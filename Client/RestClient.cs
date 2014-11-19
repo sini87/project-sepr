@@ -111,6 +111,7 @@ namespace Client
                 }
 
                 // grab the response
+                //Shit
                 using (var responseStream = response.GetResponseStream())
                 {
                     if (responseStream != null)
