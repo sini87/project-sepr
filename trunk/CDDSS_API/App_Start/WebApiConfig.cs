@@ -19,7 +19,7 @@ namespace CDDSS_API
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.EnableSystemDiagnosticsTracing();
 
-            var cors = new EnableCorsAttribute("http://localhost:51853", "*", "GET");
+            var cors = new EnableCorsAttribute("http://localhost:51853", "*", "*");
             config.EnableCors(cors);
 
             // Web API routes
