@@ -8,18 +8,12 @@ using System.Web.Http.Cors;
 
 namespace CDDSS_API.Repository
 {
-    public class UsersRepository
+    public class UsersRepository : RepositoryBase
     {
-        private IObjectContextFactory _objectContextFactory;
 
-        public UsersRepository()
+        public List<UserShort> GetUsers() 
         {
-            _objectContextFactory = new LazySingletonObjectContextFactory();
-        }
-
-        public List<UserShort> GetUsers()
-        {
-            var query = from user in _objectContextFactory.Create().Users
+            var query = from user in ctx.Users
                         select new
                         {
                             FirstName = user.FirstName,
@@ -35,7 +29,7 @@ namespace CDDSS_API.Repository
 
         public List<User> GetUsersDetailed()
         {
-            return _objectContextFactory.Create().Users.ToList();
+            return ctx.Users.ToList();
         }
     }
 }
