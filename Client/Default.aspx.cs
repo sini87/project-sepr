@@ -16,7 +16,8 @@ namespace Client
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var client = new RestClient(@"http://localhost:51853/api/Users");
+                var client = RestClient.Instance;
+                client.EndPoint = @"http://localhost:51853/api/User";
 
                 client.Method = HttpVerb.GET;
                 client.ContentType = "text/json";
@@ -33,7 +34,7 @@ namespace Client
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
         {
 
-            RestClient.Login(Login.UserName, Login.Password);
+            RestClient.Instance.Login(Login.UserName, Login.Password);
             
             e.Authenticated = true;
         }
