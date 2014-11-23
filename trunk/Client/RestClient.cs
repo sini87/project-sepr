@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,29 +22,58 @@ namespace Client
         public HttpVerb Method { get; set; }
         public string ContentType { get; set; }
         public string PostData { get; set; }
-        private static string accessToken;
+        private string accessToken;
         private Dictionary<string, MemoryStream> filesDict;
+        private static RestClient instance;
 
-        public RestClient()
+        public static RestClient Instance
         {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new RestClient();
+                }
+                return instance;
+            }
+        }
 
+        private RestClient()
+        {
             EndPoint = "";
             Method = HttpVerb.GET;
-            ContentType = "text/xml";
+            ContentType = "text/json";
             PostData = "";
         }
-        public RestClient(string endpoint)
+
+        private RestClient(string endpoint)
         {
             EndPoint = endpoint;
             Method = HttpVerb.GET;
-            ContentType = "text/xml";
+            ContentType = "text/json";
+            PostData = "";
+        }
+        public RestClient(string username, string password)
+        {
+            Login(username,password);
+            EndPoint = "";
+            Method = HttpVerb.GET;
+            ContentType = "text/json";
+            PostData = "";
+        }
+        public RestClient(string username, string password, string endpoint)
+        {
+            Login(username, password);
+            EndPoint = endpoint;
+            Method = HttpVerb.GET;
+            ContentType = "text/json";
             PostData = "";
         }
         public RestClient(string endpoint, HttpVerb method)
         {
             EndPoint = endpoint;
             Method = method;
-            ContentType = "text/xml";
+            ContentType = "text/json";
             PostData = "";
         }
 
@@ -51,7 +81,7 @@ namespace Client
         {
             EndPoint = endpoint;
             Method = method;
-            ContentType = "text/xml";
+            ContentType = "text/json";
             PostData = postData;
         }
 
@@ -61,27 +91,21 @@ namespace Client
             return MakeRequest("");
         }
 
-        public static Boolean Login(string username, string password)
-        {
+        public bool Login(string username, string password){
 
             var client = new RestClient(@"http://localhost:51853/Token");
-            client.Method = HttpVerb.POST;
-            client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
-            var json = client.MakeRequest();
-            Dictionary<string, string> dict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-            if (dict.ContainsKey("access_token"))
-            {
-                accessToken = dict["access_token"];
-                System.Console.WriteLine("Token: " + accessToken);
-            }
+                client.Method = HttpVerb.POST;
+                client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
+                var json = client.MakeRequest();
+                Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                if (dict.ContainsKey("access_token"))
+                {
+                    accessToken = dict["access_token"];
+                    System.Console.WriteLine("Token: " + accessToken);
+                }
             return false;
         }
 
-        /// <summary>
-        /// used for a standart rest request
-        /// </summary>
-        /// <param name="parameters">parameters</param>
-        /// <returns>json</returns>
         public string MakeRequest(string parameters)
         {
             var request = (HttpWebRequest)WebRequest.Create(EndPoint + parameters);
@@ -117,7 +141,6 @@ namespace Client
                 }
 
                 // grab the response
-                //Shit
                 using (var responseStream = response.GetResponseStream())
                 {
                     if (responseStream != null)
@@ -132,13 +155,36 @@ namespace Client
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename">name of the file</param>
+        /// <param name="memorystream">file loaded in memory stream</param>
+        /// <returns>false if file already added to upload</returns>
+        public bool AddFile(string filename, MemoryStream memorystream)
+        {
+            if (filesDict == null)
+            {
+                filesDict = new Dictionary<string, MemoryStream>();
+            }
+            if (filesDict.ContainsKey(filename))
+            {
+                return false;
+            }
+            else
+            {
+                filesDict.Add(filename, memorystream);
+                return true;
+            }
+        }
+
+        /// <summary>
         /// source from http://stackoverflow.com/questions/15543150/httprequest-files-is-empty-when-posting-file-through-httpclient
         /// </summary>
         /// <param name="issue"></param>
         /// <param name="filename"></param>
         public void UploadFilesToRemoteUrl(int issue)
         {
-
+            
 
             string url = @"http://localhost:51853/api/Document?issueid=" + issue;
             long length = 0;
@@ -164,7 +210,7 @@ namespace Client
 
             string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n Content-Type: application/octet-stream\r\n\r\n";
 
-            foreach (KeyValuePair<string, MemoryStream> file in filesDict)
+            foreach (KeyValuePair<string,MemoryStream> file in filesDict)
             {
 
                 //string header = string.Format(headerTemplate, "file" + i, files[i]);
@@ -174,14 +220,14 @@ namespace Client
 
                 memStream.Write(headerbytes, 0, headerbytes.Length);
 
-
-
+                
+                
                 byte[] buffer = new byte[1024];
 
                 memStream.Write(file.Value.ToArray(), 0, file.Value.ToArray().Length);
 
                 memStream.Write(boundarybytes, 0, boundarybytes.Length);
-
+                
             }
 
             filesDict = null;
@@ -206,6 +252,9 @@ namespace Client
             httpWebRequest2 = null;
             webResponse2 = null;
         }
+        
+
+    } // class
 
         
         //sample method how to upload files
@@ -213,8 +262,9 @@ namespace Client
         //{
         //    try
         //    {
-        //        RestClient.Login("sinisa.zubic@gmx.at", "passme");
-        //        var client = new RestClient(@"http://localhost:51853/api/Document");
+        //        var client = RestClient.Instance;
+        //        client.Login("sinisa.zubic@gmx.at", "passme");
+        //        client.Endpoint = @"http://localhost:51853/api/Document";
         //        client.Method = HttpVerb.POST;
         //        //var json = client.MakeRequest("?issue=1&filename=test.png");
 
@@ -233,5 +283,5 @@ namespace Client
         //        System.Console.WriteLine(ex.Message);
         //    }
         //}
-    }
+    
 }

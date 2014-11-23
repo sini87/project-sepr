@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using CDDSS_API.Models;
 using CDDSS_API.Providers;
 using CDDSS_API.Results;
+using CDDSS_API.Repository;
 
 namespace CDDSS_API.Controllers
 {
@@ -336,6 +337,9 @@ namespace CDDSS_API.Controllers
             {
                 return GetErrorResult(result);
             }
+
+            UserRepository uRep = new UserRepository();
+            uRep.CreateAccessObjectForUser(model.Email);
 
             return Ok();
         }
