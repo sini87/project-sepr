@@ -47,7 +47,7 @@ namespace CDDSS_API.Controllers
         /// <param name="lastName"></param>
         /// <param name="secretQuestion"></param>
         /// <param name="answer"></param>
-        /// <returns></returns>
+        /// <returns>returns HTTP Status Code OK if operation was successful, else HTTP Status Cude NOT Acceptable</returns>
         public HttpResponseMessage Post(string firstName="", string lastName = "", string secretQuestion = "", string answer = "")
         {
             HttpResponseMessage result = null;
