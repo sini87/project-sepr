@@ -67,8 +67,8 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// returns document by issueid and filename
-        /// if document does not exist then bad reqeust
+        /// Returns document by issueid and filename.
+        /// If document does not exist then bad reqeust.
         /// </summary>
         /// <param name="issueId"></param>
         /// <param name="filename"></param>
