@@ -34,7 +34,6 @@ namespace Client
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
         {
 
-            RestClient.Instance.Login(Login.UserName, Login.Password);
             
             e.Authenticated = true;
         }
