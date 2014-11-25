@@ -17,9 +17,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>We suggest the following:<asp:Login ID="Login" runat="server" OnAuthenticate="Login_Authenticate">
-        </asp:Login>
-        <asp:ListBox ID="ListBox" runat="server" Height="177px" Width="332px"></asp:ListBox>
+    <h3>We suggest the following:<asp:ListBox ID="ListBox" runat="server" Height="177px" Width="332px"></asp:ListBox>
     </h3>
     <p>&nbsp;</p>
     <ol class="round">

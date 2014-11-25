@@ -94,15 +94,16 @@ namespace Client
         public bool Login(string username, string password){
 
             var client = new RestClient(@"http://localhost:51853/Token");
-                client.Method = HttpVerb.POST;
-                client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
-                var json = client.MakeRequest();
-                Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-                if (dict.ContainsKey("access_token"))
-                {
-                    accessToken = dict["access_token"];
-                    System.Console.WriteLine("Token: " + accessToken);
-                }
+            client.Method = HttpVerb.POST;
+            client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
+            var json = client.MakeRequest();
+            Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            if (dict.ContainsKey("access_token"))
+            {
+                accessToken = dict["access_token"];
+                System.Console.WriteLine("Token: " + accessToken);
+                return true;
+            }
             return false;
         }
 
@@ -130,27 +131,43 @@ namespace Client
                 }
             }
 
-            using (var response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                var responseValue = string.Empty;
-
-                if (response.StatusCode != HttpStatusCode.OK)
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
-                    throw new ApplicationException(message);
-                }
+                    var responseValue = string.Empty;
 
-                // grab the response
-                using (var responseStream = response.GetResponseStream())
-                {
-                    if (responseStream != null)
-                        using (var reader = new StreamReader(responseStream))
-                        {
-                            responseValue = reader.ReadToEnd();
-                        }
-                }
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
+                        throw new ApplicationException(message);
+                    }
+                    else
+                    {
+                        responseValue = "OK";
+                    }
 
-                return responseValue;
+                    // grab the response
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        if (responseStream != null)
+                            using (var reader = new StreamReader(responseStream))
+                            {
+                                responseValue = reader.ReadToEnd();
+                                if (responseValue.Length == 0)
+                                {
+                                    responseValue = response.StatusCode.ToString();
+                                }
+                            }
+                    }
+
+                    PostData = "";
+                    return responseValue;
+                }
+            }
+            catch (WebException ex)
+            {
+                return "";
             }
         }
 
