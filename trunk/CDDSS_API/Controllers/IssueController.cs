@@ -1,5 +1,6 @@
 ﻿using CDDSS_API.Models;
 using CDDSS_API.Models.Domain;
+using CDDSS_API.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,13 @@ namespace CDDSS_API.Controllers
     [Authorize]
     public class IssueController : ApiController
     {
+        IssueRepository issueRep;
+
+        public IssueController()
+        {
+            issueRep = new IssueRepository();
+        }
+
         /// <summary>
         /// returns an issue by issueid
         /// </summary>
@@ -43,7 +51,18 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public List<IssueShort> GET()
         {
+            issueRep.GetAllIssues();
             return null;
+        }
+
+        /// <summary>
+        /// returns a list of issues with title TODO
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/IssuesFromUser")]
+        public List<IssueShort> GETIssuesByUser()
+        {
+            return issueRep.GetAllIssues();
         }
     }
 }
