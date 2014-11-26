@@ -245,6 +245,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Repository\CriterionRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
+    <Compile Include="Repository\IssueRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

@@ -45,6 +45,12 @@ namespace CDDSS_API.Models.Domain
     partial void InsertDocument(Document instance);
     partial void UpdateDocument(Document instance);
     partial void DeleteDocument(Document instance);
+    partial void InsertTag_Issue(Tag_Issue instance);
+    partial void UpdateTag_Issue(Tag_Issue instance);
+    partial void DeleteTag_Issue(Tag_Issue instance);
+    partial void InsertTag(Tag instance);
+    partial void UpdateTag(Tag instance);
+    partial void DeleteTag(Tag instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -114,6 +120,22 @@ namespace CDDSS_API.Models.Domain
 			get
 			{
 				return this.GetTable<Document>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Tag_Issue> Tag_Issues
+		{
+			get
+			{
+				return this.GetTable<Tag_Issue>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Tag> Tags
+		{
+			get
+			{
+				return this.GetTable<Tag>();
 			}
 		}
 	}
@@ -941,6 +963,8 @@ namespace CDDSS_API.Models.Domain
 		
 		private EntitySet<Document> _Documents;
 		
+		private EntitySet<Tag_Issue> _Tag_Issues;
+		
 		private EntityRef<Issue> _Issue1;
 		
     #region Extensibility Method Definitions
@@ -968,6 +992,7 @@ namespace CDDSS_API.Models.Domain
 			this._AccessRights = new EntitySet<AccessRight>(new Action<AccessRight>(this.attach_AccessRights), new Action<AccessRight>(this.detach_AccessRights));
 			this._Issues = new EntitySet<Issue>(new Action<Issue>(this.attach_Issues), new Action<Issue>(this.detach_Issues));
 			this._Documents = new EntitySet<Document>(new Action<Document>(this.attach_Documents), new Action<Document>(this.detach_Documents));
+			this._Tag_Issues = new EntitySet<Tag_Issue>(new Action<Tag_Issue>(this.attach_Tag_Issues), new Action<Tag_Issue>(this.detach_Tag_Issues));
 			this._Issue1 = default(EntityRef<Issue>);
 			OnCreated();
 		}
@@ -1155,6 +1180,19 @@ namespace CDDSS_API.Models.Domain
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Tag_Issue", Storage="_Tag_Issues", ThisKey="Id", OtherKey="Issue")]
+		public EntitySet<Tag_Issue> Tag_Issues
+		{
+			get
+			{
+				return this._Tag_Issues;
+			}
+			set
+			{
+				this._Tag_Issues.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Issue", Storage="_Issue1", ThisKey="RelatedTo", OtherKey="Id", IsForeignKey=true)]
 		public Issue Issue1
 		{
@@ -1240,6 +1278,18 @@ namespace CDDSS_API.Models.Domain
 		}
 		
 		private void detach_Documents(Document entity)
+		{
+			this.SendPropertyChanging();
+			entity.Issue1 = null;
+		}
+		
+		private void attach_Tag_Issues(Tag_Issue entity)
+		{
+			this.SendPropertyChanging();
+			entity.Issue1 = this;
+		}
+		
+		private void detach_Tag_Issues(Tag_Issue entity)
 		{
 			this.SendPropertyChanging();
 			entity.Issue1 = null;
@@ -1394,6 +1444,288 @@ namespace CDDSS_API.Models.Domain
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tag_Issue")]
+	public partial class Tag_Issue : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Tag;
+		
+		private int _Issue;
+		
+		private EntityRef<Issue> _Issue1;
+		
+		private EntityRef<Tag> _Tag1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTagChanging(int value);
+    partial void OnTagChanged();
+    partial void OnIssueChanging(int value);
+    partial void OnIssueChanged();
+    #endregion
+		
+		public Tag_Issue()
+		{
+			this._Issue1 = default(EntityRef<Issue>);
+			this._Tag1 = default(EntityRef<Tag>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tag", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Tag
+		{
+			get
+			{
+				return this._Tag;
+			}
+			set
+			{
+				if ((this._Tag != value))
+				{
+					if (this._Tag1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTagChanging(value);
+					this.SendPropertyChanging();
+					this._Tag = value;
+					this.SendPropertyChanged("Tag");
+					this.OnTagChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issue", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Issue
+		{
+			get
+			{
+				return this._Issue;
+			}
+			set
+			{
+				if ((this._Issue != value))
+				{
+					if (this._Issue1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIssueChanging(value);
+					this.SendPropertyChanging();
+					this._Issue = value;
+					this.SendPropertyChanged("Issue");
+					this.OnIssueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Tag_Issue", Storage="_Issue1", ThisKey="Issue", OtherKey="Id", IsForeignKey=true)]
+		public Issue Issue1
+		{
+			get
+			{
+				return this._Issue1.Entity;
+			}
+			set
+			{
+				Issue previousValue = this._Issue1.Entity;
+				if (((previousValue != value) 
+							|| (this._Issue1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Issue1.Entity = null;
+						previousValue.Tag_Issues.Remove(this);
+					}
+					this._Issue1.Entity = value;
+					if ((value != null))
+					{
+						value.Tag_Issues.Add(this);
+						this._Issue = value.Id;
+					}
+					else
+					{
+						this._Issue = default(int);
+					}
+					this.SendPropertyChanged("Issue1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tag_Tag_Issue", Storage="_Tag1", ThisKey="Tag", OtherKey="Id", IsForeignKey=true)]
+		public Tag Tag1
+		{
+			get
+			{
+				return this._Tag1.Entity;
+			}
+			set
+			{
+				Tag previousValue = this._Tag1.Entity;
+				if (((previousValue != value) 
+							|| (this._Tag1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tag1.Entity = null;
+						previousValue.Tag_Issues.Remove(this);
+					}
+					this._Tag1.Entity = value;
+					if ((value != null))
+					{
+						value.Tag_Issues.Add(this);
+						this._Tag = value.Id;
+					}
+					else
+					{
+						this._Tag = default(int);
+					}
+					this.SendPropertyChanged("Tag1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tag")]
+	public partial class Tag : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private EntitySet<Tag_Issue> _Tag_Issues;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Tag()
+		{
+			this._Tag_Issues = new EntitySet<Tag_Issue>(new Action<Tag_Issue>(this.attach_Tag_Issues), new Action<Tag_Issue>(this.detach_Tag_Issues));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(20)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tag_Tag_Issue", Storage="_Tag_Issues", ThisKey="Id", OtherKey="Tag")]
+		public EntitySet<Tag_Issue> Tag_Issues
+		{
+			get
+			{
+				return this._Tag_Issues;
+			}
+			set
+			{
+				this._Tag_Issues.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Tag_Issues(Tag_Issue entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tag1 = this;
+		}
+		
+		private void detach_Tag_Issues(Tag_Issue entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tag1 = null;
 		}
 	}
 }

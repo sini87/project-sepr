@@ -50,6 +50,7 @@
       <Association Name="Issue_AccessRight" Member="AccessRights" ThisKey="Id" OtherKey="Issue" Type="AccessRight" />
       <Association Name="Issue_Issue" Member="Issues" ThisKey="Id" OtherKey="RelatedTo" Type="Issue" />
       <Association Name="Issue_Document" Member="Documents" ThisKey="Id" OtherKey="Issue" Type="Document" />
+      <Association Name="Issue_Tag_Issue" Member="Tag_Issues" ThisKey="Id" OtherKey="Issue" Type="Tag_Issue" />
       <Association Name="Issue_Issue" Member="Issue1" ThisKey="RelatedTo" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -59,6 +60,21 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="[File]" Member="File" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Association Name="Issue_Document" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tag_Issue" Member="Tag_Issues">
+    <Type Name="Tag_Issue">
+      <Column Name="Tag" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Issue_Tag_Issue" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
+      <Association Name="Tag_Tag_Issue" Member="Tag1" ThisKey="Tag" OtherKey="Id" Type="Tag" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tag" Member="Tags">
+    <Type Name="Tag">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="Tag_Tag_Issue" Member="Tag_Issues" ThisKey="Id" OtherKey="Tag" Type="Tag_Issue" />
     </Type>
   </Table>
 </Database>
