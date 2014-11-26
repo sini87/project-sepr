@@ -51,8 +51,7 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public List<IssueShort> GET()
         {
-            issueRep.GetAllIssues();
-            return null;
+            return issueRep.GetAllIssues(); ;
         }
 
         /// <summary>
