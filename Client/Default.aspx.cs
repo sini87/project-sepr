@@ -11,13 +11,13 @@ namespace Client
 {
     public partial class _Default : Page
     {
-        List<UserShort> uList;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (this.User.Identity.IsAuthenticated)
             {
+                ListBox.Visible = true;
                 var client = RestClient.Instance;
-                client.EndPoint = @"http://localhost:51853/api/User";
+                client.EndPoint = @"api/User";
 
                 client.Method = HttpVerb.GET;
                 client.ContentType = "text/json";
@@ -26,15 +26,16 @@ namespace Client
                 foreach (UserShort u in userList)
                 {
                     ListBox.Items.Add(new ListItem(u.LastName + " " + u.FirstName));
-                    System.Console.WriteLine(u.LastName + " " + u.FirstName);
                 }
+            }
+            else
+            {
+                ListBox.Visible = false;
             }
         }
 
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
         {
-
-            
             e.Authenticated = true;
         }
     }

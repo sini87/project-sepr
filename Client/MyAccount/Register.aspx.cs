@@ -34,7 +34,7 @@ namespace Client
                 RestClient.Instance.Login(m.Email, m.Password);
                 RestClient.Instance.Method = HttpVerb.POST;
 
-                RestClient.Instance.EndPoint = "http://localhost:51853/api/User";
+                RestClient.Instance.EndPoint = "api/User";
                 var json = RestClient.Instance.MakeRequest("?firstName=" + FirstName.Text + "&lastName=" + LastName.Text + "&secretQuestion=" + Question2.Text + "&answer=" + Answer2.Text);
                 System.Console.WriteLine(json);
                 
@@ -45,7 +45,7 @@ namespace Client
         {
             CreateUserWizard.Email = CreateUserWizard.UserName.Split('@')[0];
             RestClient client = RestClient.Instance;
-            client.EndPoint = "http://localhost:51853/api/account/Register";
+            client.EndPoint = "api/account/Register";
             client.Method = HttpVerb.POST;
             m = new CDDSS_API.Models.RegisterBindingModel();
             m.Email = CreateUserWizard.UserName;

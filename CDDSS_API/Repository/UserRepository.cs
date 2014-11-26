@@ -25,14 +25,33 @@ namespace CDDSS_API.Repository
                         {
                             FirstName = user.FirstName,
                             LastName = user.LastName,
-                            AO = (int)user.AccessObject
+                            AO = (int)user.AccessObject,
+                            Email = user.Email
                         };
             List<UserShort> list = new List<UserShort>();
             foreach (var u in query)
             {
-                list.Add(new UserShort(u.FirstName, u.LastName, u.AO));
+                list.Add(new UserShort(u.FirstName, u.LastName, u.AO, u.Email));
             }
             return list;
+        }
+
+        /// <summary>
+        /// return a UserShort by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public UserShort GetUserByEmail(string email)
+        {
+            var query = from user in ctx.Users where user.Email == email
+                        select new
+                        {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            AO = (int)user.AccessObject,
+                            Email = user.Email
+                        };
+            return new UserShort(query.First().FirstName, query.First().LastName, query.First().AO, query.First().Email);
         }
 
         /// <summary>
