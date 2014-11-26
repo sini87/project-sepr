@@ -1,9 +1,9 @@
 ﻿using CDDSS_API;
+using CDDSS_API.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Net;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -15,28 +15,28 @@ namespace Client
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                ListBox.Visible = true;
-                var client = RestClient.Instance;
-                client.EndPoint = @"api/User";
+                RestClient.Instance.EndPoint = "api/Issue";
+                RestClient.Instance.Method = HttpVerb.GET;
+                //RestClient.Instance.GetType = "";
+                var json = RestClient.Instance.MakeRequest();
+                List<IssueShort> user = JsonConvert.DeserializeObject<List<IssueShort>>(json);
 
-                client.Method = HttpVerb.GET;
-                client.ContentType = "text/json";
-                var json = client.MakeRequest();
-                List<UserShort> userList = JsonConvert.DeserializeObject<List<UserShort>>(json);
-                foreach (UserShort u in userList)
-                {
-                    ListBox.Items.Add(new ListItem(u.LastName + " " + u.FirstName));
-                }
+
             }
             else
             {
-                ListBox.Visible = false;
+               
             }
         }
 
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
         {
             e.Authenticated = true;
+        }
+
+        protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
