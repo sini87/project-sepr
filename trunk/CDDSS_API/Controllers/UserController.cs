@@ -40,6 +40,16 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
+        /// returns current logged in user
+        /// </summary>
+        /// <returns>UserShort</returns>
+        [Route("api/User/Current")]
+        public UserShort GET()
+        {
+            return usersRep.GetUserByEmail(RequestContext.Principal.Identity.Name);
+        }
+
+        /// <summary>
         /// edits a user profile
         /// </summary>
         /// <param name="email"></param>

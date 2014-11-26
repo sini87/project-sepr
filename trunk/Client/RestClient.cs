@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CDDSS_API;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +17,15 @@ namespace Client
         PUT,
         DELETE
     }
+
+    /// <summary>
+    /// Class used to access WEB API
+    /// 
+    /// After every Request the parameters are reseted. So for every request you have to set the Parameters. 
+    /// </summary>
     public class RestClient
     {
+        private static string Prefix = @"http://localhost:51853/";
         public string EndPoint { get; set; }
         public HttpVerb Method { get; set; }
         public string ContentType { get; set; }
@@ -25,6 +33,7 @@ namespace Client
         private string accessToken;
         private Dictionary<string, MemoryStream> filesDict;
         private static RestClient instance;
+        private UserShort currentUser;
 
         public static RestClient Instance
         {
@@ -33,58 +42,23 @@ namespace Client
                 if (instance == null)
                 {
                     instance = new RestClient();
+                    instance.EndPoint = "";
+                    instance.Method = HttpVerb.GET;
+                    instance.ContentType = "text/json";
+                    instance.PostData = "";
                 }
+                
                 return instance;
             }
         }
 
-        private RestClient()
+        public UserShort CurrentUser
         {
-            EndPoint = "";
-            Method = HttpVerb.GET;
-            ContentType = "text/json";
-            PostData = "";
+            get
+            {
+                return currentUser;
+            }
         }
-
-        private RestClient(string endpoint)
-        {
-            EndPoint = endpoint;
-            Method = HttpVerb.GET;
-            ContentType = "text/json";
-            PostData = "";
-        }
-        public RestClient(string username, string password)
-        {
-            Login(username,password);
-            EndPoint = "";
-            Method = HttpVerb.GET;
-            ContentType = "text/json";
-            PostData = "";
-        }
-        public RestClient(string username, string password, string endpoint)
-        {
-            Login(username, password);
-            EndPoint = endpoint;
-            Method = HttpVerb.GET;
-            ContentType = "text/json";
-            PostData = "";
-        }
-        public RestClient(string endpoint, HttpVerb method)
-        {
-            EndPoint = endpoint;
-            Method = method;
-            ContentType = "text/json";
-            PostData = "";
-        }
-
-        public RestClient(string endpoint, HttpVerb method, string postData)
-        {
-            EndPoint = endpoint;
-            Method = method;
-            ContentType = "text/json";
-            PostData = postData;
-        }
-
 
         public string MakeRequest()
         {
@@ -93,7 +67,8 @@ namespace Client
 
         public bool Login(string username, string password){
 
-            var client = new RestClient(@"http://localhost:51853/Token");
+            var client = Instance;
+            client.EndPoint = "Token";
             client.Method = HttpVerb.POST;
             client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
             var json = client.MakeRequest();
@@ -101,15 +76,37 @@ namespace Client
             if (dict.ContainsKey("access_token"))
             {
                 accessToken = dict["access_token"];
-                System.Console.WriteLine("Token: " + accessToken);
+
+                client.EndPoint = "api/User/Current";
+                client.Method = HttpVerb.GET;
+                json = client.MakeRequest();
+                currentUser = JsonConvert.DeserializeObject<UserShort>(json);
                 return true;
+            }
+            return false;
+        }
+
+        public bool LoginOut()
+        {
+            if (accessToken != null)
+            {
+                var client = Instance;
+                client.EndPoint = "api/Account/Logout";
+                client.Method = HttpVerb.POST;
+                var json = client.MakeRequest();
+                if (json.ToString().Equals("OK"))
+                {
+                    accessToken = null;
+                    currentUser = null;
+                    return true;
+                }
             }
             return false;
         }
 
         public string MakeRequest(string parameters)
         {
-            var request = (HttpWebRequest)WebRequest.Create(EndPoint + parameters);
+            var request = (HttpWebRequest)WebRequest.Create(Prefix + EndPoint + parameters);
 
             request.Method = Method.ToString();
             request.ContentLength = 0;
@@ -167,7 +164,15 @@ namespace Client
             }
             catch (WebException ex)
             {
+                Console.WriteLine(ex.Message);
                 return "";
+            }
+            finally
+            {
+                instance.EndPoint = "";
+                instance.Method = HttpVerb.GET;
+                instance.ContentType = "text/json";
+                instance.PostData = "";
             }
         }
 
@@ -203,7 +208,7 @@ namespace Client
         {
             
 
-            string url = @"http://localhost:51853/api/Document?issueid=" + issue;
+            string url = Prefix+ "Document?issueid=" + issue;
             long length = 0;
             string boundary = "----------------------------" +
             DateTime.Now.Ticks.ToString("x");

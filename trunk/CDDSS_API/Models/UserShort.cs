@@ -14,12 +14,25 @@ namespace CDDSS_API
         //[DataMember]
         public string LastName { get; set; }
         public int AccessObject { get; set; }
+        public string Email { get; set; }
 
+        public UserShort()
+        {
+
+        }
         public UserShort(string firstName, string lastName, int accessObject)
         {
             FirstName = firstName;
             LastName = lastName;
             AccessObject = accessObject;
+        }
+
+        public UserShort(string firstName, string lastName, int accessObject, string email)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            AccessObject = accessObject;
+            Email = email;
         }
     }
 }

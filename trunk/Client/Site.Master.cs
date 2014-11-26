@@ -67,11 +67,16 @@ namespace Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            LoginName control = (LoginName)LoginView1.FindControl("LoginName");
+            if (control != null)
+            {
+                control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+            }
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
+            RestClient.Instance.LoginOut();
             FormsAuthentication.SignOut();
         }
     }
