@@ -50,6 +50,7 @@
       <Association Name="Issue_AccessRight" Member="AccessRights" ThisKey="Id" OtherKey="Issue" Type="AccessRight" />
       <Association Name="Issue_Issue" Member="Issues" ThisKey="Id" OtherKey="RelatedTo" Type="Issue" />
       <Association Name="Issue_Document" Member="Documents" ThisKey="Id" OtherKey="Issue" Type="Document" />
+      <Association Name="Issue_Criterion" Member="Criterion" ThisKey="Id" OtherKey="Issue" Type="Criterion" />
       <Association Name="Issue_Tag_Issue" Member="Tag_Issues" ThisKey="Id" OtherKey="Issue" Type="Tag_Issue" />
       <Association Name="Issue_Issue" Member="Issue1" ThisKey="RelatedTo" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
@@ -60,6 +61,16 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="[File]" Member="File" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Association Name="Issue_Document" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Criterion" Member="Criterion">
+    <Type Name="Criterion">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Issue_Criterion" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Tag_Issue" Member="Tag_Issues">
