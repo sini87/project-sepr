@@ -27,6 +27,7 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <returns>list of files</returns>
         [AllowAnonymous]
+        [HttpPost]
         public List<String> Get(int issueId)
         {
             return docRep.GetFilesByIssueId(issueId);
@@ -37,6 +38,7 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="issueId"></param>
         /// <returns>returns statuscode created if everything is ok or list of files which cloud not be uploaded because the already exsist</returns>
+        [HttpPost]
         public HttpResponseMessage Post(int issueId)
         {
             HttpResponseMessage result = null;

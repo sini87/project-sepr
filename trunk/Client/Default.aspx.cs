@@ -19,13 +19,13 @@ namespace Client
                 RestClient.Instance.Method = HttpVerb.GET;
                 //RestClient.Instance.GetType = "";
                 var json = RestClient.Instance.MakeRequest();
-                List<IssueShort> user = JsonConvert.DeserializeObject<List<IssueShort>>(json);
+                List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
 
-
+                //TODO
             }
             else
             {
-               
+                ListBox.Visible = false;
             }
         }
 
