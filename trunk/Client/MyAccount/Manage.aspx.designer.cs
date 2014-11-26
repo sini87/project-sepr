@@ -11,5 +11,23 @@ namespace Client.MyAccount {
     
     
     public partial class Manage {
+        
+        /// <summary>
+        /// Label_FirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label_FirstName;
+        
+        /// <summary>
+        /// TextBox_FirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox_FirstName;
     }
 }
