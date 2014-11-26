@@ -52,6 +52,9 @@
       <Association Name="Issue_Document" Member="Documents" ThisKey="Id" OtherKey="Issue" Type="Document" />
       <Association Name="Issue_Criterion" Member="Criterion" ThisKey="Id" OtherKey="Issue" Type="Criterion" />
       <Association Name="Issue_Tag_Issue" Member="Tag_Issues" ThisKey="Id" OtherKey="Issue" Type="Tag_Issue" />
+      <Association Name="Issue_Issue_artefact" Member="Issue_artefacts" ThisKey="Id" OtherKey="Issue" Type="Issue_artefact" />
+      <Association Name="Issue_Issue_stakeholder" Member="Issue_stakeholders" ThisKey="Id" OtherKey="Issue" Type="Issue_stakeholder" />
+      <Association Name="Issue_InfluenceFactor" Member="InfluenceFactors" ThisKey="Id" OtherKey="Issue" Type="InfluenceFactor" />
       <Association Name="Issue_Issue" Member="Issue1" ThisKey="RelatedTo" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -86,6 +89,46 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Association Name="Tag_Tag_Issue" Member="Tag_Issues" ThisKey="Id" OtherKey="Tag" Type="Tag_Issue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Issue_artefact" Member="Issue_artefacts">
+    <Type Name="Issue_artefact">
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Artefact" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Issue_Issue_artefact" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
+      <Association Name="Artefact_Issue_artefact" Member="Artefact1" ThisKey="Artefact" OtherKey="Id" Type="Artefact" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Issue_stakeholder" Member="Issue_stakeholders">
+    <Type Name="Issue_stakeholder">
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Stakeholder" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Issue_Issue_stakeholder" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
+      <Association Name="Stakeholder_Issue_stakeholder" Member="Stakeholder1" ThisKey="Stakeholder" OtherKey="Id" Type="Stakeholder" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InfluenceFactor" Member="InfluenceFactors">
+    <Type Name="InfluenceFactor">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Characteristic" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Issue_InfluenceFactor" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Artefact" Member="Artefacts">
+    <Type Name="Artefact">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="Artefact_Issue_artefact" Member="Issue_artefacts" ThisKey="Id" OtherKey="Artefact" Type="Issue_artefact" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Stakeholder" Member="Stakeholders">
+    <Type Name="Stakeholder">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Stakeholder_Issue_stakeholder" Member="Issue_stakeholders" ThisKey="Id" OtherKey="Stakeholder" Type="Issue_stakeholder" />
     </Type>
   </Table>
 </Database>
