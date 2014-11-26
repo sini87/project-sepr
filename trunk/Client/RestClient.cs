@@ -208,7 +208,7 @@ namespace Client
         {
             
 
-            string url = Prefix+ "Document?issueid=" + issue;
+            string url = Prefix+ "api/Document?issueid=" + issue;
             long length = 0;
             string boundary = "----------------------------" +
             DateTime.Now.Ticks.ToString("x");
