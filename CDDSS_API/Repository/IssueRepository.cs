@@ -12,14 +12,23 @@ namespace CDDSS_API.Repository
 {
     public class IssueRepository : RepositoryBase
     {
-        public List<IssueModel> GetAllIssues()
+        public List<IssueModel> GetAllIssues(string email)
         {
-            List<Issue> issueList = ctx.Issues.ToList<Issue>();
             List<IssueModel> list = new List<IssueModel>();
-            IssueModel issueShort;
 
-            foreach (Issue issue in issueList){
-                issueShort = new IssueModel(issue.Id, issue.Title,issue.Status, (double)issue.ReviewRating);
+            User user = ctx.Users.Where(x => x.Email == email).First();
+            IssueModel issueShort;
+            Issue issue;
+            foreach (AccessRight ar in ctx.AccessRights.Where(x => x.AccessObject == user.AccessObject).ToList()){
+                issue = ar.Issue1;
+                if (issue.ReviewRating == null)
+                {
+                    issueShort = new IssueModel(issue.Id, issue.Title, issue.Status, 0);
+                }
+                else
+                {
+                    issueShort = new IssueModel(issue.Id, issue.Title, issue.Status, (double)issue.ReviewRating);
+                }
                 foreach (Tag_Issue ti in issue.Tag_Issues.ToList<Tag_Issue>())
                 {
                     issueShort.Tags.Add(new TagModel(ti.Tag1.Id, ti.Tag1.Name));
@@ -37,6 +46,10 @@ namespace CDDSS_API.Repository
             model.Title = issue.Title;
             model.Status = issue.Status;
             model.Description = issue.Description;
+            if (issue.RelatedTo != null)
+                model.RelatedTo = (int)issue.RelatedTo;
+            if (issue.RelationType != null)
+                model.RelationType = (char)issue.RelationType;
 
             foreach (Tag_Issue tagissue in issue.Tag_Issues.ToList())
             {
@@ -58,7 +71,10 @@ namespace CDDSS_API.Repository
             {
                 model.Documents.Add(doc.Name);
             }
-
+            foreach (AccessRight ar in issue.AccessRights)
+            {
+                model.AccessRights.Add(ar.AccessObject, ar.Right);
+            }
             return model;
         }
 
@@ -331,6 +347,69 @@ namespace CDDSS_API.Repository
                 ctx.Issue_artefacts.InsertOnSubmit(issueartefact);
                 ctx.SubmitChanges();
             }
+
+            //accessRights
+            AccessRight ar;
+            foreach (int accessObjectID in issue.AccessRights.Keys)
+            {
+                ar = new AccessRight()
+                {
+                    AccessObject = accessObjectID,
+                    Issue = issueID,
+                    Right = issue.AccessRights[accessObjectID]
+                };
+                ctx.AccessRights.InsertOnSubmit(ar);
+                ctx.SubmitChanges();
+            }
+        }
+
+        
+        public bool DeleteIssue(int issueId, string ownerEmail)
+        {
+            IEnumerable<AccessRight> ars = ctx.Users.Where(x => x.Email == ownerEmail).First().AccessObject1.AccessRights.Where(x => x.Issue == issueId);
+            if (ars.Count() > 0)
+            {
+                ars = ars.Where(x => x.Right == 'O');
+                if (ars.Count() > 0)
+                {
+                    ctx.Issues.DeleteOnSubmit(ars.First().Issue1);
+                    ctx.SubmitChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool NextStage(int issueId, string ownerEmail)
+        {
+            IEnumerable<AccessRight> ars = ctx.Users.Where(x => x.Email == ownerEmail).First().AccessObject1.AccessRights.Where(x => x.Issue == issueId);
+            if (ars.Count() > 0)
+            {
+                ars = ars.Where(x => x.Right == 'O');
+                if (ars.Count() > 0)
+                {
+                    Issue issue = ars.First().Issue1;
+                    if (issue.Status.ToUpper().Equals("CREATING"))
+                    {
+                        issue.Status = "Brainstorming";
+                    }
+                    else if (issue.Status.ToUpper().Equals("BRAINSTORMING"))
+                    {
+                        issue.Status = "Evaluating";
+                    }
+                    else if (issue.Status.ToUpper().Equals("EVALUATING"))
+                    {
+                        issue.Status = "Finished";
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    ctx.SubmitChanges();
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
