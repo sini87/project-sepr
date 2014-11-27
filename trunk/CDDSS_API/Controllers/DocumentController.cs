@@ -92,5 +92,21 @@ namespace CDDSS_API.Controllers
             }
             return result;
         }
+
+        /// <summary>
+        /// deletes a document 
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <param name="filename"></param>
+        /// <returns>statuscode OK if deleted, statuscode NotAcceptable if document does not exist</returns>
+        [HttpDelete]
+        [AllowAnonymous]
+        public HttpResponseMessage Delete(int issueId, string filename)
+        {
+            if (docRep.DeleteDocument(issueId, filename))
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            else
+                return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// returns an issue detailed by issueid - FINISHED
+        /// returns an issue detailed by issueid
         /// </summary>
         /// <param name="issueId">id of issue</param>
         /// <returns>issueModel</returns>
@@ -38,7 +38,7 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// Creates a new Issue - FINISHED
+        /// Creates a new Issue
         /// Adding Artefacts, Tags, Stakeholders: If you add a tags (artefacts, stakeholders) wihtout an id, then they will be created as new. If You add those things with an id, make sure that you get this id throuth the right API (e.g. api/Tags)
         /// </summary>
         /// <param name="issue"></param>
@@ -50,22 +50,50 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// returns a list of issues with title - FINISHED
+        /// returns a list of issues which the current user is allowed to see(only id, title, tags and rieview fields are populated)
         /// </summary>
         /// <returns></returns>
         public List<IssueModel> GET()
         {
-            return issueRep.GetAllIssues();
+            return issueRep.GetAllIssues(RequestContext.Principal.Identity.Name);
         }
 
         /// <summary>
-        /// returns a list of issues with title - FINISHED
+        /// returns a list of issues with title
         /// </summary>
         /// <returns></returns>
         [Route("api/IssuesFromUser")]
         public List<IssueModel> GETIssuesByUser()
         {
             return issueRep.GetUserIssues(RequestContext.Principal.Identity.Name);
+        }
+
+        /// <summary>
+        /// deletes an issue
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <returns>returns statuscode ok if issue is deleted, if issue does not exist or user is not owner then status code Not Acceptable</returns>
+        [HttpDelete]
+        public HttpResponseMessage Delete(int issueId)
+        {
+            if (issueRep.DeleteIssue(issueId, RequestContext.Principal.Identity.Name))
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+        }
+
+        /// <summary>
+        /// the proccess gets to the next stage
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <returns>OK if accomplished, else NotAcceptable</returns>
+        [HttpPost]
+        [Route("api/Issue/{issueId}/nextStage")]
+        public HttpResponseMessage NextStage(int issueId)
+        {
+            if (issueRep.NextStage(issueId, RequestContext.Principal.Identity.Name)){
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
         }
     }
 }

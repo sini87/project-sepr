@@ -30,6 +30,12 @@ namespace CDDSS_API.Models
         public List<InfluenceFactorModel> InfluenceFactors { get; set; }
         [DataMember]
         public List<string> Documents { get; set; }
+        [DataMember]
+        public Dictionary<int,char> AccessRights { get; set; }
+        [DataMember]
+        public int RelatedTo { get; set; }
+        [DataMember]
+        public char RelationType { get; set; }
 
         public IssueModel()
         {
@@ -38,6 +44,7 @@ namespace CDDSS_API.Models
             Stakeholders = new List<StakeholderModel>();
             InfluenceFactors = new List<InfluenceFactorModel>();
             Documents = new List<string>();
+            AccessRights = new Dictionary<int, char>();
             ReviewRating = 0.0;
             Status = "";
             Title = "";
@@ -51,6 +58,7 @@ namespace CDDSS_API.Models
             Stakeholders = new List<StakeholderModel>();
             InfluenceFactors = new List<InfluenceFactorModel>();
             Documents = new List<string>();
+            AccessRights = new Dictionary<int, char>();
             Id = id;
             Title = title;
             ReviewRating = reviewRating;

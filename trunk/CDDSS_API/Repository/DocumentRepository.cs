@@ -120,5 +120,17 @@ namespace CDDSS_API.Repository
                 return ms;
             }
         }
+
+        public bool DeleteDocument(int issueId, string filename)
+        {
+            Document doc = ctx.Documents.Where(x => x.Issue == issueId).First(x => x.Name == filename);
+            if (doc != null)
+            {
+                ctx.Documents.DeleteOnSubmit(doc);
+                ctx.SubmitChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
