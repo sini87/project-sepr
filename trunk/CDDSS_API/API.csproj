@@ -234,13 +234,19 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ArtefactModel.cs" />
+    <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Models\Domain\DataClasses.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InfluenceFactorModel.cs" />
+    <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\IssueShort.cs" />
+    <Compile Include="Models\StakeholderModel.cs" />
+    <Compile Include="Models\TagModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Repository\CriterionRepository.cs" />
