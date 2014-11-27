@@ -4,9 +4,10 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %></title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
+          <%: Scripts.Render("~/bundles/bootstrap") %>
     </asp:PlaceHolder>  
     <webopt:BundleReference runat="server" Path="~/Content/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -19,6 +20,7 @@
         <Scripts>
             <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
             <%--Framework Scripts--%>
+            
             
             <asp:ScriptReference Name="MsAjaxBundle" />
             <asp:ScriptReference Name="jquery" />
@@ -40,7 +42,9 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a runat="server" href="~/">your logo here</a>
+                    <a runat="server" href="~/">
+                        <img src="images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
+                    </a>
                 </p>
             </div>
             <div class="float-right">
@@ -48,8 +52,8 @@
                     <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
-                                <li><a id="registerLink" runat="server" href="~/MyAccount/Register">Register</a></li>
-                                <li><a id="loginLink" runat="server" href="~/MyAccount/Login">Log in</a></li>
+                                <li><a id="loginLink" runat="server" href="~/MyAccount/Login" class="test" contextmenu="aaa">LOGIN</a></li>
+                                <li><a id="registerLink" runat="server" href="~/MyAccount/Register">SIGN UP</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
@@ -61,13 +65,6 @@
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </section>
-                <nav>
-                    <ul id="menu">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </header>
@@ -80,7 +77,7 @@
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                &copy; <%: DateTime.Now.Year %> - CDDSS
             </div>
         </div>
     </footer>
