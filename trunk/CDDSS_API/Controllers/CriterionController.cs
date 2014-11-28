@@ -10,7 +10,7 @@ using CDDSS_API.Repository;
 
 namespace CDDSS_API.Controllers
 {
-    public enum CriterionResponseMessage {DuplicateEntry, AddSuccessfull};
+    public enum CriterionPostResponseMessage {DuplicateEntry, AddSuccessfull};
 
     [EnableCors("http://localhost:51853", "*", "*")]
     public class CriterionController : ApiController
@@ -32,16 +32,13 @@ namespace CDDSS_API.Controllers
             return cRep.GetCriterion(id);
         }
 
-
         /// <summary>
-        /// Returns all Criterions of one issue by issueID
+        /// Returns all Criterias of CDDSS
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="issueID"></param>
         /// <returns></returns>
-        public List<Criterion> GetIssueCriterias(int issueID)
+        public List<Criterion> GetAllCriterias()
         {
-            return cRep.GetCriteriasByIssue(issueID);
+            return cRep.getAllCriterias();
         }
 
         /// <summary>
@@ -50,14 +47,14 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        public CriterionResponseMessage Post(Criterion criterion)
+        public CriterionPostResponseMessage Post(Criterion criterion)
         {
-            if (cRep.isDuplicate(criterion.Name, criterion.Issue1.Id)) return CriterionResponseMessage.DuplicateEntry;
+            if (cRep.isDuplicate(criterion)) return CriterionPostResponseMessage.DuplicateEntry;
             else
             {
                 cRep.AddCriterion(criterion);
-                if (cRep.isDuplicate(criterion.Name, criterion.Issue1.Id)) return CriterionResponseMessage.AddSuccessfull;
-                else return CriterionResponseMessage.DuplicateEntry;
+                if (cRep.isDuplicate(criterion)) return CriterionPostResponseMessage.AddSuccessfull;
+                else return CriterionPostResponseMessage.DuplicateEntry;
                 
             }
         }
