@@ -73,5 +73,15 @@ namespace CDDSS_API.Repository
 
 
 
+
+        internal bool isDuplicate(string p1, int p2)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void AddCriterion(Criterion criterion)
+        {
+            throw new NotImplementedException();
+        }
     }//EndClass
 }
