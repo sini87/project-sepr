@@ -12,8 +12,18 @@
         <div id="landingpage_text_small">
             A Decision Making, Collaborating & Workflow Plattform
         </div>
-
         
+        <asp:TextBox ID="text" runat="server" Visible="false"></asp:TextBox>
+
+        <asp:Table ID="IssueTable" runat="server" Width="100%" Visible="false"> 
+            <asp:TableRow>
+                <asp:TableCell>Id</asp:TableCell>
+                <asp:TableCell>Title</asp:TableCell>
+                <asp:TableCell>Tags</asp:TableCell>
+                <asp:TableCell>Status</asp:TableCell>
+            </asp:TableRow>
+        </asp:Table>
+         
             <a id="landingpage_button" runat="server" href="~/MyAccount/Register">
                 GETTING STARTED
             </a>
