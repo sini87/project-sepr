@@ -25,7 +25,7 @@ namespace Client
             }
             else
             {
-                ListBox.Visible = false;
+                //ListBox.Visible = false;
             }
         }
 
