@@ -14,9 +14,10 @@ namespace CDDSS_API.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Criterion GetCriterion(int id)
+        internal Criterion GetCriterion(int id)
         {
-            Criterion criterion = new Criterion();;
+            Criterion criterion = new Criterion();
+            criterion = null;
             var query = from Criterion in ctx.Criterion
                         where
                           Criterion.Id == id
@@ -40,16 +41,13 @@ namespace CDDSS_API.Repository
         }//EndGetCriterion(id)
 
         /// <summary>
-        /// Return all Criterias by IssueID
+        /// Returns all Criterias
         /// </summary>
-        /// <param name="issueID"></param>
         /// <returns></returns>
-        public List<Criterion> GetCriteriasByIssue(int issueID)
+        internal List<Criterion> getAllCriterias()
         {
-            List<Criterion> allIssueCriterias = new List<Criterion>();
+            List<Criterion> criterionList = new List<Criterion>();
             var query = from Criterion in ctx.Criterion
-                        where
-                          Criterion.Issue == issueID
                         select new
                         {
                             Id = Criterion.Id,
@@ -60,28 +58,59 @@ namespace CDDSS_API.Repository
                         };
             foreach (var c in query)
             {
-                Criterion criterion = new Criterion();
-                criterion.Id = c.Id;
-                criterion.Issue = c.Issue;
-                criterion.Name = c.Name;
-                criterion.Weight = c.Weight;
-                criterion.Description = c.Description;
-                allIssueCriterias.Add(criterion);
+                Criterion criterionListItem = new Criterion();
+                criterionListItem.Id = c.Id;
+                criterionListItem.Name = c.Name;
+                criterionListItem.Description = c.Description;
+                criterionListItem.Issue = c.Issue;
+                criterionListItem.Weight = c.Weight;
+                criterionList.Add(criterionListItem);
             }
-            return allIssueCriterias;
+            return criterionList;
         }
 
-
-
-
-        internal bool isDuplicate(string p1, int p2)
+        /// <summary>
+        /// returns true if Criterion is duplicated, else return false
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="issueId"></param>
+        /// <returns></returns>
+        internal bool isDuplicate(Criterion criterion)
         {
-            throw new NotImplementedException();
+            var query = from Criterion in ctx.Criterion
+                        where
+                          Criterion.Id == criterion.Id &&
+                          Criterion.Issue == Criterion.Issue
+                        select new
+                        {
+                            Name = Criterion.Name,
+                            Issue = Criterion.Issue,
+                            Weight = Criterion.Weight
+                        };
+            if (query!=null) return true;
+            else return false;
         }
 
         internal void AddCriterion(Criterion criterion)
         {
-            throw new NotImplementedException();
+            var query = from Criterion in
+                            (from Criterion in ctx.Criterion
+                             select new
+                             {
+                                 Criterion.Id,
+                                 Dummy = "x"
+                             })
+                        group Criterion by new { Criterion.Dummy } into g
+                        select new
+                        {
+                            Column1 = (int?)g.Max(p => p.Id)
+                        };
+            foreach (var c in query)
+            {
+                criterion.Id = c.Column1.Value;
+            }
+            ctx.Criterion.InsertOnSubmit(criterion);
+            ctx.SubmitChanges();
         }
     }//EndClass
 }

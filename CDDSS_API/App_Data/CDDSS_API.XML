@@ -488,12 +488,10 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.GetIssueCriterias(System.Int32)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.GetAllCriterias">
             <summary>
-            Returns all Criterions of one issue by issueID
+            Returns all Criterias of CDDSS
             </summary>
-            <param name="id"></param>
-            <param name="issueID"></param>
             <returns></returns>
         </member>
         <member name="M:CDDSS_API.Controllers.CriterionController.Post(CDDSS_API.Models.Domain.Criterion)">
@@ -649,11 +647,18 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Repository.CriterionRepository.GetCriteriasByIssue(System.Int32)">
+        <member name="M:CDDSS_API.Repository.CriterionRepository.getAllCriterias">
             <summary>
-            Return all Criterias by IssueID
+            Returns all Criterias
             </summary>
-            <param name="issueID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionRepository.isDuplicate(CDDSS_API.Models.Domain.Criterion)">
+            <summary>
+            returns true if Criterion is duplicated, else return false
+            </summary>
+            <param name="name"></param>
+            <param name="issueId"></param>
             <returns></returns>
         </member>
         <member name="T:CDDSS_API.Repository.DocumentRepository">
