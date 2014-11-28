@@ -10,6 +10,8 @@ using CDDSS_API.Repository;
 
 namespace CDDSS_API.Controllers
 {
+    public enum CriterionResponseMessage {DuplicateEntry, AddSuccessfull};
+
     [EnableCors("http://localhost:51853", "*", "*")]
     public class CriterionController : ApiController
     {
@@ -47,9 +49,16 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        public HttpResponseMessage Post(Criterion criterion)
+        public CriterionResponseMessage Post(Criterion criterion)
         {
-            return new HttpResponseMessage();
+            if (cRep.isDuplicate(criterion.Name, criterion.Issue1.Id)) return CriterionResponseMessage.DuplicateEntry;
+            else
+            {
+                cRep.AddCriterion(criterion);
+                if (cRep.isDuplicate(criterion.Name, criterion.Issue1.Id)) return CriterionResponseMessage.AddSuccessfull;
+                else return CriterionResponseMessage.DuplicateEntry;
+                
+            }
         }
         
         /// <summary>
@@ -60,7 +69,7 @@ namespace CDDSS_API.Controllers
         /// <param name="name"></param>
         /// <param name="IssueID"></param>
         /// <returns></returns>
-        public Criterion Edit(int ID, String name, int IssueID)
+        public Criterion Update(int ID, String name, int IssueID)
         {
             return new Criterion();
         }
