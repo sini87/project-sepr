@@ -3,6 +3,7 @@ using CDDSS_API.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Net;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,28 +16,64 @@ namespace Client
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                RestClient.Instance.EndPoint = "api/Issue";
+               
+                RestClient.Instance.EndPoint = "api/IssuesFromUser";
                 RestClient.Instance.Method = HttpVerb.GET;
-                //RestClient.Instance.GetType = "";
                 var json = RestClient.Instance.MakeRequest();
                 List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
 
-                //TODO
+
+                TableRow row;
+                TableCell tId;
+                TableCell tTitle;
+                TableCell tTags;
+                TableCell tStatus;
+
+                if (user != null)
+                {
+                    foreach (IssueModel element in user)
+                    {
+
+                        row = new TableRow();
+
+                        tId = new TableCell();
+                        tId.Text = "" + element.Id;
+                        row.Cells.Add(tId);
+
+                        tTitle = new TableCell();
+                        tTitle.Text = element.Title;
+                        row.Cells.Add(tTitle);
+
+                        tTags = new TableCell();
+                        foreach (TagModel tagElement in element.Tags)
+                        {
+                            tTags.Text += tagElement.Name + ";";
+                        }
+                        tTags.Text = tTags.Text.Substring(0, tTags.Text.Length - 1);
+                        row.Cells.Add(tTags);
+
+                        tStatus = new TableCell();
+                        tStatus.Text = element.Status;
+                        row.Cells.Add(tStatus);
+
+                        IssueTable.Rows.Add(row);
+                    }
+
+                    IssueTable.Visible = true;
+                }
+                else { 
+                    
+                    text.Text = "No Issues existing";
+                    text.Visible = true;
             }
-            else
-            {
-                //ListBox.Visible = false;
             }
         }
+
+
 
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
         {
             e.Authenticated = true;
-        }
-
-        protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

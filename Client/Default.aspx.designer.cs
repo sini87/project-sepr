@@ -13,6 +13,24 @@ namespace Client {
     public partial class _Default {
         
         /// <summary>
+        /// text control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox text;
+        
+        /// <summary>
+        /// IssueTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table IssueTable;
+        
+        /// <summary>
         /// landingpage_button control.
         /// </summary>
         /// <remarks>
