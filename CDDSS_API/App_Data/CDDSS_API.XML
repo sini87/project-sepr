@@ -504,7 +504,7 @@
             <param name="criterion"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.Edit(System.Int32,System.String,System.Int32)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.Update(System.Int32,System.String,System.Int32)">
             <summary>
             BRAINSTORMING
             Edit a specific Criterion

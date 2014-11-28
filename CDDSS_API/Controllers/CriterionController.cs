@@ -32,6 +32,7 @@ namespace CDDSS_API.Controllers
             return cRep.GetCriterion(id);
         }
 
+
         /// <summary>
         /// Returns all Criterions of one issue by issueID
         /// </summary>
