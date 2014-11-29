@@ -1,4 +1,5 @@
-﻿using CDDSS_API.Models.Domain;
+﻿using CDDSS_API.Models;
+using CDDSS_API.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,6 @@ namespace CDDSS_API.Repository
         internal Criterion GetCriterion(int id)
         {
             Criterion criterion = new Criterion();
-            criterion = null;
             var query = from Criterion in ctx.Criterion
                         where
                           Criterion.Id == id
@@ -75,24 +75,27 @@ namespace CDDSS_API.Repository
         /// <param name="name"></param>
         /// <param name="issueId"></param>
         /// <returns></returns>
-        internal bool isDuplicate(Criterion criterion)
+        internal bool isDuplicate(CriterionModel criterion)
         {
+            int i = 0;
             var query = from Criterion in ctx.Criterion
                         where
-                          Criterion.Id == criterion.Id &&
-                          Criterion.Issue == Criterion.Issue
+                          Criterion.Description == criterion.Description &&
+                          Criterion.Issue == criterion.Issue
                         select new
                         {
                             Name = Criterion.Name,
                             Issue = Criterion.Issue,
                             Weight = Criterion.Weight
                         };
-            if (query!=null) return true;
+            foreach (var c in query) i++;
+            if (i > 0) return true;
             else return false;
         }
 
-        internal void AddCriterion(Criterion criterion)
+        internal void AddCriterion(CriterionModel criterion)
         {
+            Criterion criterionLinq = new Criterion();
             var query = from Criterion in
                             (from Criterion in ctx.Criterion
                              select new
@@ -109,7 +112,14 @@ namespace CDDSS_API.Repository
             {
                 criterion.Id = c.Column1.Value;
             }
-            ctx.Criterion.InsertOnSubmit(criterion);
+
+            criterionLinq.Id = criterion.Id;
+            criterionLinq.Name = criterion.Name;
+            criterionLinq.Description = criterion.Description;
+            criterionLinq.Weight = criterion.Weight;
+            criterionLinq.Issue = criterion.Issue;
+            //criterionLinq.Issue1 = criterion.Issue1;
+            ctx.Criterion.InsertOnSubmit(criterionLinq);
             ctx.SubmitChanges();
         }
     }//EndClass

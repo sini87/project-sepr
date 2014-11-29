@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CDDSS_API.Repository;
+using CDDSS_API.Models;
 
 namespace CDDSS_API.Controllers
 {
@@ -47,9 +48,10 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        public CriterionPostResponseMessage Post(Criterion criterion)
+        public CriterionPostResponseMessage Post(CriterionModel criterion)
         {
-            if (cRep.isDuplicate(criterion)) return CriterionPostResponseMessage.DuplicateEntry;
+            if (cRep.isDuplicate(criterion))
+                return CriterionPostResponseMessage.DuplicateEntry;
             else
             {
                 cRep.AddCriterion(criterion);
