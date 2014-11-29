@@ -661,6 +661,12 @@
             <param name="issueId"></param>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Repository.CriterionRepository.AddCriterion(CDDSS_API.Models.CriterionModel)">
+            <summary>
+            Adds new Criterion
+            </summary>
+            <param name="criterion"></param>
+        </member>
         <member name="T:CDDSS_API.Repository.DocumentRepository">
             <summary>
             Used for Operations with table document
