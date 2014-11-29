@@ -494,7 +494,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.Post(CDDSS_API.Models.Domain.Criterion)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.Post(CDDSS_API.Models.CriterionModel)">
             <summary>
             BRAINSTORMING
             Adds new Criterion
@@ -653,7 +653,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Repository.CriterionRepository.isDuplicate(CDDSS_API.Models.Domain.Criterion)">
+        <member name="M:CDDSS_API.Repository.CriterionRepository.isDuplicate(CDDSS_API.Models.CriterionModel)">
             <summary>
             returns true if Criterion is duplicated, else return false
             </summary>
