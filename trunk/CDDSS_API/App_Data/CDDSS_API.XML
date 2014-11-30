@@ -481,6 +481,34 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:CDDSS_API.Controllers.AlternativeController.Get(System.Int32)">
+            <summary>
+            returns all alternatives of an issue
+            </summary>
+            <param name="issueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.AlternativeController.Create(CDDSS_API.Models.AlternativeModel)">
+            <summary>
+            creates a new alternative
+            </summary>
+            <param name="altModel">Alternative Model</param>
+            <returns>HTTP OK if successfully created, else HTTP not acceptable</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.AlternativeController.Update(CDDSS_API.Models.AlternativeModel)">
+            <summary>
+            updates an alternative
+            </summary>
+            <param name="altModel">Alternative Model</param>
+            <returns>HTTP OK if successfully updated, else HTTP not acceptable</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.AlternativeController.Delete(System.Int32)">
+            <summary>
+            deletes an alternative
+            </summary>
+            <param name="alternativeId">integer id of the alternative</param>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.CriterionController.Get(System.Int32)">
             <summary>
             Returns a Criterion by Id

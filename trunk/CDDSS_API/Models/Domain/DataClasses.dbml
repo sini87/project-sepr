@@ -55,6 +55,7 @@
       <Association Name="Issue_Issue_artefact" Member="Issue_artefacts" ThisKey="Id" OtherKey="Issue" Type="Issue_artefact" />
       <Association Name="Issue_Issue_stakeholder" Member="Issue_stakeholders" ThisKey="Id" OtherKey="Issue" Type="Issue_stakeholder" />
       <Association Name="Issue_InfluenceFactor" Member="InfluenceFactors" ThisKey="Id" OtherKey="Issue" Type="InfluenceFactor" />
+      <Association Name="Issue_Alternative" Member="Alternatives" ThisKey="Id" OtherKey="Issue" Type="Alternative" />
       <Association Name="Issue_Issue" Member="Issue1" ThisKey="RelatedTo" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -129,6 +130,17 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
       <Association Name="Stakeholder_Issue_stakeholder" Member="Issue_stakeholders" ThisKey="Id" OtherKey="Stakeholder" Type="Issue_stakeholder" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Alternative" Member="Alternatives">
+    <Type Name="Alternative">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Reason" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Rating" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Issue_Alternative" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>

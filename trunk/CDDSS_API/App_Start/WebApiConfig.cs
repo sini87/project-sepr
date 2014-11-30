@@ -30,6 +30,13 @@ namespace CDDSS_API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Controllers with Actions
+            // To handle routes like `/api/VTRouting/route`
+            //config.Routes.MapHttpRoute(
+            //    name: "ControllerAndAction",
+            //    routeTemplate: "api/{controller}/{action}"
+            //);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="issue"></param>
         /// <returns>TODO - response code</returns>
+        [Route("api/Issue/Create")]
         public string Create(IssueModel issue)
         {
             issueRep.CreateIssue(issue, RequestContext.Principal.Identity.Name);
@@ -62,7 +63,7 @@ namespace CDDSS_API.Controllers
         /// returns a list of issues with title
         /// </summary>
         /// <returns></returns>
-        [Route("api/IssuesFromUser")]
+        [Route("api/Issue/OfUser")]
         public List<IssueModel> GETIssuesByUser()
         {
             return issueRep.GetUserIssues(RequestContext.Principal.Identity.Name);

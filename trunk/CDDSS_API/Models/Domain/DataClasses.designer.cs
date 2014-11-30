@@ -69,6 +69,9 @@ namespace CDDSS_API.Models.Domain
     partial void InsertStakeholder(Stakeholder instance);
     partial void UpdateStakeholder(Stakeholder instance);
     partial void DeleteStakeholder(Stakeholder instance);
+    partial void InsertAlternative(Alternative instance);
+    partial void UpdateAlternative(Alternative instance);
+    partial void DeleteAlternative(Alternative instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -202,6 +205,14 @@ namespace CDDSS_API.Models.Domain
 			get
 			{
 				return this.GetTable<Stakeholder>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Alternative> Alternatives
+		{
+			get
+			{
+				return this.GetTable<Alternative>();
 			}
 		}
 	}
@@ -1039,6 +1050,8 @@ namespace CDDSS_API.Models.Domain
 		
 		private EntitySet<InfluenceFactor> _InfluenceFactors;
 		
+		private EntitySet<Alternative> _Alternatives;
+		
 		private EntityRef<Issue> _Issue1;
 		
     #region Extensibility Method Definitions
@@ -1071,6 +1084,7 @@ namespace CDDSS_API.Models.Domain
 			this._Issue_artefacts = new EntitySet<Issue_artefact>(new Action<Issue_artefact>(this.attach_Issue_artefacts), new Action<Issue_artefact>(this.detach_Issue_artefacts));
 			this._Issue_stakeholders = new EntitySet<Issue_stakeholder>(new Action<Issue_stakeholder>(this.attach_Issue_stakeholders), new Action<Issue_stakeholder>(this.detach_Issue_stakeholders));
 			this._InfluenceFactors = new EntitySet<InfluenceFactor>(new Action<InfluenceFactor>(this.attach_InfluenceFactors), new Action<InfluenceFactor>(this.detach_InfluenceFactors));
+			this._Alternatives = new EntitySet<Alternative>(new Action<Alternative>(this.attach_Alternatives), new Action<Alternative>(this.detach_Alternatives));
 			this._Issue1 = default(EntityRef<Issue>);
 			OnCreated();
 		}
@@ -1323,6 +1337,19 @@ namespace CDDSS_API.Models.Domain
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Alternative", Storage="_Alternatives", ThisKey="Id", OtherKey="Issue")]
+		public EntitySet<Alternative> Alternatives
+		{
+			get
+			{
+				return this._Alternatives;
+			}
+			set
+			{
+				this._Alternatives.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Issue", Storage="_Issue1", ThisKey="RelatedTo", OtherKey="Id", IsForeignKey=true)]
 		public Issue Issue1
 		{
@@ -1468,6 +1495,18 @@ namespace CDDSS_API.Models.Domain
 		}
 		
 		private void detach_InfluenceFactors(InfluenceFactor entity)
+		{
+			this.SendPropertyChanging();
+			entity.Issue1 = null;
+		}
+		
+		private void attach_Alternatives(Alternative entity)
+		{
+			this.SendPropertyChanging();
+			entity.Issue1 = this;
+		}
+		
+		private void detach_Alternatives(Alternative entity)
 		{
 			this.SendPropertyChanging();
 			entity.Issue1 = null;
@@ -2866,6 +2905,229 @@ namespace CDDSS_API.Models.Domain
 		{
 			this.SendPropertyChanging();
 			entity.Stakeholder1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Alternative")]
+	public partial class Alternative : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _Issue;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private string _Reason;
+		
+		private System.Nullable<double> _Rating;
+		
+		private EntityRef<Issue> _Issue1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnIssueChanging(int value);
+    partial void OnIssueChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnReasonChanging(string value);
+    partial void OnReasonChanged();
+    partial void OnRatingChanging(System.Nullable<double> value);
+    partial void OnRatingChanged();
+    #endregion
+		
+		public Alternative()
+		{
+			this._Issue1 = default(EntityRef<Issue>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issue", DbType="Int NOT NULL")]
+		public int Issue
+		{
+			get
+			{
+				return this._Issue;
+			}
+			set
+			{
+				if ((this._Issue != value))
+				{
+					if (this._Issue1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIssueChanging(value);
+					this.SendPropertyChanging();
+					this._Issue = value;
+					this.SendPropertyChanged("Issue");
+					this.OnIssueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(150)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reason", DbType="VarChar(100)")]
+		public string Reason
+		{
+			get
+			{
+				return this._Reason;
+			}
+			set
+			{
+				if ((this._Reason != value))
+				{
+					this.OnReasonChanging(value);
+					this.SendPropertyChanging();
+					this._Reason = value;
+					this.SendPropertyChanged("Reason");
+					this.OnReasonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rating", DbType="Float")]
+		public System.Nullable<double> Rating
+		{
+			get
+			{
+				return this._Rating;
+			}
+			set
+			{
+				if ((this._Rating != value))
+				{
+					this.OnRatingChanging(value);
+					this.SendPropertyChanging();
+					this._Rating = value;
+					this.SendPropertyChanged("Rating");
+					this.OnRatingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Alternative", Storage="_Issue1", ThisKey="Issue", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Issue Issue1
+		{
+			get
+			{
+				return this._Issue1.Entity;
+			}
+			set
+			{
+				Issue previousValue = this._Issue1.Entity;
+				if (((previousValue != value) 
+							|| (this._Issue1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Issue1.Entity = null;
+						previousValue.Alternatives.Remove(this);
+					}
+					this._Issue1.Entity = value;
+					if ((value != null))
+					{
+						value.Alternatives.Add(this);
+						this._Issue = value.Id;
+					}
+					else
+					{
+						this._Issue = default(int);
+					}
+					this.SendPropertyChanged("Issue1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
