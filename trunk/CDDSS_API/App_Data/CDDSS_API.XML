@@ -530,10 +530,10 @@
             <param name="criterion"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.Update(System.Int32,System.String,System.Int32)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.Put(CDDSS_API.Models.Domain.Criterion)">
             <summary>
             BRAINSTORMING
-            Edit a specific Criterion
+            Updates a specific Criterion
             </summary>
             <param name="ID"></param>
             <param name="name"></param>
@@ -694,6 +694,21 @@
             Adds new Criterion
             </summary>
             <param name="criterion"></param>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionRepository.UpdateCriterion(CDDSS_API.Models.Domain.Criterion)">
+            <summary>
+            Updates a Criterion
+            </summary>
+            <param name="criterion"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionRepository.DeleteCriterion(System.Int32,System.String)">
+            <summary>
+            Deletes a Criterion
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <returns></returns>
         </member>
         <member name="T:CDDSS_API.Repository.DocumentRepository">
             <summary>
