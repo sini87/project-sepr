@@ -47,7 +47,7 @@
             <div class="float-left">
                 <p class="site-title">
                     <a runat="server" href="~/">
-                        <img src="images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
+                        <img src="../images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
                     </a>
                 </p>
             </div>
