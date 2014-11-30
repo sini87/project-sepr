@@ -146,6 +146,12 @@
       <DependentUpon>aspnet-Client-20141119124736.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cddss.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\minified\bootstrap-theme.css" />
     <Content Include="Content\themes\base\minified\bootstrap-theme.min.css" />
     <Content Include="Content\themes\base\minified\bootstrap.css" />
@@ -208,7 +214,11 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\accent.png" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="Images\bg.jpg" />
     <Content Include="Images\bullet.png" />
+    <None Include="Images\cddss_logo.png" />
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
@@ -376,6 +386,11 @@
     <Compile Include="MyAccount\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RestClient.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -399,7 +414,12 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />
