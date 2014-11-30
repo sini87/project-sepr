@@ -63,15 +63,17 @@ namespace CDDSS_API.Controllers
         
         /// <summary>
         /// BRAINSTORMING
-        /// Edit a specific Criterion
+        /// Updates a specific Criterion
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="name"></param>
         /// <param name="IssueID"></param>
         /// <returns></returns>
-        public Criterion Update(int ID, String name, int IssueID)
+        public HttpResponseMessage Put(Criterion criterion)
         {
-            return new Criterion();
+           if (cRep.UpdateCriterion(criterion))
+                return Request.CreateResponse(HttpStatusCode.OK, "Criterion updated!");
+            else return Request.CreateResponse(HttpStatusCode.NotModified, "Criterion couldn't get updated!");
         }
 
         /// <summary>
@@ -82,7 +84,9 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public HttpResponseMessage Delete(int id, String name)
         {
-            return new HttpResponseMessage(); 
+            if (cRep.DeleteCriterion(id, name))
+                return Request.CreateResponse(HttpStatusCode.OK, "Criterion deleted!");
+            else return Request.CreateResponse(HttpStatusCode.NotModified, "Criterion not deleted!");
         }
         
     }

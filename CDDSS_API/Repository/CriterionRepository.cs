@@ -116,5 +116,56 @@ namespace CDDSS_API.Repository
             ctx.Criterion.InsertOnSubmit(criterionLinq);
             ctx.SubmitChanges();
         }
+
+        /// <summary>
+        /// Updates a Criterion
+        /// </summary>
+        /// <param name="criterion"></param>
+        /// <returns></returns>
+        internal Boolean UpdateCriterion(Criterion criterion)
+        {
+            IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
+                                            where
+                                              Criterion.Id == criterion.Id
+                                            select Criterion;
+            IEnumerable<Issue> query2 = from Issues in ctx.Issues
+                                        where
+                                          Issues.Id == criterion.Id
+                                        select Issues;
+            if (query1.Count() > 0 && query2.Count() >0)
+            {
+                query1.First().Name = criterion.Name;
+                query1.First().Description = criterion.Description;
+                query1.First().Issue = criterion.Issue;
+                query1.First().Issue1 = query2.First();
+                query1.First().Weight=criterion.Weight;
+                ctx.SubmitChanges();
+                return true;
+            }
+            else return false;
+        }
+
+        /// <summary>
+        /// Deletes a Criterion
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Boolean DeleteCriterion(int id, String name)
+        {
+            Criterion criterion = new Criterion();
+            IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
+                                            where
+                                              Criterion.Id == id &&
+                                              Criterion.Name == name
+                                            select Criterion;
+            if (query1.Count() > 0)
+            {
+                ctx.Criterion.DeleteOnSubmit(query1.First());
+                ctx.SubmitChanges();
+                return true;
+            }
+            else return false;
+        }
     }//EndClass
 }
