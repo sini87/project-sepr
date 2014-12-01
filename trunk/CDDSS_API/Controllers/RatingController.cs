@@ -61,9 +61,10 @@ namespace CDDSS_API.Controllers
         /// <param name="alternativeId"></param>
         /// <param name="criterionId"></param>
         /// <returns></returns>
-        public HttpResponseMessage Put(int alternativeId, int criterionId)
+        public HttpResponseMessage Put(RatingModel rating)
         {
-            return null; //TODO
+            if (rRep.UpdateRating(rating)) return Request.CreateResponse(HttpStatusCode.OK, "Rating updated!");
+            else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT updated!");
         }
 
         /// <summary>
@@ -72,9 +73,10 @@ namespace CDDSS_API.Controllers
         /// <param name="alternativeId"></param>
         /// <param name="criterionId"></param>
         /// <returns></returns>
-        public HttpResponseMessage Delete(int alternativeId, int criterionId)
+        public HttpResponseMessage Delete(int criterionid, int alternativeid)
         {
-            return null; //TODO
+            if(rRep.DeleteRating(criterionid, alternativeid)) return Request.CreateResponse(HttpStatusCode.OK, "Rating deleted!"); 
+            else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT deleted!");
         }
     }
 }

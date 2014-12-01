@@ -159,11 +159,23 @@ namespace CDDSS_API.Repository
             {
                 ctx.Criterion.DeleteOnSubmit(query1.First());
                 ctx.SubmitChanges();
-                return true;
+                query1 = from Criterion in ctx.Criterion
+                                            where
+                                              Criterion.Id == id &&
+                                              Criterion.Name == name
+                                              select Criterion;
+                if (query1.Count() == 0) return true;
+                else return false;
             }
             else return false;
         }
 
+        /// <summary>
+        /// Sets Criterionweight
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="weight"></param>
+        /// <returns></returns>
         public Boolean SetCriterionWeight(int id, Double weight)
         {
             IEnumerable<Criterion> query = from Criterion in ctx.Criterion

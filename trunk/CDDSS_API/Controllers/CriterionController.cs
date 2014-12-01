@@ -49,7 +49,6 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// BRAINSTORMING
         /// Adds new Criterion
         /// </summary>
         /// <param name="criterion"></param>
@@ -68,7 +67,6 @@ namespace CDDSS_API.Controllers
         }
         
         /// <summary>
-        /// BRAINSTORMING
         /// Updates a specific Criterion
         /// </summary>
         /// <param name="ID"></param>
