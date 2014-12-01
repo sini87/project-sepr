@@ -524,7 +524,6 @@
         </member>
         <member name="M:CDDSS_API.Controllers.CriterionController.Post(CDDSS_API.Models.CriterionModel)">
             <summary>
-            BRAINSTORMING
             Adds new Criterion
             </summary>
             <param name="criterion"></param>
@@ -532,7 +531,6 @@
         </member>
         <member name="M:CDDSS_API.Controllers.CriterionController.Put(CDDSS_API.Models.CriterionModel)">
             <summary>
-            BRAINSTORMING
             Updates a specific Criterion
             </summary>
             <param name="ID"></param>
@@ -663,7 +661,7 @@
             <param name="rating"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.RatingController.Put(System.Int32,System.Int32)">
+        <member name="M:CDDSS_API.Controllers.RatingController.Put(CDDSS_API.Models.RatingModel)">
             <summary>
             Updates a Rating
             </summary>
@@ -755,6 +753,14 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Repository.CriterionRepository.SetCriterionWeight(System.Int32,System.Double)">
+            <summary>
+            Sets Criterionweight
+            </summary>
+            <param name="id"></param>
+            <param name="weight"></param>
+            <returns></returns>
+        </member>
         <member name="T:CDDSS_API.Repository.DocumentRepository">
             <summary>
             Used for Operations with table document
@@ -811,6 +817,21 @@
             Inserts a Rating
             </summary>
             <param name="ratingModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.UpdateRating(CDDSS_API.Models.RatingModel)">
+            <summary>
+            Updates Rating
+            </summary>
+            <param name="rating"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.DeleteRating(System.Int32,System.Int32)">
+            <summary>
+            Deletes a Rating
+            </summary>
+            <param name="criterionid"></param>
+            <param name="alternativeid"></param>
             <returns></returns>
         </member>
         <member name="T:CDDSS_API.Repository.UserRepository">

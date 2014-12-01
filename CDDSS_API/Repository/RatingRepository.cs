@@ -73,5 +73,60 @@ namespace CDDSS_API.Repository
             ctx.SubmitChanges();
             return true;
         }
+
+        /// <summary>
+        /// Updates Rating
+        /// </summary>
+        /// <param name="rating"></param>
+        /// <returns></returns>
+        internal Boolean UpdateRating(RatingModel rating)
+        {
+            IEnumerable<Rating> query = from Rating in ctx.Rating
+                                        where Rating.Criterion==rating.CriterionID&&
+                                              Rating.Alternative==rating.AlternativeID
+                                        select Rating;
+            query.First().Criterion = rating.CriterionID;
+            query.First().Alternative = rating.AlternativeID;
+            IEnumerable<User> query1 = from Users in ctx.Users
+                                      where Users.Email == rating.User
+                                      select Users;
+            rating.User = query1.First().Id;
+            query.First().Rating1 = rating.Rating1;
+            ctx.SubmitChanges();
+            IEnumerable<Rating> query2 = from Rating in ctx.Rating
+                                        where Rating.Criterion==rating.CriterionID&&
+                                              Rating.Alternative==rating.AlternativeID&&
+                                              Rating.User==rating.User&&
+                                              Rating.Rating1==rating.Rating1
+                                        select Rating;
+            if (query2.Count() > 0) return true;
+            else return false;
+        }
+
+        /// <summary>
+        /// Deletes a Rating
+        /// </summary>
+        /// <param name="criterionid"></param>
+        /// <param name="alternativeid"></param>
+        /// <returns></returns>
+        internal Boolean DeleteRating(int criterionid, int alternativeid)
+        {
+            IEnumerable<Rating> query = from Rating in ctx.Rating
+                                        where Rating.Criterion == criterionid &&
+                                              Rating.Alternative == alternativeid
+                                        select Rating;
+            if (query.Count() > 0)
+            {
+                ctx.Rating.DeleteOnSubmit(query.First());
+                ctx.SubmitChanges();
+                query = from Rating in ctx.Rating
+                                            where Rating.Criterion == criterionid &&
+                                                  Rating.Alternative == alternativeid
+                                            select Rating;
+                if (query.Count() == 0) return true;
+                else return false;       
+            }
+            else return false;
+        }
     }
 }
