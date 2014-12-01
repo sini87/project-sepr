@@ -14,7 +14,7 @@ namespace CDDSS_API.Controllers
     /// <summary>
     /// </summary>
     [EnableCors("http://localhost:51853", "*", "*")]
-   // [Authorize]
+    [Authorize]
     public class IssueController : ApiController
     {
         IssueRepository issueRep;
