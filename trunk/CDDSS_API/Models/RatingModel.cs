@@ -17,12 +17,6 @@ namespace CDDSS_API.Models
         internal string User { get; set; }
         [DataMember]
         internal Double Rating1 { get; set; }
-        [DataMember]
-        internal AlternativeModel Alternative1 { get; set; }
-        [DataMember]
-        internal CriterionModel Criterion { get; set; }
-        [DataMember]
-        internal UserShort User1 { get; set; }
 
         internal RatingModel()
         {
@@ -30,20 +24,14 @@ namespace CDDSS_API.Models
             AlternativeID = -1;
             User = "";
             Rating1 = 0.0;
-            Alternative1 = new AlternativeModel();
-            Criterion = new CriterionModel();
-            User1 = new UserShort();
         }
 
-        internal RatingModel(int criterionID, int alternativeID, String user, Double rating, AlternativeModel alternative, CriterionModel criterion, UserShort user1)
+        internal RatingModel(int criterionID, int alternativeID, String user, Double rating)
         {
             CriterionID = criterionID;
             AlternativeID = alternativeID;
             User = user;
             Rating1 = rating;
-            Alternative1 = Alternative1;
-            Criterion = criterion;
-            User1 = user1;
         }
     }
 }

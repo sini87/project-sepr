@@ -17,7 +17,6 @@ namespace CDDSS_API.Controllers
         public RatingController()
         {
             rRep = new RatingRepository();
-            cRep = new CriterionRepository();
         }
 
         /// <summary>
@@ -29,7 +28,6 @@ namespace CDDSS_API.Controllers
         public RatingModel getRating(int criterionId, int alternativeId)
         {
             RatingModel rating = rRep.getRating(criterionId, alternativeId);
-            rating.Criterion = cRep.GetCriterion(criterionId);
             return rating;
         }
 

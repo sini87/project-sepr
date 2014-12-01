@@ -18,7 +18,6 @@ namespace CDDSS_API.Repository
         internal CriterionModel GetCriterion(int id)
         {
             CriterionModel criterion = new CriterionModel();
-            IssueRepository iRep = new IssueRepository();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                         where
                                           Criterion.Id == id
@@ -28,8 +27,15 @@ namespace CDDSS_API.Repository
             criterion.Name = query1.First().Name;
             criterion.Description = query1.First().Description;
             criterion.Issue = query1.First().Issue;
-            criterion.Issue1 = iRep.GetIssueDetailed(criterion.Issue);
             criterion.Weight = (Double)query1.First().Weight;
+            IEnumerable<Rating> query2 = from Rating in ctx.Rating
+                                            where
+                                              Rating.Criterion == id
+                                            select Rating;
+            foreach (var r in query2)
+            {
+                criterion.Ratings.Add(new RatingModel(r.Criterion, r.Alternative, r.User, r.Rating1));
+            }
             return criterion;
         }//EndGetCriterion(id)
 
@@ -40,29 +46,11 @@ namespace CDDSS_API.Repository
         internal List<CriterionModel> getAllCriterias()
         {
             List<CriterionModel> criterionList = new List<CriterionModel>();
-            IssueRepository iRep = new IssueRepository();
             var query = from Criterion in ctx.Criterion
-                        select new
-                        {
-                            Id = Criterion.Id,
-                            Name = Criterion.Name,
-                            Description = Criterion.Description,
-                            Issue = Criterion.Issue,
-                            Weight = Criterion.Weight
-                        };
+                        select Criterion;
             foreach (var c in query)
             {
-                CriterionModel criterionListItem = new CriterionModel();
-                criterionListItem.Id = c.Id;
-                criterionListItem.Name = c.Name;
-                criterionListItem.Description = c.Description;
-                criterionListItem.Issue = c.Issue;
-                criterionListItem.Weight = (Double)c.Weight;
-                foreach (var cl in criterionList)
-                {
-                    cl.Issue1 = iRep.GetIssueDetailed(cl.Issue);
-                }
-                criterionList.Add(criterionListItem);
+               criterionList.Add(GetCriterion(c.Id));
             }
             return criterionList;
         }
