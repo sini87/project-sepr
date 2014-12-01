@@ -151,6 +151,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cddss.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\minified\bootstrap-theme.css" />
     <Content Include="Content\themes\base\minified\bootstrap-theme.min.css" />
@@ -217,9 +218,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Images\bg.jpg" />
+    <None Include="Images\bg_dark.jpg" />
     <Content Include="Images\bullet.png" />
     <None Include="Images\cddss_logo.png" />
     <Content Include="Images\heroAccent.png" />
+    <None Include="Images\login_bg.png" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
     <Content Include="Images\orderedList2.png" />
@@ -246,6 +249,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Login.Master" />
     <None Include="Properties\PublishProfiles\AWSCLient.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="MyAccount\Register.aspx" />
@@ -348,6 +352,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.Master.cs">
+      <DependentUpon>Login.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.Master.designer.cs">
+      <DependentUpon>Login.Master</DependentUpon>
     </Compile>
     <Compile Include="Model\DataClasses.designer.cs">
       <DependentUpon>DataClasses.dbml</DependentUpon>

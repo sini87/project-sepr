@@ -1,5 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Client.Login" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Login.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Client.Login" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <webopt:BundleReference runat="server" Path="~/Login/css" /> 
 </asp:Content>
 <asp:Content ID="Content2" runat="server" contentplaceholderid="MainContent">
     <asp:Login ID="Login1" runat="server" OnAuthenticate="Login1_Authenticate">
@@ -9,29 +10,33 @@
                     <td>
                         <table cellpadding="0">
                             <tr>
-                                <td align="center" colspan="2">Log In</td>
-                            </tr>
-                            <tr>
-                                <td align="right">
-                                    <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">Email:</asp:Label>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                <td align="center" id="td_icon" colspan="2">
+                                    <a runat="server" href="~/">
+                                        <img src="../images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
+                                    </a>
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">
-                                    <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>
+                                <td align="center"colspan="2">
+                                    <img src="../images/login_bg.png" id="login_bg" alt="login background" />
                                 </td>
-                                <td>
-                                    <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                            </tr>
+                            <tr>
+                                <td align="center" class="td_bold" colspan="2">Get your issue solved in a<br />collaborative way.</td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <asp:TextBox ID="UserName" runat="server" ToolTip="Your Email Address" placeholder="Your Email Address" OnTextChanged="UserName_TextChanged"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <asp:TextBox ID="Password" runat="server" TextMode="Password" ToolTip="Your Password" placeholder="Your Password"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <asp:CheckBox ID="RememberMe" runat="server" Text="Remember me next time." />
+                                    <asp:CheckBox ID="RememberMe" runat="server" Text="Remember me." />
                                 </td>
                             </tr>
                             <tr>
@@ -40,8 +45,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right" colspan="2">
-                                    <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1" />
+                                <td align="center" colspan="2">
+                                    <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="LOG IN" ValidationGroup="Login1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" id="td_link" colspan="2">
+                                    <a id="noaccount" runat="server" href="~/MyAccount/Register">No account yet?</a>
                                 </td>
                             </tr>
                         </table>

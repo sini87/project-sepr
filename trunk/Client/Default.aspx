@@ -2,6 +2,8 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
+    <div class="container">
+        <div class="helper">
     <div id="landingpage_content">
         <div id="landingpage_text_big">
             COLLABORATIVE DESIGN DECISION

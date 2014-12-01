@@ -10,9 +10,15 @@
 
 body {
     border-top:none !important;
-    background-image: url("../Images/bg.jpg");
-    background-size: 100% auto;
-    background-repeat: no-repeat; 
+    background-color:transparent;
+}
+
+html { 
+  background: url("../Images/bg.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #body {
@@ -37,13 +43,13 @@ footer {
     background-color:transparent !important;
 	display:inline-block;
 	cursor:pointer;
-	color:#FFFFFF;
+	color:#FFFFFF !important;
 	padding:9px 38px !important;
 	text-decoration:none;
 }
 
 #LoginView1_loginLink:hover {
-    color: #009688;
+    color: #009688 !important;
 }
 
 #LoginView1_registerLink {
@@ -58,14 +64,14 @@ footer {
 	border:4px solid #009688;
 	display:inline-block;
 	cursor:pointer;
-	color:#009688;
+	color:#009688 !important;
 	padding:9px 38px !important;
 	text-decoration:none;
 }
 
 #LoginView1_registerLink:hover {
     background-color:#009688 !important;
-	color:#FFFFFF;
+	color:#FFFFFF !important;
 }
 
 #logo_cddss {
@@ -112,4 +118,27 @@ footer {
 #MainContent_landingpage_button:hover {
     background-color:#00796B !important;
     border:4px solid #00796B;
+}
+
+/********************
+*   Mobile Styles   *
+********************/
+@media only screen and (max-width: 850px) {
+
+#landingpage_text_big {
+    font-size: 2em;
+}
+
+#landingpage_text_small {
+    font-size: 1.25em;
+}
+
+#MainContent_landingpage_button {
+    font-size: 1em;
+    padding:9px 19px !important;
+
+    margin-top:10px;
+}
+
+
 }
