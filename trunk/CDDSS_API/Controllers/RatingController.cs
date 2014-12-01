@@ -12,10 +12,12 @@ namespace CDDSS_API.Controllers
     public class RatingController : ApiController
     {
         RatingRepository rRep;
+        CriterionRepository cRep;
 
         public RatingController()
         {
             rRep = new RatingRepository();
+            cRep = new CriterionRepository();
         }
 
         /// <summary>
@@ -26,7 +28,9 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public RatingModel getRating(int criterionId, int alternativeId)
         {
-            return null;
+            RatingModel rating = rRep.getRating(criterionId, alternativeId);
+            rating.Criterion = cRep.GetCriterion(criterionId);
+            return rating;
         }
 
         /// <summary>
@@ -35,7 +39,7 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public List<RatingModel> getAllRatings()
         {
-            return null;
+            return rRep.getAllRatings();
         }
 
         /// <summary>
@@ -45,7 +49,12 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public HttpResponseMessage Post(RatingModel rating)
         {
-            return null;
+            if (rRep.AddRating(rating))
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Rating created!");
+            }
+            else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT created!");
+
         }
 
         /// <summary>
@@ -56,7 +65,7 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public HttpResponseMessage Put(int alternativeId, int criterionId)
         {
-            return null;
+            return null; //TODO
         }
 
         /// <summary>
@@ -67,7 +76,7 @@ namespace CDDSS_API.Controllers
         /// <returns></returns>
         public HttpResponseMessage Delete(int alternativeId, int criterionId)
         {
-            return null;
+            return null; //TODO
         }
     }
 }
