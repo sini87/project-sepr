@@ -20,6 +20,7 @@
       <Column Name="SecretQuestion" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
       <Column Name="Answer" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
       <Association Name="User_Rating" Member="Rating" ThisKey="Id" OtherKey="User" Type="Rating" />
+      <Association Name="User_CriterionWeight" Member="CriterionWeights" ThisKey="Id" OtherKey="User" Type="CriterionWeight" />
       <Association Name="AccessObject_User" Member="AccessObject1" ThisKey="AccessObject" OtherKey="Id" Type="AccessObject" IsForeignKey="true" />
     </Type>
   </Table>
@@ -76,6 +77,7 @@
       <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Association Name="Criterion_Rating" Member="Rating" ThisKey="Id" OtherKey="Criterion" Type="Rating" />
+      <Association Name="Criterion_CriterionWeight" Member="CriterionWeights" ThisKey="Id" OtherKey="Criterion" Type="CriterionWeight" />
       <Association Name="Issue_Criterion" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -155,6 +157,15 @@
       <Association Name="Alternative_Rating" Member="Alternative1" ThisKey="Alternative" OtherKey="Id" Type="Alternative" IsForeignKey="true" />
       <Association Name="Criterion_Rating" Member="Criterion1" ThisKey="Criterion" OtherKey="Id" Type="Criterion" IsForeignKey="true" />
       <Association Name="User_Rating" Member="User1" ThisKey="User" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CriterionWeight" Member="CriterionWeights">
+    <Type Name="CriterionWeight">
+      <Column Name="[User]" Member="User" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Criterion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Criterion_CriterionWeight" Member="Criterion1" ThisKey="Criterion" OtherKey="Id" Type="Criterion" IsForeignKey="true" />
+      <Association Name="User_CriterionWeight" Member="User1" ThisKey="User" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

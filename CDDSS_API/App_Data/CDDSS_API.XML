@@ -554,6 +554,34 @@
             <param name="weight"></param>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.CriterionWeightController.AddCriterionWeights(System.Collections.Generic.List{CDDSS_API.Models.CriterionWeightModel})">
+            <summary>
+            Adds criterion weights to a group of criteria of the logged in user
+            </summary>
+            <param name="list">group of criterion weights, user and accessobject must not be set</param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.CriterionWeightController.GetCriterionWeightsForIssue(System.Int32)">
+            <summary>
+            Returns all criterion weights of an issue
+            </summary>
+            <param name="issueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.CriterionWeightController.EditCriterionWeights(System.Collections.Generic.List{CDDSS_API.Models.CriterionWeightModel})">
+            <summary>
+            updates criterion wieghts of the current logged user
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.CriterionWeightController.DeleteCriterionWeights(System.Int32)">
+            <summary>
+            deletes criterion weights for issue of logged in user
+            </summary>
+            <param name="issueId"></param>
+            <returns></returns>
+        </member>
         <member name="T:CDDSS_API.Controllers.DocumentController">
             <summary>
             controller used for document operations
@@ -710,6 +738,34 @@
             <param name="secretQuestion"></param>
             <param name="answer"></param>
             <returns>returns HTTP Status Code OK if operation was successful, else HTTP Status Cude NOT Acceptable</returns>
+        </member>
+        <member name="M:CDDSS_API.Models.CriterionWeightModel.#ctor(System.Int32,System.Int32,System.Double)">
+            <summary>
+            Creates a new CriterionWeightModel
+            </summary>
+            <param name="userId">Access Object ID of User</param>
+            <param name="criterion">Criterion ID</param>
+            <param name="weight"></param>
+        </member>
+        <member name="M:CDDSS_API.Models.CriterionWeightModel.#ctor(System.String,System.Int32,System.Double)">
+            <summary>
+            Creates a new CriterionWeightModel
+            </summary>
+            <param name="user">Access Object ID of User</param>
+            <param name="criterion">Criterion ID</param>
+            <param name="weight"></param>
+        </member>
+        <member name="M:CDDSS_API.Models.CriterionWeightModel.#ctor(System.Int32,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="criterion">criterion id</param>
+            <param name="weight"></param>
+        </member>
+        <member name="P:CDDSS_API.Models.CriterionWeightModel.UserAccesObject">
+            <summary>
+            Access Object ID of User
+            </summary>
         </member>
         <member name="M:CDDSS_API.Repository.CriterionRepository.GetCriterion(System.Int32)">
             <summary>

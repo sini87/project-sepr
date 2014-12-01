@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlternativeController.cs" />
     <Compile Include="Controllers\CriterionController.cs" />
+    <Compile Include="Controllers\CriterionWeightController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Models\AlternativeModel.cs" />
     <Compile Include="Models\ArtefactModel.cs" />
     <Compile Include="Models\CriterionModel.cs" />
+    <Compile Include="Models\CriterionWeightModel.cs" />
     <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Models\Domain\DataClasses.designer.cs">
       <AutoGen>True</AutoGen>
@@ -257,6 +259,7 @@
     <Compile Include="Repository\AlternativeRepository.cs" />
     <Compile Include="Repository\ArtefactsRepository.cs" />
     <Compile Include="Repository\CriterionRepository.cs" />
+    <Compile Include="Repository\CriterionWeightRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\IssueRepository.cs" />
     <Compile Include="Repository\RatingRepository.cs" />
