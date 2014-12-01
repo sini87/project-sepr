@@ -34,5 +34,16 @@ namespace CDDSS_API.Models
             Criterion = new CriterionModel();
             User1 = new UserShort();
         }
+
+        internal RatingModel(int criterionID, int alternativeID, String user, Double rating, AlternativeModel alternative, CriterionModel criterion, UserShort user1)
+        {
+            CriterionID = criterionID;
+            AlternativeID = alternativeID;
+            User = user;
+            Rating1 = rating;
+            Alternative1 = Alternative1;
+            Criterion = criterion;
+            User1 = user1;
+        }
     }
 }

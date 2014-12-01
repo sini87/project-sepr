@@ -34,7 +34,6 @@ namespace CDDSS_API.Controllers
         {
             CriterionModel criterion = new CriterionModel();
             criterion = cRep.GetCriterion(id);
-            criterion.Issue1 = iRep.GetIssueDetailed(criterion.Issue);
             return criterion;
         }
 
@@ -46,9 +45,6 @@ namespace CDDSS_API.Controllers
         {
             List<CriterionModel> criterionList = new List<CriterionModel>();
             criterionList = cRep.getAllCriterias();
-            foreach(var cl in criterionList){
-                cl.Issue1 = iRep.GetIssueDetailed(cl.Issue);
-            }
             return criterionList;
         }
 

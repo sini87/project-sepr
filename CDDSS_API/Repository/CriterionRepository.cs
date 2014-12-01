@@ -18,6 +18,7 @@ namespace CDDSS_API.Repository
         internal CriterionModel GetCriterion(int id)
         {
             CriterionModel criterion = new CriterionModel();
+            IssueRepository iRep = new IssueRepository();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                         where
                                           Criterion.Id == id
@@ -27,6 +28,7 @@ namespace CDDSS_API.Repository
             criterion.Name = query1.First().Name;
             criterion.Description = query1.First().Description;
             criterion.Issue = query1.First().Issue;
+            criterion.Issue1 = iRep.GetIssueDetailed(criterion.Issue);
             criterion.Weight = (Double)query1.First().Weight;
             return criterion;
         }//EndGetCriterion(id)
@@ -38,6 +40,7 @@ namespace CDDSS_API.Repository
         internal List<CriterionModel> getAllCriterias()
         {
             List<CriterionModel> criterionList = new List<CriterionModel>();
+            IssueRepository iRep = new IssueRepository();
             var query = from Criterion in ctx.Criterion
                         select new
                         {
@@ -55,6 +58,10 @@ namespace CDDSS_API.Repository
                 criterionListItem.Description = c.Description;
                 criterionListItem.Issue = c.Issue;
                 criterionListItem.Weight = (Double)c.Weight;
+                foreach (var cl in criterionList)
+                {
+                    cl.Issue1 = iRep.GetIssueDetailed(cl.Issue);
+                }
                 criterionList.Add(criterionListItem);
             }
             return criterionList;
@@ -113,11 +120,7 @@ namespace CDDSS_API.Repository
             criterionLinq.Weight = criterion.Weight;
             criterionLinq.Issue = criterion.Issue;
             
-            IEnumerable<Issue> query1 = from Issues in ctx.Issues
-                        where
-                          Issues.Id == criterion.Id
-                        select Issues;
-            criterionLinq.Issue1 = query1.First();
+            //TODO CREATE RATING
             ctx.Criterion.InsertOnSubmit(criterionLinq);
             ctx.SubmitChanges();
         }
