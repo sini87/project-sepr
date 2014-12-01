@@ -792,6 +792,27 @@
             <param name="filename">filename</param>
             <returns>stream of the file</returns>
         </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.getRating(System.Int32,System.Int32)">
+            <summary>
+            Returns a specific Rating
+            </summary>
+            <param name="criterionId"></param>
+            <param name="alternativeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.getAllRatings">
+            <summary>
+            Returns all Ratings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.AddRating(CDDSS_API.Models.RatingModel)">
+            <summary>
+            Inserts a Rating
+            </summary>
+            <param name="ratingModel"></param>
+            <returns></returns>
+        </member>
         <member name="T:CDDSS_API.Repository.UserRepository">
             <summary>
             makes db operations on table user
