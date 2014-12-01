@@ -1,0 +1,144 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Maven+Pro);
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+/* colors
+    $green='#009688';
+    $darkgreen='#00796B';
+*/
+
+/* main stuff */
+
+body {
+    border-top:none !important;
+    background-color:transparent;
+}
+
+html { 
+  background: url("../Images/bg.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#body {
+    background-color:transparent !important;
+}
+
+footer {
+    background-color:#00796B !important;
+    height: 36px !important;
+    color:#FFFFFF;
+    font-size: 1.2em;
+    padding-top:6px;
+}
+
+/* login/signup navbar */
+
+#LoginView1_loginLink {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    
+    background-color:transparent !important;
+	display:inline-block;
+	cursor:pointer;
+	color:#FFFFFF !important;
+	padding:9px 38px !important;
+	text-decoration:none;
+}
+
+#LoginView1_loginLink:hover {
+    color: #009688 !important;
+}
+
+#LoginView1_registerLink {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    
+    background-color:transparent !important;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:12px;
+	border:4px solid #009688;
+	display:inline-block;
+	cursor:pointer;
+	color:#009688 !important;
+	padding:9px 38px !important;
+	text-decoration:none;
+}
+
+#LoginView1_registerLink:hover {
+    background-color:#009688 !important;
+	color:#FFFFFF !important;
+}
+
+#logo_cddss {
+    width:100px;
+}
+
+/* landingpage */
+
+#landingpage_content {
+    margin-top:10%;
+    margin-bottom:10%;
+}
+
+#landingpage_text_big {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 4em;
+    color:#FFFFFF;
+}
+
+#landingpage_text_small {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5em;
+    color:#FFFFFF;
+}
+
+#MainContent_landingpage_button {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 2em;
+    
+    background-color:#009688 !important;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:12px;
+	border:4px solid #009688;
+	display:inline-block;
+	cursor:pointer;
+	color:#FFFFFF;
+	padding:9px 38px !important;
+	text-decoration:none;
+
+    margin-top:10px;
+}
+
+#MainContent_landingpage_button:hover {
+    background-color:#00796B !important;
+    border:4px solid #00796B;
+}
+
+/********************
+*   Mobile Styles   *
+********************/
+@media only screen and (max-width: 850px) {
+
+#landingpage_text_big {
+    font-size: 2em;
+}
+
+#landingpage_text_small {
+    font-size: 1.25em;
+}
+
+#MainContent_landingpage_button {
+    font-size: 1em;
+    padding:9px 19px !important;
+
+    margin-top:10px;
+}
+
+
+}
