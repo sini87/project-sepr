@@ -15,14 +15,19 @@ namespace CDDSS_API.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        internal Criterion GetCriterion(int id)
+        internal CriterionModel GetCriterion(int id)
         {
-            Criterion criterion = new Criterion();
+            CriterionModel criterion = new CriterionModel();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                         where
                                           Criterion.Id == id
                                         select Criterion;
-            criterion = query1.First();
+
+            criterion.Id = query1.First().Id;
+            criterion.Name = query1.First().Name;
+            criterion.Description = query1.First().Description;
+            criterion.Issue = query1.First().Issue;
+            criterion.Weight = (Double)query1.First().Weight;
             return criterion;
         }//EndGetCriterion(id)
 
@@ -30,9 +35,9 @@ namespace CDDSS_API.Repository
         /// Returns all Criterias
         /// </summary>
         /// <returns></returns>
-        internal List<Criterion> getAllCriterias()
+        internal List<CriterionModel> getAllCriterias()
         {
-            List<Criterion> criterionList = new List<Criterion>();
+            List<CriterionModel> criterionList = new List<CriterionModel>();
             var query = from Criterion in ctx.Criterion
                         select new
                         {
@@ -44,12 +49,12 @@ namespace CDDSS_API.Repository
                         };
             foreach (var c in query)
             {
-                Criterion criterionListItem = new Criterion();
+                CriterionModel criterionListItem = new CriterionModel();
                 criterionListItem.Id = c.Id;
                 criterionListItem.Name = c.Name;
                 criterionListItem.Description = c.Description;
                 criterionListItem.Issue = c.Issue;
-                criterionListItem.Weight = c.Weight;
+                criterionListItem.Weight = (Double)c.Weight;
                 criterionList.Add(criterionListItem);
             }
             return criterionList;
@@ -122,7 +127,7 @@ namespace CDDSS_API.Repository
         /// </summary>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        internal Boolean UpdateCriterion(Criterion criterion)
+        internal Boolean UpdateCriterion(CriterionModel criterion)
         {
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                             where
@@ -162,6 +167,21 @@ namespace CDDSS_API.Repository
             if (query1.Count() > 0)
             {
                 ctx.Criterion.DeleteOnSubmit(query1.First());
+                ctx.SubmitChanges();
+                return true;
+            }
+            else return false;
+        }
+
+        public Boolean SetCriterionWeight(int id, Double weight)
+        {
+            IEnumerable<Criterion> query = from Criterion in ctx.Criterion
+                        where
+                          Criterion.Weight == Criterion.Weight
+                        select Criterion;
+            if (query.Count() > 0)
+            {
+                query.First().Weight = weight;
                 ctx.SubmitChanges();
                 return true;
             }

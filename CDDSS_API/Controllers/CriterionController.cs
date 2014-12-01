@@ -17,10 +17,12 @@ namespace CDDSS_API.Controllers
     public class CriterionController : ApiController
     {
         private CriterionRepository cRep;
+        private IssueRepository iRep;
 
         public CriterionController()
         {
             cRep = new CriterionRepository();
+            iRep = new IssueRepository();
         }
 
         /// <summary>
@@ -28,18 +30,26 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Criterion Get(int id)
+        public CriterionModel Get(int id)
         {
-            return cRep.GetCriterion(id);
+            CriterionModel criterion = new CriterionModel();
+            criterion = cRep.GetCriterion(id);
+            criterion.Issue1 = iRep.GetIssueDetailed(criterion.Issue);
+            return criterion;
         }
 
         /// <summary>
         /// Returns all Criterias of CDDSS
         /// </summary>
         /// <returns></returns>
-        public List<Criterion> GetAllCriterias()
+        public List<CriterionModel> GetAllCriterias()
         {
-            return cRep.getAllCriterias();
+            List<CriterionModel> criterionList = new List<CriterionModel>();
+            criterionList = cRep.getAllCriterias();
+            foreach(var cl in criterionList){
+                cl.Issue1 = iRep.GetIssueDetailed(cl.Issue);
+            }
+            return criterionList;
         }
 
         /// <summary>
@@ -48,16 +58,16 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        public CriterionPostResponseMessage Post(CriterionModel criterion)
+        public HttpResponseMessage Post(CriterionModel criterion)
         {
             if (cRep.isDuplicate(criterion))
-                return CriterionPostResponseMessage.DuplicateEntry;
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Duplicate Entry!");
             else
             {
                 cRep.AddCriterion(criterion);
-                if (cRep.isDuplicate(criterion)) return CriterionPostResponseMessage.AddSuccessfull;
-                else return CriterionPostResponseMessage.DuplicateEntry;
-                
+                if (cRep.isDuplicate(criterion)) return Request.CreateResponse(HttpStatusCode.OK, "Criterion added!");
+                else return Request.CreateResponse(HttpStatusCode.NotAcceptable, "Duplicate Entry!");
+
             }
         }
         
@@ -69,7 +79,7 @@ namespace CDDSS_API.Controllers
         /// <param name="name"></param>
         /// <param name="IssueID"></param>
         /// <returns></returns>
-        public HttpResponseMessage Put(Criterion criterion)
+        public HttpResponseMessage Put(CriterionModel criterion)
         {
            if (cRep.UpdateCriterion(criterion))
                 return Request.CreateResponse(HttpStatusCode.OK, "Criterion updated!");
@@ -87,6 +97,21 @@ namespace CDDSS_API.Controllers
             if (cRep.DeleteCriterion(id, name))
                 return Request.CreateResponse(HttpStatusCode.OK, "Criterion deleted!");
             else return Request.CreateResponse(HttpStatusCode.NotModified, "Criterion not deleted!");
+        }
+
+        /// <summary>
+        /// Sets Criterion Weight
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="weight"></param>
+        /// <returns></returns>
+        public HttpResponseMessage SetCriterionWeight(int id, int weight)
+        {
+            if (cRep.SetCriterionWeight(id, weight))
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Criterionweight updatet!");
+            }
+            else return Request.CreateResponse(HttpStatusCode.NotModified, "Criterionweight not updatet!");
         }
         
     }

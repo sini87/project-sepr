@@ -22,6 +22,8 @@ namespace CDDSS_API.Models
         public Double Weight { get; set; }
         [DataMember]
         public IssueModel Issue1 { get; set; }
+        [DataMember]
+        public List<Rating> Ratings { get; set; }
 
         public CriterionModel()
         {
@@ -30,6 +32,7 @@ namespace CDDSS_API.Models
             Issue = -1;
             Weight = -1;
             Issue1 = new IssueModel();
+            Ratings = new List<Rating>();
         }
     }
 

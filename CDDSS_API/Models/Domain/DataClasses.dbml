@@ -19,6 +19,7 @@
       <Column Name="LastName" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
       <Column Name="SecretQuestion" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
       <Column Name="Answer" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Association Name="User_Rating" Member="Rating" ThisKey="Id" OtherKey="User" Type="Rating" />
       <Association Name="AccessObject_User" Member="AccessObject1" ThisKey="AccessObject" OtherKey="Id" Type="AccessObject" IsForeignKey="true" />
     </Type>
   </Table>
@@ -74,6 +75,7 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Criterion_Rating" Member="Rating" ThisKey="Id" OtherKey="Criterion" Type="Rating" />
       <Association Name="Issue_Criterion" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -140,7 +142,19 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
       <Column Name="Reason" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Rating" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Alternative_Rating" Member="Rating1" ThisKey="Id" OtherKey="Alternative" Type="Rating" />
       <Association Name="Issue_Alternative" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rating" Member="Rating">
+    <Type Name="Rating">
+      <Column Name="Criterion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Alternative" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[User]" Member="User" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Rating" Member="Rating1" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Alternative_Rating" Member="Alternative1" ThisKey="Alternative" OtherKey="Id" Type="Alternative" IsForeignKey="true" />
+      <Association Name="Criterion_Rating" Member="Criterion1" ThisKey="Criterion" OtherKey="Id" Type="Criterion" IsForeignKey="true" />
+      <Association Name="User_Rating" Member="User1" ThisKey="User" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
