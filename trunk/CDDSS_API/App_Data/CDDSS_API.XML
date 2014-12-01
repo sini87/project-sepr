@@ -530,7 +530,7 @@
             <param name="criterion"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.Put(CDDSS_API.Models.Domain.Criterion)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.Put(CDDSS_API.Models.CriterionModel)">
             <summary>
             BRAINSTORMING
             Updates a specific Criterion
@@ -546,6 +546,14 @@
             </summary>
             <param name="id"></param>
             <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.CriterionController.SetCriterionWeight(System.Int32,System.Int32)">
+            <summary>
+            Sets Criterion Weight
+            </summary>
+            <param name="id"></param>
+            <param name="weight"></param>
             <returns></returns>
         </member>
         <member name="T:CDDSS_API.Controllers.DocumentController">
@@ -634,6 +642,43 @@
             <param name="issueId"></param>
             <returns>OK if accomplished, else NotAcceptable</returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.getRating(System.Int32,System.Int32)">
+            <summary>
+            Returns a specific Rating
+            </summary>
+            <param name="criterionId"></param>
+            <param name="alternativeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.getAllRatings">
+            <summary>
+            Returns all Ratings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.Post(CDDSS_API.Models.RatingModel)">
+            <summary>
+            Inserts new Rating
+            </summary>
+            <param name="rating"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.Put(System.Int32,System.Int32)">
+            <summary>
+            Updates a Rating
+            </summary>
+            <param name="alternativeId"></param>
+            <param name="criterionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.Delete(System.Int32,System.Int32)">
+            <summary>
+            Deletes a Rating
+            </summary>
+            <param name="alternativeId"></param>
+            <param name="criterionId"></param>
+            <returns></returns>
+        </member>
         <member name="T:CDDSS_API.Controllers.UserController">
             <summary>
             ApiController User
@@ -695,7 +740,7 @@
             </summary>
             <param name="criterion"></param>
         </member>
-        <member name="M:CDDSS_API.Repository.CriterionRepository.UpdateCriterion(CDDSS_API.Models.Domain.Criterion)">
+        <member name="M:CDDSS_API.Repository.CriterionRepository.UpdateCriterion(CDDSS_API.Models.CriterionModel)">
             <summary>
             Updates a Criterion
             </summary>

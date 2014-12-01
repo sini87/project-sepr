@@ -223,6 +223,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,6 +249,7 @@
     <Compile Include="Models\Domain\InfluenceFactorModel.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\IssueShort.cs" />
+    <Compile Include="Models\RatingModel.cs" />
     <Compile Include="Models\StakeholderModel.cs" />
     <Compile Include="Models\TagModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -257,6 +259,7 @@
     <Compile Include="Repository\CriterionRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\IssueRepository.cs" />
+    <Compile Include="Repository\RatingRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\StakeholdersRepository.cs" />
     <Compile Include="Repository\TagsRepository.cs" />
