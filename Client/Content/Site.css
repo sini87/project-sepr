@@ -28,7 +28,7 @@ a {
     }
 
     a:hover {
-        background-color: #c7d1d6;
+        /*background-color: #c7d1d6;*/
     }
 
 header, footer, hgroup,
@@ -401,7 +401,7 @@ fieldset {
     }
 
     input, textarea {
-        border: 1px solid #e2e2e2;
+        border: 2px solid #b9b9b9;
         background: #fff;
         color: #333;
         font-size: 1.2em;
@@ -416,7 +416,7 @@ fieldset {
     }
     
         input:focus, textarea:focus {
-            border: 1px solid #7ac0da;
+            border: 2px solid #FFE082;
         }
 
         input[type="checkbox"] {
@@ -505,7 +505,7 @@ input[type="checkbox"].input-validation-error {
 table {
     border-collapse: collapse;
     border-spacing: 0;
-    margin-top: 0.75em;
+    /*margin-top: 0.75em;*/
     border: 0 none;
 }
 
@@ -691,7 +691,7 @@ tr.pager td {
 
     /* forms */
     input {
-        width: 90%;
+        width: 100%;
     }
 
     

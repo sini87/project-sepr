@@ -32,5 +32,10 @@ namespace Client
                 e.Authenticated = true;
             }
         }
+
+        protected void UserName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
