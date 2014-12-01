@@ -17,6 +17,8 @@ namespace CDDSS_API.Models
         internal string User { get; set; }
         [DataMember]
         internal Double Rating1 { get; set; }
+        //[DataMember]
+        //internal int UserID { get; set; }
 
         internal RatingModel()
         {
@@ -24,6 +26,7 @@ namespace CDDSS_API.Models
             AlternativeID = -1;
             User = "";
             Rating1 = 0.0;
+          //  UserID = -1;
         }
 
         internal RatingModel(int criterionID, int alternativeID, String user, Double rating)
@@ -32,6 +35,7 @@ namespace CDDSS_API.Models
             AlternativeID = alternativeID;
             User = user;
             Rating1 = rating;
+         //   UserID = userID;
         }
     }
 }

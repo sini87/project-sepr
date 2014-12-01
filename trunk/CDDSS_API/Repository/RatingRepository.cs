@@ -64,7 +64,10 @@ namespace CDDSS_API.Repository
             Rating rating = new Rating();
             rating.Alternative = ratingModel.AlternativeID;
             rating.Criterion = ratingModel.CriterionID;
-            rating.User = ratingModel.User;
+            IEnumerable<User> query = from Users in ctx.Users
+                                      where Users.Email==ratingModel.User
+                                        select Users;
+            rating.User = query.First().Id;
             rating.Rating1 = ratingModel.Rating1;
             ctx.Rating.InsertOnSubmit(rating);
             ctx.SubmitChanges();
