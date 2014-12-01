@@ -73,7 +73,6 @@ namespace CDDSS_API.Repository
                 alt.Issue = altModel.Issue;
                 alt.Description = altModel.Description;
                 alt.Reason = altModel.Reason;
-
                 ctx.Alternatives.InsertOnSubmit(alt);
                 ctx.SubmitChanges();
                 return true;
@@ -95,7 +94,6 @@ namespace CDDSS_API.Repository
                 alt.Name = altModel.Name;
                 alt.Reason = altModel.Reason;
                 alt.Description = altModel.Description;
-
                 ctx.SubmitChanges();
                 return true;
             }
