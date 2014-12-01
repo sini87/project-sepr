@@ -9,7 +9,7 @@ namespace CDDSS_API.Models
     public class DBConnection
     {
         private static DBConnection instance;
-        private string connStr = "Data Source=54.93.179.79;Initial Catalog=cddss;Persist Security Info=True;User ID=cddss;Password=passme";
+        private string connStr = "Data Source=54.93.154.67;Initial Catalog=cddss;Persist Security Info=True;User ID=cddss;Password=passme";
         private SqlConnection conn;
 
         private DBConnection()
