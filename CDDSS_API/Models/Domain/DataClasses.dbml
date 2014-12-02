@@ -21,6 +21,7 @@
       <Column Name="Answer" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
       <Association Name="User_Rating" Member="Rating" ThisKey="Id" OtherKey="User" Type="Rating" />
       <Association Name="User_CriterionWeight" Member="CriterionWeights" ThisKey="Id" OtherKey="User" Type="CriterionWeight" />
+      <Association Name="User_Review" Member="Reviews" ThisKey="Id" OtherKey="User" Type="Review" />
       <Association Name="AccessObject_User" Member="AccessObject1" ThisKey="AccessObject" OtherKey="Id" Type="AccessObject" IsForeignKey="true" />
     </Type>
   </Table>
@@ -58,6 +59,7 @@
       <Association Name="Issue_Issue_stakeholder" Member="Issue_stakeholders" ThisKey="Id" OtherKey="Issue" Type="Issue_stakeholder" />
       <Association Name="Issue_InfluenceFactor" Member="InfluenceFactors" ThisKey="Id" OtherKey="Issue" Type="InfluenceFactor" />
       <Association Name="Issue_Alternative" Member="Alternatives" ThisKey="Id" OtherKey="Issue" Type="Alternative" />
+      <Association Name="Issue_Review" Member="Reviews" ThisKey="Id" OtherKey="Issue" Type="Review" />
       <Association Name="Issue_Issue" Member="Issue1" ThisKey="RelatedTo" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -166,6 +168,17 @@
       <Column Name="Weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Association Name="Criterion_CriterionWeight" Member="Criterion1" ThisKey="Criterion" OtherKey="Id" Type="Criterion" IsForeignKey="true" />
       <Association Name="User_CriterionWeight" Member="User1" ThisKey="User" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Review" Member="Reviews">
+    <Type Name="Review">
+      <Column Name="Issue" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[User]" Member="User" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Rating" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Explanation" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Document" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Issue_Review" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_Review" Member="User1" ThisKey="User" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
