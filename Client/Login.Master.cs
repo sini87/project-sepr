@@ -72,7 +72,10 @@ namespace Client
                 LoginName control = (LoginName)LoginView1.FindControl("LoginName");
                 if (control != null)
                 {
-                    control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+                    if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
+                    {
+                        control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+                    }
                 }
             }
         }

@@ -67,10 +67,16 @@ namespace Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoginName control = (LoginName)LoginView1.FindControl("LoginName");
-            if (control != null)
+            if (LoginView1 != null)
             {
-                control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+                LoginName control = (LoginName)LoginView1.FindControl("LoginName");
+                if (control != null)
+                {
+                    if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
+                    {
+                        control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+                    }
+                }
             }
         }
 
