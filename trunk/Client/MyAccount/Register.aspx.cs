@@ -16,9 +16,10 @@ namespace Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            CreateUserWizard.Answer = "hallo";
-            CreateUserWizard.Email = "hallo";
-            CreateUserWizard.Question = "hallo";
+            //CreateUserWizard.Answer = "hallo";
+            //CreateUserWizard.Email = "hallo";
+            //CreateUserWizard.Question = "hallo";
+            CreateUserWizard.CreateUserButtonText = "SIGN UP";
         }
 
         protected void ActiveStepChanged(object sender, EventArgs e)
@@ -43,12 +44,13 @@ namespace Client
 
         protected void CreatingUser(object sender, LoginCancelEventArgs e)
         {
-            CreateUserWizard.Email = CreateUserWizard.UserName.Split('@')[0];
+            //CreateUserWizard.Email = CreateUserWizard.UserName.Split('@')[0];
+            CreateUserWizard.UserName = CreateUserWizard.Email.Split('@')[0];
             RestClient client = RestClient.Instance;
             client.EndPoint = "api/account/Register";
             client.Method = HttpVerb.POST;
             m = new CDDSS_API.Models.RegisterBindingModel();
-            m.Email = CreateUserWizard.UserName;
+            m.Email = CreateUserWizard.Email;
             m.Password = CreateUserWizard.Password;
             m.ConfirmPassword = CreateUserWizard.ConfirmPassword;
             client.PostData = Newtonsoft.Json.JsonConvert.SerializeObject(m);
@@ -82,5 +84,11 @@ namespace Client
             registering = false;
             Server.Transfer("~/Default.aspx");
         }
+
+        protected void Email_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

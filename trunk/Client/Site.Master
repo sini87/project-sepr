@@ -56,7 +56,7 @@
                     <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
-                                <li><a id="loginLink" runat="server" href="~/MyAccount/Login" class="test" contextmenu="aaa">LOGIN</a></li>
+                                <li><a id="loginLink" runat="server" href="~/MyAccount/Login">LOGIN</a></li>
                                 <li><a id="registerLink" runat="server" href="~/MyAccount/Register">SIGN UP</a></li>
                             </ul>
                         </AnonymousTemplate>
