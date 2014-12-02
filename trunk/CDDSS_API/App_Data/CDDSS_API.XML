@@ -705,6 +705,36 @@
             <param name="criterionId"></param>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.ReviewController.AddReview(CDDSS_API.Models.ReviewModel)">
+            <summary>
+            adds a new review to the issue of the logged user
+            ReviewModel: Fields Issue and Rating are required Explanation is optional, other fields are not processed
+            </summary>
+            <param name="reviewModel"></param>
+            <returns>OK if added</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.ReviewController.GetReviewsFOfIssue(System.Int32)">
+            <summary>
+            returns all reviews of an issue
+            </summary>
+            <param name="issueId">issue id</param>
+            <returns>List of reviews</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.ReviewController.EditReview(CDDSS_API.Models.ReviewModel)">
+            <summary>
+            edits a review of the issue
+            ReviewModel: Fields Issue and Rating are required Explanation is optional, other fields are not processed
+            </summary>
+            <param name="reviewModel"></param>
+            <returns>OK if edited</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.ReviewController.DeleteReview(System.Int32)">
+            <summary>
+            Deletes an review for an issue of logged user
+            </summary>
+            <param name="issueId">issue id</param>
+            <returns>OK if deleted</returns>
+        </member>
         <member name="T:CDDSS_API.Controllers.UserController">
             <summary>
             ApiController User

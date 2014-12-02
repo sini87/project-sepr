@@ -78,6 +78,9 @@ namespace CDDSS_API.Models.Domain
     partial void InsertCriterionWeight(CriterionWeight instance);
     partial void UpdateCriterionWeight(CriterionWeight instance);
     partial void DeleteCriterionWeight(CriterionWeight instance);
+    partial void InsertReview(Review instance);
+    partial void UpdateReview(Review instance);
+    partial void DeleteReview(Review instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -237,6 +240,14 @@ namespace CDDSS_API.Models.Domain
 				return this.GetTable<CriterionWeight>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Review> Reviews
+		{
+			get
+			{
+				return this.GetTable<Review>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[User]")]
@@ -282,6 +293,8 @@ namespace CDDSS_API.Models.Domain
 		private EntitySet<Rating> _Rating;
 		
 		private EntitySet<CriterionWeight> _CriterionWeights;
+		
+		private EntitySet<Review> _Reviews;
 		
 		private EntityRef<AccessObject> _AccessObject1;
 		
@@ -329,6 +342,7 @@ namespace CDDSS_API.Models.Domain
 		{
 			this._Rating = new EntitySet<Rating>(new Action<Rating>(this.attach_Rating), new Action<Rating>(this.detach_Rating));
 			this._CriterionWeights = new EntitySet<CriterionWeight>(new Action<CriterionWeight>(this.attach_CriterionWeights), new Action<CriterionWeight>(this.detach_CriterionWeights));
+			this._Reviews = new EntitySet<Review>(new Action<Review>(this.attach_Reviews), new Action<Review>(this.detach_Reviews));
 			this._AccessObject1 = default(EntityRef<AccessObject>);
 			OnCreated();
 		}
@@ -703,6 +717,19 @@ namespace CDDSS_API.Models.Domain
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Review", Storage="_Reviews", ThisKey="Id", OtherKey="User")]
+		public EntitySet<Review> Reviews
+		{
+			get
+			{
+				return this._Reviews;
+			}
+			set
+			{
+				this._Reviews.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccessObject_User", Storage="_AccessObject1", ThisKey="AccessObject", OtherKey="Id", IsForeignKey=true)]
 		public AccessObject AccessObject1
 		{
@@ -776,6 +803,18 @@ namespace CDDSS_API.Models.Domain
 		}
 		
 		private void detach_CriterionWeights(CriterionWeight entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = null;
+		}
+		
+		private void attach_Reviews(Review entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = this;
+		}
+		
+		private void detach_Reviews(Review entity)
 		{
 			this.SendPropertyChanging();
 			entity.User1 = null;
@@ -1130,6 +1169,8 @@ namespace CDDSS_API.Models.Domain
 		
 		private EntitySet<Alternative> _Alternatives;
 		
+		private EntitySet<Review> _Reviews;
+		
 		private EntityRef<Issue> _Issue1;
 		
     #region Extensibility Method Definitions
@@ -1163,6 +1204,7 @@ namespace CDDSS_API.Models.Domain
 			this._Issue_stakeholders = new EntitySet<Issue_stakeholder>(new Action<Issue_stakeholder>(this.attach_Issue_stakeholders), new Action<Issue_stakeholder>(this.detach_Issue_stakeholders));
 			this._InfluenceFactors = new EntitySet<InfluenceFactor>(new Action<InfluenceFactor>(this.attach_InfluenceFactors), new Action<InfluenceFactor>(this.detach_InfluenceFactors));
 			this._Alternatives = new EntitySet<Alternative>(new Action<Alternative>(this.attach_Alternatives), new Action<Alternative>(this.detach_Alternatives));
+			this._Reviews = new EntitySet<Review>(new Action<Review>(this.attach_Reviews), new Action<Review>(this.detach_Reviews));
 			this._Issue1 = default(EntityRef<Issue>);
 			OnCreated();
 		}
@@ -1428,6 +1470,19 @@ namespace CDDSS_API.Models.Domain
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Review", Storage="_Reviews", ThisKey="Id", OtherKey="Issue")]
+		public EntitySet<Review> Reviews
+		{
+			get
+			{
+				return this._Reviews;
+			}
+			set
+			{
+				this._Reviews.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Issue", Storage="_Issue1", ThisKey="RelatedTo", OtherKey="Id", IsForeignKey=true)]
 		public Issue Issue1
 		{
@@ -1585,6 +1640,18 @@ namespace CDDSS_API.Models.Domain
 		}
 		
 		private void detach_Alternatives(Alternative entity)
+		{
+			this.SendPropertyChanging();
+			entity.Issue1 = null;
+		}
+		
+		private void attach_Reviews(Review entity)
+		{
+			this.SendPropertyChanging();
+			entity.Issue1 = this;
+		}
+		
+		private void detach_Reviews(Review entity)
 		{
 			this.SendPropertyChanging();
 			entity.Issue1 = null;
@@ -3702,6 +3769,242 @@ namespace CDDSS_API.Models.Domain
 					if ((value != null))
 					{
 						value.CriterionWeights.Add(this);
+						this._User = value.Id;
+					}
+					else
+					{
+						this._User = default(string);
+					}
+					this.SendPropertyChanged("User1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Review")]
+	public partial class Review : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Issue;
+		
+		private string _User;
+		
+		private int _Rating;
+		
+		private string _Explanation;
+		
+		private System.Data.Linq.Binary _Document;
+		
+		private EntityRef<Issue> _Issue1;
+		
+		private EntityRef<User> _User1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIssueChanging(int value);
+    partial void OnIssueChanged();
+    partial void OnUserChanging(string value);
+    partial void OnUserChanged();
+    partial void OnRatingChanging(int value);
+    partial void OnRatingChanged();
+    partial void OnExplanationChanging(string value);
+    partial void OnExplanationChanged();
+    partial void OnDocumentChanging(System.Data.Linq.Binary value);
+    partial void OnDocumentChanged();
+    #endregion
+		
+		public Review()
+		{
+			this._Issue1 = default(EntityRef<Issue>);
+			this._User1 = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issue", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Issue
+		{
+			get
+			{
+				return this._Issue;
+			}
+			set
+			{
+				if ((this._Issue != value))
+				{
+					if (this._Issue1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIssueChanging(value);
+					this.SendPropertyChanging();
+					this._Issue = value;
+					this.SendPropertyChanged("Issue");
+					this.OnIssueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[User]", Storage="_User", DbType="NVarChar(128) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string User
+		{
+			get
+			{
+				return this._User;
+			}
+			set
+			{
+				if ((this._User != value))
+				{
+					this.OnUserChanging(value);
+					this.SendPropertyChanging();
+					this._User = value;
+					this.SendPropertyChanged("User");
+					this.OnUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rating", DbType="Int NOT NULL")]
+		public int Rating
+		{
+			get
+			{
+				return this._Rating;
+			}
+			set
+			{
+				if ((this._Rating != value))
+				{
+					this.OnRatingChanging(value);
+					this.SendPropertyChanging();
+					this._Rating = value;
+					this.SendPropertyChanged("Rating");
+					this.OnRatingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Explanation", DbType="VarChar(MAX)")]
+		public string Explanation
+		{
+			get
+			{
+				return this._Explanation;
+			}
+			set
+			{
+				if ((this._Explanation != value))
+				{
+					this.OnExplanationChanging(value);
+					this.SendPropertyChanging();
+					this._Explanation = value;
+					this.SendPropertyChanged("Explanation");
+					this.OnExplanationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Document", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Document
+		{
+			get
+			{
+				return this._Document;
+			}
+			set
+			{
+				if ((this._Document != value))
+				{
+					this.OnDocumentChanging(value);
+					this.SendPropertyChanging();
+					this._Document = value;
+					this.SendPropertyChanged("Document");
+					this.OnDocumentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Review", Storage="_Issue1", ThisKey="Issue", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Issue Issue1
+		{
+			get
+			{
+				return this._Issue1.Entity;
+			}
+			set
+			{
+				Issue previousValue = this._Issue1.Entity;
+				if (((previousValue != value) 
+							|| (this._Issue1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Issue1.Entity = null;
+						previousValue.Reviews.Remove(this);
+					}
+					this._Issue1.Entity = value;
+					if ((value != null))
+					{
+						value.Reviews.Add(this);
+						this._Issue = value.Id;
+					}
+					else
+					{
+						this._Issue = default(int);
+					}
+					this.SendPropertyChanged("Issue1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Review", Storage="_User1", ThisKey="User", OtherKey="Id", IsForeignKey=true)]
+		public User User1
+		{
+			get
+			{
+				return this._User1.Entity;
+			}
+			set
+			{
+				User previousValue = this._User1.Entity;
+				if (((previousValue != value) 
+							|| (this._User1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User1.Entity = null;
+						previousValue.Reviews.Remove(this);
+					}
+					this._User1.Entity = value;
+					if ((value != null))
+					{
+						value.Reviews.Add(this);
 						this._User = value.Id;
 					}
 					else
