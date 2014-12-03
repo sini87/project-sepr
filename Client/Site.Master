@@ -62,9 +62,11 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <p>
-                                Hello, <a id="A1" runat="server" class="username" href="~/MyAccount/Manage.aspx" title="Manage your account">
-                                <asp:LoginName id="LoginName" runat="Server"  CssClass="username" /></a>!
-                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log out" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut"/>
+                                <a id="A2" runat="server" class="acronym" href="~/MyAccount/Manage.aspx" title="Manage your account">
+                                <asp:Label id="LoginAcronym" runat="Server" /></a>
+                                <a id="A1" runat="server" class="username" href="~/MyAccount/Manage.aspx" title="Manage your account">
+                                <asp:LoginName id="LoginName" runat="Server" CssClass="username" /></a> |
+                                <asp:LoginStatus runat="server" id="logout" LogoutAction="Redirect" LogoutText="Logout" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut"/>
                             </p>
                         </LoggedInTemplate>
                     </asp:LoginView>

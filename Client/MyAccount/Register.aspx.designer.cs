@@ -40,13 +40,22 @@ namespace Client {
         protected global::System.Web.UI.WebControls.WizardStep CreateUserWizard_EditUser;
         
         /// <summary>
-        /// FirstNameLabel control.
+        /// validationSummary control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FirstNameLabel;
+        protected global::System.Web.UI.WebControls.ValidationSummary validationSummary;
+        
+        /// <summary>
+        /// ErrorMessage2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ErrorMessage2;
         
         /// <summary>
         /// FirstName control.
@@ -67,15 +76,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator FirstNameRequired;
         
         /// <summary>
-        /// LastNameLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LastNameLabel;
-        
-        /// <summary>
         /// LastName control.
         /// </summary>
         /// <remarks>
@@ -94,15 +94,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator LastNameRequired;
         
         /// <summary>
-        /// QuestionLabel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label QuestionLabel2;
-        
-        /// <summary>
         /// Question2 control.
         /// </summary>
         /// <remarks>
@@ -119,15 +110,6 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator QuestionRequired2;
-        
-        /// <summary>
-        /// AnswerLabel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label AnswerLabel2;
         
         /// <summary>
         /// Answer2 control.

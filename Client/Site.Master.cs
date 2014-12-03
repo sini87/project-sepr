@@ -74,7 +74,23 @@ namespace Client
                 {
                     if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
                     {
-                        control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+                        control.FormatString = RestClient.Instance.CurrentUser.FirstName;// +" " + RestClient.Instance.CurrentUser.LastName;
+                    }
+                }
+
+                Label acronym = (Label)LoginView1.FindControl("LoginAcronym");
+                if (acronym != null)
+                {
+                    if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
+                    {
+                        if (RestClient.Instance.CurrentUser.FirstName != null && RestClient.Instance.CurrentUser.LastName != null)
+                        {
+                            acronym.Text = RestClient.Instance.CurrentUser.FirstName.Substring(0, 1) + RestClient.Instance.CurrentUser.LastName.Substring(0, 1);
+                        }
+                    }
+                    if (acronym.Text.Equals(""))
+                    {
+                        acronym.Text = "&nbsp;";
                     }
                 }
             }

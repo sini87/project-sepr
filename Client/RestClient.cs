@@ -73,7 +73,7 @@ namespace Client
             client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
             var json = client.MakeRequest();
             Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-            if (dict.ContainsKey("access_token"))
+            if (dict!=null && dict.ContainsKey("access_token"))
             {
                 accessToken = dict["access_token"];
 
