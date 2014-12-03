@@ -100,3 +100,64 @@ td[align=center] {
     background-color:#F2DEDE;
     color:#C34A48;
 }
+
+#MainContent_CreateUserWizard_FirstName {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_LastName {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_Question2 {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_Answer2 {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+#MainContent_CreateUserWizard_StepNavigationTemplateContainerID_StepNextButton {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.5em;
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+    background-color:#009688;
+    border: 0px;
+
+    width:100%;
+}
+
+#MainContent_CreateUserWizard_StepNavigationTemplateContainerID_StepNextButton:hover {
+    background-color:#00796B;
+}
+
+/* go on page width of button */
+table[cellspacing="5"] {
+    width:100%;
+}
+
+#MainContent_CreateUserWizard_CompleteStepContainer_ContinueButton {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.5em;
+    color:#ffffff;
+
+    margin-top:15px;
+    margin-bottom:15px;
+
+    background-color:#009688;
+    border: 0px;
+
+    width:100%;
+}
+
+#MainContent_CreateUserWizard_CompleteStepContainer_ContinueButton:hover {
+    background-color:#00796B;
+}
+
+#MainContent_CreateUserWizard_StepNavigationTemplateContainerID_StepPreviousButton{
+    display:none;
+}
