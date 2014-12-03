@@ -30,5 +30,15 @@ namespace Client
             // Code that runs when an unhandled error occurs
 
         }
+
+        protected void Session_Start(Object sender, EventArgs e)
+        {
+            Session["init"] = 0;
+        }
+
+        public void Session_OnEnd(Object sender, EventArgs e)
+        {
+            RestClient.SessionEnd(Session.SessionID);
+        }
     }
 }

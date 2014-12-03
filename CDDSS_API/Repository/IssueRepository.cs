@@ -86,7 +86,7 @@ namespace CDDSS_API.Repository
             SqlCommand cmd = DBConnection.Instance.Connection.CreateCommand();
             cmd.CommandText = "select iss.Id, iss.Title, iss.[Status], ISNULL(iss.ReviewRating,0) from " +
                 "[Issue] iss, [AccessRight] ar, AccessObject ao, [User] us WHERE ao.Id " + 
-                "= ar.AccessObject and us.AccessObject = ao.id AND us.Email LIKE 'sinisa.zubic@gmx.at' and ar.[Right] = 'O' and iss.Id = ar.Issue";
+                "= ar.AccessObject and us.AccessObject = ao.id AND us.Email LIKE '" + email + "' and ar.[Right] = 'O' and iss.Id = ar.Issue";
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.Connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -110,9 +110,8 @@ namespace CDDSS_API.Repository
                     tag = ctx.Tags.First(x => x.Id == ti.Tag);
                     issueShort.Tags.Add(new TagModel(tag.Id, tag.Name));
                 }
-
                 list.Add(issueShort);
-                reader.NextResult();
+                reader.Read();
             }
 
             DBConnection.Instance.Connection.Close();
@@ -408,6 +407,27 @@ namespace CDDSS_API.Repository
                     ctx.SubmitChanges();
                     return true;
                 }
+            }
+            return false;
+        }
+
+        public bool EditIssue(IssueModel im)
+        {
+            try
+            {
+                Issue i = ctx.Issues.Where(x => x.Id == im.Id).First();
+
+                i.Title = im.Title;
+                i.Description = im.Description;
+                i.RelatedTo = im.RelatedTo;
+                i.RelationType = im.RelationType;
+                ctx.SubmitChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
             return false;
         }

@@ -96,5 +96,24 @@ namespace CDDSS_API.Controllers
             }
             return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
         }
+
+        /// <summary>
+        /// Edits an issue, only title, description, relatedTo and relationType.
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/Issue/Edit")]
+        public HttpResponseMessage Edit(IssueModel issue)
+        {
+            if (issueRep.EditIssue(issue))
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+            }
+        }
     }
 }

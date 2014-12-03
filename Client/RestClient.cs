@@ -1,4 +1,5 @@
 ﻿using CDDSS_API;
+using Client.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,33 +31,38 @@ namespace Client
         public HttpVerb Method { get; set; }
         public string ContentType { get; set; }
         public string PostData { get; set; }
-        private string accessToken;
+        public string accessToken;
         private Dictionary<string, MemoryStream> filesDict;
-        private static RestClient instance;
-        private UserShort currentUser;
+        private RestClient instance;
+        private UserShort user;
+        public string SessionID { get; set; }
+        private static Dictionary<string, RestClient> sessionRCDict = new Dictionary<string, RestClient>();
 
-        public static RestClient Instance
+        public static RestClient GetInstance(string email)
+        {
+            if (!sessionRCDict.ContainsKey(email))
+            {
+                return null;
+            }
+            else
+            {
+                return sessionRCDict[email];
+            }
+
+        }
+
+        public UserShort User
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new RestClient();
-                    instance.EndPoint = "";
-                    instance.Method = HttpVerb.GET;
-                    instance.ContentType = "text/json";
-                    instance.PostData = "";
-                }
-                
-                return instance;
+                return user;
             }
         }
 
-        public UserShort CurrentUser
+        public static void SessionEnd(string sessionID)
         {
-            get
-            {
-                return currentUser;
+            if(sessionRCDict.ContainsKey(sessionID)){
+                sessionRCDict.Remove(sessionID);
             }
         }
 
@@ -65,43 +71,76 @@ namespace Client
             return MakeRequest("");
         }
 
-        public bool Login(string username, string password){
+        public static bool Login(string username, string password, string sessionID)
+        {
 
-            var client = Instance;
+            var client = new RestClient();
+            client.SessionID = sessionID;
             client.EndPoint = "Token";
             client.Method = HttpVerb.POST;
             client.PostData = "userName=" + username + "&password=" + password + "&confirmpassword=&grant_type=password";
             var json = client.MakeRequest();
             Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-            if (dict!=null && dict.ContainsKey("access_token"))
+            if (dict != null && dict.ContainsKey("access_token"))
             {
-                accessToken = dict["access_token"];
+                client.accessToken = dict["access_token"];
 
                 client.EndPoint = "api/User/Current";
                 client.Method = HttpVerb.GET;
                 json = client.MakeRequest();
-                currentUser = JsonConvert.DeserializeObject<UserShort>(json);
+                client.user = JsonConvert.DeserializeObject<UserShort>(json);
+
+                client.instance = client;
+                if (sessionRCDict.ContainsKey(sessionID))
+                {
+                    sessionRCDict[sessionID].Logout();
+                    sessionRCDict.Remove(sessionID);
+                }
+                sessionRCDict.Add(sessionID, client);
+                client.EndPoint = "";
+                client.Method = HttpVerb.GET;
+                client.ContentType = "text/json";
+                client.PostData = "";
                 return true;
             }
             return false;
         }
 
-        public bool LoginOut()
+        public bool Logout()
         {
             if (accessToken != null)
             {
-                var client = Instance;
+                var client = instance;
                 client.EndPoint = "api/Account/Logout";
                 client.Method = HttpVerb.POST;
                 var json = client.MakeRequest();
                 if (json.ToString().Equals("OK"))
                 {
+                    sessionRCDict.Remove(SessionID);
                     accessToken = null;
-                    currentUser = null;
+                    user = null;
                     return true;
                 }
             }
             return false;
+        }
+
+        public static bool Register(CDDSS_API.Models.RegisterBindingModel m){
+            RestClient rc = new RestClient();
+            rc.EndPoint = "api/account/Register";
+            rc.PostData = JsonConvert.SerializeObject(m);
+            rc.Method = HttpVerb.POST;
+            rc.ContentType = "text/json";
+            var json = rc.MakeRequest();
+            if (!json.ToString().Equals("OK"))
+            {
+                DataClassesDataContext ctx = new DataClassesDataContext();
+                User u = new User();
+                u.UserName = m.Email;
+                ctx.Users.InsertOnSubmit(u);
+                return false;
+            }
+            return true;
         }
 
         public string MakeRequest(string parameters)
@@ -169,10 +208,13 @@ namespace Client
             }
             finally
             {
-                instance.EndPoint = "";
-                instance.Method = HttpVerb.GET;
-                instance.ContentType = "text/json";
-                instance.PostData = "";
+                if (instance != null)
+                {
+                    instance.EndPoint = "";
+                    instance.Method = HttpVerb.GET;
+                    instance.ContentType = "text/json";
+                    instance.PostData = "";
+                }
             }
         }
 
@@ -206,9 +248,9 @@ namespace Client
         /// <param name="filename"></param>
         public void UploadFilesToRemoteUrl(int issue)
         {
-            
 
-            string url = Prefix+ "api/Document?issueid=" + issue;
+
+            string url = Prefix + "api/Document?issueid=" + issue;
             long length = 0;
             string boundary = "----------------------------" +
             DateTime.Now.Ticks.ToString("x");
@@ -232,7 +274,7 @@ namespace Client
 
             string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n Content-Type: application/octet-stream\r\n\r\n";
 
-            foreach (KeyValuePair<string,MemoryStream> file in filesDict)
+            foreach (KeyValuePair<string, MemoryStream> file in filesDict)
             {
 
                 //string header = string.Format(headerTemplate, "file" + i, files[i]);
@@ -242,14 +284,14 @@ namespace Client
 
                 memStream.Write(headerbytes, 0, headerbytes.Length);
 
-                
-                
+
+
                 byte[] buffer = new byte[1024];
 
                 memStream.Write(file.Value.ToArray(), 0, file.Value.ToArray().Length);
 
                 memStream.Write(boundarybytes, 0, boundarybytes.Length);
-                
+
             }
 
             filesDict = null;
@@ -274,36 +316,36 @@ namespace Client
             httpWebRequest2 = null;
             webResponse2 = null;
         }
-        
+
 
     } // class
 
-        
-        //sample method how to upload files
-        //public static void RestFileUpload()
-        //{
-        //    try
-        //    {
-        //        var client = RestClient.Instance;
-        //        client.Login("sinisa.zubic@gmx.at", "passme");
-        //        client.Endpoint = @"http://localhost:51853/api/Document";
-        //        client.Method = HttpVerb.POST;
-        //        //var json = client.MakeRequest("?issue=1&filename=test.png");
 
-        //        using (MemoryStream ms = new MemoryStream())
-        //        using (FileStream file = new FileStream(@"C:\test.pdf", FileMode.Open, FileAccess.Read))
-        //        {
-        //            byte[] bytes = new byte[file.Length];
-        //            file.Read(bytes, 0, (int)file.Length);
-        //            ms.Write(bytes, 0, (int)file.Length);
-        //            client.AddFile("test.pdf", ms);
-        //        }
-        //        client.UploadFilesToRemoteUrl(1);
-        //    }
-        //    catch (System.Net.WebException ex)
-        //    {
-        //        System.Console.WriteLine(ex.Message);
-        //    }
-        //}
-    
+    //sample method how to upload files
+    //public static void RestFileUpload()
+    //{
+    //    try
+    //    {
+    //        var client = RestClient.Instance;
+    //        client.Login("sinisa.zubic@gmx.at", "passme");
+    //        client.Endpoint = @"http://localhost:51853/api/Document";
+    //        client.Method = HttpVerb.POST;
+    //        //var json = client.MakeRequest("?issue=1&filename=test.png");
+
+    //        using (MemoryStream ms = new MemoryStream())
+    //        using (FileStream file = new FileStream(@"C:\test.pdf", FileMode.Open, FileAccess.Read))
+    //        {
+    //            byte[] bytes = new byte[file.Length];
+    //            file.Read(bytes, 0, (int)file.Length);
+    //            ms.Write(bytes, 0, (int)file.Length);
+    //            client.AddFile("test.pdf", ms);
+    //        }
+    //        client.UploadFilesToRemoteUrl(1);
+    //    }
+    //    catch (System.Net.WebException ex)
+    //    {
+    //        System.Console.WriteLine(ex.Message);
+    //    }
+    //}
+
 }

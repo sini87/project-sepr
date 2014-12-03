@@ -14,14 +14,13 @@ namespace Client
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (this.User.Identity.IsAuthenticated)
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            if (this.User.Identity.IsAuthenticated && rc != null)
             {
-               
-                RestClient.Instance.EndPoint = "api/IssuesFromUser";
-                RestClient.Instance.Method = HttpVerb.GET;
-                var json = RestClient.Instance.MakeRequest();
+                rc.EndPoint = "api/Issue/OfUser";
+                rc.Method = HttpVerb.GET;
+                var json = rc.MakeRequest();
                 List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
-
 
                 TableRow row;
                 TableCell tId;

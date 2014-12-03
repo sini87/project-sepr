@@ -11,7 +11,11 @@ namespace Client.MyAccount
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            TextBox_FirstName.Text = RestClient.Instance.CurrentUser.FirstName;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            if (rc != null)
+            {
+                TextBox_FirstName.Text = rc.User.FirstName;
+            }
         }
     }
 }
