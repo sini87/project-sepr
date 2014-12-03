@@ -11,6 +11,7 @@ namespace Client
     public partial class Register : System.Web.UI.Page
     {
         public static bool registering = false;
+        private string email;
         private static CDDSS_API.Models.RegisterBindingModel m;
 
 
@@ -38,12 +39,16 @@ namespace Client
                 ctx.Users.DeleteAllOnSubmit(ctx.Users.ToList());
                 ctx.SubmitChanges();
             }else if (CreateUserWizard.ActiveStepIndex == 2){
+                CreateUserWizard.UserName = email;
+                RestClient.Login(m.Email, m.Password, Session.SessionID);
+                RestClient rc = RestClient.GetInstance(Session.SessionID);
+                rc.Method = HttpVerb.POST;
 
-                RestClient.Instance.Login(m.Email, m.Password);
-                RestClient.Instance.Method = HttpVerb.POST;
-
-                RestClient.Instance.EndPoint = "api/User";
-                var json = RestClient.Instance.MakeRequest("?firstName=" + FirstName.Text + "&lastName=" + LastName.Text + "&secretQuestion=" + Question2.Text + "&answer=" + Answer2.Text);
+                rc.EndPoint = "api/User";
+                var json = rc.MakeRequest("?firstName=" + FirstName.Text + "&lastName=" + LastName.Text + "&secretQuestion=" + Question2.Text + "&answer=" + Answer2.Text);
+                rc.User.Email = email;
+                rc.User.LastName = LastName.Text;
+                rc.User.FirstName = FirstName.Text;
                 System.Console.WriteLine(json);
                 
             }
@@ -52,24 +57,14 @@ namespace Client
         protected void CreatingUser(object sender, LoginCancelEventArgs e)
         {
             //CreateUserWizard.Email = CreateUserWizard.UserName.Split('@')[0];
+            email = CreateUserWizard.UserName;
             CreateUserWizard.UserName = CreateUserWizard.Email.Split('@')[0];
-            RestClient client = RestClient.Instance;
-            client.EndPoint = "api/account/Register";
-            client.Method = HttpVerb.POST;
+            
             m = new CDDSS_API.Models.RegisterBindingModel();
             m.Email = CreateUserWizard.Email;
             m.Password = CreateUserWizard.Password;
             m.ConfirmPassword = CreateUserWizard.ConfirmPassword;
-            client.PostData = Newtonsoft.Json.JsonConvert.SerializeObject(m);
-            var json = client.MakeRequest();
-            if (!json.ToString().Equals("OK"))
-            {
-                DataClassesDataContext ctx = new DataClassesDataContext();
-                User u = new User();
-                u.UserName = CreateUserWizard.UserName;
-                ctx.Users.InsertOnSubmit(u);
-            }
-            else
+            if (RestClient.Register(m))
             {
                 registering = true;
             }

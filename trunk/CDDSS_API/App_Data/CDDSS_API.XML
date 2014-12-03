@@ -668,6 +668,13 @@
             <param name="issueId"></param>
             <returns>OK if accomplished, else NotAcceptable</returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.IssueController.Edit(CDDSS_API.Models.IssueModel)">
+            <summary>
+            Edits an issue, only title, description, relatedTo and relationType.
+            </summary>
+            <param name="issue"></param>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.RatingController.getRating(System.Int32,System.Int32)">
             <summary>
             Returns a specific Rating

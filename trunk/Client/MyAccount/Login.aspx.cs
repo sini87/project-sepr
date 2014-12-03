@@ -19,7 +19,7 @@ namespace Client
 
         protected void Authenticate(object sender, AuthenticateEventArgs e)
         {
-            if (RestClient.Instance.Login(Login1.UserName, Login1.Password))
+            if (RestClient.Login(Login1.UserName, Login1.Password,Session.SessionID))
             {
                 e.Authenticated = true;
             }
@@ -27,7 +27,7 @@ namespace Client
 
         protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
         {
-            if (RestClient.Instance.Login(Login1.UserName, Login1.Password))
+            if (RestClient.Login(Login1.UserName, Login1.Password,Session.SessionID))
             {
                 e.Authenticated = true;
             }

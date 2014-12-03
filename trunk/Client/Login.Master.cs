@@ -67,14 +67,15 @@ namespace Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LoginView1 != null)
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            if (LoginView1 != null && rc != null)
             {
                 LoginName control = (LoginName)LoginView1.FindControl("LoginName");
                 if (control != null)
                 {
-                    if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
+                    if (rc != null && rc.User != null)
                     {
-                        control.FormatString = RestClient.Instance.CurrentUser.FirstName + " " + RestClient.Instance.CurrentUser.LastName;
+                        control.FormatString = rc.User.FirstName + " " + rc.User.LastName;
                     }
                 }
             }
@@ -82,7 +83,7 @@ namespace Client
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            RestClient.Instance.LoginOut();
+            RestClient.GetInstance(Session.SessionID);
             FormsAuthentication.SignOut();
         }
     }

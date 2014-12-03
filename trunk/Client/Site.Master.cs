@@ -67,25 +67,26 @@ namespace Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LoginView1 != null)
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            if (LoginView1 != null && rc != null)
             {
                 LoginName control = (LoginName)LoginView1.FindControl("LoginName");
                 if (control != null)
                 {
-                    if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
+                    if (rc != null && rc.User != null)
                     {
-                        control.FormatString = RestClient.Instance.CurrentUser.FirstName;// +" " + RestClient.Instance.CurrentUser.LastName;
+                        control.FormatString = rc.User.FirstName;// +" " + RestClient.Instance.CurrentUser.LastName;
                     }
                 }
 
                 Label acronym = (Label)LoginView1.FindControl("LoginAcronym");
                 if (acronym != null)
                 {
-                    if (RestClient.Instance != null && RestClient.Instance.CurrentUser != null)
+                    if (rc != null && rc.User != null)
                     {
-                        if (RestClient.Instance.CurrentUser.FirstName != null && RestClient.Instance.CurrentUser.LastName != null)
+                        if (rc.User.FirstName != null && rc.User.LastName != null)
                         {
-                            acronym.Text = RestClient.Instance.CurrentUser.FirstName.Substring(0, 1) + RestClient.Instance.CurrentUser.LastName.Substring(0, 1);
+                            acronym.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
                         }
                     }
                     if (acronym.Text.Equals(""))
@@ -97,8 +98,8 @@ namespace Client
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
-        {
-            RestClient.Instance.LoginOut();
+        {           
+            RestClient.GetInstance(Session.SessionID).Logout();
             FormsAuthentication.SignOut();
         }
     }
