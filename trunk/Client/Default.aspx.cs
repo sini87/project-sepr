@@ -52,7 +52,11 @@ namespace Client
                         row.Cells.Add(tStatus);
 
                         tDetail = new TableCell();
-                        tDetail.Text = "Link auf DetailSeite";
+                        HyperLink lnk = new HyperLink();
+                        lnk.Text = "Details";
+                        lnk.NavigateUrl = "~/IssueDetail?issueId=" + element.Id;
+                        tDetail.Controls.Add(lnk);
+
                         row.Cells.Add(tDetail);
 
                         IssueTable.Rows.Add(row);
