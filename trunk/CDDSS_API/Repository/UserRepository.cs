@@ -55,6 +55,31 @@ namespace CDDSS_API.Repository
         }
 
         /// <summary>
+        /// Returns user detailed
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public UserShort GetUserDetailByEmail(string email)
+        {
+            var query = from user in ctx.Users
+                        where user.Email == email
+                        select new
+                        {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            AO = (int)user.AccessObject,
+                            Email = user.Email,
+                            PasswordHash = user.PasswordHash,
+                            PhoneNumber = user.PhoneNumber,
+                            UserName=user.UserName,
+                            SecretQuestion=user.SecretQuestion,
+                            Answer=user.Answer
+                        };
+            UserShort usershort = new UserShort(query.First().FirstName, query.First().LastName, query.First().AO, query.First().Email, query.First().PhoneNumber, query.First().UserName, query.First().SecretQuestion, query.First().Answer);
+            return usershort;
+        }
+
+        /// <summary>
         /// edits a user
         /// </summary>
         /// <param name="email">is necessary</param>
