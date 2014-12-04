@@ -19,7 +19,7 @@
 
         <asp:Table ID="IssueTable" runat="server" Width="100%" Visible="false"> 
             <asp:TableRow>
-                <asp:TableCell>Id</asp:TableCell>
+                <asp:TableCell></asp:TableCell>
                 <asp:TableCell>Title</asp:TableCell>
                 <asp:TableCell>Tags</asp:TableCell>
                 <asp:TableCell>Status</asp:TableCell>
