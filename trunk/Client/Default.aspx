@@ -15,14 +15,14 @@
             A Decision Making, Collaborating & Workflow Plattform
         </div>
         
-        <asp:TextBox ID="text" runat="server" Visible="false"></asp:TextBox>
+        <asp:Label ID="text" runat="server" Visible="false"></asp:Label>
 
         <asp:Table ID="IssueTable" runat="server" Width="100%" Visible="false"> 
-            <asp:TableRow>
-                <asp:TableCell></asp:TableCell>
+            <asp:TableRow>                
                 <asp:TableCell>Title</asp:TableCell>
                 <asp:TableCell>Tags</asp:TableCell>
                 <asp:TableCell>Status</asp:TableCell>
+                <asp:TableCell>Details</asp:TableCell>
             </asp:TableRow>
         </asp:Table>
          
