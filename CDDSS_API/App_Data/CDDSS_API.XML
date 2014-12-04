@@ -765,6 +765,12 @@
             </summary>
             <returns>UserShort</returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.UserController.GetUserDetailed">
+            <summary>
+            Returns all Values of an User for edit profile
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.UserController.Post(System.String,System.String,System.String,System.String)">
             <summary>
             edits a user profile
@@ -941,6 +947,13 @@
         <member name="M:CDDSS_API.Repository.UserRepository.GetUserByEmail(System.String)">
             <summary>
             return a UserShort by email
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.UserRepository.GetUserDetailByEmail(System.String)">
+            <summary>
+            Returns user detailed
             </summary>
             <param name="email"></param>
             <returns></returns>

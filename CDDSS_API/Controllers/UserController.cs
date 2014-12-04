@@ -50,6 +50,16 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
+        /// Returns all Values of an User for edit profile
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/User/Current/Detailed")]
+        public UserShort GetUserDetailed()
+        {
+            return usersRep.GetUserDetailByEmail(RequestContext.Principal.Identity.Name);
+        }
+
+        /// <summary>
         /// edits a user profile
         /// </summary>
         /// <param name="email"></param>

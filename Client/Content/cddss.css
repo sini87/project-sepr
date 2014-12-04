@@ -9,8 +9,11 @@
 /* main stuff */
 
 body {
-    border-top:none !important;
     background-color:transparent;
+    font-weight: 700;
+    border-top-style: none !important;
+    border-top-color: inherit !important;
+    border-top-width: medium;
 }
 
 html { 
