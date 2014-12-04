@@ -84,7 +84,7 @@ namespace Client
                 {
                     if (rc != null && rc.User != null)
                     {
-                        if (rc.User.FirstName != null && rc.User.LastName != null)
+                        if (rc.User.FirstName != "" && rc.User.LastName != "")
                         {
                             acronym.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
                         }
