@@ -68,12 +68,12 @@ namespace CDDSS_API.Controllers
         /// <param name="secretQuestion"></param>
         /// <param name="answer"></param>
         /// <returns>returns HTTP Status Code OK if operation was successful, else HTTP Status Cude NOT Acceptable</returns>
-        public HttpResponseMessage Post(string firstName="", string lastName = "", string secretQuestion = "", string answer = "")
+        public HttpResponseMessage Post(UserShort user)
         {
             HttpResponseMessage result = null;
-            string email = HttpContext.Current.User.Identity.Name;
+            user.Email = HttpContext.Current.User.Identity.Name;
 
-            if (email != null && email.Length > 0 && usersRep.EditUser(email, firstName, lastName, secretQuestion, answer))
+            if (user.Email != null && user.Email.Length > 0 && usersRep.EditUser(user))
             {
 
                 result = Request.CreateResponse(HttpStatusCode.OK);

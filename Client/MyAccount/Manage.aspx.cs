@@ -12,6 +12,7 @@ namespace Client.MyAccount
     public partial class Manage : System.Web.UI.Page
     {
         TextBoxValues value = new TextBoxValues();
+        UserShort user = new UserShort();
 
         internal class TextBoxValues
         {
@@ -39,32 +40,40 @@ namespace Client.MyAccount
             value.TextBoxAnswer = TextBoxAnswer.Text;
             if (rc != null)
             {
-                UserShort user = new UserShort();
-                rc.EndPoint = "api/User/Current/Detailed";
-                rc.Method = HttpVerb.GET;
-                var json = rc.MakeRequest();
-                user = JsonConvert.DeserializeObject<UserShort>(json);
-               // TextBox_FirstName.Text = rc.User.FirstName;
-                TextBoxFirstname.Text = user.FirstName;
-                TextBoxLastname.Text = user.LastName;
-                TextBoxUsername.Text = user.UserName;
-                TextBoxSecretQuerstion.Text=user.SecretQuestion;
-                TextBoxAnswer.Text = user.Answer;
-                
-            }
+                        rc.EndPoint = "api/User/Current/Detailed";
+                        rc.Method = HttpVerb.GET;
+                        var json = rc.MakeRequest();
+                        user = JsonConvert.DeserializeObject<UserShort>(json);
+                        // TextBox_FirstName.Text = rc.User.FirstName;
+                        TextBoxFirstname.Text = user.FirstName;
+                        TextBoxLastname.Text = user.LastName;
+                        TextBoxUsername.Text = user.UserName;
+                        TextBoxSecretQuerstion.Text = user.SecretQuestion;
+                        TextBoxAnswer.Text = user.Answer;
+             }
 
         }
 
         protected void OnSubmitButtonClick(object sender, EventArgs e)
         {
+            user.FirstName = value.TextBoxFirstname;
+            user.LastName = value.TextBoxLastname;
+            user.UserName = value.TextBoxUsername;
+            user.SecretQuestion = value.TextBoxSecretQuestion;
+            user.Answer = value.TextBoxAnswer;
+            TextBoxFirstname.Text = value.TextBoxFirstname;
+            TextBoxLastname.Text = value.TextBoxLastname;
+            TextBoxUsername.Text = value.TextBoxUsername;
+            TextBoxSecretQuerstion.Text = user.SecretQuestion;
+            TextBoxAnswer.Text = value.TextBoxAnswer;
             RestClient rc = RestClient.GetInstance(Session.SessionID);
             Boolean isedited=false;
             rc.EndPoint = "api/User";
             rc.Method = HttpVerb.POST;
-            rc.ContentType = "application/json";
-            rc.PostData = "firstName=" + value.TextBoxFirstname + "&lastName=" + value.TextBoxLastname + "&secretQuestion=" + value.TextBoxSecretQuestion + "&answer=" + value.TextBoxAnswer;
+            rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
+            rc.PostData=JsonConvert.SerializeObject(user);
             var json = rc.MakeRequest();
-            isedited = JsonConvert.DeserializeObject<Boolean>(json);
+            //isedited = JsonConvert.DeserializeObject<Boolean>(json);
         }
     }
 }

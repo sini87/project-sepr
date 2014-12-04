@@ -771,7 +771,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.UserController.Post(System.String,System.String,System.String,System.String)">
+        <member name="M:CDDSS_API.Controllers.UserController.Post(CDDSS_API.UserShort)">
             <summary>
             edits a user profile
             </summary>
@@ -958,7 +958,7 @@
             <param name="email"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Repository.UserRepository.EditUser(System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:CDDSS_API.Repository.UserRepository.EditUser(CDDSS_API.UserShort)">
             <summary>
             edits a user
             </summary>

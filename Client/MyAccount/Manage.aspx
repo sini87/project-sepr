@@ -10,9 +10,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <span class="auto-style1">Here you can edit your userprofile</span><br />
-    <asp:Table ID="Table1" runat="server" CellSpacing="5">
+    <asp:Table ID="Table1" runat="server" CellSpacing="10">
         <asp:TableRow >
-            <asp:TableCell  Width="150px">Email: </asp:TableCell>
+            <asp:TableCell>Email: </asp:TableCell>
             <asp:TableCell ID="Cell1"><asp:TextBox ID="TextBoxEmail" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
@@ -48,7 +48,7 @@
                 
             </asp:TableCell>
             <asp:TableCell>
-                <asp:Button OnClick="OnSubmitButtonClick" Width="310px" ID="Button1" runat="server" Text="Ändern"/>
+                <asp:Button OnClick="OnSubmitButtonClick" ID="Button1" runat="server" Text="Ändern"/>
             </asp:TableCell> 
         </asp:TableRow>
     </asp:Table>
