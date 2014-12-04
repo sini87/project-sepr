@@ -144,17 +144,7 @@ namespace Client
 
         protected void addAlternative_Click(object sender, EventArgs e)
         {
-            lAlternativeName.Enabled = true;
-            lAlternativeDescription.Enabled = true;
-            lAlternativeReason.Enabled = true;
 
-            TextBox tName = new TextBox();
-            TextBox tDescrption = new TextBox();
-            TextBox tReason = new TextBox();
-
-            alternatives.Controls.Add(tName);
-            alternatives.Controls.Add(tDescrption);
-            alternatives.Controls.Add(tReason);
         }
 
         protected void addCriteria_Click(object sender, EventArgs e)

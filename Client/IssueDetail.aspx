@@ -51,10 +51,17 @@
     <hr />
 
     <h3>Alternatives</h3>
-    <asp:Label runat="server" ID="lAlternativeName" Enabled="false">Name</asp:Label><asp:label runat="server" ID="lAlternativeDescription" Enabled="false">Description</asp:label><asp:label runat="server" ID="lAlternativeReason" Enabled="false">Reason</asp:label>
-    <asp:Panel runat="server" ID="alternatives"></asp:Panel><br />
-    <asp:LinkButton runat="server" ID="addAlternative" OnClick="addAlternative_Click">add alternative</asp:LinkButton>
-
+    <asp:HiddenField ID="HiddenAlternatives" runat="server" Value="1" ViewStateMode="Enabled"/>
+    <asp:Table ID="Table1" runat="server" Width="50%" Visible="false">  
+        <asp:TableHeaderRow>                
+                <asp:TableCell>Name</asp:TableCell>
+                <asp:TableCell>Description</asp:TableCell>
+                <asp:TableCell>Reason</asp:TableCell>
+        </asp:TableHeaderRow>
+    </asp:Table>
+    <asp:LinkButton runat="server" ID="addAlternative">add alternative</asp:LinkButton>
+    <br />
+    <br />
     <button>Save</button> <button>Finish Phase</button>
 </asp:Content>
 
