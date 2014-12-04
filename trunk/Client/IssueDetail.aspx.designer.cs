@@ -157,40 +157,22 @@ namespace Client {
         protected global::System.Web.UI.WebControls.LinkButton addComment;
         
         /// <summary>
-        /// lAlternativeName control.
+        /// HiddenAlternatives control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lAlternativeName;
+        protected global::System.Web.UI.WebControls.HiddenField HiddenAlternatives;
         
         /// <summary>
-        /// lAlternativeDescription control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lAlternativeDescription;
-        
-        /// <summary>
-        /// lAlternativeReason control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lAlternativeReason;
-        
-        /// <summary>
-        /// alternatives control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel alternatives;
+        protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
         /// addAlternative control.
