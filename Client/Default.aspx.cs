@@ -23,21 +23,17 @@ namespace Client
                 List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
 
                 TableRow row;
-                TableCell tId;
                 TableCell tTitle;
                 TableCell tTags;
                 TableCell tStatus;
+                TableCell tDetail;
 
-                if (user != null)
+                if (user.Count > 0)
                 {
                     foreach (IssueModel element in user)
                     {
 
                         row = new TableRow();
-
-                        tId = new TableCell();
-                        tId.Text = "" + element.Id;
-                        row.Cells.Add(tId);
 
                         tTitle = new TableCell();
                         tTitle.Text = element.Title;
@@ -55,16 +51,21 @@ namespace Client
                         tStatus.Text = element.Status;
                         row.Cells.Add(tStatus);
 
+                        tDetail = new TableCell();
+                        tDetail.Text = "Link auf DetailSeite";
+                        row.Cells.Add(tDetail);
+
                         IssueTable.Rows.Add(row);
                     }
 
                     IssueTable.Visible = true;
                 }
-                else { 
-                    
+                else
+                {
+
                     text.Text = "No Issues existing";
                     text.Visible = true;
-            }
+                }
             }
         }
 
