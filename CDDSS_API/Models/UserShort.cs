@@ -39,13 +39,11 @@ namespace CDDSS_API
             Email = email;
         }
 
-        public UserShort(string firstName, string lastName, int accessObject, string email, string phonenumber, string username, string secretquestion, string answer)
+        public UserShort(string email, string firstName, string lastName, string username, string secretquestion, string answer)
         {
+            Email = email;
             FirstName = firstName;
             LastName = lastName;
-            AccessObject = accessObject;
-            Email = email;
-            PhoneNumber = phonenumber;
             UserName = username;
             SecretQuestion = secretquestion;
             Answer = answer;

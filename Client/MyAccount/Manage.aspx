@@ -17,31 +17,23 @@
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>Firstname: </asp:TableCell>
-            <asp:TableCell ID="Cell2"><asp:TextBox ID="TextBoxFirstname" runat="server"></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="Cell2"><asp:TextBox OnTextChanged="TextBoxFirstnameChanged" ID="TextBoxFirstname" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
        <asp:TableRow>
             <asp:TableCell>Lastname: </asp:TableCell>
-            <asp:TableCell ID="Cell3"><asp:TextBox ID="TextBoxLastname" runat="server"></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="Cell3"><asp:TextBox OnTextChanged="TextBoxLastnameChanged" ID="TextBoxLastname" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>Username: </asp:TableCell>
-            <asp:TableCell ID="Cell4"><asp:TextBox ID="TextBoxUsername" runat="server"></asp:TextBox></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Password: </asp:TableCell>
-            <asp:TableCell ID="Cell5"><asp:TextBox ID="TextBoxPassword" runat="server"></asp:TextBox></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Password bestätigen: </asp:TableCell>
-            <asp:TableCell ID="Cell6"><asp:TextBox ID="TextBoxPasswordconfirm" runat="server"></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="Cell4"><asp:TextBox OnTextChanged="TextBoxUsernameChanged" ID="TextBoxUsername" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>Geheimfrage: </asp:TableCell>
-            <asp:TableCell ID="Cell7"><asp:TextBox ID="TextBoxSecretQuerstion" runat="server"></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="Cell7"><asp:TextBox OnTextChanged="TextBoxSecretQuestionChanged"  ID="TextBoxSecretQuestion" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>Antwort: </asp:TableCell>
-            <asp:TableCell ID="Cell8"><asp:TextBox ID="TextBoxAnswer" runat="server"></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="Cell8"><asp:TextBox OnTextChanged="TextBoxAnswerChanged"  ID="TextBoxAnswer" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>
@@ -51,11 +43,9 @@
                 <asp:Button OnClick="OnSubmitButtonClick" ID="Button1" runat="server" Text="Ändern"/>
             </asp:TableCell> 
         </asp:TableRow>
-    </asp:Table>
-    <div style="margin-left:160px; margin-top:5px;">
-
-    </div>
-   
+    </asp:Table>   
     <br />
+    
+    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     
 </asp:Content>
