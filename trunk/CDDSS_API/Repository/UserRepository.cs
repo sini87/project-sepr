@@ -67,15 +67,15 @@ namespace CDDSS_API.Repository
                         {
                             FirstName = user.FirstName,
                             LastName = user.LastName,
-                            AO = (int)user.AccessObject,
+                            //AO = (int)user.AccessObject,
                             Email = user.Email,
-                            PasswordHash = user.PasswordHash,
-                            PhoneNumber = user.PhoneNumber,
+                            //PasswordHash = user.PasswordHash,
+                            //PhoneNumber = user.PhoneNumber,
                             UserName=user.UserName,
                             SecretQuestion=user.SecretQuestion,
                             Answer=user.Answer
                         };
-            UserShort usershort = new UserShort(query.First().FirstName, query.First().LastName, query.First().AO, query.First().Email, query.First().PhoneNumber, query.First().UserName, query.First().SecretQuestion, query.First().Answer);
+            UserShort usershort = new UserShort(query.First().Email, query.First().FirstName, query.First().LastName, query.First().UserName, query.First().SecretQuestion, query.First().Answer);
             return usershort;
         }
 
@@ -93,10 +93,11 @@ namespace CDDSS_API.Repository
             try
             {
                 User u = ctx.Users.First(x => x.Email == user.Email);
-                u.FirstName = user.FirstName;
-                u.LastName = user.LastName;
-                u.SecretQuestion = user.SecretQuestion;
-                u.Answer = user.Answer;
+                if (user.FirstName != "") u.FirstName = user.FirstName;
+                if (user.LastName != "") u.LastName = user.LastName;
+                if (user.UserName != "") u.UserName = user.UserName;
+                if (user.SecretQuestion!="") u.SecretQuestion = user.SecretQuestion;
+                if (user.Answer!="") u.Answer = user.Answer;
                 ctx.SubmitChanges();
                 return true;
             }

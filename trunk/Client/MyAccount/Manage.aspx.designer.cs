@@ -94,42 +94,6 @@ namespace Client.MyAccount {
         protected global::System.Web.UI.WebControls.TextBox TextBoxUsername;
         
         /// <summary>
-        /// Cell5-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell Cell5;
-        
-        /// <summary>
-        /// TextBoxPassword-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxPassword;
-        
-        /// <summary>
-        /// Cell6-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell Cell6;
-        
-        /// <summary>
-        /// TextBoxPasswordconfirm-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxPasswordconfirm;
-        
-        /// <summary>
         /// Cell7-Steuerelement
         /// </summary>
         /// <remarks>
@@ -139,13 +103,13 @@ namespace Client.MyAccount {
         protected global::System.Web.UI.WebControls.TableCell Cell7;
         
         /// <summary>
-        /// TextBoxSecretQuerstion-Steuerelement
+        /// TextBoxSecretQuestion-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxSecretQuerstion;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxSecretQuestion;
         
         /// <summary>
         /// Cell8-Steuerelement
@@ -173,5 +137,14 @@ namespace Client.MyAccount {
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// Label1-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }
