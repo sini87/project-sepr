@@ -112,13 +112,13 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel users;
         
         /// <summary>
-        /// HiddenFieldCriteria control.
+        /// rowCountCriteria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenFieldCriteria;
+        protected global::System.Web.UI.WebControls.HiddenField rowCountCriteria;
         
         /// <summary>
         /// criteriaTable control.
@@ -157,22 +157,22 @@ namespace Client {
         protected global::System.Web.UI.WebControls.LinkButton addComment;
         
         /// <summary>
-        /// HiddenAlternatives control.
+        /// rowCountAlternatives control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenAlternatives;
+        protected global::System.Web.UI.WebControls.HiddenField rowCountAlternatives;
         
         /// <summary>
-        /// Table1 control.
+        /// alternativesTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
+        protected global::System.Web.UI.WebControls.Table alternativesTable;
         
         /// <summary>
         /// addAlternative control.
