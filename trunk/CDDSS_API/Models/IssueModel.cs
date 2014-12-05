@@ -36,15 +36,21 @@ namespace CDDSS_API.Models
         public int RelatedTo { get; set; }
         [DataMember]
         public char RelationType { get; set; }
+        [DataMember]
+        public List<CriterionModel> Criterions { get; set; }
+        [DataMember]
+        public List<CriterionWeightModel> CriterionWeights { get; set; }
 
         public IssueModel()
         {
+            CriterionWeights = new List<CriterionWeightModel>();
             Tags = new List<TagModel>();
             Artefacts = new List<ArtefactModel>();
             Stakeholders = new List<StakeholderModel>();
             InfluenceFactors = new List<InfluenceFactorModel>();
             Documents = new List<string>();
             AccessRights = new Dictionary<int, char>();
+            Criterions = new List<Models.CriterionModel>();
             ReviewRating = 0.0;
             Status = "";
             Title = "";
@@ -53,6 +59,8 @@ namespace CDDSS_API.Models
 
         public IssueModel(int id, string title, string status, double reviewRating)
         {
+            CriterionWeights = new List<CriterionWeightModel>();
+            Criterions = new List<Models.CriterionModel>();
             Tags = new List<TagModel>();
             Artefacts = new List<ArtefactModel>();
             Stakeholders = new List<StakeholderModel>();
