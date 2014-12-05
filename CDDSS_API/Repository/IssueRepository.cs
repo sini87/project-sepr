@@ -51,19 +51,19 @@ namespace CDDSS_API.Repository
             if (issue.RelationType != null)
                 model.RelationType = (char)issue.RelationType;
 
-            foreach (Tag_Issue tagissue in issue.Tag_Issues.ToList())
+            foreach (Tag_Issue tagissue in ctx.Tag_Issues.Where(x => x.Issue == issueID).ToList())
             {
                 model.Tags.Add(new TagModel(tagissue.Tag1.Id, tagissue.Tag1.Name));
             }
-            foreach (Issue_artefact issueart in issue.Issue_artefacts.ToList())
+            foreach (Issue_artefact issueart in ctx.Issue_artefacts.Where(x => x.Issue == issueID).ToList())
             {
                 model.Artefacts.Add(new ArtefactModel(issueart.Artefact1.Id, issueart.Artefact1.Name));
             }
-            foreach (Issue_stakeholder issuestake in issue.Issue_stakeholders.ToList())
+            foreach (Issue_stakeholder issuestake in ctx.Issue_stakeholders.Where(x => x.Issue == issueID).ToList())
             {
                 model.Stakeholders.Add(new StakeholderModel(issuestake.Stakeholder1.Id, issuestake.Stakeholder1.Name));
             }
-            foreach (InfluenceFactor inf in issue.InfluenceFactors.ToList())
+            foreach (InfluenceFactor inf in ctx.InfluenceFactors.Where(x => x.Issue == issueID).ToList())
             {
                 model.InfluenceFactors.Add(new InfluenceFactorModel(inf.Id,inf.Name,inf.Type,inf.Characteristic));
             }
@@ -75,6 +75,26 @@ namespace CDDSS_API.Repository
             {
                 model.AccessRights.Add(ar.AccessObject, ar.Right);
             }
+            CriterionModel cm;
+            CriterionWeightModel cwm;
+            foreach (Criterion cr in ctx.Criterion.Where(x => x.Issue == issueID))
+            {
+                cm = new CriterionModel();
+                cm.Id = cr.Id;
+                cm.Issue = cr.Issue;
+                cm.Name = cr.Name;
+                cm.Weight = (double)cr.Weight;
+                model.Criterions.Add(cm);
+                foreach (CriterionWeight cw in ctx.CriterionWeights.Where(x => x.Criterion == cm.Id))
+                {
+                    cwm = new CriterionWeightModel();
+                    cwm.Criterion = cm.Id;
+                    cwm.UserAccesObject = (int) cw.User1.AccessObject;
+                    cwm.UserId = cw.User;
+                    cwm.Weight = cw.Weight;
+                }
+            }
+            
             return model;
         }
 
