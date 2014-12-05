@@ -40,12 +40,12 @@
                 
             </asp:TableCell>
             <asp:TableCell>
-                <asp:Button OnClick="OnSubmitButtonClick" ID="Button1" runat="server" Text="Ändern"/>
+                <asp:Button OnClick="OnSubmitButtonClick" Width="99%" ID="Button1" runat="server" Text="Ändern"/>
             </asp:TableCell> 
         </asp:TableRow>
     </asp:Table>   
     <br />
     
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="Label" BackColor="Black"></asp:Label>
     
 </asp:Content>
