@@ -37,7 +37,7 @@ namespace CDDSS_API.Models
         public InfluenceFactorModel(int id, string name, bool type, string characteristic)
         {
             Id = id;
-            Name = "";
+            Name = name;
             Type = type;
             Characteristic = "";
             Characteristic = characteristic;
