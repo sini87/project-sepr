@@ -34,7 +34,7 @@
     <hr />
 
     <h3>Criteria</h3>
-    <asp:HiddenField ID="HiddenFieldCriteria" runat="server" Value="1" ViewStateMode="Enabled"/>
+    <asp:HiddenField ID="rowCountCriteria" runat="server" Value="1" />
     <asp:Table ID="criteriaTable" runat="server" Width="50%" Visible="false">  
         <asp:TableHeaderRow>                
                 <asp:TableCell>Name</asp:TableCell>
@@ -51,15 +51,15 @@
     <hr />
 
     <h3>Alternatives</h3>
-    <asp:HiddenField ID="HiddenAlternatives" runat="server" Value="1" ViewStateMode="Enabled"/>
-    <asp:Table ID="Table1" runat="server" Width="50%" Visible="false">  
+    <asp:HiddenField ID="rowCountAlternatives" runat="server" Value="1" />
+    <asp:Table ID="alternativesTable" runat="server" Width="50%" Visible="false">  
         <asp:TableHeaderRow>                
                 <asp:TableCell>Name</asp:TableCell>
                 <asp:TableCell>Description</asp:TableCell>
                 <asp:TableCell>Reason</asp:TableCell>
         </asp:TableHeaderRow>
     </asp:Table>
-    <asp:LinkButton runat="server" ID="addAlternative">add alternative</asp:LinkButton>
+    <asp:LinkButton runat="server" ID="addAlternative" OnClick="addAlternative_Click">add alternative</asp:LinkButton>
     <br />
     <br />
     <button>Save</button> <button>Finish Phase</button>
