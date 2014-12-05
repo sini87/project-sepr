@@ -9,71 +9,93 @@ using System.Web.UI.WebControls;
 
 namespace Client.MyAccount
 {
+    internal class PersistentTextBoxValues
+    {
+        internal String PersistentEmail { get; set; }
+        internal String PersistentFirstname { get; set; }
+        internal String PersistentLastname { get; set; }
+        internal String PersistentUsername { get; set; }
+        internal String PersistentSecretQuestion { get; set; }
+        internal String PersistentAnswer { get; set; }
+
+        internal PersistentTextBoxValues()
+        {
+
+        }
+    }
+
     public partial class Manage : System.Web.UI.Page
     {
-        TextBoxValues value = new TextBoxValues();
-        UserShort user = new UserShort();
+        PersistentTextBoxValues persistentDatas = null;
+        UserShort user = null;
+        RestClientProgram client;
 
-        internal class TextBoxValues
+        
+
+        internal class RestClientProgram
         {
-            internal String TextBoxEmail {get; set;}
-            internal String TextBoxFirstname {get; set;}
-            internal String TextBoxLastname {get; set;}
-            internal String TextBoxUsername {get; set;}
-            internal String TextBoxSecretQuestion {get; set;}
-            internal String TextBoxAnswer { get; set; }
+            internal RestClient rc {get; set;}
 
-            internal TextBoxValues()
+            internal RestClientProgram(string sessionID)
             {
-                
+                rc = RestClient.GetInstance(sessionID);
+            }
+
+            internal UserShort getUserDetailed()
+            {
+                rc.EndPoint = "api/User/Current/Detailed";
+                rc.Method = HttpVerb.GET;
+                var json = rc.MakeRequest();
+                return JsonConvert.DeserializeObject<UserShort>(json);
+            }
+
+            internal void CommitChangedUserDatas(UserShort user)
+            {
+                rc.EndPoint = "api/User";
+                rc.Method = HttpVerb.POST;
+                rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
+                rc.PostData = JsonConvert.SerializeObject(user);
+                var json = rc.MakeRequest();
             }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            value.TextBoxFirstname = TextBoxFirstname.Text;
-            value.TextBoxLastname = TextBoxLastname.Text;
-            value.TextBoxUsername = TextBoxUsername.Text;
-            value.TextBoxSecretQuestion = TextBoxSecretQuerstion.Text;
-            value.TextBoxAnswer = TextBoxAnswer.Text;
-            if (rc != null)
+            client = new RestClientProgram(Session.SessionID);
+            if (client.rc != null && persistentDatas==null)
             {
-                        rc.EndPoint = "api/User/Current/Detailed";
-                        rc.Method = HttpVerb.GET;
-                        var json = rc.MakeRequest();
-                        user = JsonConvert.DeserializeObject<UserShort>(json);
-                        // TextBox_FirstName.Text = rc.User.FirstName;
+                        persistentDatas = new PersistentTextBoxValues();
+                        user = new UserShort();
+                        user = client.getUserDetailed();
                         TextBoxFirstname.Text = user.FirstName;
                         TextBoxLastname.Text = user.LastName;
                         TextBoxUsername.Text = user.UserName;
                         TextBoxSecretQuerstion.Text = user.SecretQuestion;
                         TextBoxAnswer.Text = user.Answer;
+                        persistentDatas.PersistentFirstname = TextBoxFirstname.Text;
+                        persistentDatas.PersistentLastname = TextBoxLastname.Text;
+                        persistentDatas.PersistentUsername = TextBoxUsername.Text;
+                        persistentDatas.PersistentSecretQuestion = TextBoxSecretQuerstion.Text;
+                        persistentDatas.PersistentAnswer = TextBoxAnswer.Text;
              }
-
         }
 
         protected void OnSubmitButtonClick(object sender, EventArgs e)
         {
-            user.FirstName = value.TextBoxFirstname;
-            user.LastName = value.TextBoxLastname;
-            user.UserName = value.TextBoxUsername;
-            user.SecretQuestion = value.TextBoxSecretQuestion;
-            user.Answer = value.TextBoxAnswer;
-            TextBoxFirstname.Text = value.TextBoxFirstname;
-            TextBoxLastname.Text = value.TextBoxLastname;
-            TextBoxUsername.Text = value.TextBoxUsername;
-            TextBoxSecretQuerstion.Text = user.SecretQuestion;
-            TextBoxAnswer.Text = value.TextBoxAnswer;
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            Boolean isedited=false;
-            rc.EndPoint = "api/User";
-            rc.Method = HttpVerb.POST;
-            rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
-            rc.PostData=JsonConvert.SerializeObject(user);
-            var json = rc.MakeRequest();
+            Boolean hasChangedValues = false;
+            if (TextBoxFirstname.Text != persistentDatas.PersistentFirstname ||
+                TextBoxLastname.Text != persistentDatas.PersistentLastname ||
+                TextBoxUsername.Text != persistentDatas.PersistentUsername ||
+                TextBoxSecretQuerstion.Text != persistentDatas.PersistentSecretQuestion ||
+                TextBoxAnswer.Text != persistentDatas.PersistentAnswer) hasChangedValues = true;
+
+            if (hasChangedValues) {
+                RestClientProgram client = new RestClientProgram(Session.SessionID);
+                client.CommitChangedUserDatas(user);
+            }
             //isedited = JsonConvert.DeserializeObject<Boolean>(json);
         }
+
+
     }
 }
