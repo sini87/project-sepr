@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Net;
 using System.Drawing;
+using CDDSS_API.Models;
 
 namespace Client.MyAccount
 {
@@ -32,6 +33,7 @@ namespace Client.MyAccount
         internal static List<PersistentDatas> persistentDatasList = new List<PersistentDatas>();
         Boolean hasChangedDatas = false;
         PersistentDatas persistentDataItem = new PersistentDatas();
+        Boolean isRightPWChange = false;
 
         internal class RestClientProgram
         {
@@ -44,6 +46,7 @@ namespace Client.MyAccount
 
             internal UserShort getUserDetailed()
             {
+
                 UserShort user = new UserShort();
                 rc.EndPoint = "api/User/Current/Detailed";
                 rc.Method = HttpVerb.GET;
@@ -52,7 +55,7 @@ namespace Client.MyAccount
                 return user;
             }
 
-            internal Boolean CommitChangedUserDatas(UserShort user)
+            internal Boolean CommitChangedUserDatas(UserShort user, Boolean isRightPWChange, String OldPassword="", String NewPassword="", String NewPasswordConfirm="")
             {
                 rc.EndPoint = "api/User";
                 rc.Method = HttpVerb.POST;
@@ -65,6 +68,20 @@ namespace Client.MyAccount
                     return false;
                 }
             }
+
+            internal Boolean ChangeUserPassword(UserShort user, String OldPassword, String NewPassword, String NewConfirmedPassword)
+            {
+                ChangePasswordBindingModel passwordmodel = new ChangePasswordBindingModel();
+                passwordmodel.NewPassword = NewPassword;
+                passwordmodel.OldPassword = OldPassword;
+                passwordmodel.ConfirmPassword = NewConfirmedPassword;
+                rc.EndPoint = "api/Account/ChangePassword";
+                rc.Method = HttpVerb.POST;
+                rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
+                rc.PostData = JsonConvert.SerializeObject(passwordmodel);
+                var jsonPW = rc.MakeRequest();
+                return true;
+            }
         }
 
         protected void Exit(object sender, EventArgs e)
@@ -74,13 +91,11 @@ namespace Client.MyAccount
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            TextBoxEmail.Visible = true;
-            TextBoxEmail.Enabled = false;
-            string sendertext = e.ToString();
+            TextBoxUsername.Enabled = false;
+            MessagesDiv.Visible = false;
             client = new RestClientProgram();
             client.rc = RestClient.GetInstance(Session.SessionID);
             user = new UserShort();
-            Label1.Visible = false;
             hasChangedDatas = false;
             user = client.getUserDetailed();
             TextBoxEmail.Text = user.Email;          
@@ -90,25 +105,33 @@ namespace Client.MyAccount
         {     
             if (hasChangedDatas)
             {
-                UserShort user = new UserShort(TextBoxEmail.Text, TextBoxFirstname.Text, TextBoxLastname.Text, TextBoxUsername.Text, TextBoxSecretQuestion.Text, TextBoxAnswer.Text);
-                if (client.CommitChangedUserDatas(user))
+                UserShort user = new UserShort(TextBoxEmail.Text, TextBoxFirstname.Text, TextBoxLastname.Text, TextBoxUsername.Text, TextBoxSecretQuestion.Text, TextBoxAnswer.Text, TextBoxPassword.Text);
+                if (client.CommitChangedUserDatas(user, isRightPWChange, user.Password, TextBoxPassword.Text, TextBoxConfirmPassword.Text))
                 {
+                    MessagesDiv.Visible = true;
                     user = client.getUserDetailed();
-                    Label1.Visible = true;
-                    Label1.BackColor = System.Drawing.ColorTranslator.FromHtml("#66FF99");
-                    Label1.Text = "Änderungen übernommen<br />";
+                    //Label1.BackColor = System.Drawing.ColorTranslator.FromHtml("#66FF99");
+                    Label1.Text = "Changes commitet<br />";
                     Label1.Text = Label1.Text +"Email: "+ user.Email+"<br />";
                     Label1.Text = Label1.Text +"Firstname: "+ user.FirstName + "<br />";
                     Label1.Text = Label1.Text + "Lastname: " + user.LastName + "<br />";
                     Label1.Text = Label1.Text +"Username: "+ user.UserName + "<br />";
                     Label1.Text = Label1.Text +"SecretQuestion: "+ user.SecretQuestion + "<br />";
                     Label1.Text = Label1.Text +"Answer: "+ user.Answer + "<br />";
+                    if (isRightPWChange)
+                    {
+                        client.ChangeUserPassword(user, TextBoxOldPassword.Text, TextBoxPassword.Text, TextBoxConfirmPassword.Text);
+                        Label1.Text = Label1.Text + "Password: " + TextBoxPassword.Text + "<br />";
+                    }
+                    else
+                    {
+                        Label1.Text = Label1.Text + "Password Error: Invalid password entries!<br />";
+                    }
                 }
                 else
                 {
-                    Label1.Visible = true;
-                    Label1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF6666");
-                    Label1.Text = "Änderungen konnten nicht übernommen werden";
+                    //Label1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF6666");
+                    Label1.Text = "Changes not commitet!";
                 }
             }                              
         }
@@ -116,32 +139,119 @@ namespace Client.MyAccount
         protected void TextBoxFirstnameChanged(object sender, EventArgs e)
         {
             if (TextBoxFirstname.Text != "")
-                    hasChangedDatas = true;
+            {
+                hasChangedDatas = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text =Label1.Text+ "Invalid Firstname entry!";
+            }
+                   
              
         }
 
         protected void TextBoxLastnameChanged(object sender, EventArgs e)
         {
             if (TextBoxLastname.Text != "")
-                    hasChangedDatas = true;
+            {
+                hasChangedDatas = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text = Label1.Text + "Invalid Lastname entry!";
+            }
+                   
         }
 
         protected void TextBoxUsernameChanged(object sender, EventArgs e)
         {
             if (TextBoxUsername.Text != "")
-                    hasChangedDatas = true;
+            {
+                hasChangedDatas = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text = Label1.Text + "Invalid Username entry!";
+            }
+                    
         }
 
         protected void TextBoxSecretQuestionChanged(object sender, EventArgs e)
         {
             if (TextBoxSecretQuestion.Text != "")
-                    hasChangedDatas = true;
+            {
+                hasChangedDatas = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text = Label1.Text + "Invalid SecretQuestion entry!";
+            }
+                    
         }
 
         protected void TextBoxAnswerChanged(object sender, EventArgs e)
         {
             if (TextBoxAnswer.Text != "")
-                    hasChangedDatas = true;
+            {
+                hasChangedDatas = true;
+            }
+            
+                    
+        }
+
+        protected void TextBoxPasswordChanged(object sender, EventArgs e)
+        {
+            if (TextBoxPassword.Text != "" && TextBoxPassword.Text == TextBoxConfirmPassword.Text && TextBoxOldPassword.Text != "")
+            {
+                hasChangedDatas = true;
+                isRightPWChange = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text = "Invalid password entries!";
+            }
+                
+        }
+
+        protected void TextBoxPasswordConfirmChanged(object sender, EventArgs e)
+        {
+            if (TextBoxConfirmPassword.Text != "" && TextBoxPassword.Text == TextBoxConfirmPassword.Text && TextBoxOldPassword.Text!="")
+            {
+                hasChangedDatas = true;
+                isRightPWChange = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text = "Invalid password entries!";
+            }
+                
+        }
+
+        protected void TextBoxOldPasswordChanged(object sender, EventArgs e)
+        {
+            if (TextBoxConfirmPassword.Text != "" && TextBoxPassword.Text == TextBoxConfirmPassword.Text && TextBoxOldPassword.Text != "")
+            {
+                hasChangedDatas = true;
+                isRightPWChange = true;
+            }
+            else
+            {
+                MessagesDiv.Visible = true;
+                Label1.Text = "Invalid password entries!";
+            }
+
+        }
+
+        protected void OnNextButtonClick(object sender, EventArgs e)
+        {
+            Server.Transfer("~/Default.aspx");
+
         }
 
     }

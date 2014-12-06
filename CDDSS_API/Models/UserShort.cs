@@ -19,6 +19,7 @@ namespace CDDSS_API
         public string UserName {get; set;}
         public string SecretQuestion {get; set;}
         public string Answer {get; set;}
+        public string Password { get; set; }
 
         public UserShort()
         {
@@ -39,7 +40,7 @@ namespace CDDSS_API
             Email = email;
         }
 
-        public UserShort(string email, string firstName, string lastName, string username, string secretquestion, string answer)
+        public UserShort(string email, string firstName, string lastName, string username, string secretquestion, string answer, string password)
         {
             Email = email;
             FirstName = firstName;
@@ -47,6 +48,7 @@ namespace CDDSS_API
             UserName = username;
             SecretQuestion = secretquestion;
             Answer = answer;
+            Password = password;
         }
     }
 }
