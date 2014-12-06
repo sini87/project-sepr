@@ -40,9 +40,12 @@ namespace CDDSS_API.Models
         public List<CriterionModel> Criterions { get; set; }
         [DataMember]
         public List<CriterionWeightModel> CriterionWeights { get; set; }
+        [DataMember]
+        public List<AccessRightModel> AccessUserList { get; set; }
 
         public IssueModel()
         {
+            AccessUserList = new List<AccessRightModel>();
             CriterionWeights = new List<CriterionWeightModel>();
             Tags = new List<TagModel>();
             Artefacts = new List<ArtefactModel>();
@@ -59,6 +62,7 @@ namespace CDDSS_API.Models
 
         public IssueModel(int id, string title, string status, double reviewRating)
         {
+            AccessUserList = new List<AccessRightModel>();
             CriterionWeights = new List<CriterionWeightModel>();
             Criterions = new List<Models.CriterionModel>();
             Tags = new List<TagModel>();

@@ -71,8 +71,14 @@ namespace CDDSS_API.Repository
             {
                 model.Documents.Add(doc.Name);
             }
-            foreach (AccessRight ar in issue.AccessRights)
+            UserShort us;
+            User u;
+            foreach (AccessRight ar in ctx.AccessRights.Where(x => x.Issue == issueID).ToList())
             {
+                u = ctx.Users.Where(x => x.AccessObject == ar.AccessObject).First();
+                us = new UserShort(u.FirstName, u.LastName, (int)u.AccessObject);
+                us.Email = u.Email;
+                model.AccessUserList.Add(new AccessRightModel(us, ar.Right));
                 model.AccessRights.Add(ar.AccessObject, ar.Right);
             }
             CriterionModel cm;
