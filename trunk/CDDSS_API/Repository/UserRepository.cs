@@ -69,13 +69,13 @@ namespace CDDSS_API.Repository
                             LastName = user.LastName,
                             //AO = (int)user.AccessObject,
                             Email = user.Email,
-                            //PasswordHash = user.PasswordHash,
+                            PasswordHash = user.PasswordHash,
                             //PhoneNumber = user.PhoneNumber,
                             UserName=user.UserName,
                             SecretQuestion=user.SecretQuestion,
                             Answer=user.Answer
                         };
-            UserShort usershort = new UserShort(query.First().Email, query.First().FirstName, query.First().LastName, query.First().UserName, query.First().SecretQuestion, query.First().Answer);
+            UserShort usershort = new UserShort(query.First().Email, query.First().FirstName, query.First().LastName, query.First().UserName, query.First().SecretQuestion, query.First().Answer, query.First().PasswordHash);
             return usershort;
         }
 

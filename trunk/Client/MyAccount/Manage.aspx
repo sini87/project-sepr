@@ -12,7 +12,7 @@
     <span class="auto-style1">Here you can edit your userprofile</span><br />
     <asp:Table ID="Table1" runat="server" CellSpacing="10">
         <asp:TableRow >
-            <asp:TableCell>Email: </asp:TableCell>
+            <asp:TableCell Enabled="False">Email: </asp:TableCell>
             <asp:TableCell ID="Cell1"><asp:TextBox ID="TextBoxEmail" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
@@ -36,6 +36,18 @@
             <asp:TableCell ID="Cell8"><asp:TextBox OnTextChanged="TextBoxAnswerChanged"  ID="TextBoxAnswer" runat="server"></asp:TextBox></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
+            <asp:TableCell>Old Password: </asp:TableCell>
+            <asp:TableCell ID="Cell9"><asp:TextBox OnTextChanged="TextBoxOldPasswordChanged"  ID="TextBoxOldPassword" runat="server"></asp:TextBox></asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>Password: </asp:TableCell>
+            <asp:TableCell ID="Cell10"><asp:TextBox OnTextChanged="TextBoxPasswordChanged"  ID="TextBoxPassword" runat="server"></asp:TextBox></asp:TableCell>
+        </asp:TableRow>
+             <asp:TableRow>
+            <asp:TableCell>Confirm Password: </asp:TableCell>
+            <asp:TableCell ID="Cell11"><asp:TextBox OnTextChanged="TextBoxPasswordConfirmChanged"  ID="TextBoxConfirmPassword" runat="server"></asp:TextBox></asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
             <asp:TableCell>
                 
             </asp:TableCell>
@@ -43,9 +55,19 @@
                 <asp:Button OnClick="OnSubmitButtonClick" Width="99%" ID="Button1" runat="server" Text="Ändern"/>
             </asp:TableCell> 
         </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                
+            </asp:TableCell>
+            <asp:TableCell>
+                <asp:Button OnClick="OnNextButtonClick" Width="99%" ID="Button2" runat="server" Text="Weiter"/>
+            </asp:TableCell> 
+        </asp:TableRow>
     </asp:Table>   
     <br />
+    <div ID="MessagesDiv" runat="server" style="color:lightgreen">
+        <asp:Label ID="Label1" runat="server" Text="Label" BackColor="Black"></asp:Label>
+    </div>
     
-    <asp:Label ID="Label1" runat="server" Text="Label" BackColor="Black"></asp:Label>
     
 </asp:Content>
