@@ -11,9 +11,6 @@ namespace Client
 {
     public partial class IssueDetail : System.Web.UI.Page
     {
-        int rowsCntCriteriaTable;
-        int rowsCntAlternativeTable;
-        int rowsCntCommentTable;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,6 +20,7 @@ namespace Client
 
                 if (this.User.Identity.IsAuthenticated && rc != null)
                 {
+                    
                     String issueId = Request.QueryString["issueId"];
 
                     rc.EndPoint = "api/Issue?issueId=" + issueId;
@@ -136,10 +134,6 @@ namespace Client
                         lDocuments.Text = "No documents";
                         documents.Controls.Add(lDocuments);
                     }
-
-                    generateCriteriaTable();
-                    generateAlternativeTable();
-
                 }
             }
             catch (Exception ex)
@@ -148,138 +142,14 @@ namespace Client
             }
         }
 
-
-        protected void addCriteria_Click(object sender, EventArgs e)
-        {         
-            rowsCntCriteriaTable = int.Parse(rowCountCriteria.Value);
-            rowsCntCriteriaTable++;
-            rowCountCriteria.Value = rowsCntCriteriaTable.ToString();
-
-            TextBox tbName = new TextBox();
-            tbName.ID = "criteriaName" + rowsCntCriteriaTable;
-
-            TextBox tbDescrption = new TextBox();
-            tbDescrption.ID = "criteriaDescription" + rowsCntCriteriaTable;
-
-            TableRow row = new TableRow();
-            TableCell cellName = new TableCell();
-            TableCell cellDesc = new TableCell();
-
-            cellName.Controls.Add(tbName);
-            row.Cells.Add(cellName);
-            cellDesc.Controls.Add(tbDescrption);
-            row.Cells.Add(cellDesc);
-
-            row.Cells.Add(cellName);
-            row.Cells.Add(cellDesc);
-
-            criteriaTable.Rows.Add(row);
-
+        protected void save_Click(object sender, EventArgs e)
+        {
            
-        }
+            var hidCriteriaValue = hiddenCriteria.Value;
+            var hidCritWeightValue = hiddenCriteriaWeight.Value;
+            var hidAlternativeValue = hiddenAlternatives.Value;
 
 
-        protected void addAlternative_Click(object sender, EventArgs e)
-        {
-            rowsCntAlternativeTable = int.Parse(rowCountAlternatives.Value);
-            rowsCntAlternativeTable++;
-            rowCountAlternatives.Value = rowsCntAlternativeTable.ToString();
-
-            TextBox tbName = new TextBox();
-            tbName.ID = "alternativeName" + rowsCntAlternativeTable;
-
-            TextBox tbDescrption = new TextBox();
-            tbDescrption.ID = "alternativeDescription" + rowsCntAlternativeTable;
-
-            TextBox tbReason = new TextBox();
-            tbDescrption.ID = "alternativeReson" + rowsCntAlternativeTable;
-
-            TableRow row = new TableRow();
-            TableCell cellName = new TableCell();
-            TableCell cellDesc = new TableCell();
-            TableCell cellReason = new TableCell();
-
-            cellName.Controls.Add(tbName);
-            row.Cells.Add(cellName);
-            cellDesc.Controls.Add(tbDescrption);
-            row.Cells.Add(cellDesc);
-            cellReason.Controls.Add(tbReason);
-            row.Cells.Add(cellReason);
-
-            row.Cells.Add(cellName);
-            row.Cells.Add(cellDesc);
-            row.Cells.Add(cellReason);
-
-            alternativesTable.Rows.Add(row);
-        }
-
-        private void generateCriteriaTable()
-        {
-            rowsCntCriteriaTable = int.Parse(rowCountCriteria.Value);
-
-            for (int i = 1; i <= rowsCntCriteriaTable; i++)
-            {
-                TextBox tbName = new TextBox();
-                tbName.ID = "criteriaName" + i;
-
-                TextBox tbDescrption = new TextBox();
-                tbDescrption.ID = "criteriaDescription" + i;
-
-                TableRow row = new TableRow();
-                TableCell cellName = new TableCell();
-                TableCell cellDesc = new TableCell();
-
-                cellName.Controls.Add(tbName);
-                row.Cells.Add(cellName);
-                cellDesc.Controls.Add(tbDescrption);
-                row.Cells.Add(cellDesc);
-
-                row.Cells.Add(cellName);
-                row.Cells.Add(cellDesc);
-
-                criteriaTable.Rows.Add(row);
-                criteriaTable.Visible = true;
-                                
-            }
-
-        }
-
-        private void generateAlternativeTable()
-        {
-            rowsCntAlternativeTable = int.Parse(rowCountAlternatives.Value);
-
-            for (int i = 1; i <= rowsCntAlternativeTable; i++)
-            {
-                TextBox tbName = new TextBox();
-                tbName.ID = "alternativeName" + i;
-
-                TextBox tbDescrption = new TextBox();
-                tbDescrption.ID = "alternativeDescription" + i;
-
-                TextBox tbReason = new TextBox();
-                tbDescrption.ID = "alternativeReson" + i;
-
-                TableRow row = new TableRow();
-                TableCell cellName = new TableCell();
-                TableCell cellDesc = new TableCell();
-                TableCell cellReason = new TableCell();
-
-                cellName.Controls.Add(tbName);
-                row.Cells.Add(cellName);
-                cellDesc.Controls.Add(tbDescrption);
-                row.Cells.Add(cellDesc);
-                cellReason.Controls.Add(tbReason);
-                row.Cells.Add(cellReason);
-
-                row.Cells.Add(cellName);
-                row.Cells.Add(cellDesc);
-                row.Cells.Add(cellReason);
-
-                alternativesTable.Rows.Add(row);
-                alternativesTable.Visible = true;
-            }
-
-            
         }
     }
 }

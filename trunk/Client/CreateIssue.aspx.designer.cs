@@ -40,6 +40,15 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Table tagsTable;
         
         /// <summary>
+        /// drpTags control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpTags;
+        
+        /// <summary>
         /// addTags control.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace Client {
         protected global::System.Web.UI.WebControls.LinkButton addTags;
         
         /// <summary>
+        /// createNewTag control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton createNewTag;
+        
+        /// <summary>
         /// description control.
         /// </summary>
         /// <remarks>
@@ -56,24 +74,6 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox description;
-        
-        /// <summary>
-        /// user control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel user;
-        
-        /// <summary>
-        /// addUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addUser;
         
         /// <summary>
         /// rowCountStakeholder control.
@@ -94,6 +94,15 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Table stakeholderTable;
         
         /// <summary>
+        /// drpStakeholders control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpStakeholders;
+        
+        /// <summary>
         /// addStakeholders control.
         /// </summary>
         /// <remarks>
@@ -103,102 +112,156 @@ namespace Client {
         protected global::System.Web.UI.WebControls.LinkButton addStakeholders;
         
         /// <summary>
-        /// documentUpload control.
+        /// rowCountArtefacts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel documentUpload;
+        protected global::System.Web.UI.WebControls.HiddenField rowCountArtefacts;
         
         /// <summary>
-        /// FileUpload control.
+        /// artefactTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload;
+        protected global::System.Web.UI.WebControls.Table artefactTable;
         
         /// <summary>
-        /// rowCountCriteria control.
+        /// drpArtefacts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField rowCountCriteria;
+        protected global::System.Web.UI.WebControls.DropDownList drpArtefacts;
         
         /// <summary>
-        /// criteriaTable control.
+        /// addArtefact control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table criteriaTable;
+        protected global::System.Web.UI.WebControls.LinkButton addArtefact;
         
         /// <summary>
-        /// addCriteria control.
+        /// rowCountFactors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addCriteria;
+        protected global::System.Web.UI.WebControls.HiddenField rowCountFactors;
         
         /// <summary>
-        /// criteriaWeight control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel criteriaWeight;
+        protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
-        /// addComment control.
+        /// drpFactors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addComment;
+        protected global::System.Web.UI.WebControls.DropDownList drpFactors;
         
         /// <summary>
-        /// rowCountAlternatives control.
+        /// addFactor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField rowCountAlternatives;
+        protected global::System.Web.UI.WebControls.LinkButton addFactor;
         
         /// <summary>
-        /// alternativesTable control.
+        /// user control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table alternativesTable;
+        protected global::System.Web.UI.WebControls.Panel user;
         
         /// <summary>
-        /// addAlternative control.
+        /// addUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addAlternative;
+        protected global::System.Web.UI.WebControls.LinkButton addUser;
         
         /// <summary>
-        /// BtnCreateIssue control.
+        /// relations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnCreateIssue;
+        protected global::System.Web.UI.WebControls.Panel relations;
+        
+        /// <summary>
+        /// txtRelation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRelation;
+        
+        /// <summary>
+        /// drpRelation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpRelation;
+        
+        /// <summary>
+        /// addRelation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addRelation;
+        
+        /// <summary>
+        /// addDocument control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addDocument;
+        
+        /// <summary>
+        /// save control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button save;
+        
+        /// <summary>
+        /// savePublish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button savePublish;
     }
 }
