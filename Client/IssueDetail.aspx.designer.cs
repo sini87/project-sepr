@@ -112,75 +112,39 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel users;
         
         /// <summary>
-        /// rowCountCriteria control.
+        /// hiddenCriteria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField rowCountCriteria;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenCriteria;
         
         /// <summary>
-        /// criteriaTable control.
+        /// hiddenCriteriaWeight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table criteriaTable;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenCriteriaWeight;
         
         /// <summary>
-        /// addCriteria control.
+        /// hiddenAlternatives control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addCriteria;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenAlternatives;
         
         /// <summary>
-        /// criteriaWeight control.
+        /// save control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel criteriaWeight;
-        
-        /// <summary>
-        /// addComment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addComment;
-        
-        /// <summary>
-        /// rowCountAlternatives control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField rowCountAlternatives;
-        
-        /// <summary>
-        /// alternativesTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table alternativesTable;
-        
-        /// <summary>
-        /// addAlternative control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addAlternative;
+        protected global::System.Web.UI.WebControls.Button save;
     }
 }

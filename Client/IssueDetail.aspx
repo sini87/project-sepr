@@ -1,13 +1,51 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IssueDetail.aspx.cs" Inherits="Client.IssueDetail" %>
+<asp:Content runat="server" ContentPlaceHolderID="HeadContent">
 
+    <script src="Scripts/AddCriteria.js"></script>
+    <script src="Scripts/AddCriteriaWeight.js"></script>
+    <script src="Scripts/AddAlternative.js"></script>
+
+    <script src="Scripts/jquery-2.1.1.js" type="text/javascript"></script>
+    <script type="text/javascript"> 
+       
+        $(document).ready(function () {
+            getData();
+        });
+        
+        function getData() {
+            $('#save').click(function () {
+                var hiddenValues = "";
+                $(".getCriteria").each(function () {
+                    hiddenValues += $(this).val() + ",";
+                });
+                $("#hiddenCriteria").val(hiddenValues);// var test = $("#hiddenCriteria").val(); alert(test);
+
+                hiddenValues = "";
+                $(".getCriteriaWeight").each(function () {
+                    hiddenValues += $(this).val() + ",";
+                });
+                $("#hiddenCriteriaWeight").val(hiddenValues);// var test = $("#hiddenCriteriaWeight").val(); alert(test);
+
+                hiddenValues = "";
+                $(".getAlternative").each(function () {
+                    hiddenValues += $(this).val() + ",";
+                });
+                $("#hiddenAlternatives").val(hiddenValues);// var test = $("#hiddenAlternatives").val(); alert(test);
+
+            });
+        }
+                
+    </script>
+</asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h1>Issue</h1>
     <br />
+
     <hr />
     <asp:Panel runat="server" ID="issueTitle"></asp:Panel><br />
 
     <asp:Panel runat="server" ID="rating" /><br />
-    <asp:Panel runat="server" ID="tag"></asp:Panel><br />
+    <asp:Panel runat="server" ID="tag" class="tag"></asp:Panel><br />
     <asp:Panel runat="server" ID="status"></asp:Panel><br />
     <h3>Description</h3><br />
     <asp:Panel runat="server" ID="description"></asp:Panel><br />
@@ -34,34 +72,36 @@
     <hr />
 
     <h3>Criteria</h3>
-    <asp:HiddenField ID="rowCountCriteria" runat="server" Value="1" />
-    <asp:Table ID="criteriaTable" runat="server" Width="50%" Visible="false">  
-        <asp:TableHeaderRow>                
-                <asp:TableCell>Name</asp:TableCell>
-                <asp:TableCell>Description</asp:TableCell>
-        </asp:TableHeaderRow>
-    </asp:Table>
+ 
+    <div id="criteria">
+        <a id="btAddCriteria" class="crit">add criteria</a>
+        <a id="btRemoveCriteria" class="crit" />remove criteria</a>
+        <a id="btRemoveAllCriteria" class="crit" />remove all</a><br />
+    </div>
+    <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
 
-    <asp:LinkButton runat="server" ID="addCriteria" OnClick="addCriteria_Click">add criteria</asp:LinkButton>
     <hr />
-
     <h3>Criteria Weight</h3>
-    <asp:Panel runat="server" ID="criteriaWeight"></asp:Panel><br />
-    <asp:LinkButton runat="server" ID="addComment">add comment</asp:LinkButton>
+ 
+    <div id="criteriaWeight">
+        <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
+        <a id="btRemoveCriteriaWeight" class="critWeight" />remove criteria weight</a>
+        <a id="btRemoveAllCriteriaWeight" class="critWeight" />remove all</a><br />
+    </div>
     <hr />
-
+    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/>
+    
     <h3>Alternatives</h3>
-    <asp:HiddenField ID="rowCountAlternatives" runat="server" Value="1" />
-    <asp:Table ID="alternativesTable" runat="server" Width="50%" Visible="false">  
-        <asp:TableHeaderRow>                
-                <asp:TableCell>Name</asp:TableCell>
-                <asp:TableCell>Description</asp:TableCell>
-                <asp:TableCell>Reason</asp:TableCell>
-        </asp:TableHeaderRow>
-    </asp:Table>
-    <asp:LinkButton runat="server" ID="addAlternative" OnClick="addAlternative_Click">add alternative</asp:LinkButton>
+   
+    <div id="alternatives">
+        <a id="btAddAlternative" class="alternative">add alternative</a>
+        <a id="btRemoveAlternative" class="alternative" />remove alternative</a>
+        <a id="btRemoveAllAlternative" class="alternative" />remove all</a><br />
+    </div>
+    <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
     <br />
     <br />
-    <button>Save</button> <button>Finish Phase</button>
+    
+<asp:Button ID="save" runat="server" Text="Save" OnClientClick="return getData(); return false;" ClientIDMode="Static" OnClick="save_Click"/>
 </asp:Content>
 
