@@ -90,7 +90,7 @@
 
     <hr />
     <h3>Criteria Weight</h3>
- 
+    <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
     <div id="criteriaWeight" runat="server" visible="false">
         <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
         <a id="btRemoveCriteriaWeight" class="critWeight" />remove criteria weight</a>
@@ -100,7 +100,7 @@
     <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/>
     
     <h3>Alternatives</h3>
-   
+    <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
     <div id="alternatives" runat="server" visible="false">
         <a id="btAddAlternative" class="alternative">add alternative</a>
         <a id="btRemoveAlternative" class="alternative" />remove alternative</a>
