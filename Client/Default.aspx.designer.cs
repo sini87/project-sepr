@@ -13,22 +13,58 @@ namespace Client {
     public partial class _Default {
         
         /// <summary>
-        /// text control.
+        /// headingIssuesOwned control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label text;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl headingIssuesOwned;
         
         /// <summary>
-        /// IssueTable control.
+        /// issuesOwnedText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table IssueTable;
+        protected global::System.Web.UI.WebControls.Label issuesOwnedText;
+        
+        /// <summary>
+        /// OwnedIssueTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel OwnedIssueTable;
+        
+        /// <summary>
+        /// headingInvolvedIssues control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl headingInvolvedIssues;
+        
+        /// <summary>
+        /// involvedIssuesText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label involvedIssuesText;
+        
+        /// <summary>
+        /// InvolvedIssueTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel InvolvedIssueTable;
         
         /// <summary>
         /// landingpage_button control.
