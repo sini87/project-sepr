@@ -1,0 +1,163 @@
+﻿html { 
+  background: url("../Images/bg_dark.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#MainContent_CreateUserWizard {
+    background-color:#ffffff;
+    border-collapse:separate;
+    border-radius:8px;
+    -moz-border-radius:8px;
+    margin:auto;
+}
+
+#td_icon {
+    background-color:#00796B;
+    border-collapse:separate;
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
+    -moz-border-top-radius:6px;
+    -moz-border-top-right-radius:6px;
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+#login_bg {
+    margin-top:-12px;
+    width:20px;
+}
+
+.td_bold {
+    font-weight:bold;
+    padding-top:5px;
+}
+
+#MainContent_CreateUserWizard_CreateUserStepContainer_Email {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_CreateUserStepContainer_Password {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_CreateUserStepContainer_ConfirmPassword {
+    margin-top:15px;
+}
+
+#MainContent_Login1_RememberMe {
+    margin-left:30px;
+    margin-right:5px;
+}
+
+label[for=MainContent_Login1_RememberMe] {
+    font-size: 0.75em;
+    font-weight:normal;
+    vertical-align:top;
+    margin-top:3px;
+}
+
+#MainContent_CreateUserWizard___CustomNav0_StepNextButtonButton {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.5em;
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+    background-color:#009688;
+    border: 0px;
+
+    width:100%;
+}
+
+#MainContent_CreateUserWizard___CustomNav0_StepNextButtonButton:hover {
+    background-color:#00796B;
+}
+
+td[align=center] {
+    padding-left:30px;
+    padding-right:30px;
+}
+
+#MainContent_CreateUserWizard_CreateUserStepContainer_noaccount {
+    color:#009688;
+    text-decoration:underline;
+}
+
+#td_link {
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+#MainContent_CreateUserWizard_CreateUserStepContainer_noaccount:hover {
+    color:#00796B;
+    background-color:none;
+}
+
+.td_failure {
+    background-color:#F2DEDE;
+    color:#C34A48;
+}
+
+#MainContent_CreateUserWizard_FirstName {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_LastName {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_Question2 {
+    margin-top:15px;
+}
+
+#MainContent_CreateUserWizard_Answer2 {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+#MainContent_CreateUserWizard_StepNavigationTemplateContainerID_StepNextButton {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.5em;
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+    background-color:#009688;
+    border: 0px;
+
+    width:100%;
+}
+
+#MainContent_CreateUserWizard_StepNavigationTemplateContainerID_StepNextButton:hover {
+    background-color:#00796B;
+}
+
+/* go on page width of button */
+table[cellspacing="5"] {
+    width:100%;
+}
+
+#MainContent_CreateUserWizard_CompleteStepContainer_ContinueButton {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.5em;
+    color:#ffffff;
+
+    margin-top:15px;
+    margin-bottom:15px;
+
+    background-color:#009688;
+    border: 0px;
+
+    width:100%;
+}
+
+#MainContent_CreateUserWizard_CompleteStepContainer_ContinueButton:hover {
+    background-color:#00796B;
+}
+
+#MainContent_CreateUserWizard_StepNavigationTemplateContainerID_StepPreviousButton{
+    display:none;
+}

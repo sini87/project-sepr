@@ -15,7 +15,6 @@
     </asp:Table>
     
     <asp:LinkButton runat="server" ID="addTags" OnClick="addTags_Click">add tag</asp:LinkButton>
-    <asp:LinkButton runat="server" ID="createNewTag" OnClick="createNewTag_Click">acreate new tag</asp:LinkButton><br />
 <h2>Description</h2>
 <asp:TextBox runat="server" ID="description" Width="80%"></asp:TextBox><br />
 

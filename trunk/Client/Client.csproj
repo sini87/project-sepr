@@ -201,6 +201,8 @@
     <Content Include="Content\themes\base\minified\images\cddss.css" />
     <Content Include="Content\themes\base\minified\images\login.css" />
     <Content Include="Content\themes\base\minified\images\Site.css" />
+    <Content Include="Content\themes\base\minified\login.css" />
+    <Content Include="Content\themes\base\minified\register.css" />
     <Content Include="Content\themes\base\minified\Site.css" />
     <Content Include="Content\themes\base\minified\cddss.css" />
     <Content Include="Content\themes\base\progressbar.css" />
@@ -225,6 +227,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Images\avatar_woman.png" />
     <Content Include="IssueDetail.aspx" />
+    <Content Include="Profile.aspx" />
     <Content Include="Scripts\AddAlternative.js" />
     <Content Include="Scripts\AddCriteria.js" />
     <Content Include="Scripts\AddCriteriaWeight.js" />
@@ -411,6 +414,13 @@
     </Compile>
     <Compile Include="MyAccount\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyAccount\Register.aspx.cs">

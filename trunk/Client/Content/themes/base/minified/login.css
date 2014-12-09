@@ -1,0 +1,102 @@
+﻿html { 
+  background: url("../Images/bg_dark.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#MainContent_Login1 {
+    background-color:#ffffff;
+    border-collapse:separate;
+    border-radius:8px;
+    -moz-border-radius:8px;
+    margin:auto;
+}
+
+#td_icon {
+    background-color:#00796B;
+    border-collapse:separate;
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
+    -moz-border-top-radius:6px;
+    -moz-border-top-right-radius:6px;
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+#login_bg {
+    margin-top:-12px;
+    width:20px;
+}
+
+.td_bold {
+    font-weight:bold;
+    padding-top:5px;
+}
+
+#MainContent_Login1_UserName {
+    margin-top:15px;
+}
+
+#MainContent_Login1_Password {
+    margin-top:15px;
+}
+
+#MainContent_Login1_RememberMe {
+    margin-left:30px;
+    margin-right:5px;
+}
+
+label[for=MainContent_Login1_RememberMe] {
+    font-size: 0.75em;
+    font-weight:normal;
+    vertical-align:top;
+    margin-top:3px;
+}
+
+#MainContent_Login1_LoginButton {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.5em;
+    color:#ffffff;
+
+    margin-bottom:15px;
+
+    background-color:#009688;
+    border: 0px;
+
+    width:100%;
+}
+
+#MainContent_Login1_LoginButton:hover {
+    background-color:#00796B;
+}
+
+td[align=center] {
+    padding-left:30px;
+    padding-right:30px;
+}
+
+#MainContent_Login1_noaccount {
+    color:#009688;
+    text-decoration:underline;
+}
+
+#td_link {
+    padding-bottom:15px;
+}
+
+#MainContent_Login1_noaccount:hover {
+    color:#00796B;
+    background-color:none;
+}
+
+#td_button {
+    padding-left:0px;
+    padding-right:0px;
+}
+
+.td_failure {
+    background-color:#F2DEDE;
+    color:#C34A48;
+}
