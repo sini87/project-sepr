@@ -16,19 +16,19 @@
             $('#save').click(function () {
                 var hiddenValues = "";
                 $(".getCriteria").each(function () {
-                    hiddenValues += $(this).val() + ",";
+                    hiddenValues += $(this).val() + ";";
                 });
                 $("#hiddenCriteria").val(hiddenValues);// var test = $("#hiddenCriteria").val(); alert(test);
 
                 hiddenValues = "";
                 $(".getCriteriaWeight").each(function () {
-                    hiddenValues += $(this).val() + ",";
+                    hiddenValues += $(this).val() + ";";
                 });
                 $("#hiddenCriteriaWeight").val(hiddenValues);// var test = $("#hiddenCriteriaWeight").val(); alert(test);
 
                 hiddenValues = "";
                 $(".getAlternative").each(function () {
-                    hiddenValues += $(this).val() + ",";
+                    hiddenValues += $(this).val() + ";";
                 });
                 $("#hiddenAlternatives").val(hiddenValues);// var test = $("#hiddenAlternatives").val(); alert(test);
 
@@ -72,7 +72,7 @@
     <hr />
 
     <h3>Criteria</h3>
- 
+    <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
     <div id="criteria">
         <a id="btAddCriteria" class="crit">add criteria</a>
         <a id="btRemoveCriteria" class="crit" />remove criteria</a>
@@ -102,6 +102,6 @@
     <br />
     <br />
     
-<asp:Button ID="save" runat="server" Text="Save" OnClientClick="return getData(); return false;" ClientIDMode="Static" OnClick="save_Click"/>
+<asp:Button ID="save" runat="server" Text="Save" OnClientClick="return getData(); return false;" ClientIDMode="Static" OnClick="save_Click" Visible="false"/>
 </asp:Content>
 

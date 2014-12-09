@@ -11,7 +11,7 @@ namespace Client
 {
     public partial class IssueDetail : System.Web.UI.Page
     {
-
+        IssueModel issue;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -26,7 +26,7 @@ namespace Client
                     rc.EndPoint = "api/Issue?issueId=" + issueId;
                     rc.Method = HttpVerb.GET;
                     var json = rc.MakeRequest();
-                    var issue = JsonConvert.DeserializeObject<IssueModel>(json);
+                    issue = JsonConvert.DeserializeObject<IssueModel>(json);
 
                     Label lTitle = new Label();
                     lTitle.Text = issue.Title;
@@ -134,6 +134,34 @@ namespace Client
                         lDocuments.Text = "No documents";
                         documents.Controls.Add(lDocuments);
                     }
+
+                    Label lCriteriaName;
+                    Label lCriteriaDesc;
+                    Label lCriteriaWeight;
+                    if (issue.Criterions.Count > 0)
+                    {
+                        foreach (CriterionModel crit in issue.Criterions)
+                        {
+                            lCriteriaName = new Label();
+                            lCriteriaName.Text = crit.Name;
+                            criteriaPanel.Controls.Add(lCriteriaName);
+
+                            lCriteriaDesc = new Label();
+                            lCriteriaDesc.Text = crit.Description;
+                            criteriaPanel.Controls.Add(lCriteriaDesc);
+
+                            lCriteriaWeight = new Label();
+                            lCriteriaWeight.Text += ""+crit.Weight;
+                            criteriaPanel.Controls.Add(lCriteriaWeight);
+                        }
+                    }
+                    else{
+                        lCriteriaName = new Label();
+                        lCriteriaName.Text = "No Criterions";
+                        criteriaPanel.Controls.Add(lCriteriaName);
+                    }
+
+                    save.Visible = true;
                 }
             }
             catch (Exception ex)
@@ -144,12 +172,58 @@ namespace Client
 
         protected void save_Click(object sender, EventArgs e)
         {
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
            
-            var hidCriteriaValue = hiddenCriteria.Value;
-            var hidCritWeightValue = hiddenCriteriaWeight.Value;
-            var hidAlternativeValue = hiddenAlternatives.Value;
+            String hidCriteriaValue = hiddenCriteria.Value;
+            String hidCritWeightValue = hiddenCriteriaWeight.Value;
+            String hidAlternativeValue = hiddenAlternatives.Value;
+
+            if (!hidCriteriaValue.Equals(""))
+            {
+                hidCriteriaValue = hidCriteriaValue.Remove(hidCriteriaValue.Length - 1, 1);
+                String[] crit = hidCriteriaValue.Split(';');
+
+                int i = 0;
+                while (i < crit.Length)
+                {
+                    CriterionModel cm = new CriterionModel();
+                    cm.Name = crit[i];
+                    cm.Description = crit[i + 1];
+                    cm.Issue = issue.Id;
+                    cm.Weight = 0;
+                    cm.Ratings = null;
+                    i = i + 2;
+
+                    rc.EndPoint = "api/Criterion";
+                    rc.Method = HttpVerb.POST;
+                    var json = JsonConvert.SerializeObject(cm);
+                    rc.PostData = json;
+                    rc.MakeRequest();
+                }
+            }
+
+            if (!hidCritWeightValue.Equals(""))
+            {
+                hidCritWeightValue = hidCritWeightValue.Remove(hidCritWeightValue.Length - 1, 1);
+                String[] critWeigt = hidCritWeightValue.Split(';');
+            }
+
+            if (!hidAlternativeValue.Equals(""))
+            {
+                hidAlternativeValue = hidAlternativeValue.Remove(hidAlternativeValue.Length - 1, 1);
+                String[] critAlt = hidAlternativeValue.Split(';');
+            }
+            
+            
+            
 
 
-        }
+            
+
+           
+                
+
+         }
+
     }
 }

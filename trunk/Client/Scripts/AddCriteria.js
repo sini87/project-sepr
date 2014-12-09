@@ -1,15 +1,18 @@
 ﻿$(document).ready(function() {
     var iCnt = 0;
     // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
-    var container = $(document.createElement('div')).css({
-        padding: '5px', margin: '20px', width: '170px'});
+    var container = $(document.createElement('div'));//.css({padding: '5px', margin: '20px', width: '170px'});
 
     $('#btAddCriteria').click(function() {
         if (iCnt <= 19) {
             iCnt = iCnt + 1;
             // ADD TEXTBOX.
-            $(container).append('<input type=text class="getCriteria" id=criteria' + iCnt + ' ' +
-                        'value="Criteria ' + iCnt + '" />');
+            $(container).append('<input type=text class="getCriteria" id=criteriaName' + iCnt + ' ' +
+                        'value="Criteria Name ' + iCnt + '" />');
+            $(container).append('<input type=text class="getCriteria" id=criteriaDesc' + iCnt + ' ' +
+                        'value="Criteria Description' + iCnt + '" />');
+            //$(container).append('<input type=text class="getCriteria" id=criteriaWeight' + iCnt + ' ' +
+            //            'value="0.0" />');
 
             $('#criteria').before(container);
         }

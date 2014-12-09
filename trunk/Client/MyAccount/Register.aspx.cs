@@ -1,4 +1,6 @@
-﻿using Client.Model;
+﻿using CDDSS_API;
+using Client.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +47,13 @@ namespace Client
                 rc.Method = HttpVerb.POST;
 
                 rc.EndPoint = "api/User";
-                var json = rc.MakeRequest("?firstName=" + FirstName.Text + "&lastName=" + LastName.Text + "&secretQuestion=" + Question2.Text + "&answer=" + Answer2.Text);
+                UserShort us = new UserShort();
+                us.FirstName = FirstName.Text;
+                us.LastName = LastName.Text;
+                us.SecretQuestion = Question2.Text;
+                us.Answer = Answer2.Text;
+                rc.PostData = JsonConvert.SerializeObject(us);   
+                var json = rc.MakeRequest();
                 rc.User.Email = email;
                 rc.User.LastName = LastName.Text;
                 rc.User.FirstName = FirstName.Text;
