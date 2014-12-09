@@ -112,6 +112,24 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel users;
         
         /// <summary>
+        /// addUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl addUsers;
+        
+        /// <summary>
+        /// hiddenUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenUser;
+        
+        /// <summary>
         /// criteriaPanel control.
         /// </summary>
         /// <remarks>
@@ -119,6 +137,15 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel criteriaPanel;
+        
+        /// <summary>
+        /// criteria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl criteria;
         
         /// <summary>
         /// hiddenCriteria control.
@@ -130,6 +157,15 @@ namespace Client {
         protected global::System.Web.UI.WebControls.HiddenField hiddenCriteria;
         
         /// <summary>
+        /// criteriaWeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl criteriaWeight;
+        
+        /// <summary>
         /// hiddenCriteriaWeight control.
         /// </summary>
         /// <remarks>
@@ -137,6 +173,15 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenCriteriaWeight;
+        
+        /// <summary>
+        /// alternatives control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alternatives;
         
         /// <summary>
         /// hiddenAlternatives control.
@@ -155,5 +200,14 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button save;
+        
+        /// <summary>
+        /// saveNext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button saveNext;
     }
 }
