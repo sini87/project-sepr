@@ -32,7 +32,12 @@ namespace Client
                     rc.EndPoint = "api/Issue?issueId=" + issue.RelatedTo;
                     rc.Method = HttpVerb.GET;
                     var jsonRel = rc.MakeRequest();
-                    var issueRel = JsonConvert.DeserializeObject<IssueModel>(json);
+                    var issueRel = JsonConvert.DeserializeObject<IssueModel>(jsonRel);
+
+                    rc.EndPoint = "api/Alternative?issueId=" + issueId;
+                    rc.Method = HttpVerb.GET;
+                    var jsonAlt = rc.MakeRequest();
+                    var issueAlt = JsonConvert.DeserializeObject<List<AlternativeModel>>(jsonAlt);
 
                     generateTitle(issue);
                     generateStatus(issue);
@@ -47,7 +52,7 @@ namespace Client
                     generateUsers(issue);
                     generateCriteria(issue);
                     //generateCriteriaWeight(issue);
-                    //generateAlternatives(issue);
+                    generateAlternatives(issueAlt);
 
                     criteria.Visible = true;
                     criteriaWeight.Visible = true;
@@ -291,7 +296,7 @@ namespace Client
                     rowUser = new TableRow();
 
                     userPic = new TableCell();
-                    userPic.Text = "<img src=" + "~/Images/avatar_woman.png" + "/>";
+                    userPic.Text = "<img src=" + "'~/Images/avatar_woman.png'" + "/>";
                     rowUser.Cells.Add(userPic);
 
                     userName = new TableCell();
@@ -366,58 +371,66 @@ namespace Client
             }
         }
 
-        protected void generateAlternatives(IssueModel issue)
+        protected void generateAlternatives(List<AlternativeModel> alternatives)
         {
-            if (issue.Criterions.Count > 0)
+            if (alternatives.Count > 0)
             {
-                Table critTable = new Table();
-                critTable.Width = Unit.Percentage(100);
+                Table altTable = new Table();
+                altTable.Width = Unit.Percentage(100);
 
-                TableHeaderRow rowHeaderCriteria = new TableHeaderRow();
-                TableHeaderCell headerCellName = new TableHeaderCell();
-                headerCellName.Text = "Name";
-                TableHeaderCell headerCellDesc = new TableHeaderCell();
-                headerCellDesc.Text = "Description";
-                TableHeaderCell headerCellWeight = new TableHeaderCell();
-                headerCellWeight.Text = "Weight";
+                TableHeaderRow rowHeaderAlt = new TableHeaderRow();
+                TableHeaderCell headerAltName = new TableHeaderCell();
+                headerAltName.Text = "Name";
+                TableHeaderCell headerAltDesc = new TableHeaderCell();
+                headerAltDesc.Text = "Description";
+                TableHeaderCell headerAltReason = new TableHeaderCell();
+                headerAltReason.Text = "Reason";
+                TableHeaderCell headerAltRating = new TableHeaderCell();
+                headerAltRating.Text = "Rating";
 
-                rowHeaderCriteria.Cells.Add(headerCellName);
-                rowHeaderCriteria.Cells.Add(headerCellDesc);
-                rowHeaderCriteria.Cells.Add(headerCellWeight);
+                rowHeaderAlt.Cells.Add(headerAltName);
+                rowHeaderAlt.Cells.Add(headerAltDesc);
+                rowHeaderAlt.Cells.Add(headerAltReason);
+                rowHeaderAlt.Cells.Add(headerAltRating);
 
-                critTable.Rows.Add(rowHeaderCriteria);
+                altTable.Rows.Add(rowHeaderAlt);
 
-                TableRow rowCriteria;
-                TableCell criteriaName;
-                TableCell criteriaDesc;
-                TableCell criteriaWeight;
+                TableRow rowAlt;
+                TableCell altName;
+                TableCell altDesc;
+                TableCell altReas;
+                TableCell altRate;
 
-                foreach (CriterionModel crit in issue.Criterions)
+                foreach (AlternativeModel alt in alternatives)
                 {
-                    rowCriteria = new TableRow();
+                    rowAlt = new TableRow();
 
-                    criteriaName = new TableCell();
-                    criteriaName.Text = crit.Name;
-                    rowCriteria.Cells.Add(criteriaName);
+                    altName = new TableCell();
+                    altName.Text = alt.Name;
+                    rowAlt.Cells.Add(altName);
 
-                    criteriaDesc = new TableCell();
-                    criteriaDesc.Text = crit.Description;
-                    rowCriteria.Cells.Add(criteriaDesc);
+                    altDesc = new TableCell();
+                    altDesc.Text = alt.Description;
+                    rowAlt.Cells.Add(altDesc);
 
-                    criteriaWeight = new TableCell();
-                    criteriaWeight.Text += "" + crit.Weight;
-                    rowCriteria.Cells.Add(criteriaWeight);
+                    altReas = new TableCell();
+                    altReas.Text = alt.Reason;
+                    rowAlt.Cells.Add(altReas);
 
-                    critTable.Rows.Add(rowCriteria);
+                    altRate = new TableCell();
+                    altRate.Text = ""+alt.Rating;
+                    rowAlt.Cells.Add(altRate);
+
+                    altTable.Rows.Add(rowAlt);
                 }
 
-                criteriaPanel.Controls.Add(critTable);
+                alternativesPanel.Controls.Add(altTable);
             }
             else
             {
-                Label noCrit = new Label();
-                noCrit.Text = "No Criterions";
-                criteriaPanel.Controls.Add(noCrit);
+                Label noAlt = new Label();
+                noAlt.Text = "No Alternatives";
+                alternativesPanel.Controls.Add(noAlt);
             }
         }
 
