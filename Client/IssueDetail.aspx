@@ -42,10 +42,13 @@
     <br />
 
     <hr />
+    <h3>Title</h3>
     <asp:Panel runat="server" ID="issueTitle"></asp:Panel><br />
-
+    <h3>Rating</h3>
     <asp:Panel runat="server" ID="rating" /><br />
+    <h3>Tags</h3>
     <asp:Panel runat="server" ID="tag" class="tag"></asp:Panel><br />
+    <h3>Status</h3>
     <asp:Panel runat="server" ID="status"></asp:Panel><br />
     <h3>Description</h3><br />
     <asp:Panel runat="server" ID="description"></asp:Panel><br />
@@ -67,13 +70,18 @@
     <asp:Panel runat="server" ID="documents"></asp:Panel><br />
 
     <h3>User</h3><br />
-    <asp:Panel runat="server" ID="users"></asp:Panel><br />
-
+    <asp:Panel runat="server" ID="users"></asp:Panel>
+    <div id="addUsers" runat="server" visible="false">
+        <a id="btAddUsers" class="user" >add criteria</a>
+        <a id="btRemoveUsers" class="user" />remove criteria</a>
+        <a id="btRemoveAllUsers" class="user" />remove all</a><br />
+    </div>
+    <asp:HiddenField ID="hiddenUser" runat="server" ClientIDMode="Static"/><br />
     <hr />
 
     <h3>Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
-    <div id="criteria">
+    <div id="criteria" runat="server" visible="false">
         <a id="btAddCriteria" class="crit">add criteria</a>
         <a id="btRemoveCriteria" class="crit" />remove criteria</a>
         <a id="btRemoveAllCriteria" class="crit" />remove all</a><br />
@@ -83,7 +91,7 @@
     <hr />
     <h3>Criteria Weight</h3>
  
-    <div id="criteriaWeight">
+    <div id="criteriaWeight" runat="server" visible="false">
         <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
         <a id="btRemoveCriteriaWeight" class="critWeight" />remove criteria weight</a>
         <a id="btRemoveAllCriteriaWeight" class="critWeight" />remove all</a><br />
@@ -93,7 +101,7 @@
     
     <h3>Alternatives</h3>
    
-    <div id="alternatives">
+    <div id="alternatives" runat="server" visible="false">
         <a id="btAddAlternative" class="alternative">add alternative</a>
         <a id="btRemoveAlternative" class="alternative" />remove alternative</a>
         <a id="btRemoveAllAlternative" class="alternative" />remove all</a><br />
@@ -103,5 +111,7 @@
     <br />
     
 <asp:Button ID="save" runat="server" Text="Save" OnClientClick="return getData(); return false;" ClientIDMode="Static" OnClick="save_Click" Visible="false"/>
+<asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" OnClientClick="return getData(); return false;" ClientIDMode="Static" Visible="false" OnClick="saveNext_Click"/>
+
 </asp:Content>
 
