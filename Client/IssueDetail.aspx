@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IssueDetail.aspx.cs" Inherits="Client.IssueDetail" %>
 <asp:Content runat="server" ContentPlaceHolderID="HeadContent">
 
-    <script src="Scripts/AddCriteria.js"></script>
-    <script src="Scripts/AddCriteriaWeight.js"></script>
-    <script src="Scripts/AddAlternative.js"></script>
+    <script src="../Scripts/AddCriteria.js"></script>
+    <script src="../Scripts/AddCriteriaWeight.js"></script>
+    <script src="../Scripts/AddAlternative.js"></script>
 
-    <script src="Scripts/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery-2.1.1.js" type="text/javascript"></script>
     <script type="text/javascript"> 
        
         $(document).ready(function () {
@@ -71,42 +71,38 @@
 
     <h3>User</h3><br />
     <asp:Panel runat="server" ID="users"></asp:Panel>
-    <div id="addUsers">
-        <a id="btAddUsers" class="user" >add criteria</a>
-        <a id="btRemoveUsers" class="user" />remove criteria</a>
-        <a id="btRemoveAllUsers" class="user" />remove all</a><br />
-    </div>
-    <asp:HiddenField ID="hiddenUser" runat="server" ClientIDMode="Static"/><br />
+    
     <hr />
 
     <h3>Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
     <div id="criteria">
         <a id="btAddCriteria" class="crit">add criteria</a>
-        <a id="btRemoveCriteria" class="crit" />remove criteria</a>
-        <a id="btRemoveAllCriteria" class="crit" />remove all</a><br />
+        <a id="btRemoveCriteria" class="crit">remove criteria</a>
+        <a id="btRemoveAllCriteria" class="crit">remove all</a><br />
     </div>
     <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
-
     <hr />
+
     <h3>Criteria Weight</h3>
     <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
     <div id="criteriaWeight">
         <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
-        <a id="btRemoveCriteriaWeight" class="critWeight" />remove criteria weight</a>
-        <a id="btRemoveAllCriteriaWeight" class="critWeight" />remove all</a><br />
+        <a id="btRemoveCriteriaWeight" class="critWeight">remove criteria weight</a>
+        <a id="btRemoveAllCriteriaWeight" class="critWeight">remove all</a><br />
     </div>
+    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
     <hr />
-    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/>
-    
+       
     <h3>Alternatives</h3>
     <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
-    <div id="alternatives">
-        <a id="btAddAlternative" class="alternative">add alternative</a>
-        <a id="btRemoveAlternative" class="alternative" />remove alternative</a>
-        <a id="btRemoveAllAlternative" class="alternative" />remove all</a><br />
+    <div id="alternative">
+        <a id="btAddAlt" class="alt">add alternative</a>
+        <a id="btRemoveAlt" class="alt">remove alternative</a>
+        <a id="btRemoveAllAlt" class="alt">remove all</a><br />
     </div>
     <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
+
     <br />
     <br />
     
