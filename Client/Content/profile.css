@@ -1,0 +1,140 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Maven+Pro);
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+html { 
+    background:none;
+    background-color:#E5E5E5;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+header {
+    background-color:#00796B;
+    height:102px;
+}
+
+.main-content {
+    background-color:#ffffff;
+    margin-bottom:50px;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
+
+    padding-left:50px;
+    padding-right:50px;
+    padding-top:20px;
+    padding-bottom:50px;
+}
+
+h1, .h1 {
+    font-family: 'Maven Pro', sans-serif;
+    color:#009688;
+    font-size:48px;
+    margin-bottom:40px;
+}
+
+h2, .h2 {
+    font-family: 'Maven Pro', sans-serif;
+    color:#000000;
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+#MainContent_ownedByMeTable {
+    width:100%;
+}
+
+td {
+    font-family: 'Maven Pro', sans-serif;
+    color:#999999;
+    font-size:18px;
+}
+
+td a {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#999999 !important;
+    font-size:18px !important;
+}
+
+td a:hover {
+    color:#00796B !important;
+}
+
+td hr {
+    margin-top:4px !important;
+    margin-bottom:4px !important;
+}
+
+#MainContent_profilePicture {
+    width:100%;
+    height:100%;
+}
+
+#MainContent_name {
+    font-family: 'Maven Pro', sans-serif;
+    color:#000000;
+    font-size:36px;
+}
+
+#MainContent_email {
+    font-family: 'Maven Pro', sans-serif;
+    color:#999999;
+    font-size:24px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#MainContent_ProfileAcronym {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;
+    color:#009688;
+    height:100px;
+    text-align: center;
+    font-family: 'Maven Pro', sans-serif;
+    font-size:72px;
+}
+
+.textcenter {
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+}
+
+#info {
+    font-family: 'Maven Pro', sans-serif;
+    color:#000000;
+    font-size:36px;
+}
+
+label {
+    font-family: 'Maven Pro', sans-serif;
+    color:#999999;
+    font-size:16px;
+    margin-top:15px;
+}
+
+.changePassword {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+#changePassword {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#999999 !important;
+    font-size:14px !important;
+    text-decoration:underline !important;
+}
+
+#changePassword:hover {
+    color:#00796B !important;
+}

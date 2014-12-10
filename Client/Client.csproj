@@ -154,10 +154,6 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
-    <Content Include="App_Data\aspnet-Client-20141119124736.mdf" />
-    <Content Include="App_Data\aspnet-Client-20141119124736_log.ldf">
-      <DependentUpon>aspnet-Client-20141119124736.mdf</DependentUpon>
-    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -165,6 +161,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cddss.css" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\profile.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -226,6 +223,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Images\avatar_woman.png" />
+    <None Include="Images\avatar_woman_big.png" />
     <Content Include="IssueDetail.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="Scripts\AddAlternative.js" />
@@ -262,6 +260,7 @@
     <Content Include="Content\themes\base\minified\bootstrap-theme.css.map" />
     <Content Include="Content\themes\base\minified\bootstrap.css.map" />
     <Content Include="Login.Master" />
+    <Content Include="LoggedIn.Master" />
     <None Include="Properties\PublishProfiles\AWSCLient.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="MyAccount\Register.aspx" />
@@ -379,6 +378,13 @@
     <Compile Include="IssueDetail.aspx.designer.cs">
       <DependentUpon>IssueDetail.aspx</DependentUpon>
     </Compile>
+    <Compile Include="LoggedIn.Master.cs">
+      <DependentUpon>LoggedIn.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoggedIn.Master.designer.cs">
+      <DependentUpon>LoggedIn.Master</DependentUpon>
+    </Compile>
     <Compile Include="Login.Master.cs">
       <DependentUpon>Login.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -488,6 +494,9 @@
     <None Include="Model\DataClasses.dbml.layout">
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

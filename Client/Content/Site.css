@@ -94,7 +94,7 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 1080px;
+    max-width: 1170px;
 }
 
 #body {
@@ -602,7 +602,7 @@ tr.pager td {
 
         #login a {
             background: none;
-            color: #999;
+            color: #fff;
             font-weight: 600;
             margin: 2px;
             padding: 0;

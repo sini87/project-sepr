@@ -127,29 +127,34 @@ footer {
 
 #LoginView1_A2 {
 
-    font-family: 'Maven Pro', sans-serif;
-    color:#009688;
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#009688 !important;
     
-    display: inline-block;
-    background: #fff url("../Images/avatar_woman.png") center no-repeat; 
+    display: inline-block !important;
+    background: #fff url("../Images/avatar_woman.png") center no-repeat !important; 
     background-color:transparent !important;
-    text-align: center;
-    line-height: 60px;
-    width: 66px;
-    text-transform: uppercase;
+    text-align: center !important;
+    line-height: 60px !important;
+    width: 66px !important;
+    text-transform: uppercase !important;
 }
 
 #LoginView1_A1 {
 
-    font-family: 'Maven Pro', sans-serif;
-    color:#FFC107;
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#FFC107 !important;
     
-    display: inline-block;
+    display: inline-block !important;
     background-color:transparent !important;
-    text-align: center;
-    line-height: 60px;
+    text-align: center !important;
+    /*line-height: 60px !important;*/
     text-decoration:none !important;
-    text-transform: uppercase;
+    text-transform: uppercase !important;
+}
+
+#LoginView1_A1:hover {
+
+    background-color:#009688 !important;
 }
 
 #login {
@@ -159,13 +164,13 @@ footer {
 }
 
 #LoginView1_logout {
-    font-family: 'Maven Pro', sans-serif;
-    color:#FFC107;
-    background-color:#009688 !important;
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#FFC107 !important;
+    background-color:transparent !important;
 }
 
 #LoginView1_logout:hover {
-    text-decoration:underline !important;
+    background-color:#009688 !important;
 }
 
 /********************
@@ -187,6 +192,5 @@ footer {
 
     margin-top:10px;
 }
-
 
 }

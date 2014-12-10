@@ -17,7 +17,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="center"colspan="2">
+                                <td align="center" colspan="2">
                                     <img src="../images/login_bg.png" id="login_bg" alt="login background" />
                                 </td>
                             </tr>
