@@ -1,18 +1,16 @@
 ﻿$(document).ready(function () {
     var iCnt = 0;
     // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
-    var container = $(document.createElement('div')).css({
-        padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
-        borderTopColor: '#999', borderBottomColor: '#999',
-        borderLeftColor: '#999', borderRightColor: '#999'
-    });
+    var container = $(document.createElement('div')).css({padding: '5px', margin: '20px', width: '170px'});
 
     $('#btAddCriteriaWeight').click(function () {
         if (iCnt <= 19) {
             iCnt = iCnt + 1;
             // ADD TEXTBOX.
-            $(container).append('<input type=text class="getCriteriaWeight" id=criteriaWeight' + iCnt + ' ' +
-                        'value="CriteriaWeight ' + iCnt + '" />');
+            $(container).append('<input type=text class="getCriteriaWeight" id=criteriaWeightName' + iCnt + ' ' +
+                        'value="CriteriaWeightName ' + iCnt + '" />');
+            $(container).append('<input type=text class="getCriteriaWeight" id=criteriaWeightValue' + iCnt + ' ' +
+                        'value="CriteriaWeightValue ' + iCnt + '" />');
 
             $('#criteriaWeight').before(container);
         }
@@ -27,7 +25,6 @@
         if (iCnt == 0) {
             $(container).empty();
             $(container).remove();
-            $('#btSubmit').remove();
             $('#btAddCriteriaWeight').removeAttr('disabled');
             $('#btAddCriteriaWeight').attr('class', 'critWeight')
         }
@@ -35,7 +32,7 @@
     $('#btRemoveAllCriteriaWeight').click(function () {    // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
         $(container).empty();
         $(container).remove();
-        $('#btSubmit').remove(); iCnt = 0;
+        iCnt = 0;
         $('#btAddCriteriaWeight').removeAttr('disabled');
         $('#btAddCriteriaWeight').attr('class', 'critWeight');
     });

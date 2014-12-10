@@ -51,7 +51,6 @@ namespace Client
                     generateDocuments(issue);
                     generateUsers(issue);
                     generateCriteria(issue);
-                    //generateCriteriaWeight(issue);
                     generateAlternatives(issueAlt);
 
                     //criteria.Visible = true;
@@ -206,7 +205,10 @@ namespace Client
             if (issue.Criterions.Count > 0)
             {
                 Table critTable = new Table();
+                Table critWeightTable = new Table();
+
                 critTable.Width = Unit.Percentage(100);
+                critWeightTable.Width = Unit.Percentage(100);
 
                 TableHeaderRow rowHeaderCriteria = new TableHeaderRow();
                 TableHeaderCell headerCellName = new TableHeaderCell();
@@ -215,6 +217,65 @@ namespace Client
                 headerCellDesc.Text = "Description";
                 TableHeaderCell headerCellWeight = new TableHeaderCell();
                 headerCellWeight.Text = "Weight";
+
+                TableHeaderRow rowHeaderCritWeight = new TableHeaderRow();
+                TableHeaderCell headerCriteria = new TableHeaderCell();
+                rowHeaderCriteria.Cells.Add(headerCriteria);
+                critWeightTable.Rows.Add(rowHeaderCritWeight);
+
+                TableHeaderCell headerCellOwner = new TableHeaderCell();
+                TableHeaderCell headerCellUser;
+
+                TableRow rowCritWeight;
+                TableCell weight;
+                TableCell criterion;
+
+                foreach (AccessRightModel user in issue.AccessUserList)
+                {
+                    if (user.Right.Equals('O'))
+                    {
+                        headerCellOwner.Text = user.User.FirstName;
+                        rowHeaderCriteria.Cells.Add(headerCellOwner);
+
+                        foreach (CriterionModel cm in issue.Criterions)
+                        {
+                            
+                            foreach (CriterionWeightModel cwm in issue.CriterionWeights)
+                            {
+                                if (cm.Id.Equals(cwm.Criterion))
+                                {
+                                    criterion = new TableCell();
+                                    criterion.Text = cm.Name;
+                                    rowCritWeight = new TableRow();
+                                    rowCritWeight.Cells.Add(criterion);
+
+                                    if (cwm.UserId.Equals(user.User.Id))
+                                    {
+                                        weight = new TableCell();
+                                        weight.Text = "" + cwm.Weight;
+                                        rowCritWeight.Cells.Add(weight);
+                                    }
+                                    critWeightTable.Rows.Add(rowHeaderCritWeight);
+                                }
+                            }
+
+                            criteriaWeightPanel.Controls.Add(critWeightTable);
+                            break;
+                        }
+                        
+                    }
+                }
+
+                foreach (AccessRightModel user in issue.AccessUserList)
+                {
+                    if (!user.Right.Equals('O'))
+                    {
+                        headerCellUser = new TableHeaderCell();
+                        headerCellUser.Text = user.User.FirstName;
+                        rowHeaderCriteria.Cells.Add(headerCellOwner);
+                    }
+                }
+                
 
                 rowHeaderCriteria.Cells.Add(headerCellName);
                 rowHeaderCriteria.Cells.Add(headerCellDesc);
@@ -296,7 +357,7 @@ namespace Client
                     rowUser = new TableRow();
 
                     userPic = new TableCell();
-                    userPic.Text = "<img src=" + "'~/Images/avatar_woman.png'" + "/>";
+                    userPic.Text = "<img src=" + "\"../Images/avatar_woman.png\"" + "/>";
                     rowUser.Cells.Add(userPic);
 
                     userName = new TableCell();
@@ -336,7 +397,7 @@ namespace Client
                 rowHeaderCriteria.Cells.Add(headerCellWeight);
 
                 critTable.Rows.Add(rowHeaderCriteria);
-
+                
                 TableRow rowCriteria;
                 TableCell criteriaName;
                 TableCell criteriaDesc;
@@ -470,13 +531,39 @@ namespace Client
             {
                 hidCritWeightValue = hidCritWeightValue.Remove(hidCritWeightValue.Length - 1, 1);
                 String[] critWeigt = hidCritWeightValue.Split(';');
+
+                int i = 0;
+                while (i < critWeigt.Length)
+                {
+                    
+                }
             }
 
             if (!hidAlternativeValue.Equals(""))
             {
                 hidAlternativeValue = hidAlternativeValue.Remove(hidAlternativeValue.Length - 1, 1);
                 String[] critAlt = hidAlternativeValue.Split(';');
+
+                int i = 0;
+                while (i < critAlt.Length)
+                {
+                    AlternativeModel alt = new AlternativeModel();
+                    alt.Name = critAlt[i];
+                    alt.Description = critAlt[i + 1];
+                    alt.Reason = critAlt[i + 2];
+                    alt.Rating = 0;
+                    alt.Issue = issue.Id;
+
+                    i = i + 3;
+                    rc.EndPoint = "api/Alternative/Create";
+                    rc.Method = HttpVerb.POST;
+                    var json = JsonConvert.SerializeObject(alt);
+                    rc.PostData = json;
+                    rc.MakeRequest();
+                }
             }
+
+            Response.Redirect("IssueDetail?issueId=" + issue.Id);
          }
 
         protected void saveNext_Click(object sender, EventArgs e)

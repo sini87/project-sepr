@@ -1,42 +1,41 @@
 ﻿$(document).ready(function () {
     var iCnt = 0;
     // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
-    var container = $(document.createElement('div')).css({
-        padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
-        borderTopColor: '#999', borderBottomColor: '#999',
-        borderLeftColor: '#999', borderRightColor: '#999'
-    });
+    var container = $(document.createElement('div')).css({padding: '5px', margin: '20px', width: '170px'});
 
-    $('#btAddAlternative').click(function () {
+    $('#btAddAlt').click(function () {
         if (iCnt <= 19) {
             iCnt = iCnt + 1;
             // ADD TEXTBOX.
-            $(container).append('<input type=text class="getAlternative" id=alternative' + iCnt + ' ' +
-                        'value="Alternative ' + iCnt + '" />');
+            $(container).append('<input type=text class="getAlternative" id=alternativeName' + iCnt + ' ' +
+                        'value="Alternative Name ' + iCnt + '" />');
+            $(container).append('<input type=text class="getAlternative" id=alternativeDesc' + iCnt + ' ' +
+                        'value="Alternative Description' + iCnt + '" />');
+            $(container).append('<input type=text class="getAlternative" id=alternativeReason' + iCnt + ' ' +
+                        'value="Alternative Reason' + iCnt + '" />');
 
-            $('#alternatives').before(container);
+            $('#alternative').before(container);
         }
         else {      // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON. (20 IS THE LIMIT WE HAVE SET)
             $(container).append('<label>Reached the limit</label>');
-            $('#btAddAlternative').attr('class', 'alternative-disable');
-            $('#btAddAlternative').attr('disabled', 'disabled');
+            $('#btAddAlt').attr('class', 'alt-disable');
+            $('#btAddAlt').attr('disabled', 'disabled');
         }
     });
-    $('#btRemoveAlternative').click(function () {   // REMOVE ELEMENTS ONE PER CLICK.
-        if (iCnt != 0) { $('#alternative' + iCnt).remove(); iCnt = iCnt - 1; }
+    $('#btRemoveAlt').click(function () {   // REMOVE ELEMENTS ONE PER CLICK.
+        if (iCnt != 0) { $('#alt' + iCnt).remove(); iCnt = iCnt - 1; }
         if (iCnt == 0) {
             $(container).empty();
             $(container).remove();
-            $('#btSubmit').remove();
-            $('#btAddAlternative').removeAttr('disabled');
-            $('#btAddAlternative').attr('class', 'alternative')
+            $('#btAddAlt').removeAttr('disabled');
+            $('#btAddAlt').attr('class', 'alt')
         }
     });
-    $('#btRemoveAllAlternative').click(function () {    // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
+    $('#btRemoveAllAlt').click(function () {    // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
         $(container).empty();
         $(container).remove();
-        $('#btSubmit').remove(); iCnt = 0;
-        $('#btAddAlternative').removeAttr('disabled');
-        $('#btAddAlternative').attr('class', 'alternative');
+        iCnt = 0;
+        $('#btAddAlt').removeAttr('disabled');
+        $('#btAddAlt').attr('class', 'alt');
     });
 });

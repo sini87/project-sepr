@@ -11,8 +11,8 @@
                         'value="Criteria Name ' + iCnt + '" />');
             $(container).append('<input type=text class="getCriteria" id=criteriaDesc' + iCnt + ' ' +
                         'value="Criteria Description' + iCnt + '" />');
-            //$(container).append('<input type=text class="getCriteria" id=criteriaWeight' + iCnt + ' ' +
-            //            'value="0.0" />');
+            $(container).append('<input type=text class="getCriteria" id=criteriaWeight' + iCnt + ' ' +
+                        'value="0.0" />');
 
             $('#criteria').before(container);
         }
@@ -25,8 +25,7 @@
     $('#btRemoveCriteria').click(function() {   // REMOVE ELEMENTS ONE PER CLICK.
         if (iCnt != 0) { $('#crit' + iCnt).remove(); iCnt = iCnt - 1; }
         if (iCnt == 0) { $(container).empty(); 
-            $(container).remove(); 
-            $('#btSubmit').remove(); 
+            $(container).remove();  
             $('#btAddCriteria').removeAttr('disabled'); 
             $('#btAddCriteria').attr('class', 'crit') 
         }
@@ -34,23 +33,8 @@
     $('#btRemoveAllCriteria').click(function() {    // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
         $(container).empty(); 
         $(container).remove(); 
-        $('#btSubmit').remove(); iCnt = 0; 
+        iCnt = 0; 
         $('#btAddCriteria').removeAttr('disabled'); 
         $('#btAddCriteria').attr('class', 'crit');
     });
 });
-
-// PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
-var divValue, values = '';
-function GetTextValue() {
-    $(divValue).empty(); 
-    $(divValue).remove(); values = '';
-    $('.input').each(function() {
-        divValue = $(document.createElement('div')).css({
-            padding:'5px', width:'200px'
-        });
-        values += this.value + '<br />'
-    });
-    $(divValue).append('<p><b>Your selected values</b></p>' + values);
-    $('body').append(divValue);
-}

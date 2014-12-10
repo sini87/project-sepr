@@ -101,9 +101,10 @@ namespace CDDSS_API.Repository
                 {
                     cwm = new CriterionWeightModel();
                     cwm.Criterion = cm.Id;
-                    cwm.UserAccesObject = (int) cw.User1.AccessObject;
+                    cwm.UserAccesObject = (int)cw.User1.AccessObject;
                     cwm.UserId = cw.User;
                     cwm.Weight = cw.Weight;
+                    model.CriterionWeights.Add(cwm);
                 }
             }
             
