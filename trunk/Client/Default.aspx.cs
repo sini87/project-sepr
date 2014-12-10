@@ -14,44 +14,44 @@ namespace Client
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            if (this.User.Identity.IsAuthenticated && rc != null)
-            {
-                rc.EndPoint = "api/Issue/OfUser";
-                rc.Method = HttpVerb.GET;
-                var json = rc.MakeRequest();
-                List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
+            //RestClient rc = RestClient.GetInstance(Session.SessionID);
+            //if (this.User.Identity.IsAuthenticated && rc != null)
+            //{
+            //    rc.EndPoint = "api/Issue/OfUser";
+            //    rc.Method = HttpVerb.GET;
+            //    var json = rc.MakeRequest();
+            //    List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
 
-                Table dataTable = generateTable(user);
+            //    Table dataTable = generateTable(user);
 
-                if (dataTable == null){
-                    issuesOwnedText.Text = "No Issues existing";
-                    issuesOwnedText.Visible = true;
-                }else{
-                    OwnedIssueTable.Controls.Add(dataTable);
-                }
+            //    if (dataTable == null){
+            //        issuesOwnedText.Text = "No Issues existing";
+            //        issuesOwnedText.Visible = true;
+            //    }else{
+            //        OwnedIssueTable.Controls.Add(dataTable);
+            //    }
 
-                rc.EndPoint = "api/Issue";
-                rc.Method = HttpVerb.GET;
-                json = rc.MakeRequest();
-                List<IssueModel> allIssues = JsonConvert.DeserializeObject<List<IssueModel>>(json);
+            //    rc.EndPoint = "api/Issue";
+            //    rc.Method = HttpVerb.GET;
+            //    json = rc.MakeRequest();
+            //    List<IssueModel> allIssues = JsonConvert.DeserializeObject<List<IssueModel>>(json);
 
-                dataTable = generateTable(allIssues);
+            //    dataTable = generateTable(allIssues);
 
-                if (dataTable == null)
-                {
-                    involvedIssuesText.Text = "No Issues existing";
-                    involvedIssuesText.Visible = true;
-                }
-                else
-                {
-                    InvolvedIssueTable.Controls.Add(dataTable);
-                }
+            //    if (dataTable == null)
+            //    {
+            //        involvedIssuesText.Text = "No Issues existing";
+            //        involvedIssuesText.Visible = true;
+            //    }
+            //    else
+            //    {
+            //        InvolvedIssueTable.Controls.Add(dataTable);
+            //    }
 
-                headingIssuesOwned.Visible = true;
-                headingInvolvedIssues.Visible = true;
-                btnNewIssue.Visible = true;
-            }
+            //    headingIssuesOwned.Visible = true;
+            //    headingInvolvedIssues.Visible = true;
+            //    btnNewIssue.Visible = true;
+            //}
         }
 
         protected Table generateTable(List<IssueModel> data)

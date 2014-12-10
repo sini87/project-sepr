@@ -14,7 +14,7 @@
             A Decision Making, Collaborating & Workflow Plattform
         </div>
         
-        <h2 runat="server" id="headingIssuesOwned" visible="false">Owned Issues</h2>
+       <%-- <h2 runat="server" id="headingIssuesOwned" visible="false">Owned Issues</h2>
         <asp:Label ID="issuesOwnedText" runat="server" Visible="false"></asp:Label>
 
         <asp:Panel ID="OwnedIssueTable" runat="server"></asp:Panel><br />
@@ -27,7 +27,7 @@
         <asp:Button ID="btnNewIssue" runat="server" Text="Create New Issue" OnClick="brnNewIssue_Click" Visible="false"/>
             <a id="landingpage_button" runat="server" href="~/MyAccount/Register">
                 GETTING STARTED
-            </a>
+            </a>--%>
         
     </div>
     

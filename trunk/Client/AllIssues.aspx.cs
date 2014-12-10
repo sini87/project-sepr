@@ -1,16 +1,15 @@
-﻿using CDDSS_API;
-using CDDSS_API.Models;
+﻿using CDDSS_API.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Net;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Client
 {
-    public partial class MyIssues : Page
+    public partial class AllIssues : System.Web.UI.Page
     {
         protected void Page_Preload(object sender, EventArgs e)
         {
@@ -25,20 +24,22 @@ namespace Client
             RestClient rc = RestClient.GetInstance(Session.SessionID);
             if (this.User.Identity.IsAuthenticated && rc != null)
             {
-                rc.EndPoint = "api/Issue/OfUser";
+                rc.EndPoint = "api/Issue/";
                 rc.Method = HttpVerb.GET;
                 var json = rc.MakeRequest();
-                List<IssueModel> user = JsonConvert.DeserializeObject<List<IssueModel>>(json);
+                List<IssueModel> allIssues = JsonConvert.DeserializeObject<List<IssueModel>>(json);
 
-                Table dataTable = generateTable(user);
+                Table dataTable = generateTable(allIssues);
 
-                if (dataTable == null){
-                    issuesOwnedText.Text = "No Issues existing";
-                    issuesOwnedText.Visible = true;
-                }else{
-                    OwnedIssueTable.Controls.Add(dataTable);
+                if (dataTable == null)
+                {
+                    InvolvedIssuesText.Text = "No Issues existing";
+                    InvolvedIssuesText.Visible = true;
                 }
-
+                else
+                {
+                    InvolvedIssueTable.Controls.Add(dataTable);
+                }
                 btnNewIssue.Visible = true;
             }
         }
@@ -59,7 +60,7 @@ namespace Client
                 headerCellStatus.Text = "Status";
                 TableHeaderCell headerCellDetail = new TableHeaderCell();
                 headerCellDetail.Text = "Details";
-                
+
                 headerRow.Cells.Add(headerCellTitle);
                 headerRow.Cells.Add(headerCellTags);
                 headerRow.Cells.Add(headerCellRating);
@@ -122,7 +123,7 @@ namespace Client
             e.Authenticated = true;
         }
 
-        protected void brnNewIssue_Click(object sender, EventArgs e)
+        protected void btnNewIssue_Click(object sender, EventArgs e)
         {
             Response.Redirect("CreateIssue.aspx");
         }
