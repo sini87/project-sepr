@@ -50,6 +50,7 @@ namespace Client
 
                 headingIssuesOwned.Visible = true;
                 headingInvolvedIssues.Visible = true;
+                btnNewIssue.Visible = true;
             }
         }
 
