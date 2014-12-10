@@ -54,7 +54,7 @@
                 </div>
                 <div class="float-middle col-lg-5">
                     <p id="site-nav">
-                        <a id="allIssuesLink" runat="server" href="~/MyIssues">ALL ISSUES</a>
+                        <a id="allIssuesLink" runat="server" href="~/AllIssues">ALL ISSUES</a>
                         <span id="site-nav-sign">|</span>
                         <a id="myIssuesLink" runat="server" href="~/MyIssues">MY ISSUES</a>
                     </p>

@@ -123,6 +123,11 @@ namespace Client
                     emailChanged = false;
                     Server.Transfer("Default.aspx");
                 }
+                else
+                {
+                    Response.Redirect("Profile.aspx");
+                }
+
             }
         }
 
