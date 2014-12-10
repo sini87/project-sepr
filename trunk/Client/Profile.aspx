@@ -64,7 +64,7 @@
                 <asp:TextBox ID="lastname" runat="server"></asp:TextBox><br />
 
                 <label>Email</label><br />
-                <asp:TextBox ID="emailTxt" runat="server"></asp:TextBox><br />
+                <asp:TextBox ID="emailTxt" runat="server" OnTextChanged="emailTxt_TextChanged"></asp:TextBox><br />
 
             </div>
 
@@ -75,7 +75,7 @@
             </div>
 
             <div class="row text-right margintop">
-                <asp:Button ID="saveProfile" runat="server" text="Save & Update"/>
+                <asp:Button ID="saveProfile" runat="server" text="Save & Update" OnClick="saveProfile_Click"/>
             </div>
 
         </div>

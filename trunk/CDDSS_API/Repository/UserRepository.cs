@@ -88,16 +88,20 @@ namespace CDDSS_API.Repository
         /// <param name="secretQuestion"></param>
         /// <param name="answer"></param>
         /// <returns>true if update is successful</returns>
-        public bool EditUser(UserShort user)
+        public bool EditUser(UserShort user, string email)
         {
             try
             {
-                User u = ctx.Users.First(x => x.Email == user.Email);
-                if (user.FirstName != "") u.FirstName = user.FirstName;
-                if (user.LastName != "") u.LastName = user.LastName;
-                if (user.UserName != "") u.UserName = user.UserName;
-                if (user.SecretQuestion!="") u.SecretQuestion = user.SecretQuestion;
-                if (user.Answer!="") u.Answer = user.Answer;
+                User u = ctx.Users.First(x => x.Email == email);
+                if (user.FirstName != "" && user.FirstName != null) u.FirstName = user.FirstName;
+                if (user.LastName != "" && user.LastName != null) u.LastName = user.LastName;
+                if (user.SecretQuestion!="" && user.SecretQuestion != null) u.SecretQuestion = user.SecretQuestion;
+                if (user.Answer!="" && user.Answer != null) u.Answer = user.Answer;
+                if (user.Email != "" && user.Email != null)
+                {
+                    u.Email = user.Email;
+                    u.UserName = user.Email;
+                }
                 ctx.SubmitChanges();
                 return true;
             }

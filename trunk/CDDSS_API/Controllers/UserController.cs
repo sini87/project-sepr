@@ -71,9 +71,9 @@ namespace CDDSS_API.Controllers
         public HttpResponseMessage Post(UserShort user)
         {
             HttpResponseMessage result = null;
-            user.Email = HttpContext.Current.User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
 
-            if (user.Email != null && user.Email.Length > 0 && usersRep.EditUser(user))
+            if (email != null && email.Length > 0 && usersRep.EditUser(user, email))
             {
 
                 result = Request.CreateResponse(HttpStatusCode.OK);

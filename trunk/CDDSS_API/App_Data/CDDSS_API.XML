@@ -958,7 +958,7 @@
             <param name="email"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Repository.UserRepository.EditUser(CDDSS_API.UserShort)">
+        <member name="M:CDDSS_API.Repository.UserRepository.EditUser(CDDSS_API.UserShort,System.String)">
             <summary>
             edits a user
             </summary>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,9 +14,22 @@ namespace Client
 {
     public partial class Profile : System.Web.UI.Page
     {
-        
+        private bool emailChanged;
+
+        protected void Page_Preload(object sender, EventArgs e)
+        {
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                Server.Transfer("Default.aspx");
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Page.IsPostBack)
+            {
+                return;
+            }
             RestClient rc = RestClient.GetInstance(Session.SessionID);
             if (this.User.Identity.IsAuthenticated && rc != null)
             {
@@ -69,7 +83,7 @@ namespace Client
             //{
                 if (rc != null && rc.User != null)
                 {
-                    if (rc.User.FirstName != "" && rc.User.LastName != "")
+                    if (rc.User.FirstName != "" && rc.User.LastName != "" && rc.User.FirstName != null && rc.User.LastName != null)
                     {
                         ProfileAcronym.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
                     }
@@ -79,6 +93,42 @@ namespace Client
                     ProfileAcronym.Text = "&nbsp;";
                 }
             //}
+        }
+
+        protected void saveProfile_Click(object sender, EventArgs e)
+        {
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            if (this.User.Identity.IsAuthenticated && rc != null)
+            {
+                UserShort us = new UserShort();
+                us.FirstName = firstname.Text;
+                us.LastName = lastname.Text;
+                if (emailChanged)
+                {
+                    us.Email = emailTxt.Text;
+                }
+                rc.Method = HttpVerb.POST;
+                rc.EndPoint = "api/User";
+                rc.PostData = JsonConvert.SerializeObject(us);
+                var json = rc.MakeRequest();
+
+                rc.User.FirstName = us.FirstName;
+                rc.User.LastName = us.LastName;
+
+                if (emailChanged)
+                {
+                    RestClient.GetInstance(Session.SessionID).Logout();
+                    FormsAuthentication.SignOut();
+                    Session.Abandon();
+                    emailChanged = false;
+                    Server.Transfer("Default.aspx");
+                }
+            }
+        }
+
+        protected void emailTxt_TextChanged(object sender, EventArgs e)
+        {
+            emailChanged = true;
         }
     }
 }
