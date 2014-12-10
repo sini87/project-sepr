@@ -173,6 +173,33 @@ footer {
     background-color:#009688 !important;
 }
 
+#allIssuesLink, #myIssuesLink, #site-nav-sign {
+    font-family: 'Maven Pro', sans-serif;
+    font-weight: bold;
+    font-size: 2em;
+    
+    background-color:transparent !important;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff !important;
+	text-decoration:none;
+}
+
+#allIssuesLink:hover, #myIssuesLink:hover {
+    color:#FFE082 !important;
+	text-decoration:underline
+}
+
+#site-nav-sign {
+    font-weight:bolder;
+    font-size: 3em;
+}
+
+#site-nav {
+    margin-left:158px;
+    display:none;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/

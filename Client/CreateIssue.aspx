@@ -54,13 +54,6 @@
                 </asp:TableRow>
             </asp:Table>
 
-
-
-<asp:FileUpload ID="FileUpload1" runat="server" Visible="false"/><asp:Button ID="UploadButton" runat="server" Text="Upload" Visible="false" OnClick="UploadButton_Click"/><br />
-<asp:LinkButton runat="server" ID="addDocument" OnClick="addDocument_Click">add Document</asp:LinkButton>
-    
-    <br />
-
         </div>
 
         <div class="row">
@@ -117,7 +110,8 @@
         </div>
 
         <div class="row margintopsmall">
-
+          
+            <asp:FileUpload ID="FileUpload1" runat="server" Visible="false"/><asp:Button ID="UploadButton" runat="server" Text="Upload" Visible="false" OnClick="UploadButton_Click"/><br />
             <asp:LinkButton runat="server" ID="addDocument" class="mya" OnClick="addDocument_Click">add a document</asp:LinkButton>
 
         </div>

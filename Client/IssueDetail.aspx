@@ -1,5 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IssueDetail.aspx.cs" Inherits="Client.IssueDetail" %>
+﻿<%@ Page Title="Issue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IssueDetail.aspx.cs" Inherits="Client.IssueDetail" %>
 <asp:Content runat="server" ContentPlaceHolderID="HeadContent">
+
+    <webopt:BundleReference runat="server" Path="~/issueDetail/css" /> 
 
     <script src="../Scripts/AddCriteria.js"></script>
     <script src="../Scripts/AddCriteriaWeight.js"></script>
@@ -38,11 +40,13 @@
     </script>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    
     <h1>Issue</h1>
-    <br />
 
     <hr />
+
     <h3>Title</h3>
+
     <asp:Panel runat="server" ID="issueTitle"></asp:Panel><br />
     <h3>Rating</h3>
     <asp:Panel runat="server" ID="rating" /><br />

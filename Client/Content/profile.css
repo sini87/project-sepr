@@ -166,14 +166,56 @@ label {
     margin-top:50px;
 }
 
+#site-nav {
+    display:block !important;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/
+
+@media only screen and (max-width: 1199px) {
+
+header {
+    background-color:#00796B;
+    height:174px;
+}
+
+#site-nav {
+    margin-left:0px !important;
+}
+
+#allIssuesLink, #myIssuesLink, #site-nav-sign {
+    font-size: 2em;
+
+}
+
+#site-nav-sign {
+    font-size: 3em;
+}
+
+}
+
 @media only screen and (max-width: 850px) {
 
 header {
     background-color:#00796B;
-    height:184px;
+    height:284px;
+}
+
+#site-nav {
+    margin-left:0px !important;
+    margin-top:30px;
+    margin-bottom:30px;
+}
+
+#allIssuesLink, #myIssuesLink, #site-nav-sign {
+    font-size: 1.5em;
+
+}
+
+#site-nav-sign {
+    font-size: 2em;
 }
 
 }
