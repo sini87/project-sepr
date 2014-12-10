@@ -25,4 +25,6 @@
 <label>Email</label><br />
 <asp:TextBox ID="emailTxt" runat="server"></asp:TextBox><br />
 <a>Change Password</a>
+<br />
+<asp:Button ID="saveProfile" runat="server" text="save"/>
 </asp:Content>

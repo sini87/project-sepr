@@ -71,7 +71,7 @@
 
     <h3>User</h3><br />
     <asp:Panel runat="server" ID="users"></asp:Panel>
-    <div id="addUsers" runat="server" visible="false">
+    <div id="addUsers">
         <a id="btAddUsers" class="user" >add criteria</a>
         <a id="btRemoveUsers" class="user" />remove criteria</a>
         <a id="btRemoveAllUsers" class="user" />remove all</a><br />
@@ -81,7 +81,7 @@
 
     <h3>Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
-    <div id="criteria" runat="server" visible="false">
+    <div id="criteria">
         <a id="btAddCriteria" class="crit">add criteria</a>
         <a id="btRemoveCriteria" class="crit" />remove criteria</a>
         <a id="btRemoveAllCriteria" class="crit" />remove all</a><br />
@@ -91,7 +91,7 @@
     <hr />
     <h3>Criteria Weight</h3>
     <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
-    <div id="criteriaWeight" runat="server" visible="false">
+    <div id="criteriaWeight">
         <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
         <a id="btRemoveCriteriaWeight" class="critWeight" />remove criteria weight</a>
         <a id="btRemoveAllCriteriaWeight" class="critWeight" />remove all</a><br />
@@ -101,7 +101,7 @@
     
     <h3>Alternatives</h3>
     <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
-    <div id="alternatives" runat="server" visible="false">
+    <div id="alternatives">
         <a id="btAddAlternative" class="alternative">add alternative</a>
         <a id="btRemoveAlternative" class="alternative" />remove alternative</a>
         <a id="btRemoveAllAlternative" class="alternative" />remove all</a><br />
