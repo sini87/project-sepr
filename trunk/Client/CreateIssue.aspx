@@ -30,8 +30,8 @@
             <asp:HiddenField ID="rowCountTags" runat="server" Value="1" />
             <asp:Table ID="tagsTable" runat="server" Width="50%" Visible="false">  
                 <asp:TableRow>                
-                    <asp:TableCell></asp:TableCell>
-                    <asp:TableCell><asp:DropDownList ID="drpTags" runat="server"></asp:DropDownList></asp:TableCell>
+                    <%--<asp:TableCell></asp:TableCell>
+                    <asp:TableCell><asp:DropDownList ID="drpTags" runat="server"></asp:DropDownList></asp:TableCell>--%>
                 </asp:TableRow>
             </asp:Table>
     
@@ -112,7 +112,7 @@
         <div class="row margintopsmall">
           
             <asp:FileUpload ID="FileUpload1" runat="server" Visible="false"/><asp:Button ID="UploadButton" runat="server" Text="Upload" Visible="false" OnClick="UploadButton_Click"/><br />
-            <asp:LinkButton runat="server" ID="addDocument" class="mya" OnClick="addDocument_Click">add a document</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="addDocument1" class="mya" OnClick="addDocument_Click">add a document</asp:LinkButton>
 
         </div>
 

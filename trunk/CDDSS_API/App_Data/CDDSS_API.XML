@@ -509,6 +509,13 @@
             <param name="alternativeId">integer id of the alternative</param>
             <returns></returns>
         </member>
+        <!-- Badly formed XML comment ignored for member "T:CDDSS_API.Controllers.ArtefactsController" -->
+        <member name="M:CDDSS_API.Controllers.ArtefactsController.GET">
+            <summary>
+            returns all artefacts
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.CriterionController.Get(System.Int32)">
             <summary>
             Returns a Criterion by Id
@@ -640,7 +647,7 @@
             Adding Artefacts, Tags, Stakeholders: If you add a tags (artefacts, stakeholders) wihtout an id, then they will be created as new. If You add those things with an id, make sure that you get this id throuth the right API (e.g. api/Tags)
             </summary>
             <param name="issue"></param>
-            <returns>TODO - response code</returns>
+            <returns>id of created issue</returns>
         </member>
         <member name="M:CDDSS_API.Controllers.IssueController.GET">
             <summary>
@@ -741,6 +748,12 @@
             </summary>
             <param name="issueId">issue id</param>
             <returns>OK if deleted</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.TagsController.GET">
+            <summary>
+            returns al tags
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:CDDSS_API.Controllers.UserController">
             <summary>
@@ -896,6 +909,14 @@
             <param name="issueId">issue of the file</param>
             <param name="filename">filename</param>
             <returns>stream of the file</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.CreateIssue(CDDSS_API.Models.IssueModel,System.String)">
+            <summary>
+            creates a new issue and returns the issue id of the new issue
+            </summary>
+            <param name="issue"></param>
+            <param name="email"></param>
+            <returns></returns>
         </member>
         <member name="M:CDDSS_API.Repository.RatingRepository.getRating(System.Int32,System.Int32)">
             <summary>

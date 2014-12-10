@@ -27,7 +27,7 @@ namespace CDDSS_API.Controllers
         /// </summary>
         /// <returns>list of files</returns>
         [AllowAnonymous]
-        [HttpPost]
+        [HttpGet]
         public List<String> Get(int issueId)
         {
             return docRep.GetFilesByIssueId(issueId);

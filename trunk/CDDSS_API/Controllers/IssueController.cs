@@ -42,12 +42,13 @@ namespace CDDSS_API.Controllers
         /// Adding Artefacts, Tags, Stakeholders: If you add a tags (artefacts, stakeholders) wihtout an id, then they will be created as new. If You add those things with an id, make sure that you get this id throuth the right API (e.g. api/Tags)
         /// </summary>
         /// <param name="issue"></param>
-        /// <returns>TODO - response code</returns>
+        /// <returns>id of created issue</returns>
         [Route("api/Issue/Create")]
-        public string Create(IssueModel issue)
+        public object Create(IssueModel issue)
         {
-            issueRep.CreateIssue(issue, RequestContext.Principal.Identity.Name);
-            return "ok";
+            int id;
+            id = issueRep.CreateIssue(issue, RequestContext.Principal.Identity.Name);
+            return id.ToString() ;
         }
 
         /// <summary>
