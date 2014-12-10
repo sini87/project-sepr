@@ -54,9 +54,9 @@ namespace Client
                     //generateCriteriaWeight(issue);
                     generateAlternatives(issueAlt);
 
-                    criteria.Visible = true;
-                    criteriaWeight.Visible = true;
-                    alternatives.Visible = true;
+                    //criteria.Visible = true;
+                    //criteriaWeight.Visible = true;
+                    //alternatives.Visible = true;
 
                     save.Visible = true;
                     if (!issue.Status.Equals("FINISHED")){ //AND IF USER IS OWNER

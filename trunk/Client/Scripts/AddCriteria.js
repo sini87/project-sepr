@@ -1,7 +1,7 @@
 ﻿$(document).ready(function() {
     var iCnt = 0;
     // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
-    var container = $(document.createElement('div'));//.css({padding: '5px', margin: '20px', width: '170px'});
+    var container = $(document.createElement('div')).css({padding: '5px', margin: '20px', width: '170px'});
 
     $('#btAddCriteria').click(function() {
         if (iCnt <= 19) {

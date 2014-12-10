@@ -112,15 +112,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel users;
         
         /// <summary>
-        /// addUsers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl addUsers;
-        
-        /// <summary>
         /// hiddenUser control.
         /// </summary>
         /// <remarks>
@@ -137,15 +128,6 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel criteriaPanel;
-        
-        /// <summary>
-        /// criteria control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl criteria;
         
         /// <summary>
         /// hiddenCriteria control.
@@ -166,15 +148,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel criteriaWeightPanel;
         
         /// <summary>
-        /// criteriaWeight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl criteriaWeight;
-        
-        /// <summary>
         /// hiddenCriteriaWeight control.
         /// </summary>
         /// <remarks>
@@ -191,15 +164,6 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel alternativesPanel;
-        
-        /// <summary>
-        /// alternatives control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alternatives;
         
         /// <summary>
         /// hiddenAlternatives control.
