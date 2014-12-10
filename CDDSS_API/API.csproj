@@ -219,6 +219,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlternativeController.cs" />
+    <Compile Include="Controllers\ArtefactsController.cs" />
     <Compile Include="Controllers\CriterionController.cs" />
     <Compile Include="Controllers\CriterionWeightController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Controllers\IssueController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

@@ -1,4 +1,5 @@
 ﻿using CDDSS_API;
+using CDDSS_API.Models;
 using Client.Model;
 using Newtonsoft.Json;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace Client
 {
@@ -37,6 +39,14 @@ namespace Client
         private UserShort user;
         public string SessionID { get; set; }
         private static Dictionary<string, RestClient> sessionRCDict = new Dictionary<string, RestClient>();
+        public List<TableRow> TagRows { get; set; }
+        public IssueModel Issue { get; set; }
+        
+        public RestClient()
+        {
+            TagRows = new List<TableRow>();
+            Issue = null;
+        }
 
         public static RestClient GetInstance(string email)
         {
@@ -61,7 +71,8 @@ namespace Client
 
         public static void SessionEnd(string sessionID)
         {
-            if(sessionRCDict.ContainsKey(sessionID)){
+            if (sessionRCDict.ContainsKey(sessionID))
+            {
                 sessionRCDict.Remove(sessionID);
             }
         }
@@ -125,7 +136,8 @@ namespace Client
             return false;
         }
 
-        public static bool Register(CDDSS_API.Models.RegisterBindingModel m){
+        public static bool Register(CDDSS_API.Models.RegisterBindingModel m)
+        {
             RestClient rc = new RestClient();
             rc.EndPoint = "api/account/Register";
             rc.PostData = JsonConvert.SerializeObject(m);
@@ -248,7 +260,10 @@ namespace Client
         /// <param name="filename"></param>
         public void UploadFilesToRemoteUrl(int issue)
         {
-
+            if (filesDict == null)
+            {
+                return;
+            }
 
             string url = Prefix + "api/Document?issueid=" + issue;
             long length = 0;
@@ -318,7 +333,9 @@ namespace Client
         }
 
 
-    } // class
+    }
+    
+    // class
 
 
     //sample method how to upload files

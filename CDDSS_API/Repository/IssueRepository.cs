@@ -19,7 +19,8 @@ namespace CDDSS_API.Repository
             User user = ctx.Users.Where(x => x.Email == email).First();
             IssueModel issueShort;
             Issue issue;
-            foreach (AccessRight ar in ctx.AccessRights.Where(x => x.AccessObject == user.AccessObject).ToList()){
+            foreach (AccessRight ar in ctx.AccessRights.Where(x => x.AccessObject == user.AccessObject).ToList())
+            {
                 issue = ar.Issue1;
                 if (issue.ReviewRating == null)
                 {
@@ -46,7 +47,7 @@ namespace CDDSS_API.Repository
             {
                 return null;
             }
-            Issue issue = iL.First() ;
+            Issue issue = iL.First();
             model.Id = issue.Id;
             model.Title = issue.Title;
             model.Status = issue.Status;
@@ -70,7 +71,7 @@ namespace CDDSS_API.Repository
             }
             foreach (InfluenceFactor inf in ctx.InfluenceFactors.Where(x => x.Issue == issueID).ToList())
             {
-                model.InfluenceFactors.Add(new InfluenceFactorModel(inf.Id,inf.Name,inf.Type,inf.Characteristic));
+                model.InfluenceFactors.Add(new InfluenceFactorModel(inf.Id, inf.Name, inf.Type, inf.Characteristic));
             }
             foreach (Document doc in issue.Documents.ToList())
             {
@@ -107,7 +108,7 @@ namespace CDDSS_API.Repository
                     model.CriterionWeights.Add(cwm);
                 }
             }
-            
+
             return model;
         }
 
@@ -118,21 +119,21 @@ namespace CDDSS_API.Repository
             DBConnection.Instance.Connection.Open();
             SqlCommand cmd = DBConnection.Instance.Connection.CreateCommand();
             cmd.CommandText = "select iss.Id, iss.Title, iss.[Status], ISNULL(iss.ReviewRating,0) from " +
-                "[Issue] iss, [AccessRight] ar, AccessObject ao, [User] us WHERE ao.Id " + 
+                "[Issue] iss, [AccessRight] ar, AccessObject ao, [User] us WHERE ao.Id " +
                 "= ar.AccessObject and us.AccessObject = ao.id AND us.Email LIKE '" + email + "' and ar.[Right] = 'O' and iss.Id = ar.Issue";
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.Connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
 
             List<IssueModel> list = new List<IssueModel>();
-            IssueModel issueShort;           
+            IssueModel issueShort;
             Tag tag;
             while (reader.Read())
             {
                 issueShort = new IssueModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDouble(3));
                 var query = from Tag_Issue in ctx.Tag_Issues
                             where
-                              Tag_Issue.Issue == 1
+                              Tag_Issue.Issue == issueShort.Id
                             select new
                             {
                                 Tag = Tag_Issue.Tag,
@@ -151,7 +152,13 @@ namespace CDDSS_API.Repository
             return list;
         }
 
-        public void CreateIssue(IssueModel issue, string email)
+        /// <summary>
+        /// creates a new issue and returns the issue id of the new issue
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public int CreateIssue(IssueModel issue, string email)
         {
             var query = from Issues in
                             (from Issues in ctx.Issues
@@ -188,7 +195,8 @@ namespace CDDSS_API.Repository
             ctx.SubmitChanges();
 
             int aoID = ctx.Users.First(x => x.Email == email).AccessObject1.Id;
-            AccessRight r = new AccessRight(){
+            AccessRight r = new AccessRight()
+            {
                 Issue = issuePersistent.Id,
                 AccessObject = aoID,
                 Right = 'O'
@@ -247,7 +255,7 @@ namespace CDDSS_API.Repository
                     {
                         MaxId = (int)g.Max(p => p.Id)
                     };
-            int tagID,lastTagId;
+            int tagID, lastTagId;
             if (query.ToList().Count == 0)
             {
                 tagID = 1;
@@ -277,8 +285,16 @@ namespace CDDSS_API.Repository
                     Tag = lastTagId,
                     Issue = issueID
                 };
-                ctx.Tag_Issues.InsertOnSubmit(tagIssue);
-                ctx.SubmitChanges();
+                if (ctx.Tag_Issues.Where(x => x.Tag == tagIssue.Tag && x.Issue == tagIssue.Issue).Count() == 0)
+                {
+                    ctx.Tag_Issues.InsertOnSubmit(tagIssue);
+                    ctx.SubmitChanges();
+                }
+                if (tag.Id == 0)
+                {
+                    lastTagId++;
+                }
+
             }
 
             //stakeholder
@@ -393,9 +409,11 @@ namespace CDDSS_API.Repository
                 ctx.AccessRights.InsertOnSubmit(ar);
                 ctx.SubmitChanges();
             }
+
+            return issueID;
         }
 
-        
+
         public bool DeleteIssue(int issueId, string ownerEmail)
         {
             IEnumerable<AccessRight> ars = ctx.Users.Where(x => x.Email == ownerEmail).First().AccessObject1.AccessRights.Where(x => x.Issue == issueId);
