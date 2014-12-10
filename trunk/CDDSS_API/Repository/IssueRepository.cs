@@ -94,6 +94,7 @@ namespace CDDSS_API.Repository
                 cm.Id = cr.Id;
                 cm.Issue = cr.Issue;
                 cm.Name = cr.Name;
+                cm.Description = cr.Description;
                 cm.Weight = (double)cr.Weight;
                 model.Criterions.Add(cm);
                 foreach (CriterionWeight cw in ctx.CriterionWeights.Where(x => x.Criterion == cm.Id))
