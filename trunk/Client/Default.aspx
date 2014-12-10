@@ -24,7 +24,8 @@
         <asp:Label ID="involvedIssuesText" runat="server" Visible="false"></asp:Label>
 
         <asp:Panel ID="InvolvedIssueTable" runat="server"></asp:Panel><br />
-
+        <br />
+        <asp:Button ID="brnNewIssue" runat="server" Text="Create New Issue" OnClick="brnNewIssue_Click" />
             <a id="landingpage_button" runat="server" href="~/MyAccount/Register">
                 GETTING STARTED
             </a>
