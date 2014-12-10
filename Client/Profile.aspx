@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Profil" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Client.Profile" %>
+﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Client.Profile" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <webopt:BundleReference runat="server" Path="~/Profile/css" /> 
 </asp:Content>
@@ -74,10 +74,11 @@
 
             </div>
 
+            <div class="row text-right margintop">
+                <asp:Button ID="saveProfile" runat="server" text="Save & Update"/>
+            </div>
+
         </div>
 
     </div>
-
-<br />
-<asp:Button ID="saveProfile" runat="server" text="save"/>
 </asp:Content>
