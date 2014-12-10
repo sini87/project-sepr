@@ -131,5 +131,10 @@ namespace Client
         {
             e.Authenticated = true;
         }
+
+        protected void brnNewIssue_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CreateIssue.aspx");
+        }
     }
 }
