@@ -11,6 +11,14 @@ namespace Client
     {
         DropDownList tagsList = new DropDownList();
 
+        protected void Page_Preload(object sender, EventArgs e)
+        {
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                Server.Transfer("Default.aspx");
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             RestClient rc = RestClient.GetInstance(Session.SessionID);

@@ -11,7 +11,6 @@ namespace CDDSS_API
     {
         //[DataMember]
         public string FirstName { get; set; }
-        public string Id { get; set; }
         //[DataMember]
         public string LastName { get; set; }
         public int AccessObject { get; set; }
@@ -33,13 +32,12 @@ namespace CDDSS_API
             AccessObject = accessObject;
         }
 
-        public UserShort(string firstName, string lastName, int accessObject, string email, string id)
+        public UserShort(string firstName, string lastName, int accessObject, string email)
         {
             FirstName = firstName;
             LastName = lastName;
             AccessObject = accessObject;
             Email = email;
-            Id = id;
         }
 
         public UserShort(string email, string firstName, string lastName, string username, string secretquestion, string answer, string password)
