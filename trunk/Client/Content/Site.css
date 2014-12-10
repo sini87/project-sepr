@@ -46,6 +46,10 @@ mark {
     float: left;
 }
 
+.float-middle { 
+    text-align:center;
+}
+
 .float-right {
     float: right;
 }
