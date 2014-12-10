@@ -41,7 +41,12 @@ namespace CDDSS_API.Repository
         public IssueModel GetIssueDetailed(int issueID)
         {
             IssueModel model = new IssueModel();
-            Issue issue = ctx.Issues.First(x => x.Id == issueID);
+            IEnumerable<Issue> iL = ctx.Issues.Where(x => x.Id == issueID);
+            if (iL.Count() <= 0)
+            {
+                return null;
+            }
+            Issue issue = iL.First() ;
             model.Id = issue.Id;
             model.Title = issue.Title;
             model.Status = issue.Status;
