@@ -59,7 +59,8 @@ namespace Client
 
         protected void addDocument_Click(object sender, EventArgs e)
         {
-
+            FileUpload1.Visible = true;
+            UploadButton.Visible = true;
         }
 
         protected void addFactor_Click(object sender, EventArgs e)
@@ -73,6 +74,11 @@ namespace Client
         }
 
         protected void addRelation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void UploadButton_Click(object sender, EventArgs e)
         {
 
         }

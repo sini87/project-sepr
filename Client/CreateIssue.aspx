@@ -60,40 +60,14 @@
 <asp:LinkButton runat="server" ID="addRelation" OnClick="addRelation_Click">add relation</asp:LinkButton><br />
 </asp:Panel><br />
 
-<asp:LinkButton runat="server" ID="addDocument" OnClick="addDocument_Click">add Document</asp:LinkButton><br />
+
+
+<asp:FileUpload ID="FileUpload1" runat="server" Visible="false"/><asp:Button ID="UploadButton" runat="server" Text="Upload" Visible="false" OnClick="UploadButton_Click"/><br />
+<asp:LinkButton runat="server" ID="addDocument" OnClick="addDocument_Click">add Document</asp:LinkButton>
+    
     <br />
 
     <asp:Button runat="server" ID="save" Text="Save" OnClick="save_Click" />
     <asp:Button runat="server" ID="savePublish" Text="Save & Publish" OnClick="savePublish_Click" />
-
- <%--<h2>Criteria</h2>
-    <asp:HiddenField ID="rowCountCriteria" runat="server" Value="1" />
-    <asp:Table ID="criteriaTable" runat="server" Width="50%" Visible="false">  
-        <asp:TableHeaderRow>                
-                <asp:TableCell>Name</asp:TableCell>
-                <asp:TableCell>Description</asp:TableCell>
-        </asp:TableHeaderRow>
-    </asp:Table>
-
-    <asp:LinkButton runat="server" ID="addCriteria" OnClick="addCriteria_Click">add criteria</asp:LinkButton>
-    <hr />
-
-    <h2>Criteria Weight</h2>
-    <asp:Panel runat="server" ID="criteriaWeight"></asp:Panel><br />
-    <asp:LinkButton runat="server" ID="addComment" OnClick="addComment_Click">add comment</asp:LinkButton>
-    <hr />
-
-    <h2>Alternatives</h2>
-    <asp:HiddenField ID="rowCountAlternatives" runat="server" Value="1" />
-    <asp:Table ID="alternativesTable" runat="server" Width="50%" Visible="false">  
-        <asp:TableHeaderRow>                
-                <asp:TableCell>Name</asp:TableCell>
-                <asp:TableCell>Description</asp:TableCell>
-                <asp:TableCell>Reason</asp:TableCell>
-        </asp:TableHeaderRow>
-    </asp:Table>
-    <asp:LinkButton runat="server" ID="addAlternative" OnClick="addAlternative_Click">add alternative</asp:LinkButton>
-<br /><br />
-<asp:Button runat="server" ID="BtnCreateIssue" Text="Create Issue" />--%>
 </asp:Content>
 
