@@ -1,0 +1,44 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Maven+Pro);
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+html { 
+    background:none;
+    background-color:#E5E5E5;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+header {
+    background-color:#00796B;
+    height:102px;
+}
+
+.main-content {
+    background-color:#ffffff;
+    margin-bottom:50px;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
+
+    padding-left:50px;
+    padding-right:50px;
+    padding-top:10px;
+    padding-bottom:50px;
+}
+
+h1, .h1 {
+    font-family: 'Maven Pro', sans-serif;
+    color:#009688;
+    font-size:48px;
+    margin-bottom:20px;
+    margin-top:10px;
+}
+
+h2, .h2 {
+    font-family: 'Maven Pro', sans-serif;
+    color:#000000;
+    font-size:24px;
+    margin-bottom:20px;
+}

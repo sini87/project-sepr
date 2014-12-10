@@ -161,6 +161,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cddss.css" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\myissues.css" />
+    <Content Include="Content\newIssue.css" />
     <Content Include="Content\profile.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\Site.css" />
@@ -225,6 +227,7 @@
     <None Include="Images\avatar_woman.png" />
     <None Include="Images\avatar_woman_big.png" />
     <Content Include="IssueDetail.aspx" />
+    <Content Include="MyIssues.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="Scripts\AddAlternative.js" />
     <Content Include="Scripts\AddCriteria.js" />
@@ -420,6 +423,13 @@
     </Compile>
     <Compile Include="MyAccount\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyIssues.aspx.cs">
+      <DependentUpon>MyIssues.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyIssues.aspx.designer.cs">
+      <DependentUpon>MyIssues.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>

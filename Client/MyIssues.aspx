@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="CDDSS" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Client._Default" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <webopt:BundleReference runat="server" Path="~/myIssues/css" /> 
+</asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
     <div class="container">
