@@ -233,7 +233,6 @@
     <Content Include="Scripts\AddAlternative.js" />
     <Content Include="Scripts\AddCriteria.js" />
     <Content Include="Scripts\AddCriteriaWeight.js" />
-    <Content Include="WebForm1.aspx" />
     <None Include="Images\bg.jpg" />
     <None Include="Images\bg_dark.jpg" />
     <Content Include="Images\bullet.png" />
@@ -473,13 +472,6 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

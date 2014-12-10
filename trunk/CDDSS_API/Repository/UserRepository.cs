@@ -26,13 +26,12 @@ namespace CDDSS_API.Repository
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             AO = (int)user.AccessObject,
-                            Email = user.Email,
-                            Id = user.Id
+                            Email = user.Email
                         };
             List<UserShort> list = new List<UserShort>();
             foreach (var u in query)
             {
-                list.Add(new UserShort(u.FirstName, u.LastName, u.AO, u.Email, u.Id));
+                list.Add(new UserShort(u.FirstName, u.LastName, u.AO, u.Email));
             }
             return list;
         }
@@ -50,10 +49,9 @@ namespace CDDSS_API.Repository
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             AO = (int)user.AccessObject,
-                            Email = user.Email,
-                            Id = user.Id
+                            Email = user.Email
                         };
-            return new UserShort(query.First().FirstName, query.First().LastName, query.First().AO, query.First().Email, query.First().Id);
+            return new UserShort(query.First().FirstName, query.First().LastName, query.First().AO, query.First().Email);
         }
 
         /// <summary>

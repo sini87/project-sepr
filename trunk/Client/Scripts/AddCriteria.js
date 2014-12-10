@@ -11,9 +11,7 @@
                         'value="Criteria Name ' + iCnt + '" />');
             $(container).append('<input type=text class="getCriteria" id=criteriaDesc' + iCnt + ' ' +
                         'value="Criteria Description' + iCnt + '" />');
-            $(container).append('<input type=text class="getCriteria" id=criteriaWeight' + iCnt + ' ' +
-                        'value="0.0" />');
-
+            
             $('#criteria').before(container);
         }
         else {      // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON. (20 IS THE LIMIT WE HAVE SET)
