@@ -47,7 +47,7 @@ namespace Client
                         row = new TableRow();
                         cell = new TableCell();
 
-                        cell.Text = "<a href="+"/IssueDetail?issueId="+issue.Id+">"+issue.Title+"</a>";
+                        cell.Text = "<a href="+"/IssueDetail?issueId="+issue.Id+">"+issue.Title+"</a><hr/>";
                         row.Cells.Add(cell);
                         ownedByMeTable.Rows.Add(row);
                     }
@@ -63,6 +63,22 @@ namespace Client
                 }
 
             }
+
+            //Label profilepic = (Label)FindControl("ProfileAcronym");
+            //if (profilepic != null)
+            //{
+                if (rc != null && rc.User != null)
+                {
+                    if (rc.User.FirstName != "" && rc.User.LastName != "")
+                    {
+                        ProfileAcronym.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
+                    }
+                }
+                if (ProfileAcronym.Text.Equals(""))
+                {
+                    ProfileAcronym.Text = "&nbsp;";
+                }
+            //}
         }
     }
 }
