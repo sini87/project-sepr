@@ -49,11 +49,12 @@
             <asp:HiddenField ID="rowCountStakeholder" runat="server" Value="1" />
             <asp:Table ID="stakeholderTable" runat="server" Width="50%" Visible="false">  
                 <asp:TableRow>                
-                        <asp:TableCell></asp:TableCell>
-                        <asp:TableCell><asp:DropDownList ID="drpStakeholders" runat="server"></asp:DropDownList></asp:TableCell>
+                        <%--<asp:TableCell></asp:TableCell>
+                        <asp:TableCell><asp:DropDownList ID="drpStakeholders" runat="server"></asp:DropDownList></asp:TableCell>--%>
                 </asp:TableRow>
             </asp:Table>
 
+            <asp:LinkButton runat="server" ID="addStakeholder" class="mya" OnClick="addStakeholders_Click">add stakeholder</asp:LinkButton>
         </div>
 
         <div class="row">
@@ -93,6 +94,10 @@
         <div class="row">
 
             <label>User</label><br />
+            <asp:HiddenField ID="UserHiddenField" runat="server" Value="1" />
+            <asp:Table ID="usersTable" runat="server" Width="50%" Visible="false">  
+                
+            </asp:Table>
             <asp:Panel ID="user" runat="server">
                 <asp:LinkButton runat="server" ID="addUser" class="mya" OnClick="addUser_Click">add user</asp:LinkButton>
             </asp:Panel>

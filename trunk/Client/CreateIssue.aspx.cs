@@ -1,4 +1,5 @@
-﻿using CDDSS_API.Models;
+﻿using CDDSS_API;
+using CDDSS_API.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Client
         RestClient rc;
         static List<TagModel> tagList;
         List<InfluenceFactorModel> factorList;
+        List<UserShort> userList = new List<UserShort>();
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
@@ -44,6 +46,38 @@ namespace Client
                     }
                     b = (Button)tr.Cells[1].Controls[0];
                     b.Click += delTagButton_Click;
+                }
+            }
+
+            if (rc.StakeholderRows.Count > 0)
+            {
+                LinkButton b;
+                DropDownList ddl;
+                int i = 0;
+                foreach (TableRow tr in rc.StakeholderRows)
+                {
+                    if (rc.StakeholderRows[i].Cells[0].Controls[0].GetType() == typeof(DropDownList))
+                    {
+                        ddl = (DropDownList)rc.StakeholderRows[i].Controls[0].Controls[0];
+                        ddl.SelectedIndexChanged += stakeholderDDL_SelectedIndexChanged;
+                    }
+
+                    b = (LinkButton)tr.Cells[1].Controls[0];
+                    b.Click += delStakeholderButton_Click;
+
+                    i++;
+                }
+            }
+
+            if (rc.UsersRows.Count > 0)
+            {
+                LinkButton b;
+                int i = 0;
+                foreach (TableRow tr in rc.UsersRows)
+                {
+                    b = (LinkButton)rc.UsersRows[i].Cells[2].Controls[0];
+                    b.Click += delUserButton_Click;
+                    i++;
                 }
             }
         }
@@ -81,6 +115,8 @@ namespace Client
                         tagsList.Items.Add(tag.Name);
                     }
                     tagsList.Items.Add("New...");
+
+                    
                 }
                 else
                 {
@@ -94,7 +130,7 @@ namespace Client
                     //    tagsList.Items.Add(tag.Name);
                     //}
                     //tagsList.Items.Add("New...");
-                    Server.Transfer("Default.aspx");
+                    Server.Transfer("MyIssues.aspx");
                 }
             }
             else
@@ -105,6 +141,23 @@ namespace Client
                     foreach (TableRow tr in rc.TagRows)
                     {
                         tagsTable.Rows.Add(tr);
+                    }
+                }
+                if (rc.UsersRows.Count > 0)
+                {
+                    usersTable.Visible = true;
+                    foreach (TableRow tr in rc.UsersRows)
+                    {
+                        usersTable.Rows.Add(tr);
+                    }
+                }
+
+                if (rc.StakeholderRows.Count > 0)
+                {
+                    stakeholderTable.Visible = true;
+                    foreach (TableRow tr in rc.StakeholderRows)
+                    {
+                        stakeholderTable.Rows.Add(tr);
                     }
                 }
             }
@@ -128,6 +181,7 @@ namespace Client
 
             drpRelation.Items.Add(item);
         }
+
         protected void addTags_Click(object sender, EventArgs e)
         {
             rc = RestClient.GetInstance(Session.SessionID);
@@ -186,12 +240,112 @@ namespace Client
 
         protected void addUser_Click(object sender, EventArgs e)
         {
+            if (userList.Count == 0)
+            {
+                RetrieveUsers();
+            }
 
+            rc = RestClient.GetInstance(Session.SessionID);
+            TableRow tr = new TableRow();
+            TableCell buttonTC = new TableCell();
+
+            DropDownList userDDL = new DropDownList();
+            TableCell userTC = new TableCell();
+            userDDL.Items.Add("");
+            foreach (UserShort us in userList)
+            {
+                userDDL.Items.Add(us.FirstName + " " + us.LastName);
+            }
+            userTC.Controls.Add(userDDL);
+
+            DropDownList rightDDL = new DropDownList();
+            rightDDL.Items.Add("Contributor");
+            rightDDL.Items.Add("Viewer");
+            rightDDL.SelectedIndex = 0;
+            TableCell rightTC = new TableCell();
+            rightTC.Controls.Add(rightDDL);
+
+            LinkButton delUserButton = new LinkButton();
+            delUserButton.Text = "delete";
+            delUserButton.Click += delUserButton_Click;
+            buttonTC.Controls.Add(delUserButton);
+
+            tr.Cells.Add(userTC);
+            tr.Cells.Add(rightTC);
+            tr.Cells.Add(buttonTC);
+
+            usersTable.Rows.Add(tr);
+            usersTable.Visible = true;
+
+            rc.UsersRows.Add(tr);
+            rc.Issue.AccessUserList.Add(null);
+        }
+
+        void delUserButton_Click(object sender, EventArgs e)
+        {
+            int idx;
+            TableRow tr = (TableRow)((TableCell)((LinkButton)sender).Parent).Parent;
+            idx = usersTable.Rows.GetRowIndex(tr);
+            usersTable.Rows.Remove(tr);
+            rc.UsersRows.RemoveAt(idx);
         }
 
         protected void addStakeholders_Click(object sender, EventArgs e)
         {
+            rc = RestClient.GetInstance(Session.SessionID);
+            rc.EndPoint = "api/Stakeholders";
+            List<StakeholderModel> skList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
 
+            TableRow tr = new TableRow();
+            TableCell delTC = new TableCell();
+
+            DropDownList stakeholderDDL = new DropDownList();
+            stakeholderDDL.Items.Add("");
+            foreach(StakeholderModel stakeholder in skList){
+                stakeholderDDL.Items.Add(stakeholder.Name);
+            }
+            stakeholderDDL.Items.Add("New...");
+            stakeholderDDL.SelectedIndexChanged += stakeholderDDL_SelectedIndexChanged;
+            stakeholderDDL.SelectedIndex = 0;
+            TableCell stakeTC = new TableCell();
+            stakeTC.Controls.Add(stakeholderDDL);
+
+            LinkButton delStakeholderButton = new LinkButton();
+            delStakeholderButton.Text = "delete";
+            delStakeholderButton.Click += delStakeholderButton_Click;
+            delTC.Controls.Add(delStakeholderButton);
+
+            tr.Cells.Add(stakeTC);
+            tr.Cells.Add(delTC);
+
+            stakeholderTable.Rows.Add(tr);
+            stakeholderTable.Visible = true;
+
+            rc.StakeholderRows.Add(tr);
+        }
+
+        void stakeholderDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddl = (DropDownList)sender;
+            if (ddl.SelectedIndex == ddl.Items.Count - 1)
+            {
+                TextBox txtBox = new TextBox();
+                txtBox.Width = 150;
+                int idx;
+                TableRow tr = (TableRow)((TableCell)((DropDownList)sender).Parent).Parent;
+                idx = stakeholderTable.Rows.GetRowIndex(tr);
+                stakeholderTable.Rows[idx].Cells[0].Controls.RemoveAt(0);
+                stakeholderTable.Rows[idx].Cells[0].Controls.Add(txtBox);
+            }
+        }
+
+        void delStakeholderButton_Click(object sender, EventArgs e)
+        {
+            int idx;
+            TableRow tr = (TableRow)((TableCell)((LinkButton)sender).Parent).Parent;
+            idx = stakeholderTable.Rows.GetRowIndex(tr);
+            stakeholderTable.Rows.Remove(tr);
+            rc.StakeholderRows.RemoveAt(idx);
         }
 
         protected void save_Click(object sender, EventArgs e)
@@ -199,6 +353,9 @@ namespace Client
             AddIssue();
             Server.Transfer("MyIssues.aspx");
             rc.Issue = null;
+            rc.TagRows = null;
+            rc.UsersRows = new List<TableRow>();
+            rc.StakeholderRows = new List<TableRow>();
         }
 
         protected void savePublish_Click(object sender, EventArgs e)
@@ -210,6 +367,8 @@ namespace Client
             Server.Transfer("MyIssues.aspx");
             rc.Issue = null;
             rc.TagRows = null;
+            rc.UsersRows = new List<TableRow>();
+            rc.StakeholderRows = new List<TableRow>();
         }
 
         protected void addDocument_Click(object sender, EventArgs e)
@@ -257,13 +416,56 @@ namespace Client
             IssueModel issue = rc.Issue;
             issue.Title = title.Text;
             issue.Description = description.Text;
+
+            if (userList.Count == 0) RetrieveUsers();
+
+            DropDownList userDDL, rightDDL;
+            foreach (TableRow tr in rc.UsersRows)
+            {
+                userDDL = (DropDownList)tr.Cells[0].Controls[0];
+                rightDDL = (DropDownList)tr.Cells[1].Controls[0];
+                if (userDDL.SelectedIndex > 0 && !issue.AccessRights.ContainsKey((userList[userDDL.SelectedIndex - 1].AccessObject)))
+                {
+                    issue.AccessRights.Add(userList[userDDL.SelectedIndex - 1].AccessObject, rightDDL.SelectedValue.ToCharArray()[0]);
+                }
+            }
+
+            rc = RestClient.GetInstance(Session.SessionID);
+            rc.EndPoint = "api/Stakeholders";
+            List<StakeholderModel> skList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
+            DropDownList stakeholderDDL;
+            TextBox stakeholderTxt;
+            foreach (TableRow tr in rc.StakeholderRows)
+            {
+                if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
+                {
+                    stakeholderDDL = (DropDownList)tr.Cells[0].Controls[0];
+                    if (stakeholderDDL.SelectedIndex < stakeholderDDL.Items.Count - 1 && stakeholderDDL.SelectedIndex > 0)
+                    {
+                        issue.Stakeholders.Add(skList[stakeholderDDL.SelectedIndex - 1]);
+                    }
+                }
+                else
+                {
+                    stakeholderTxt = (TextBox)tr.Cells[0].Controls[0];
+                    issue.Stakeholders.Add(new StakeholderModel(stakeholderTxt.Text));
+                }
+            }
+
             rc.EndPoint = "api/Issue/Create";
             rc.Method = HttpVerb.POST;
             rc.PostData = JsonConvert.SerializeObject(issue);
             string response = rc.MakeRequest();
             int issueID = JsonConvert.DeserializeObject<int>(response);
             rc.UploadFilesToRemoteUrl(issueID);
+
             return issueID;
+        }
+
+        private void RetrieveUsers()
+        {
+            rc.EndPoint = "api/User";
+            userList = JsonConvert.DeserializeObject<List<UserShort>>(rc.MakeRequest());
         }
     }
 }

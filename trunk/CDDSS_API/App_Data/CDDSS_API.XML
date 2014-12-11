@@ -749,6 +749,12 @@
             <param name="issueId">issue id</param>
             <returns>OK if deleted</returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.StakeholdersController.Get">
+            <summary>
+            returns all stakeholders
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.TagsController.GET">
             <summary>
             returns al tags

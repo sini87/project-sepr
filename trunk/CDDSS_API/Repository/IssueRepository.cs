@@ -406,8 +406,11 @@ namespace CDDSS_API.Repository
                     Issue = issueID,
                     Right = issue.AccessRights[accessObjectID]
                 };
-                ctx.AccessRights.InsertOnSubmit(ar);
-                ctx.SubmitChanges();
+                if (accessObjectID != aoID)
+                {
+                    ctx.AccessRights.InsertOnSubmit(ar);
+                    ctx.SubmitChanges();
+                }
             }
 
             return issueID;
