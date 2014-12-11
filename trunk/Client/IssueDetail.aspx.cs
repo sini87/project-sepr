@@ -61,14 +61,34 @@ namespace Client
                     generateUsers(issue);
                     generateCriteria(issue);
                     generateAlternatives(issueAlt);
-
-                    //criteria.Visible = true;
-                    //criteriaWeight.Visible = true;
-                    //alternatives.Visible = true;
-
+                    
                     save.Visible = true;
-                    if (!issue.Status.Equals("FINISHED")){ //AND IF USER IS OWNER
-                        saveNext.Visible = true;
+
+                    CDDSS_API.UserShort currentUser = getCurrentUser();
+                    
+                    foreach (AccessRightModel arm in issue.AccessUserList)
+                    {
+                        if (arm.User.Email.Equals(currentUser.Email))
+                        {
+                            if (arm.Right.Equals('O'))
+                            {
+                                saveNext.Visible = true;
+                                break;
+                            }
+                            if (!arm.Right.Equals('O') && issue.Status.ToUpper().Equals("CREATING"))
+                            {
+                                saveNext.Visible = false;
+                                save.Visible = false;
+                            }
+                            
+                        }
+                    }
+
+
+                    if (issue.Status.ToUpper().Equals("FINISHED"))
+                    {
+                        saveNext.Visible = false;
+                        save.Visible = false;
                     }
                 }
             }
@@ -430,16 +450,17 @@ namespace Client
             }
         }
 
-        protected CDDSS_API.UserShort getUserByID(int id)
+        protected CDDSS_API.UserShort getCurrentUser()
         {
             RestClient rc = RestClient.GetInstance(Session.SessionID);
 
-            rc.EndPoint = "api/CriterionWeight?issueId=" + issue.Id;
+            rc.EndPoint = "api/User/Current";
             rc.Method = HttpVerb.GET;
             var json = rc.MakeRequest();
-            List<CriterionWeightModel> criterionWeight = JsonConvert.DeserializeObject<List<CriterionWeightModel>>(json);
 
-            return null;
+            CDDSS_API.UserShort user = JsonConvert.DeserializeObject<CDDSS_API.UserShort>(json);
+
+            return user;
         }
 
         protected void saveCriteriaCriteriaWeightAlternatives()
