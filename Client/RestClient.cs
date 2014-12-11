@@ -41,10 +41,14 @@ namespace Client
         private static Dictionary<string, RestClient> sessionRCDict = new Dictionary<string, RestClient>();
         public List<TableRow> TagRows { get; set; }
         public IssueModel Issue { get; set; }
+        public List<TableRow> StakeholderRows { get; set; }
+        public List<TableRow> UsersRows { get; set; }
         
         public RestClient()
         {
             TagRows = new List<TableRow>();
+            StakeholderRows = new List<TableRow>();
+            UsersRows = new List<TableRow>();
             Issue = null;
         }
 
