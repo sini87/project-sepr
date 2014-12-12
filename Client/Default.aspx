@@ -13,6 +13,10 @@
         <div id="landingpage_text_small">
             A Decision Making, Collaborating & Workflow Plattform
         </div>
+
+        <a id="landingpage_button" runat="server" href="~/MyAccount/Register">
+            GETTING STARTED
+        </a>
         
        <%-- <h2 runat="server" id="headingIssuesOwned" visible="false">Owned Issues</h2>
         <asp:Label ID="issuesOwnedText" runat="server" Visible="false"></asp:Label>

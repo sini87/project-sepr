@@ -123,6 +123,55 @@ label {
     display:block !important;
 }
 
+#MainContent_tagsTable {
+    width: 100% !important;
+}
+
+#MainContent_stakeholderTable {
+    width: 100% !important;
+}
+
+#MainContent_usersTable {
+    width: 100% !important;
+}
+
+.delete_button {
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer !important;
+    color:#ffffff !important;
+
+    margin-left:4px !important;
+    margin-right:4px !important;
+
+    padding:4px !important;
+}
+
+.delete_button:hover {
+    background-color: #00796B !important;
+    text-decoration:none;
+}
+
+.dropdown_tag {
+    width: 100%;
+    height: 32px !important;
+    margin-right:4px;
+}
+
+.dropdown_tag_small {
+    width: 100px;
+    height: 32px !important;
+    margin-right:4px;
+}
+
+tr {
+    margin-bottom:4px;
+}
+
+.maxwidth {
+    width:100%;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/

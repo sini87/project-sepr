@@ -166,6 +166,7 @@
     <Content Include="Content\myissues.css" />
     <Content Include="Content\newIssue.css" />
     <Content Include="Content\profile.css" />
+    <Content Include="Content\rating.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -228,6 +229,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Images\avatar_woman.png" />
     <None Include="Images\avatar_woman_big.png" />
+    <None Include="Images\rating.png" />
     <Content Include="IssueDetail.aspx" />
     <Content Include="MyIssues.aspx" />
     <Content Include="Profile.aspx" />
@@ -276,7 +278,9 @@
     <Content Include="Scripts\jquery-ui-1.11.2.js" />
     <Content Include="Scripts\jquery-ui-1.11.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\myrating.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\rating.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />

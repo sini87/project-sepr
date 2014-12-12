@@ -48,67 +48,87 @@ namespace Client
             if (data.Count > 0)
             {
                 Table dataTable = new Table();
-                TableHeaderRow headerRow = new TableHeaderRow();
-                TableHeaderCell headerCellTitle = new TableHeaderCell();
-                headerCellTitle.Text = "Title";
-                TableHeaderCell headerCellTags = new TableHeaderCell();
-                headerCellTags.Text = "Tags";
-                TableHeaderCell headerCellRating = new TableHeaderCell();
-                headerCellRating.Text = "Rating";
-                TableHeaderCell headerCellStatus = new TableHeaderCell();
-                headerCellStatus.Text = "Status";
-                TableHeaderCell headerCellDetail = new TableHeaderCell();
-                headerCellDetail.Text = "Details";
-                
-                headerRow.Cells.Add(headerCellTitle);
-                headerRow.Cells.Add(headerCellTags);
-                headerRow.Cells.Add(headerCellRating);
-                headerRow.Cells.Add(headerCellStatus);
-                headerRow.Cells.Add(headerCellDetail);
-
-                dataTable.Rows.Add(headerRow);
 
                 TableRow row;
                 TableCell tTitle;
-                TableCell tTags;
-                TableCell tRating;
-                TableCell tStatus;
-                TableCell tDetail;
+
+                Panel pTitle;
+                Panel pTags;
+                Panel pTag;
+                Panel pRating;
+                Panel pStatus, pStatusParent;
+                Panel pDetail;
 
                 foreach (IssueModel element in data)
                 {
                     row = new TableRow();
+                    row.CssClass = "row table_row";
 
                     tTitle = new TableCell();
-                    tTitle.Text = element.Title;
-                    row.Cells.Add(tTitle);
 
-                    tTags = new TableCell();
+                    pTitle = new Panel();
+                    pTitle.CssClass = "table_title col-lg-12";
+                    pTitle.Controls.Add(new LiteralControl(element.Title));
+                    tTitle.Controls.Add(pTitle);
+
+                    pTags = new Panel();
+                    pTags.CssClass = "table_tags col-lg-12";
                     foreach (TagModel tagElement in element.Tags)
                     {
-                        tTags.Text += tagElement.Name + ";";
+                        pTag = new Panel();
+                        pTag.CssClass = "table_tag";
+                        pTag.Controls.Add(new LiteralControl(tagElement.Name));
+                        pTags.Controls.Add(pTag);
                     }
+                    tTitle.Controls.Add(pTags);
 
-                    if (tTags.Text != "" && tTags.Text != null)
-                        tTags.Text = tTags.Text.Substring(0, tTags.Text.Length - 1);
+                    pRating = new Panel();
+                    pRating.CssClass = "table_rating col-lg-12";
+                    TextBox tbRating = new TextBox();
+                    tbRating.CssClass = "rating rating5";
+                    tbRating.Attributes.Add("readonly","readonly");
+                    tbRating.Text = element.ReviewRating.ToString();
+                    pRating.Controls.Add(tbRating);
+                    tTitle.Controls.Add(pRating);
 
-                    row.Cells.Add(tTags);
+                    pStatusParent = new Panel();
+                    pStatusParent.CssClass = "col-lg-12 table_status";
+                    pStatus = new Panel();
+                    pStatus.Controls.Add(new LiteralControl(element.Status));
+                    if (element != null)
+                    {
+                        if (element.Status.ToUpper().Equals("CREATING"))
+                        {
+                            pStatus.CssClass = "status_creating";
+                        }
+                        else if (element.Status.ToUpper().Equals("BRAINSTORMING"))
+                        {
+                            pStatus.CssClass = "status_brainstorming";
+                        }
+                        else if (element.Status.ToUpper().Equals("FINISHED"))
+                        {
+                            pStatus.CssClass = "status_finished";
+                        }
+                        else
+                        {
+                            pStatus.CssClass = "status_reviewed";
+                        }
+                    }
+                    pStatusParent.Controls.Add(pStatus);
+                    tTitle.Controls.Add(pStatusParent);
+                    
+                    row.Cells.Add(tTitle);
 
-                    tRating = new TableCell();
-                    tRating.Text = "" + element.ReviewRating;
-                    row.Cells.Add(tRating);
+                    string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+                        Request.ApplicationPath.TrimEnd('/') + "/";
+                    row.Attributes["onclick"] = "javascript:location.href='"+baseUrl+"IssueDetail?issueId=" + element.Id + "'";
 
-                    tStatus = new TableCell();
-                    tStatus.Text = element.Status;
-                    row.Cells.Add(tStatus);
+                    dataTable.Rows.Add(row);
 
-                    tDetail = new TableCell();
-                    HyperLink lnk = new HyperLink();
-                    lnk.Text = "Details";
-                    lnk.NavigateUrl = "~/IssueDetail?issueId=" + element.Id;
-                    tDetail.Controls.Add(lnk);
-
-                    row.Cells.Add(tDetail);
+                    row = new TableRow();
+                    row.CssClass = "row spacer";
+                    tTitle = new TableCell();
+                    row.Cells.Add(tTitle);
                     dataTable.Rows.Add(row);
                 }
                 dataTable.Width = Unit.Percentage(100);

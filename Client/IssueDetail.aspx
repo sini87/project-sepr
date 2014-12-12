@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Issue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IssueDetail.aspx.cs" Inherits="Client.IssueDetail" %>
+﻿<%@ Page Title="Issue" Language="C#" MasterPageFile="~/LoggedIn.Master" AutoEventWireup="true" CodeBehind="IssueDetail.aspx.cs" Inherits="Client.IssueDetail" %>
 <asp:Content runat="server" ContentPlaceHolderID="HeadContent">
 
     <webopt:BundleReference runat="server" Path="~/issueDetail/css" /> 
