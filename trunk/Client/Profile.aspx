@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Client.Profile" %>
+﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/LoggedIn.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Client.Profile" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <webopt:BundleReference runat="server" Path="~/Profile/css" /> 
 </asp:Content>

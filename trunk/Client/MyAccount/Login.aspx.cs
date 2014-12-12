@@ -13,7 +13,8 @@ namespace Client
         {
             if (User.Identity.IsAuthenticated)
             {
-                Server.Transfer("~/MyIssues.aspx");
+                //Server.Transfer("~/MyIssues.aspx");
+                Response.Redirect("~/MyIssues");
             }
         }
 

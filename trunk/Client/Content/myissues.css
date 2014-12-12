@@ -22,18 +22,28 @@ header {
     -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.75);
 
-    padding-left:50px;
-    padding-right:50px;
     padding-top:10px;
     padding-bottom:50px;
+}
+
+.less_padding {
+    padding-left:5px !important;
+}
+
+.extra_padding_left {
+    padding-left:50px;
+}
+
+.extra_padding_right {
+    padding-right:50px;
 }
 
 h1, .h1 {
     font-family: 'Maven Pro', sans-serif;
     color:#009688;
     font-size:48px;
-    margin-bottom:10px;
-    margin-top:10px;
+    margin-bottom:30px;
+    margin-top:20px;
 }
 
 h2, .h2 {
@@ -58,7 +68,7 @@ h2, .h2 {
 	padding:2px 28px !important;
 	text-decoration:none;
 
-    margin-top:15px;
+    margin-top:25px;
 }
 
 #MainContent_btnNewIssue:hover {
@@ -72,6 +82,97 @@ h2, .h2 {
 
 #myIssuesLink{
 	color:#FFE082 !important;
+}
+
+.table_title {
+    font-family: 'Maven Pro', sans-serif;
+    font-size:16px;
+    color:#000000;
+    text-transform:uppercase;
+    font-weight:500;
+
+    margin-top:10px;
+    margin-bottom:5px;
+    padding-left:45px;
+}
+
+.table_tag {
+    border:2px solid #B2DFDB;
+    background-color:transparent;
+
+    font-family: 'Maven Pro', sans-serif;
+    font-size:12px;
+    color:#727272;
+    text-transform:capitalize;
+
+    display:inline-block;
+
+    padding:2px 4px 2px 4px;
+    margin-right:5px;
+}
+
+.table_tags {
+    margin-bottom:5px;
+    padding-left:45px;
+}
+
+.table_rating {
+    padding-left:45px;
+}
+
+.table_status {
+    padding-left:45px;
+}
+
+.status_creating, .status_brainstorming, .status_finished, .status_reviewed {
+    border:1px solid #DBDBDB;
+
+    font-family: 'Maven Pro', sans-serif;
+    font-size:12px;
+    font-style:normal;
+    font-weight:500;
+    color:#ffffff;
+    text-transform:uppercase;
+
+    display:inline-block !important;
+
+    padding:4px 8px 4px 8px;
+    margin-top:5px;
+    margin-bottom:10px;
+}
+
+.status_creating {
+    background-color:#EAB9B9;
+}
+
+.status_brainstorming {
+    background-color:#FF9B49;
+}
+
+.status_finished {
+    background-color:#8EAA90;
+}
+
+.status_reviewed {
+    background-color:#FFD203;
+}
+
+.table_row {
+    cursor:pointer;
+    background-color:#F4F4F4;
+    padding:20px 50px 20px 50px;
+    margin-bottom:5px;
+    border-top:3px solid #DBDBDB;
+    border-bottom:3px solid #DBDBDB;
+}
+
+.table_row:hover {
+    background-color:#E5E5E5;
+}
+
+.spacer {
+  background-color:transparent !important;
+  height:5px;
 }
 
 /********************
@@ -120,6 +221,30 @@ header {
 
 #site-nav-sign {
     font-size: 2em;
+}
+
+}
+
+@media only screen and (max-width: 600px) {
+
+#MainContent_btnNewIssue {
+    margin-top:10px;
+    margin-bottom:25px;
+    margin-right:0px !important;
+}
+
+.notright {
+    float:none !important;
+    padding-left:50px;
+}
+
+}
+
+@media only screen and (max-width: 400px) {
+
+.notright {
+    padding-left:30px;
+    padding-right:30px;
 }
 
 }

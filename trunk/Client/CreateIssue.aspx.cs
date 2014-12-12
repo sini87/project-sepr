@@ -190,9 +190,11 @@ namespace Client
             DropDownList tagsDDList = new DropDownList();
             Button delTagButton = new Button();
             delTagButton.Text = "X";
+            delTagButton.CssClass = "delete_button";
             delTagButton.Click += delTagButton_Click;
             tagsDDList.AutoPostBack = true;
             tagsDDList.Items.Add("");
+            tagsDDList.CssClass = "dropdown_tag";
             foreach (TagModel tag in tagList)
             {
                 tagsDDList.Items.Add(tag.Name);
@@ -234,6 +236,7 @@ namespace Client
             {
                 tc.Controls.RemoveAt(0);
                 TextBox t = new TextBox();
+                t.CssClass = "maxwidth";
                 tc.Controls.Add(t);
             }
         }
@@ -252,6 +255,7 @@ namespace Client
             DropDownList userDDL = new DropDownList();
             TableCell userTC = new TableCell();
             userDDL.Items.Add("");
+            userDDL.CssClass = "dropdown_tag";
             foreach (UserShort us in userList)
             {
                 userDDL.Items.Add(us.FirstName + " " + us.LastName);
@@ -259,6 +263,7 @@ namespace Client
             userTC.Controls.Add(userDDL);
 
             DropDownList rightDDL = new DropDownList();
+            rightDDL.CssClass = "dropdown_tag";
             rightDDL.Items.Add("Contributor");
             rightDDL.Items.Add("Viewer");
             rightDDL.SelectedIndex = 0;
@@ -266,7 +271,8 @@ namespace Client
             rightTC.Controls.Add(rightDDL);
 
             LinkButton delUserButton = new LinkButton();
-            delUserButton.Text = "delete";
+            delUserButton.Text = "X";
+            delUserButton.CssClass = "delete_button";
             delUserButton.Click += delUserButton_Click;
             buttonTC.Controls.Add(delUserButton);
 
@@ -300,6 +306,7 @@ namespace Client
             TableCell delTC = new TableCell();
 
             DropDownList stakeholderDDL = new DropDownList();
+            stakeholderDDL.CssClass = "dropdown_tag";
             stakeholderDDL.Items.Add("");
             foreach(StakeholderModel stakeholder in skList){
                 stakeholderDDL.Items.Add(stakeholder.Name);
@@ -311,7 +318,8 @@ namespace Client
             stakeTC.Controls.Add(stakeholderDDL);
 
             LinkButton delStakeholderButton = new LinkButton();
-            delStakeholderButton.Text = "delete";
+            delStakeholderButton.Text = "X";
+            delStakeholderButton.CssClass = "delete_button";
             delStakeholderButton.Click += delStakeholderButton_Click;
             delTC.Controls.Add(delStakeholderButton);
 
@@ -424,6 +432,7 @@ namespace Client
             {
                 userDDL = (DropDownList)tr.Cells[0].Controls[0];
                 rightDDL = (DropDownList)tr.Cells[1].Controls[0];
+
                 if (userDDL.SelectedIndex > 0 && !issue.AccessRights.ContainsKey((userList[userDDL.SelectedIndex - 1].AccessObject)))
                 {
                     issue.AccessRights.Add(userList[userDDL.SelectedIndex - 1].AccessObject, rightDDL.SelectedValue.ToCharArray()[0]);

@@ -14,6 +14,7 @@
           
     </asp:PlaceHolder>  
     <webopt:BundleReference runat="server" Path="~/Content/css" /> 
+    <webopt:BundleReference runat="server" Path="~/Content/themes/base/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
@@ -44,33 +45,42 @@
     </asp:ScriptManager>
     <header>
         <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">
-                    <a runat="server" href="~/">
-                        <img src="../images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
-                    </a>
-                </p>
-            </div>
-            <div class="float-right">
-                <section id="login">
-                    <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul>
-                                <li><a id="loginLink" runat="server" href="~/MyAccount/Login">LOGIN</a></li>
-                                <li><a id="registerLink" runat="server" href="~/MyAccount/Register">SIGN UP</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <p>
-                                <a id="A2" runat="server" class="acronym" href="~/Profile.aspx" title="Manage your account">
-                                <asp:Label id="LoginAcronym" runat="Server" /></a>
-                                <a id="A1" runat="server" class="username" href="~/Profile.aspx" title="Manage your account">
-                                <asp:LoginName id="LoginName" runat="Server" CssClass="username" /></a> |
-                                <asp:LoginStatus runat="server" id="logout" LogoutAction="Redirect" LogoutText="Logout" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut"/>
-                            </p>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
-                </section>
+            <div class="row">
+                <div class="float-left col-lg-2">
+                    <p class="site-title">
+                        <a runat="server" href="~/MyIssues">
+                            <img src="../images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
+                        </a>
+                    </p>
+                </div>
+                <div class="float-middle col-lg-5">
+                    <p id="site-nav">
+                        <a id="allIssuesLink" runat="server" href="~/AllIssues">ALL ISSUES</a>
+                        <span id="site-nav-sign">|</span>
+                        <a id="myIssuesLink" runat="server" href="~/MyIssues">MY ISSUES</a>
+                    </p>
+                </div>
+                <div class="float-right col-lg-5">
+                    <section id="login">
+                        <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Disabled">
+                            <AnonymousTemplate>
+                                <ul>
+                                    <li><a id="loginLink" runat="server" href="~/MyAccount/Login">LOGIN</a></li>
+                                    <li><a id="registerLink" runat="server" href="~/MyAccount/Register">SIGN UP</a></li>
+                                </ul>
+                            </AnonymousTemplate>
+                            <LoggedInTemplate>
+                                <p>
+                                    <a id="A2" runat="server" class="acronym" href="~/Profile.aspx" title="Manage your account">
+                                    <asp:Label id="LoginAcronym" runat="Server" /></a>
+                                    <a id="A1" runat="server" class="username" href="~/Profile.aspx" title="Manage your account">
+                                    <asp:LoginName id="LoginName" runat="Server" CssClass="username" /></a> |
+                                    <asp:LoginStatus runat="server" id="logout" LogoutAction="Redirect" LogoutText="Logout" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut"/>
+                                </p>
+                            </LoggedInTemplate>
+                        </asp:LoginView>
+                    </section>
+                </div>
             </div>
         </div>
     </header>

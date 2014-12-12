@@ -1,6 +1,8 @@
-﻿<%@ Page Title="Create New Issue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateIssue.aspx.cs" Inherits="Client.CreateIssue" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+﻿<%@ Page Title="Create New Issue" Language="C#" MasterPageFile="~/LoggedIn.Master" AutoEventWireup="true" CodeBehind="CreateIssue.aspx.cs" Inherits="Client.CreateIssue" %>
+<asp:Content runat="server" ContentPlaceHolderID="HeadContent">
+
     <webopt:BundleReference runat="server" Path="~/createNewIssue/css" /> 
+
 </asp:Content>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -28,7 +30,7 @@
 
             <label>Tags</label><br />
             <asp:HiddenField ID="rowCountTags" runat="server" Value="1" />
-            <asp:Table ID="tagsTable" runat="server" Width="50%" Visible="false">  
+            <asp:Table ID="tagsTable" runat="server" Width="100%" Visible="false">  
                 <asp:TableRow>                
                     <%--<asp:TableCell></asp:TableCell>
                     <asp:TableCell><asp:DropDownList ID="drpTags" runat="server"></asp:DropDownList></asp:TableCell>--%>
@@ -47,7 +49,7 @@
 
             <label>Stakeholder</label><br />
             <asp:HiddenField ID="rowCountStakeholder" runat="server" Value="1" />
-            <asp:Table ID="stakeholderTable" runat="server" Width="50%" Visible="false">  
+            <asp:Table ID="stakeholderTable" runat="server" Width="100%" Visible="false">  
                 <asp:TableRow>                
                         <%--<asp:TableCell></asp:TableCell>
                         <asp:TableCell><asp:DropDownList ID="drpStakeholders" runat="server"></asp:DropDownList></asp:TableCell>--%>
@@ -61,7 +63,7 @@
 
             <label>Artefacts</label><br />
             <asp:HiddenField ID="rowCountArtefacts" runat="server" Value="1" />
-            <asp:Table ID="artefactTable" runat="server" Width="50%" Visible="false">  
+            <asp:Table ID="artefactTable" runat="server" Width="100%" Visible="false">  
                 <asp:TableRow>                
                         <asp:TableCell></asp:TableCell>
                         <asp:TableCell><asp:DropDownList ID="drpArtefacts" runat="server"></asp:DropDownList></asp:TableCell>
@@ -76,7 +78,7 @@
 
             <label>Factors</label><br />
             <asp:HiddenField ID="rowCountFactors" runat="server" Value="1" />
-            <asp:Table ID="Table1" runat="server" Width="50%" Visible="false">  
+            <asp:Table ID="Table1" runat="server" Width="100%" Visible="false">  
                 <asp:TableRow>                
                         <asp:TableCell></asp:TableCell>
                         <asp:TableCell><asp:DropDownList ID="drpFactors" runat="server"></asp:DropDownList></asp:TableCell>
@@ -95,7 +97,7 @@
 
             <label>User</label><br />
             <asp:HiddenField ID="UserHiddenField" runat="server" Value="1" />
-            <asp:Table ID="usersTable" runat="server" Width="50%" Visible="false">  
+            <asp:Table ID="usersTable" runat="server" Width="100%" Visible="false">  
                 
             </asp:Table>
             <asp:Panel ID="user" runat="server">
@@ -108,7 +110,7 @@
 
             <label>Relations</label><br />
             <asp:Panel ID="relations" runat="server">
-                <asp:TextBox ID="txtRelation" runat="server"></asp:TextBox><asp:DropDownList ID="drpRelation" runat="server"></asp:DropDownList><br/ />
+                <asp:TextBox ID="txtRelation" runat="server"></asp:TextBox><asp:DropDownList ID="drpRelation" class="dropdown_tag_small" runat="server"></asp:DropDownList><br/ />
                 <asp:LinkButton runat="server" ID="addRelation" class="mya" OnClick="addRelation_Click">add relation</asp:LinkButton>
             </asp:Panel>
 

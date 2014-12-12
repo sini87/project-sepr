@@ -82,7 +82,7 @@ namespace Client
                 Label acronym = (Label)LoginView1.FindControl("LoginAcronym");
                 if (acronym != null)
                 {
-                    if (rc != null && rc.User != null)
+                    if (rc != null && rc.User != null && rc.User.FirstName != null && rc.User.LastName != null)
                     {
                         if (rc.User.FirstName != "" && rc.User.LastName != "")
                         {
