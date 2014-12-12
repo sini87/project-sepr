@@ -1,6 +1,17 @@
 ﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/LoggedIn.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Client.Profile" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+
     <webopt:BundleReference runat="server" Path="~/Profile/css" /> 
+    <script src="../Scripts/jquery-2.1.1.js" type="text/javascript"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function () {
+            $("#LinkButton1").click(function () {
+                $("#PasswordDiv").fadeIn("slow");
+            });
+        });
+    </script>  
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -65,14 +76,30 @@
 
                 <label>Email</label><br />
                 <asp:TextBox ID="emailTxt" runat="server" OnTextChanged="emailTxt_TextChanged"></asp:TextBox><br />
+              
+                
 
             </div>
 
             <div class="row changePassword">
+                <asp:LinkButton ID="LinkButton1" OnClick="OnChangePassword_Click" runat="server">Change Password</asp:LinkButton>
+              <div id="PasswordDiv" runat="server" visible="false"> <br /> 
+                    <label>Old Password</label><br />
+                    <asp:TextBox ID="TextBoxOldPassword" runat="server"></asp:TextBox><br />
 
-                <a id="changePassword">Change Password</a>
+                    <label>New Password</label><br />
+                    <asp:TextBox ID="TextBoxNewPassword" runat="server" OnTextChanged="NewPassword_TextChanged"></asp:TextBox>&nbsp;<asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="TextBoxConfirmPassword" ControlToValidate="TextBoxNewPassword" ErrorMessage="Password confirmation not valid!" ForeColor="Red"></asp:CompareValidator>
+                    <br />
 
+                    <label>Confirm Password</label><br />
+                    <asp:TextBox ID="TextBoxConfirmPassword" runat="server" OnTextChanged="ConfirmPassword_TextChanged"></asp:TextBox>&nbsp;<asp:CompareValidator ID="CompareValidator2" runat="server" ControlToCompare="TextBoxNewPassword" ControlToValidate="TextBoxConfirmPassword" ErrorMessage="Password confirmation not valid!" ForeColor="Red"></asp:CompareValidator>
+                    <div id="passwordMessageDiv" style="vertical-align:middle; height:25px; margin-top:10px; color:darkgreen; background-color:lightgreen" visible="false" runat="server">
+                        Passwort erfolgreich geändert!
+                    </div>
             </div>
+                
+            </div>
+            
 
             <div class="row text-right margintop">
                 <asp:Button ID="saveProfile" runat="server" text="Save & Update" OnClick="saveProfile_Click"/>
