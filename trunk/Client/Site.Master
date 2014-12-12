@@ -9,10 +9,12 @@
     <script src="Scripts/jquery-2.1.1.js"></script>
     <script src="Scripts/bootstrap.js"></script>
     <script src="Scripts/modernizr-2.6.2.js"></script>
+
     <asp:PlaceHolder runat="server">     
         
           
     </asp:PlaceHolder>  
+
     <webopt:BundleReference runat="server" Path="~/Content/css" /> 
     <webopt:BundleReference runat="server" Path="~/Content/themes/base/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />

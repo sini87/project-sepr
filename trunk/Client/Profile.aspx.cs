@@ -15,6 +15,7 @@ namespace Client
     public partial class Profile : System.Web.UI.Page
     {
         private bool emailChanged;
+        private bool passwordChanged;
 
         protected void Page_Preload(object sender, EventArgs e)
         {
@@ -123,17 +124,58 @@ namespace Client
                     emailChanged = false;
                     Server.Transfer("Default.aspx");
                 }
-                else
+                else if (passwordChanged)
                 {
+                    ChangePasswordBindingModel passwordmodel = new ChangePasswordBindingModel();
+                    passwordmodel.NewPassword = TextBoxNewPassword.Text;
+                    passwordmodel.OldPassword = TextBoxOldPassword.Text;
+                    passwordmodel.ConfirmPassword = TextBoxConfirmPassword.Text;
+                    rc.EndPoint = "api/Account/ChangePassword";
+                    rc.Method = HttpVerb.POST;
+                    rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
+                    rc.PostData = JsonConvert.SerializeObject(passwordmodel);
+                    var jsonPW = rc.MakeRequest();
+                    passwordMessageDiv.Visible = true;
+                }else{
                     Response.Redirect("Profile.aspx");
                 }
 
+               
             }
         }
 
         protected void emailTxt_TextChanged(object sender, EventArgs e)
         {
             emailChanged = true;
+        }
+
+        protected void NewPassword_TextChanged(object sender, EventArgs e)
+        {
+            if (TextBoxNewPassword.Text != "" && TextBoxNewPassword.Text==TextBoxConfirmPassword.Text)
+            {
+                passwordChanged = true;
+            }
+            else
+            {
+                passwordChanged = false;
+            }
+        }
+
+        protected void ConfirmPassword_TextChanged(object sender, EventArgs e)
+        {
+            if (TextBoxConfirmPassword.Text != "" && TextBoxNewPassword.Text == TextBoxConfirmPassword.Text)
+            {
+                passwordChanged = true;
+            }
+            else
+            {
+                passwordChanged = false;
+            }
+        }
+       
+        protected void OnChangePassword_Click(object sender, EventArgs e)
+        {
+            PasswordDiv.Visible = true;
         }
     }
 }
