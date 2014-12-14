@@ -43,21 +43,7 @@ namespace CDDSS_API.Repository
         /// <returns>true if file already exists</returns>
         public bool CheckFileExists(int issue, string filename)
         {
-            var query = from Documents in
-            (from Documents in ctx.Documents
-            where
-              Documents.Issue == 1 &&
-              Documents.Name == filename
-            select new {
-              Dummy = "x"
-            })
-            group Documents by new { Documents.Dummy } into g
-            select new {
-              Column1 = g.Count()
-            };
-
-
-            if (null == query.FirstOrDefault())
+            if (ctx.Documents.Where(x => x.Issue == issue && x.Name == filename).Count() == 0)
             {
                 return false;
             }
@@ -73,7 +59,7 @@ namespace CDDSS_API.Repository
         /// <param name="issue">issue id to wich file is attached</param>
         /// <param name="filename">name of the file</param>
         /// <param name="inputStream">stream of the file</param>
-        /// <returns>returns false if upload was not successful, because a file with the same filename already exists</returns>
+        /// <returns>returns false if upload was not successful, because a file with the same filename  exists</returns>
         public bool UploadFile(int issue, string filename, Stream inputStream )
         {
             if (!CheckFileExists(issue, filename))

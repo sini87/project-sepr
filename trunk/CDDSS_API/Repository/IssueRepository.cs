@@ -116,21 +116,29 @@ namespace CDDSS_API.Repository
         {
             User user = ctx.Users.First(x => x.Email == email);
 
-            DBConnection.Instance.Connection.Open();
-            SqlCommand cmd = DBConnection.Instance.Connection.CreateCommand();
-            cmd.CommandText = "select iss.Id, iss.Title, iss.[Status], ISNULL(iss.ReviewRating,0) from " +
-                "[Issue] iss, [AccessRight] ar, AccessObject ao, [User] us WHERE ao.Id " +
-                "= ar.AccessObject and us.AccessObject = ao.id AND us.Email LIKE '" + email + "' and ar.[Right] = 'O' and iss.Id = ar.Issue";
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.Connection.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+
+            var q1 = 
+                        from us in ctx.Users
+                        from ar in ctx.AccessRights
+                        where
+                            us.Email == email &&
+                            ar.Right == 'O' &&
+                            ar.AccessObject == us.AccessObject
+                        select new
+                        {
+                            Id = (int?)ar.Issue1.Id,
+                            ar.Issue1.Title,
+                            ar.Issue1.Status,
+                            Rating = ((System.Double?)ar.Issue1.ReviewRating ?? (System.Double?)0)
+                        };
+
 
             List<IssueModel> list = new List<IssueModel>();
             IssueModel issueShort;
             Tag tag;
-            while (reader.Read())
+            foreach(var t in q1)
             {
-                issueShort = new IssueModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDouble(3));
+                issueShort = new IssueModel((int)t.Id, t.Title, t.Status, (double)t.Rating);
                 var query = from Tag_Issue in ctx.Tag_Issues
                             where
                               Tag_Issue.Issue == issueShort.Id
@@ -145,7 +153,6 @@ namespace CDDSS_API.Repository
                     issueShort.Tags.Add(new TagModel(tag.Id, tag.Name));
                 }
                 list.Add(issueShort);
-                reader.Read();
             }
 
             DBConnection.Instance.Connection.Close();
@@ -191,6 +198,11 @@ namespace CDDSS_API.Repository
             issuePersistent.Status = "CREATING";
             issuePersistent.Title = issue.Title;
             issuePersistent.Description = issue.Description;
+            if (issue.RelatedTo != 0)
+            {
+                issuePersistent.RelatedTo = issue.RelatedTo;
+                issuePersistent.RelationType = issue.RelationType;
+            }
             ctx.Issues.InsertOnSubmit(issuePersistent);
             ctx.SubmitChanges();
 

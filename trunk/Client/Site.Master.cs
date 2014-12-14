@@ -100,6 +100,7 @@ namespace Client
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {           
             RestClient.GetInstance(Session.SessionID).Logout();
+            SessionManager.RemoveUserSession(Session.SessionID);
             FormsAuthentication.SignOut();
         }
     }

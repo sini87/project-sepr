@@ -509,7 +509,7 @@
             <param name="alternativeId">integer id of the alternative</param>
             <returns></returns>
         </member>
-        <!-- Ungültiger XML-Kommentar wurde für den Member "T:CDDSS_API.Controllers.ArtefactsController" ignoriert -->
+        <!-- Badly formed XML comment ignored for member "T:CDDSS_API.Controllers.ArtefactsController" -->
         <member name="M:CDDSS_API.Controllers.ArtefactsController.GET">
             <summary>
             returns all artefacts
@@ -906,7 +906,7 @@
             <param name="issue">issue id to wich file is attached</param>
             <param name="filename">name of the file</param>
             <param name="inputStream">stream of the file</param>
-            <returns>returns false if upload was not successful, because a file with the same filename already exists</returns>
+            <returns>returns false if upload was not successful, because a file with the same filename  exists</returns>
         </member>
         <member name="M:CDDSS_API.Repository.DocumentRepository.GetFile(System.Int32,System.String)">
             <summary>

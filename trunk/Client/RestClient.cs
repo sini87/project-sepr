@@ -257,6 +257,14 @@ namespace Client
             }
         }
 
+        public void RemoveFile(string filename)
+        {
+            if (filesDict.ContainsKey(filename))
+            {
+                filesDict.Remove(filename);
+            }
+        }
+
         /// <summary>
         /// source from http://stackoverflow.com/questions/15543150/httprequest-files-is-empty-when-posting-file-through-httpclient
         /// </summary>
@@ -297,7 +305,7 @@ namespace Client
             {
 
                 //string header = string.Format(headerTemplate, "file" + i, files[i]);
-                string header = string.Format(headerTemplate, "uplTheFile", file.Key);
+                string header = string.Format(headerTemplate, file.Key, file.Key);
 
                 byte[] headerbytes = System.Text.Encoding.UTF8.GetBytes(header);
 

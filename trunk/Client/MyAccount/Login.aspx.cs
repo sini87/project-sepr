@@ -23,6 +23,7 @@ namespace Client
             if (RestClient.Login(Login1.UserName, Login1.Password,Session.SessionID))
             {
                 e.Authenticated = true;
+                SessionManager.AddUserSession(Session.SessionID);
             }
         }
 
@@ -31,6 +32,7 @@ namespace Client
             if (RestClient.Login(Login1.UserName, Login1.Password,Session.SessionID))
             {
                 e.Authenticated = true;
+                SessionManager.AddUserSession(Session.SessionID);
             }
         }
 
