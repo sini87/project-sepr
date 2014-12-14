@@ -31,10 +31,6 @@
             <label>Tags</label><br />
             <asp:HiddenField ID="rowCountTags" runat="server" Value="1" />
             <asp:Table ID="tagsTable" runat="server" Width="100%" Visible="false">  
-                <asp:TableRow>                
-                    <%--<asp:TableCell></asp:TableCell>
-                    <asp:TableCell><asp:DropDownList ID="drpTags" runat="server"></asp:DropDownList></asp:TableCell>--%>
-                </asp:TableRow>
             </asp:Table>
     
             <asp:LinkButton runat="server" ID="addTags" class="mya" OnClick="addTags_Click">add tag</asp:LinkButton>
@@ -49,11 +45,8 @@
 
             <label>Stakeholder</label><br />
             <asp:HiddenField ID="rowCountStakeholder" runat="server" Value="1" />
-            <asp:Table ID="stakeholderTable" runat="server" Width="100%" Visible="false">  
-                <asp:TableRow>                
-                        <%--<asp:TableCell></asp:TableCell>
-                        <asp:TableCell><asp:DropDownList ID="drpStakeholders" runat="server"></asp:DropDownList></asp:TableCell>--%>
-                </asp:TableRow>
+            <asp:Table ID="stakeholdersTable" runat="server" Width="100%" Visible="false">  
+                
             </asp:Table>
 
             <asp:LinkButton runat="server" ID="addStakeholder" class="mya" OnClick="addStakeholders_Click">add stakeholder</asp:LinkButton>
@@ -64,10 +57,6 @@
             <label>Artefacts</label><br />
             <asp:HiddenField ID="rowCountArtefacts" runat="server" Value="1" />
             <asp:Table ID="artefactTable" runat="server" Width="100%" Visible="false">  
-                <asp:TableRow>                
-                        <asp:TableCell></asp:TableCell>
-                        <asp:TableCell><asp:DropDownList ID="drpArtefacts" runat="server"></asp:DropDownList></asp:TableCell>
-                </asp:TableRow>
             </asp:Table>
 
             <asp:LinkButton runat="server" ID="addArtefact" class="mya" OnClick="addArtefact_Click">add artefact</asp:LinkButton>
@@ -78,10 +67,12 @@
 
             <label>Factors</label><br />
             <asp:HiddenField ID="rowCountFactors" runat="server" Value="1" />
-            <asp:Table ID="Table1" runat="server" Width="100%" Visible="false">  
+            <asp:Table ID="factorsTable" runat="server" Width="100%" Visible="false">  
                 <asp:TableRow>                
+                        <asp:TableCell>Name</asp:TableCell>
+                        <asp:TableCell>Characteristic</asp:TableCell>
+                        <asp:TableCell>Number?</asp:TableCell>
                         <asp:TableCell></asp:TableCell>
-                        <asp:TableCell><asp:DropDownList ID="drpFactors" runat="server"></asp:DropDownList></asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
 
@@ -110,14 +101,20 @@
 
             <label>Relations</label><br />
             <asp:Panel ID="relations" runat="server">
-                <asp:TextBox ID="txtRelation" runat="server"></asp:TextBox><asp:DropDownList ID="drpRelation" class="dropdown_tag_small" runat="server"></asp:DropDownList><br/ />
+                <asp:DropDownList ID="relationTypeDDL" class="dropdown_tag_small" runat="server" AutoPostBack="true" OnSelectedIndexChanged="relationTypeDDL_SelectedIndexChanged">
+                    <asp:ListItem Text="None" Value="N"/>
+                    <asp:ListItem Text="Parent" Value="P"/>
+                    <asp:ListItem Text="Child" Value="C"/>
+                </asp:DropDownList><asp:DropDownList ID="relationIssuesDDL" class="dropdown_tag_small" runat="server" AutoPostBack="true" OnSelectedIndexChanged="relationIssuesDDL_SelectedIndexChanged"></asp:DropDownList><br/ />
                 <asp:LinkButton runat="server" ID="addRelation" class="mya" OnClick="addRelation_Click">add relation</asp:LinkButton>
             </asp:Panel>
+
+            <asp:RequiredFieldValidator ID="relationDDLFieldValidator" runat="server" ControlToValidate="relationTypeDDL" ValidationGroup="relationTypeDDLValGroup" Style="display:none" InitialValue="N"></asp:RequiredFieldValidator>
 
         </div>
 
         <div class="row margintopsmall">
-          
+            <asp:Table ID="documentTable" runat="server" Width="100%" Visible="false"></asp:Table>
             <asp:FileUpload ID="FileUpload1" runat="server" Visible="false"/><asp:Button ID="UploadButton" runat="server" Text="Upload" Visible="false" OnClick="UploadButton_Click"/><br />
             <asp:LinkButton runat="server" ID="addDocument1" class="mya" OnClick="addDocument_Click">add a document</asp:LinkButton>
 

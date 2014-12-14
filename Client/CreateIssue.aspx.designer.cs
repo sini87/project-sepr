@@ -67,13 +67,13 @@ namespace Client {
         protected global::System.Web.UI.WebControls.HiddenField rowCountStakeholder;
         
         /// <summary>
-        /// stakeholderTable control.
+        /// stakeholdersTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table stakeholderTable;
+        protected global::System.Web.UI.WebControls.Table stakeholdersTable;
         
         /// <summary>
         /// addStakeholder control.
@@ -103,15 +103,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Table artefactTable;
         
         /// <summary>
-        /// drpArtefacts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpArtefacts;
-        
-        /// <summary>
         /// addArtefact control.
         /// </summary>
         /// <remarks>
@@ -130,22 +121,13 @@ namespace Client {
         protected global::System.Web.UI.WebControls.HiddenField rowCountFactors;
         
         /// <summary>
-        /// Table1 control.
+        /// factorsTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
-        
-        /// <summary>
-        /// drpFactors control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpFactors;
+        protected global::System.Web.UI.WebControls.Table factorsTable;
         
         /// <summary>
         /// addFactor control.
@@ -202,22 +184,22 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel relations;
         
         /// <summary>
-        /// txtRelation control.
+        /// relationTypeDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRelation;
+        protected global::System.Web.UI.WebControls.DropDownList relationTypeDDL;
         
         /// <summary>
-        /// drpRelation control.
+        /// relationIssuesDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpRelation;
+        protected global::System.Web.UI.WebControls.DropDownList relationIssuesDDL;
         
         /// <summary>
         /// addRelation control.
@@ -227,6 +209,24 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton addRelation;
+        
+        /// <summary>
+        /// relationDDLFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator relationDDLFieldValidator;
+        
+        /// <summary>
+        /// documentTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table documentTable;
         
         /// <summary>
         /// FileUpload1 control.

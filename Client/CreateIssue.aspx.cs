@@ -13,65 +13,83 @@ namespace Client
 {
     public partial class CreateIssue : System.Web.UI.Page
     {
-        DropDownList tagsList = new DropDownList();
         RestClient rc;
-        static List<TagModel> tagList;
-        List<InfluenceFactorModel> factorList;
         List<UserShort> userList = new List<UserShort>();
+        List<TagModel> tagsList = new List<TagModel>();
+        List<StakeholderModel> stakeholdersList = new List<StakeholderModel>();
+        List<ArtefactModel> artefactsList = new List<ArtefactModel>();
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                SessionManager.AddUserSession(Session.SessionID);
+            }
             rc = RestClient.GetInstance(Session.SessionID);
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            
+            if (!Page.IsPostBack)
+            {
+                session.CreateIssueEntered();
+            }
             if (rc == null)
             {
                 RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
                 rc = RestClient.GetInstance(Session.SessionID);
             }
-            if (rc.TagRows.Count > 0)
+
+            DropDownList ddlist;
+            LinkButton b;
+            if (session.TagsTRs.Count > 0)
             {
-                DropDownList ddlist;
-                Button b;
-                TextBox tagTextBox;
-                foreach (TableRow tr in rc.TagRows)
+                foreach (TableRow tr in session.TagsTRs)
                 {
                     if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
                     {
                         ddlist = (DropDownList)tr.Cells[0].Controls[0];
                         ddlist.SelectedIndexChanged += tagsDDList_SelectedIndexChanged;
                     }
-                    else if (tr.Cells[0].Controls[0].GetType() == typeof(TextBox))
-                    {
-                        tagTextBox = (TextBox)tr.Cells[0].Controls[0];
-                        tagTextBox.TextChanged += tagTextBox_TextChanged;
-                    }
-                    b = (Button)tr.Cells[1].Controls[0];
+                    b = (LinkButton)tr.Cells[1].Controls[0];
                     b.Click += delTagButton_Click;
                 }
             }
 
-            if (rc.StakeholderRows.Count > 0)
+            if (session.StakeholdersTRs.Count > 0)
             {
-                LinkButton b;
-                DropDownList ddl;
-                int i = 0;
-                foreach (TableRow tr in rc.StakeholderRows)
+                foreach (TableRow tr in session.StakeholdersTRs)
                 {
-                    if (rc.StakeholderRows[i].Cells[0].Controls[0].GetType() == typeof(DropDownList))
+                    if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
                     {
-                        ddl = (DropDownList)rc.StakeholderRows[i].Controls[0].Controls[0];
-                        ddl.SelectedIndexChanged += stakeholderDDL_SelectedIndexChanged;
+                        ddlist = (DropDownList)tr.Cells[0].Controls[0];
+                        ddlist.SelectedIndexChanged += stakeholdersDDL_SelectedIndexChanged;
                     }
-
                     b = (LinkButton)tr.Cells[1].Controls[0];
                     b.Click += delStakeholderButton_Click;
-
-                    i++;
                 }
+            }
+
+            if (session.FactorTRs.Count > 0)
+            {
+                foreach (TableRow tr in session.FactorTRs)
+                {
+                    b = (LinkButton)tr.Cells[3].Controls[0];
+                    b.Click += delFactorBtn_Click;
+                }
+            }
+
+            foreach (TableRow tr in session.ArtefactsTRs)
+            {
+                if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
+                {
+                    ddlist = (DropDownList)tr.Cells[0].Controls[0];
+                    ddlist.SelectedIndexChanged += artefactsDDL_SelectedIndexChanged;
+                }
+                b = (LinkButton)tr.Cells[1].Controls[0];
+                b.Click += delArtefactButton_Click;
             }
 
             if (rc.UsersRows.Count > 0)
             {
-                LinkButton b;
                 int i = 0;
                 foreach (TableRow tr in rc.UsersRows)
                 {
@@ -80,65 +98,48 @@ namespace Client
                     i++;
                 }
             }
-        }
 
-        void tagTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TableRow tr = (TableRow)((TextBox)sender).Parent.Parent;
-            Table t = (Table)tr.Parent;
-            if (rc.Issue.Tags[t.Rows.GetRowIndex(tr) - 1] == null)
+            foreach (TableRow tr in session.DocumentsTRs)
             {
-                TagModel tag = new TagModel();
-                tag.Name = ((TextBox)sender).Text;
-                rc.Issue.Tags[t.Rows.GetRowIndex(tr) - 1] = tag;
-            }
-            else
-            {
-                rc.Issue.Tags[t.Rows.GetRowIndex(tr)].Name = ((TextBox)sender).Text;
+                b = (LinkButton)tr.Cells[1].Controls[0];
+                b.Click += delFileBtn_Click;
             }
 
+            if (UploadButton != null && UploadButton.Visible)
+            {
+                UploadButton.Click += UploadButton_Click;
+            }            
         }
 
         protected void Page_Init(object sender, EventArgs e)
         {
             rc = RestClient.GetInstance(Session.SessionID);
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
 
             if (!Page.IsPostBack)
             {
-                if (this.User.Identity.IsAuthenticated && rc != null)
+                session.TagsTRs.Clear();
+                if (!this.User.Identity.IsAuthenticated)
                 {
-                    rc.EndPoint = "api/Tags";
-                    tagList = JsonConvert.DeserializeObject<List<TagModel>>(rc.MakeRequest());
-                    tagsList.Items.Add(" ");
-                    foreach (TagModel tag in tagList)
-                    {
-                        tagsList.Items.Add(tag.Name);
-                    }
-                    tagsList.Items.Add("New...");
+                    RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
+                    rc = RestClient.GetInstance(Session.SessionID);
+                    //Server.Transfer("MyIssues.aspx");
+                }
 
-                    
-                }
-                else
+                List<IssueModel> issueList = RetrieveIssues();
+                relationIssuesDDL.Items.Add(new ListItem("", "0"));
+                foreach (IssueModel iss in issueList)
                 {
-                    //RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
-                    //rc = RestClient.GetInstance(Session.SessionID);
-                    //rc.EndPoint = "api/Tags";
-                    //tagList = JsonConvert.DeserializeObject<List<TagModel>>(rc.MakeRequest());
-                    //tagsList.Items.Add(" ");
-                    //foreach (TagModel tag in tagList)
-                    //{
-                    //    tagsList.Items.Add(tag.Name);
-                    //}
-                    //tagsList.Items.Add("New...");
-                    Server.Transfer("MyIssues.aspx");
+                    relationIssuesDDL.Items.Add(new ListItem(iss.Title, iss.Id.ToString()));
                 }
+                relationIssuesDDL.SelectedIndex = 0;
             }
             else
             {
-                if (rc.TagRows.Count > 0)
+                if (session.TagsTRs.Count > 0)
                 {
                     tagsTable.Visible = true;
-                    foreach (TableRow tr in rc.TagRows)
+                    foreach (TableRow tr in session.TagsTRs)
                     {
                         tagsTable.Rows.Add(tr);
                     }
@@ -152,12 +153,39 @@ namespace Client
                     }
                 }
 
-                if (rc.StakeholderRows.Count > 0)
+                if (session.StakeholdersTRs.Count > 0)
                 {
-                    stakeholderTable.Visible = true;
-                    foreach (TableRow tr in rc.StakeholderRows)
+                    stakeholdersTable.Visible = true;
+                    foreach (TableRow tr in session.StakeholdersTRs)
                     {
-                        stakeholderTable.Rows.Add(tr);
+                        stakeholdersTable.Rows.Add(tr);
+                    }
+                }
+
+                if (session.ArtefactsTRs.Count > 0)
+                {
+                    artefactTable.Visible = true;
+                    foreach (TableRow tr in session.ArtefactsTRs)
+                    {
+                        artefactTable.Rows.Add(tr);
+                    }
+                }
+
+                if (session.FactorTRs.Count > 0)
+                {
+                    factorsTable.Visible = true;
+                    foreach (TableRow tr in session.FactorTRs)
+                    {
+                        factorsTable.Rows.Add(tr);
+                    }
+                }
+
+                if (session.DocumentsTRs.Count > 0)
+                {
+                    documentTable.Visible = true;
+                    foreach (TableRow tr in session.DocumentsTRs)
+                    {
+                        documentTable.Rows.Add(tr);
                     }
                 }
             }
@@ -172,72 +200,83 @@ namespace Client
             }
         }
 
-        protected void fillTagDropDown()
-        {
-
-            ListItem item = new ListItem();
-            item.Value = "new";
-            item.Text = "new";
-
-            drpRelation.Items.Add(item);
-        }
 
         protected void addTags_Click(object sender, EventArgs e)
         {
-            rc = RestClient.GetInstance(Session.SessionID);
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
             TableRow tr = new TableRow();
-            TableCell dropTC = new TableCell();
-            DropDownList tagsDDList = new DropDownList();
-            Button delTagButton = new Button();
+            TableCell tagTC = new TableCell();
+            TableCell buttonTC = new TableCell();
+
+            if (tagsList == null || tagsList.Count == 0) RetrieveTags();
+
+            DropDownList tagsDDL = new DropDownList();
+            tagsDDL.Items.Add(new ListItem("","-1"));
+            tagsDDL.SelectedIndexChanged += tagsDDList_SelectedIndexChanged;
+            tagsDDL.CssClass = "dropdown_tag";
+            tagsDDL.AutoPostBack = true;
+            tagsDDL.ID = "tagDDL" + session.NextTTRID;
+            foreach (TagModel tag in tagsList)
+            {
+                tagsDDL.Items.Add(new ListItem(tag.Name,tag.Id.ToString()));
+            }
+            tagsDDL.Items.Add(new ListItem("New...","-2"));
+            tagTC.Controls.Add(tagsDDL);
+
+            LinkButton delTagButton = new LinkButton();
             delTagButton.Text = "X";
+            delTagButton.ID = tagsDDL.ID.Replace("tagDDL", "tagBTN");
             delTagButton.CssClass = "delete_button";
             delTagButton.Click += delTagButton_Click;
-            tagsDDList.AutoPostBack = true;
-            tagsDDList.Items.Add("");
-            tagsDDList.CssClass = "dropdown_tag";
-            foreach (TagModel tag in tagList)
-            {
-                tagsDDList.Items.Add(tag.Name);
-            }
-            tagsDDList.Items.Add("New...");
-            tagsDDList.SelectedIndex = 0;
-            TableCell delTC = new TableCell();
-            delTC.Controls.Add(delTagButton);
-            dropTC.Controls.Add(tagsDDList);
-            tr.Cells.Add(dropTC);
-            tr.Cells.Add(delTC);
+            buttonTC.Controls.Add(delTagButton);
+
+            tr.Cells.Add(tagTC);
+            tr.Cells.Add(buttonTC);
+            
             tagsTable.Rows.Add(tr);
             tagsTable.Visible = true;
-            rc.TagRows.Add(tr);
-            rc.Issue.Tags.Add(null);
+            
+            session.TagsTRs.Add(tr);
         }
 
         void delTagButton_Click(object sender, EventArgs e)
         {
-            Button dpList = (Button)sender;
-            TableRow tr = (TableRow)dpList.Parent.Parent;
-            Table t = (Table)tr.Parent;
-            t.Rows.Remove(tr);
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            LinkButton delBtn = (LinkButton)sender;
+            TableRow tr = (TableRow)delBtn.Parent.Parent;
+            tagsTable.Rows.Remove(tr);
+            session.TagsTRs.Clear();
+            foreach (TableRow trow in tagsTable.Rows)
+            {
+                session.TagsTRs.Add(trow);
+            }
+            
+            if (tagsTable.Rows.Count == 0)
+            {
+                tagsTable.Visible = false;
+            }
         }
 
         void tagsDDList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
             DropDownList dpList = (DropDownList)sender;
+            if (dpList.Parent == null) return;
             TableRow tr = (TableRow)dpList.Parent.Parent;
             TableCell tc = tr.Cells[0];
-            rc = RestClient.GetInstance(Session.SessionID);
 
-            if (dpList.SelectedIndex > 0 && dpList.SelectedIndex < dpList.Items.Count - 1)
+            if (dpList.SelectedIndex == dpList.Items.Count - 1)
             {
-                Table t = (Table)tr.Parent;
-                rc.Issue.Tags[t.Rows.GetRowIndex(tr) - 1] = tagList[dpList.SelectedIndex - 1];
-            }
-            else if (dpList.SelectedIndex == dpList.Items.Count - 1)
-            {
-                tc.Controls.RemoveAt(0);
                 TextBox t = new TextBox();
                 t.CssClass = "maxwidth";
+                tc.Controls.RemoveAt(0);
+                t.ID = dpList.ID.Replace("tagDDL", "tagTXT");
                 tc.Controls.Add(t);
+                session.TagsTRs.Clear();
+                foreach (TableRow trow in tagsTable.Rows)
+                {
+                    session.TagsTRs.Add(trow);
+                }
             }
         }
 
@@ -294,68 +333,230 @@ namespace Client
             idx = usersTable.Rows.GetRowIndex(tr);
             usersTable.Rows.Remove(tr);
             rc.UsersRows.RemoveAt(idx);
+            if (usersTable.Rows.Count == 0)
+            {
+                usersTable.Visible = false;
+            }
         }
 
         protected void addStakeholders_Click(object sender, EventArgs e)
         {
-            rc = RestClient.GetInstance(Session.SessionID);
-            rc.EndPoint = "api/Stakeholders";
-            List<StakeholderModel> skList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
-
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
             TableRow tr = new TableRow();
-            TableCell delTC = new TableCell();
+            TableCell stakeholderTC = new TableCell();
+            TableCell buttonTC = new TableCell();
+
+            if (stakeholdersList == null || stakeholdersList.Count == 0) RetrieveStakeholders();
 
             DropDownList stakeholderDDL = new DropDownList();
+            stakeholderDDL.Items.Add(new ListItem("", "-1"));
+            stakeholderDDL.SelectedIndexChanged += stakeholdersDDL_SelectedIndexChanged;
             stakeholderDDL.CssClass = "dropdown_tag";
-            stakeholderDDL.Items.Add("");
-            foreach(StakeholderModel stakeholder in skList){
-                stakeholderDDL.Items.Add(stakeholder.Name);
+            stakeholderDDL.AutoPostBack = true;
+            stakeholderDDL.ID = "stakeholderDDL" + session.NextSTRID;
+            foreach (StakeholderModel stakeholder in stakeholdersList)
+            {
+                stakeholderDDL.Items.Add(new ListItem(stakeholder.Name,stakeholder.Id.ToString()));
             }
-            stakeholderDDL.Items.Add("New...");
-            stakeholderDDL.SelectedIndexChanged += stakeholderDDL_SelectedIndexChanged;
-            stakeholderDDL.SelectedIndex = 0;
-            TableCell stakeTC = new TableCell();
-            stakeTC.Controls.Add(stakeholderDDL);
+            stakeholderDDL.Items.Add(new ListItem("New...", "-2"));
+            stakeholderTC.Controls.Add(stakeholderDDL);
 
             LinkButton delStakeholderButton = new LinkButton();
             delStakeholderButton.Text = "X";
+            delStakeholderButton.ID = stakeholderDDL.ID.Replace("stakeholderDDL", "stakeholderBTN");
             delStakeholderButton.CssClass = "delete_button";
             delStakeholderButton.Click += delStakeholderButton_Click;
-            delTC.Controls.Add(delStakeholderButton);
+            buttonTC.Controls.Add(delStakeholderButton);
 
-            tr.Cells.Add(stakeTC);
-            tr.Cells.Add(delTC);
+            tr.Cells.Add(stakeholderTC);
+            tr.Cells.Add(buttonTC);
 
-            stakeholderTable.Rows.Add(tr);
-            stakeholderTable.Visible = true;
+            stakeholdersTable.Rows.Add(tr);
+            stakeholdersTable.Visible = true;
 
-            rc.StakeholderRows.Add(tr);
+            session.StakeholdersTRs.Add(tr);            
         }
 
-        void stakeholderDDL_SelectedIndexChanged(object sender, EventArgs e)
+        void stakeholdersDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DropDownList ddl = (DropDownList)sender;
-            if (ddl.SelectedIndex == ddl.Items.Count - 1)
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            DropDownList dpList = (DropDownList)sender;
+            if (dpList.Parent == null) return;
+            TableRow tr = (TableRow)dpList.Parent.Parent;
+            TableCell tc = tr.Cells[0];
+
+            if (dpList.SelectedIndex == dpList.Items.Count - 1)
             {
-                TextBox txtBox = new TextBox();
-                txtBox.Width = 150;
-                int idx;
-                TableRow tr = (TableRow)((TableCell)((DropDownList)sender).Parent).Parent;
-                idx = stakeholderTable.Rows.GetRowIndex(tr);
-                stakeholderTable.Rows[idx].Cells[0].Controls.RemoveAt(0);
-                stakeholderTable.Rows[idx].Cells[0].Controls.Add(txtBox);
+                TextBox t = new TextBox();
+                t.CssClass = "maxwidth";
+                tc.Controls.RemoveAt(0);
+                t.ID = dpList.ID.Replace("DDL", "TXT");
+                tc.Controls.Add(t);
+                session.StakeholdersTRs.Clear();
+                foreach (TableRow trow in stakeholdersTable.Rows)
+                {
+                    session.StakeholdersTRs.Add(trow);
+                }
             }
         }
 
         void delStakeholderButton_Click(object sender, EventArgs e)
         {
-            int idx;
-            TableRow tr = (TableRow)((TableCell)((LinkButton)sender).Parent).Parent;
-            idx = stakeholderTable.Rows.GetRowIndex(tr);
-            stakeholderTable.Rows.Remove(tr);
-            rc.StakeholderRows.RemoveAt(idx);
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            LinkButton delBtn = (LinkButton)sender;
+            TableRow tr = (TableRow)delBtn.Parent.Parent;
+            stakeholdersTable.Rows.Remove(tr);
+            session.StakeholdersTRs.Clear();
+            foreach (TableRow trow in stakeholdersTable.Rows)
+            {
+                session.StakeholdersTRs.Add(trow);
+            }
+            if (stakeholdersTable.Rows.Count == 0)
+            {
+                stakeholdersTable.Visible = false;
+            }
         }
 
+        protected void addFactor_Click(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            string factID = session.NextFTRID;
+            
+            TextBox factorNameTxt = new TextBox();
+            factorNameTxt.ID = "factNameTXT" + factID;
+            factorNameTxt.Width = 100;
+            TableCell nameTC = new TableCell();
+            nameTC.Controls.Add(factorNameTxt);
+
+            TextBox factorCharacteristicsTxt = new TextBox();
+            factorCharacteristicsTxt.ID = "factCharTXT" + factID;
+            factorCharacteristicsTxt.Width = 130;
+            TableCell characteristicsTC = new TableCell();
+            characteristicsTC.Controls.Add(factorCharacteristicsTxt);
+
+            CheckBox numericChck = new CheckBox();
+            numericChck.ID = "factNumCHK" + factID;
+            numericChck.Width = 50;
+            TableCell numericTC = new TableCell();
+            numericTC.Controls.Add(numericChck);
+
+            LinkButton delFactorBtn = new LinkButton();
+            delFactorBtn.ID = "delFactBTN" + factID;
+            delFactorBtn.Text = "X";
+            delFactorBtn.CssClass = "delete_button";
+            delFactorBtn.Click += delFactorBtn_Click;
+            TableCell delTC = new TableCell();
+            delTC.Controls.Add(delFactorBtn);
+
+            TableRow tr = new TableRow();
+            tr.Cells.Add(nameTC);
+            tr.Cells.Add(characteristicsTC);
+            tr.Cells.Add(numericTC);
+            tr.Cells.Add(delTC);
+
+            factorsTable.Rows.Add(tr);
+            factorsTable.Visible = true;
+
+            session.FactorTRs.Add(tr);
+        }
+
+        void delFactorBtn_Click(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            LinkButton delBtn = (LinkButton)sender;
+            TableRow tr = (TableRow)delBtn.Parent.Parent;
+            factorsTable.Rows.Remove(tr);
+            session.FactorTRs.Clear();
+            foreach (TableRow trow in factorsTable.Rows)
+            {
+                if (trow.Cells[0].Controls.Count > 0) 
+                    session.FactorTRs.Add(trow);
+            }
+            if (factorsTable.Rows.Count == 0)
+            {
+                factorsTable.Visible = false;
+            }
+        }
+
+        protected void addArtefact_Click(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            string artefactID = session.NextATRID;
+            TableRow tr = new TableRow();
+            TableCell artefactTC = new TableCell();
+            TableCell buttonTC = new TableCell();
+
+            if (artefactsList == null || artefactsList.Count == 0) RetrieveArtefacts();
+
+            DropDownList artefactsDDL = new DropDownList();
+            artefactsDDL.Items.Add(new ListItem("", "-1"));
+            artefactsDDL.SelectedIndexChanged += artefactsDDL_SelectedIndexChanged;
+            artefactsDDL.CssClass = "dropdown_tag";
+            artefactsDDL.AutoPostBack = true;
+            artefactsDDL.ID = "artefactDDL" + artefactID;
+            foreach (ArtefactModel artefact in artefactsList)
+            {
+                artefactsDDL.Items.Add(new ListItem(artefact.Name, artefact.Id.ToString()));
+            }
+            artefactsDDL.Items.Add(new ListItem("New...", "-2"));
+            artefactTC.Controls.Add(artefactsDDL);
+
+            LinkButton delArtefactButton = new LinkButton();
+            delArtefactButton.Text = "X";
+            delArtefactButton.ID = "artefactBTN" + artefactID;
+            delArtefactButton.CssClass = "delete_button";
+            delArtefactButton.Click += delArtefactButton_Click;
+            buttonTC.Controls.Add(delArtefactButton);
+
+            tr.Cells.Add(artefactTC);
+            tr.Cells.Add(buttonTC);
+
+            artefactTable.Rows.Add(tr);
+            artefactTable.Visible = true;
+
+            session.ArtefactsTRs.Add(tr);            
+        }
+
+        void delArtefactButton_Click(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            LinkButton delBtn = (LinkButton)sender;
+            TableRow tr = (TableRow)delBtn.Parent.Parent;
+            artefactTable.Rows.Remove(tr);
+            session.ArtefactsTRs.Clear();
+            foreach (TableRow trow in artefactTable.Rows)
+            {
+                session.ArtefactsTRs.Add(trow);
+            }
+            if (artefactTable.Rows.Count == 0)
+            {
+                artefactTable.Visible = false;
+            }
+        }
+
+        void artefactsDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            DropDownList dpList = (DropDownList)sender;
+            if (dpList.Parent == null) return;
+            TableRow tr = (TableRow)dpList.Parent.Parent;
+            TableCell tc = tr.Cells[0];
+
+            if (dpList.SelectedIndex == dpList.Items.Count - 1)
+            {
+                TextBox t = new TextBox();
+                t.CssClass = "maxwidth";
+                tc.Controls.RemoveAt(0);
+                t.ID = dpList.ID.Replace("DDL", "TXT");
+                tc.Controls.Add(t);
+                session.ArtefactsTRs.Clear();
+                foreach (TableRow trow in artefactTable.Rows)
+                {
+                    session.ArtefactsTRs.Add(trow);
+                }
+            }
+        }
+        
         protected void save_Click(object sender, EventArgs e)
         {
             AddIssue();
@@ -385,25 +586,17 @@ namespace Client
             UploadButton.Visible = true;
         }
 
-        protected void addFactor_Click(object sender, EventArgs e)
-        {
-            TextBox t = new TextBox();
-            t.ID = "factorTxt";
-            t.Width = 200;
-            TableRow tr = new TableRow();
-            TableCell tc = new TableCell();
-            tc.Controls.Add(t);
-            tr.Cells.Add(tc);
-            Table1.Rows.Add(tr);
-            Table1.Visible = true;
-        }
-
-        protected void addArtefact_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void addRelation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void relationTypeDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void relationIssuesDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -417,14 +610,82 @@ namespace Client
                 ms.Write(bytes, 0, (int)FileUpload1.FileContent.Length);
                 rc.AddFile(FileUpload1.FileName, ms);
             }
+
+            FileUpload1.Visible = false;
+            UploadButton.Visible = false;
+
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            Label fileNameLbl = new Label();
+            fileNameLbl.Text = FileUpload1.FileName;
+            TableCell fileTC = new TableCell();
+            fileTC.Controls.Add(fileNameLbl);
+
+            LinkButton delFileBtn = new LinkButton();
+            delFileBtn.Text = "X";
+            delFileBtn.CssClass = "delete_button";
+            delFileBtn.Click += delFileBtn_Click;
+            TableCell delTC = new TableCell();
+            delTC.Controls.Add(delFileBtn);
+
+            TableRow tr = new TableRow();
+            tr.Cells.Add(fileTC);
+            tr.Cells.Add(delTC);
+            
+            documentTable.Rows.Add(tr);
+            documentTable.Visible = true;
+
+            session.DocumentsTRs.Add(tr);
+        }
+
+        void delFileBtn_Click(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            if (rc == null)
+            {
+                rc = RestClient.GetInstance(Session.SessionID);
+            }
+            LinkButton delBtn = (LinkButton)sender;
+            TableRow tr = (TableRow)delBtn.Parent.Parent;
+            Label fileLbl = (Label)tr.Cells[0].Controls[0];
+            rc.RemoveFile(fileLbl.Text);
+            documentTable.Rows.Remove(tr);
+            session.DocumentsTRs.Clear();
+            foreach (TableRow trow in documentTable.Rows)
+            {
+                session.DocumentsTRs.Add(trow);
+            }
+            if (documentTable.Rows.Count == 0)
+            {
+                documentTable.Visible = false;
+            }
         }
 
         private int AddIssue()
         {
-            IssueModel issue = rc.Issue;
+            IssueModel issue = new IssueModel();
             issue.Title = title.Text;
             issue.Description = description.Text;
 
+            DropDownList ddl;
+            TextBox txt;
+            foreach (TableRow tr in tagsTable.Rows)
+            {
+                if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
+                {
+                    ddl = (DropDownList)tr.Cells[0].Controls[0];
+                    if (Convert.ToInt32(ddl.SelectedValue) > 0)
+                    {
+                        issue.Tags.Add(new TagModel(Convert.ToInt32(ddl.SelectedValue), ""));
+                    }
+                }
+                else
+                {
+                    txt = (TextBox)tr.Cells[0].Controls[0];
+                    issue.Tags.Add(new TagModel(txt.Text));
+                }
+            }
+            
+            
             if (userList.Count == 0) RetrieveUsers();
 
             DropDownList userDDL, rightDDL;
@@ -439,26 +700,65 @@ namespace Client
                 }
             }
 
-            rc = RestClient.GetInstance(Session.SessionID);
-            rc.EndPoint = "api/Stakeholders";
-            List<StakeholderModel> skList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
-            DropDownList stakeholderDDL;
-            TextBox stakeholderTxt;
-            foreach (TableRow tr in rc.StakeholderRows)
+            foreach (TableRow tr in stakeholdersTable.Rows)
             {
                 if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
                 {
-                    stakeholderDDL = (DropDownList)tr.Cells[0].Controls[0];
-                    if (stakeholderDDL.SelectedIndex < stakeholderDDL.Items.Count - 1 && stakeholderDDL.SelectedIndex > 0)
+                    ddl = (DropDownList)tr.Cells[0].Controls[0];
+                    if (Convert.ToInt32(ddl.SelectedValue) > 0)
                     {
-                        issue.Stakeholders.Add(skList[stakeholderDDL.SelectedIndex - 1]);
+                        issue.Stakeholders.Add(new StakeholderModel(Convert.ToInt32(ddl.SelectedValue), ""));
                     }
                 }
                 else
                 {
-                    stakeholderTxt = (TextBox)tr.Cells[0].Controls[0];
-                    issue.Stakeholders.Add(new StakeholderModel(stakeholderTxt.Text));
+                    txt = (TextBox)tr.Cells[0].Controls[0];
+                    issue.Stakeholders.Add(new StakeholderModel(txt.Text));
                 }
+            }
+
+            double ch;
+            foreach (TableRow tr in factorsTable.Rows)
+            {
+                if (tr.Cells[0].Controls.Count > 0)
+                {
+                    InfluenceFactorModel ifm = new InfluenceFactorModel();
+                    if (((CheckBox)tr.Cells[2].Controls[0]).Enabled && double.TryParse(((TextBox)tr.Cells[1].Controls[0]).Text, out ch))
+                    {
+                        ifm.Type = true;
+                    }
+                    else
+                    {
+                        ifm.Type = false;
+                    }
+
+                    ifm.Name = ((TextBox)tr.Cells[0].Controls[0]).Text;
+                    ifm.Characteristic = ((TextBox)tr.Cells[1].Controls[0]).Text;
+                    issue.InfluenceFactors.Add(ifm);
+                }
+            }
+
+            foreach (TableRow tr in artefactTable.Rows)
+            {
+                if (tr.Cells[0].Controls[0].GetType() == typeof(DropDownList))
+                {
+                    ddl = (DropDownList)tr.Cells[0].Controls[0];
+                    if (Convert.ToInt32(ddl.SelectedValue) > 0)
+                    {
+                        issue.Artefacts.Add(new ArtefactModel(Convert.ToInt32(ddl.SelectedValue), ""));
+                    }
+                }
+                else
+                {
+                    txt = (TextBox)tr.Cells[0].Controls[0];
+                    issue.Artefacts.Add(new ArtefactModel(txt.Text));
+                }
+            }
+
+            if (relationIssuesDDL.SelectedValue != null && relationIssuesDDL.SelectedIndex > 0 && relationTypeDDL.SelectedIndex > 0)
+            {
+                issue.RelatedTo = Convert.ToInt32(relationIssuesDDL.SelectedValue);
+                issue.RelationType = Convert.ToChar(relationTypeDDL.SelectedValue);
             }
 
             rc.EndPoint = "api/Issue/Create";
@@ -475,6 +775,34 @@ namespace Client
         {
             rc.EndPoint = "api/User";
             userList = JsonConvert.DeserializeObject<List<UserShort>>(rc.MakeRequest());
+        }
+
+        private void RetrieveTags()
+        {
+            rc.EndPoint = "api/Tags";
+            tagsList = JsonConvert.DeserializeObject<List<TagModel>>(rc.MakeRequest());
+        }
+
+        private void RetrieveStakeholders()
+        {
+            rc.EndPoint = "api/Stakeholders";
+            stakeholdersList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
+        }
+
+        private void RetrieveArtefacts()
+        {
+            rc.EndPoint = "api/Artefacts";
+            artefactsList = JsonConvert.DeserializeObject<List<ArtefactModel>>(rc.MakeRequest());
+        }
+
+        private List<IssueModel> RetrieveIssues()
+        {
+            if (rc == null)
+            {
+                rc = RestClient.GetInstance(Session.SessionID);
+            }
+            rc.EndPoint = "api/Issue";
+            return JsonConvert.DeserializeObject<List<IssueModel>>(rc.MakeRequest());
         }
     }
 }
