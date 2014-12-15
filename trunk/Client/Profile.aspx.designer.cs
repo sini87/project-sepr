@@ -121,15 +121,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.TextBox TextBoxNewPassword;
         
         /// <summary>
-        /// CompareValidator1-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
-        
-        /// <summary>
         /// TextBoxConfirmPassword-Steuerelement
         /// </summary>
         /// <remarks>
@@ -155,6 +146,15 @@ namespace Client {
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl passwordMessageDiv;
+        
+        /// <summary>
+        /// passwordMessageDefaultDiv-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl passwordMessageDefaultDiv;
         
         /// <summary>
         /// saveProfile-Steuerelement

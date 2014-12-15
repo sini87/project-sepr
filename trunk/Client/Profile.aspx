@@ -3,8 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
     <webopt:BundleReference runat="server" Path="~/Profile/css" /> 
-    <script src="../Scripts/jquery-2.1.1.js" type="text/javascript"></script>
-    <script type="text/javascript"> 
+    <script src="Scripts/jquery-2.1.1.js" type="text/javascript"></script>
+    <script>
         $(document).ready(function () {
             $("#LinkButton1").click(function () {
                 $("#PasswordDiv").fadeIn("slow");
@@ -66,7 +66,7 @@
 
             <div class="row">
 
-                <div id="info">User Info</div>
+            <div id="info">User Info</div>
 
                 <label>Firstname</label><br />
                 <asp:TextBox ID="firstname" runat="server"></asp:TextBox><br />
@@ -88,13 +88,15 @@
                     <asp:TextBox ID="TextBoxOldPassword" runat="server"></asp:TextBox><br />
 
                     <label>New Password</label><br />
-                    <asp:TextBox ID="TextBoxNewPassword" runat="server" OnTextChanged="NewPassword_TextChanged"></asp:TextBox>&nbsp;<asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="TextBoxConfirmPassword" ControlToValidate="TextBoxNewPassword" ErrorMessage="Password confirmation not valid!" ForeColor="Red"></asp:CompareValidator>
-                    <br />
+                    <asp:TextBox ID="TextBoxNewPassword" runat="server" OnTextChanged="NewPassword_TextChanged"></asp:TextBox>&nbsp;<br />
 
                     <label>Confirm Password</label><br />
                     <asp:TextBox ID="TextBoxConfirmPassword" runat="server" OnTextChanged="ConfirmPassword_TextChanged"></asp:TextBox>&nbsp;<asp:CompareValidator ID="CompareValidator2" runat="server" ControlToCompare="TextBoxNewPassword" ControlToValidate="TextBoxConfirmPassword" ErrorMessage="Password confirmation not valid!" ForeColor="Red"></asp:CompareValidator>
                     <div id="passwordMessageDiv" style="vertical-align:middle; height:25px; margin-top:10px; color:darkgreen; background-color:lightgreen" visible="false" runat="server">
                         Passwort erfolgreich geändert!
+                    </div>
+                  <div id="passwordMessageDefaultDiv" style="vertical-align:middle; height:25px; margin-top:10px; color:darkred; background-color:#FA5858" visible="false" runat="server">
+                        Passwort konnte nicht geändert werden!
                     </div>
             </div>
                 
