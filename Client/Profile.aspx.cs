@@ -135,7 +135,14 @@ namespace Client
                     rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
                     rc.PostData = JsonConvert.SerializeObject(passwordmodel);
                     var jsonPW = rc.MakeRequest();
-                    passwordMessageDiv.Visible = true;
+                    if (jsonPW == "OK")
+                    {
+                        passwordMessageDiv.Visible = true;
+                    }
+                    else
+                    {
+                        passwordMessageDefaultDiv.Visible = true;
+                    }
                 }else{
                     Response.Redirect("Profile.aspx");
                 }
@@ -172,10 +179,10 @@ namespace Client
                 passwordChanged = false;
             }
         }
-       
-        protected void OnChangePassword_Click(object sender, EventArgs e)
-        {
-            PasswordDiv.Visible = true;
-        }
+
+         protected void OnChangePassword_Click(object sender, EventArgs e)
+         {
+             PasswordDiv.Visible = true; 
+         }
     }
 }
