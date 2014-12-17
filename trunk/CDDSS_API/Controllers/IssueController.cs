@@ -99,7 +99,7 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// Edits an issue, only title, description, relatedTo and relationType.
+        /// Edits an issue with AccessRights, Tags, Stakeholders, InfluenceFactors and Artefacts
         /// </summary>
         /// <param name="issue"></param>
         /// <returns></returns>
@@ -107,7 +107,7 @@ namespace CDDSS_API.Controllers
         [Route("api/Issue/Edit")]
         public HttpResponseMessage Edit(IssueModel issue)
         {
-            if (issueRep.EditIssue(issue))
+            if (issueRep.EditIssue(issue, null))
             {
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
