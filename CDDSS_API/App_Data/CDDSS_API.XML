@@ -589,6 +589,34 @@
             <param name="issueId"></param>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.DecisionController.GetDecision(System.Int32)">
+            <summary>
+            retrieves a decision by issueID
+            </summary>
+            <param name="issueID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.DecisionController.CreateDecision(CDDSS_API.Models.DecisionModel)">
+            <summary>
+            creates a decision
+            </summary>
+            <param name="decision"></param>
+            <returns>statuscode OK if successfull</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.DecisionController.EditDecision(CDDSS_API.Models.DecisionModel)">
+            <summary>
+            edits an decision
+            </summary>
+            <param name="decision"></param>
+            <returns>statuscode OK if successfull</returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.DecisionController.CreateDecision(System.Int32)">
+            <summary>
+            deletes an decision by issueId
+            </summary>
+            <param name="issueID"></param>
+            <returns>statuscode OK if successfull</returns>
+        </member>
         <member name="T:CDDSS_API.Controllers.DocumentController">
             <summary>
             controller used for document operations
@@ -677,7 +705,7 @@
         </member>
         <member name="M:CDDSS_API.Controllers.IssueController.Edit(CDDSS_API.Models.IssueModel)">
             <summary>
-            Edits an issue, only title, description, relatedTo and relationType.
+            Edits an issue with AccessRights, Tags, Stakeholders, InfluenceFactors and Artefacts
             </summary>
             <param name="issue"></param>
             <returns></returns>

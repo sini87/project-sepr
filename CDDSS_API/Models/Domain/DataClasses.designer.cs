@@ -81,6 +81,9 @@ namespace CDDSS_API.Models.Domain
     partial void InsertReview(Review instance);
     partial void UpdateReview(Review instance);
     partial void DeleteReview(Review instance);
+    partial void InsertDecision(Decision instance);
+    partial void UpdateDecision(Decision instance);
+    partial void DeleteDecision(Decision instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -246,6 +249,14 @@ namespace CDDSS_API.Models.Domain
 			get
 			{
 				return this.GetTable<Review>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Decision> Decisions
+		{
+			get
+			{
+				return this.GetTable<Decision>();
 			}
 		}
 	}
@@ -1171,6 +1182,8 @@ namespace CDDSS_API.Models.Domain
 		
 		private EntitySet<Review> _Reviews;
 		
+		private EntityRef<Decision> _Decision;
+		
 		private EntityRef<Issue> _Issue1;
 		
     #region Extensibility Method Definitions
@@ -1205,6 +1218,7 @@ namespace CDDSS_API.Models.Domain
 			this._InfluenceFactors = new EntitySet<InfluenceFactor>(new Action<InfluenceFactor>(this.attach_InfluenceFactors), new Action<InfluenceFactor>(this.detach_InfluenceFactors));
 			this._Alternatives = new EntitySet<Alternative>(new Action<Alternative>(this.attach_Alternatives), new Action<Alternative>(this.detach_Alternatives));
 			this._Reviews = new EntitySet<Review>(new Action<Review>(this.attach_Reviews), new Action<Review>(this.detach_Reviews));
+			this._Decision = default(EntityRef<Decision>);
 			this._Issue1 = default(EntityRef<Issue>);
 			OnCreated();
 		}
@@ -1480,6 +1494,35 @@ namespace CDDSS_API.Models.Domain
 			set
 			{
 				this._Reviews.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Decision", Storage="_Decision", ThisKey="Id", OtherKey="IssueId", IsUnique=true, IsForeignKey=false)]
+		public Decision Decision
+		{
+			get
+			{
+				return this._Decision.Entity;
+			}
+			set
+			{
+				Decision previousValue = this._Decision.Entity;
+				if (((previousValue != value) 
+							|| (this._Decision.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Decision.Entity = null;
+						previousValue.Issue = null;
+					}
+					this._Decision.Entity = value;
+					if ((value != null))
+					{
+						value.Issue = this;
+					}
+					this.SendPropertyChanged("Decision");
+				}
 			}
 		}
 		
@@ -4012,6 +4055,157 @@ namespace CDDSS_API.Models.Domain
 						this._User = default(string);
 					}
 					this.SendPropertyChanged("User1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Decision")]
+	public partial class Decision : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IssueId;
+		
+		private int _AlternativeId;
+		
+		private string _Explanation;
+		
+		private EntityRef<Issue> _Issue;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIssueIdChanging(int value);
+    partial void OnIssueIdChanged();
+    partial void OnAlternativeIdChanging(int value);
+    partial void OnAlternativeIdChanged();
+    partial void OnExplanationChanging(string value);
+    partial void OnExplanationChanged();
+    #endregion
+		
+		public Decision()
+		{
+			this._Issue = default(EntityRef<Issue>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IssueId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int IssueId
+		{
+			get
+			{
+				return this._IssueId;
+			}
+			set
+			{
+				if ((this._IssueId != value))
+				{
+					if (this._Issue.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIssueIdChanging(value);
+					this.SendPropertyChanging();
+					this._IssueId = value;
+					this.SendPropertyChanged("IssueId");
+					this.OnIssueIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlternativeId", DbType="Int NOT NULL")]
+		public int AlternativeId
+		{
+			get
+			{
+				return this._AlternativeId;
+			}
+			set
+			{
+				if ((this._AlternativeId != value))
+				{
+					this.OnAlternativeIdChanging(value);
+					this.SendPropertyChanging();
+					this._AlternativeId = value;
+					this.SendPropertyChanged("AlternativeId");
+					this.OnAlternativeIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Explanation", DbType="VarChar(MAX)")]
+		public string Explanation
+		{
+			get
+			{
+				return this._Explanation;
+			}
+			set
+			{
+				if ((this._Explanation != value))
+				{
+					this.OnExplanationChanging(value);
+					this.SendPropertyChanging();
+					this._Explanation = value;
+					this.SendPropertyChanged("Explanation");
+					this.OnExplanationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Issue_Decision", Storage="_Issue", ThisKey="IssueId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Issue Issue
+		{
+			get
+			{
+				return this._Issue.Entity;
+			}
+			set
+			{
+				Issue previousValue = this._Issue.Entity;
+				if (((previousValue != value) 
+							|| (this._Issue.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Issue.Entity = null;
+						previousValue.Decision = null;
+					}
+					this._Issue.Entity = value;
+					if ((value != null))
+					{
+						value.Decision = this;
+						this._IssueId = value.Id;
+					}
+					else
+					{
+						this._IssueId = default(int);
+					}
+					this.SendPropertyChanged("Issue");
 				}
 			}
 		}

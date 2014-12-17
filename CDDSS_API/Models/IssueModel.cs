@@ -42,6 +42,8 @@ namespace CDDSS_API.Models
         public List<CriterionWeightModel> CriterionWeights { get; set; }
         [DataMember]
         public List<AccessRightModel> AccessUserList { get; set; }
+        [DataMember]
+        public DecisionModel Decision { get; set; }
 
         public IssueModel()
         {

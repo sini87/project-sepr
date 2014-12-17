@@ -60,6 +60,7 @@
       <Association Name="Issue_InfluenceFactor" Member="InfluenceFactors" ThisKey="Id" OtherKey="Issue" Type="InfluenceFactor" />
       <Association Name="Issue_Alternative" Member="Alternatives" ThisKey="Id" OtherKey="Issue" Type="Alternative" />
       <Association Name="Issue_Review" Member="Reviews" ThisKey="Id" OtherKey="Issue" Type="Review" />
+      <Association Name="Issue_Decision" Member="Decision" ThisKey="Id" OtherKey="IssueId" Type="Decision" Cardinality="One" />
       <Association Name="Issue_Issue" Member="Issue1" ThisKey="RelatedTo" OtherKey="Id" Type="Issue" IsForeignKey="true" />
     </Type>
   </Table>
@@ -179,6 +180,14 @@
       <Column Name="Document" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Issue_Review" Member="Issue1" ThisKey="Issue" OtherKey="Id" Type="Issue" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="User_Review" Member="User1" ThisKey="User" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Decision" Member="Decisions">
+    <Type Name="Decision">
+      <Column Name="IssueId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AlternativeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Explanation" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Issue_Decision" Member="Issue" ThisKey="IssueId" OtherKey="Id" Type="Issue" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>
