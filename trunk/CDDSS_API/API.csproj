@@ -223,6 +223,7 @@
     <Compile Include="Controllers\ArtefactsController.cs" />
     <Compile Include="Controllers\CriterionController.cs" />
     <Compile Include="Controllers\CriterionWeightController.cs" />
+    <Compile Include="Controllers\DecisionController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
@@ -248,13 +249,14 @@
     <Compile Include="Models\CriterionModel.cs" />
     <Compile Include="Models\CriterionWeightModel.cs" />
     <Compile Include="Models\DBConnection.cs" />
+    <Compile Include="Models\DecisionModel.cs" />
     <Compile Include="Models\Domain\DataClasses.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Domain\InfluenceFactorModel.cs" />
+    <Compile Include="Models\InfluenceFactorModel.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\IssueShort.cs" />
     <Compile Include="Models\RatingModel.cs" />
@@ -267,6 +269,7 @@
     <Compile Include="Repository\ArtefactsRepository.cs" />
     <Compile Include="Repository\CriterionRepository.cs" />
     <Compile Include="Repository\CriterionWeightRepository.cs" />
+    <Compile Include="Repository\DecisionRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\IssueRepository.cs" />
     <Compile Include="Repository\RatingRepository.cs" />

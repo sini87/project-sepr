@@ -52,6 +52,7 @@ namespace CDDSS_API.Repository
             model.Title = issue.Title;
             model.Status = issue.Status;
             model.Description = issue.Description;
+            if (issue.ReviewRating != null) model.ReviewRating = (double)issue.ReviewRating;
             if (issue.RelatedTo != null)
                 model.RelatedTo = (int)issue.RelatedTo;
             if (issue.RelationType != null)
@@ -107,6 +108,21 @@ namespace CDDSS_API.Repository
                     cwm.Weight = cw.Weight;
                     model.CriterionWeights.Add(cwm);
                 }
+            }
+
+            if (ctx.Decisions.Where(x => x.IssueId == issueID).Count() > 0)
+            {
+                Decision dec = ctx.Decisions.Where(x => x.IssueId == issueID).First();
+                DecisionModel dm = new DecisionModel(dec.IssueId, dec.AlternativeId, dec.Explanation);
+
+                if (ctx.Alternatives.Where(x => x.Id == dm.AlternativeID).Count() > 0)
+                {
+                    Alternative alt = ctx.Alternatives.Where(x => x.Id == dm.AlternativeID).First();
+                    AlternativeModel am = new AlternativeModel(alt.Id, alt.Issue, alt.Name, alt.Description, alt.Reason);
+                    dm.Alternative = am;
+                }
+
+                model.Decision = dm;
             }
 
             return model;
