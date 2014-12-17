@@ -509,7 +509,7 @@
             <param name="alternativeId">integer id of the alternative</param>
             <returns></returns>
         </member>
-        <!-- Ungültiger XML-Kommentar wurde für den Member "T:CDDSS_API.Controllers.ArtefactsController" ignoriert -->
+        <!-- Badly formed XML comment ignored for member "T:CDDSS_API.Controllers.ArtefactsController" -->
         <member name="M:CDDSS_API.Controllers.ArtefactsController.GET">
             <summary>
             returns all artefacts

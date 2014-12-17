@@ -217,213 +217,21 @@ namespace CDDSS_API.Repository
             ctx.SubmitChanges();
 
 
-            query = from InfluenceFactors in
-                        (from InfluenceFactors in ctx.InfluenceFactors
-                         select new
-                         {
-                             InfluenceFactors.Id,
-                             Dummy = "x"
-                         })
-                    group InfluenceFactors by new { InfluenceFactors.Dummy } into g
-                    select new
-                    {
-                        MaxId = (int)g.Max(p => p.Id)
-                    };
-
-            int ifID;
-            if (query.ToList().Count == 0)
-            {
-                ifID = 1;
-            }
-            else
-            {
-                ifID = query.ToList()[0].MaxId + 1;
-            }
-            foreach (InfluenceFactorModel iF in issue.InfluenceFactors)
-            {
-                InfluenceFactor iFPersistent = new InfluenceFactor
-                {
-                    Id = ifID,
-                    Issue = issuePersistent.Id,
-                    Name = iF.Name,
-                    Type = iF.Type,
-                    Characteristic = iF.Characteristic
-                };
-                ctx.InfluenceFactors.InsertOnSubmit(iFPersistent);
-                ctx.SubmitChanges();
-                ifID++;
-            }
+            //Influence
+            ModifyInfluenceFactors(issueID, issue.InfluenceFactors);
 
             //TAGS
-            query = from Tags in
-                        (from Tags in ctx.Tags
-                         select new
-                         {
-                             Tags.Id,
-                             Dummy = "x"
-                         })
-                    group Tags by new { Tags.Dummy } into g
-                    select new
-                    {
-                        MaxId = (int)g.Max(p => p.Id)
-                    };
-            int tagID, lastTagId;
-            if (query.ToList().Count == 0)
-            {
-                tagID = 1;
-            }
-            else
-            {
-                tagID = query.ToList()[0].MaxId + 1;
-            }
-            foreach (TagModel tag in issue.Tags)
-            {
-                if (tag.Id == 0)
-                {
-                    Tag tagPersistent = new Tag
-                    {
-                        Id = tagID,
-                        Name = tag.Name
-                    };
-                    ctx.Tags.InsertOnSubmit(tagPersistent);
-                    lastTagId = tagID;
-                }
-                else
-                {
-                    lastTagId = tag.Id;
-                }
-                Tag_Issue tagIssue = new Tag_Issue
-                {
-                    Tag = lastTagId,
-                    Issue = issueID
-                };
-                if (ctx.Tag_Issues.Where(x => x.Tag == tagIssue.Tag && x.Issue == tagIssue.Issue).Count() == 0)
-                {
-                    ctx.Tag_Issues.InsertOnSubmit(tagIssue);
-                    ctx.SubmitChanges();
-                }
-                if (tag.Id == 0)
-                {
-                    lastTagId++;
-                }
-
-            }
+            ModifyTags(issueID, issue.Tags);
 
             //stakeholder
-            query = from Stakeholders in
-                        (from Stakeholders in ctx.Stakeholders
-                         select new
-                         {
-                             Stakeholders.Id,
-                             Dummy = "x"
-                         })
-                    group Stakeholders by new { Stakeholders.Dummy } into g
-                    select new
-                    {
-                        MaxId = (int)g.Max(p => p.Id)
-                    };
-
-            int stakeholderID, lastStakeholderId;
-            if (query.ToList().Count == 0)
-            {
-                stakeholderID = 1;
-            }
-            else
-            {
-                stakeholderID = query.ToList()[0].MaxId + 1;
-            }
-            foreach (StakeholderModel stakeholder in issue.Stakeholders)
-            {
-                if (stakeholder.Id == 0)
-                {
-                    Stakeholder stakeholderPersistent = new Stakeholder
-                    {
-                        Id = stakeholderID,
-                        Name = stakeholder.Name
-                    };
-                    ctx.Stakeholders.InsertOnSubmit(stakeholderPersistent);
-                    lastStakeholderId = stakeholderID;
-                    stakeholderID++;
-                }
-                else
-                {
-                    lastStakeholderId = stakeholder.Id;
-                }
-                Issue_stakeholder issueStakeholder = new Issue_stakeholder
-                {
-                    Stakeholder = lastStakeholderId,
-                    Issue = issueID
-                };
-                ctx.Issue_stakeholders.InsertOnSubmit(issueStakeholder);
-                ctx.SubmitChanges();
-            }
+            ModifyStakeholders(issueID, issue.Stakeholders);
 
 
             //artefact
-            query = from Artefacts in
-                        (from Artefacts in ctx.Artefacts
-                         select new
-                         {
-                             Artefacts.Id,
-                             Dummy = "x"
-                         })
-                    group Artefacts by new { Artefacts.Dummy } into g
-                    select new
-                    {
-                        MaxId = (int)g.Max(p => p.Id)
-                    };
-
-            int artefactID, lastartefactId;
-            if (query.ToList().Count == 0)
-            {
-                artefactID = 1;
-            }
-            else
-            {
-                artefactID = query.ToList()[0].MaxId + 1;
-            }
-            foreach (ArtefactModel artefact in issue.Artefacts)
-            {
-                if (artefact.Id == 0)
-                {
-                    Artefact artefactPersistent = new Artefact
-                    {
-                        Id = artefactID,
-                        Name = artefact.Name
-                    };
-                    ctx.Artefacts.InsertOnSubmit(artefactPersistent);
-                    lastartefactId = artefactID;
-                    artefactID++;
-                }
-                else
-                {
-                    lastartefactId = artefact.Id;
-                }
-                Issue_artefact issueartefact = new Issue_artefact
-                {
-                    Artefact = lastartefactId,
-                    Issue = issueID
-                };
-                ctx.Issue_artefacts.InsertOnSubmit(issueartefact);
-                ctx.SubmitChanges();
-            }
+            ModifyArtefacts(issueID, issue.Artefacts);
 
             //accessRights
-            AccessRight ar;
-            foreach (int accessObjectID in issue.AccessRights.Keys)
-            {
-                ar = new AccessRight()
-                {
-                    AccessObject = accessObjectID,
-                    Issue = issueID,
-                    Right = issue.AccessRights[accessObjectID]
-                };
-                if (accessObjectID != aoID)
-                {
-                    ctx.AccessRights.InsertOnSubmit(ar);
-                    ctx.SubmitChanges();
-                }
-            }
+            ModifyAccessRights(issueID, issue.AccessRights, email);
 
             return issueID;
         }
@@ -456,9 +264,13 @@ namespace CDDSS_API.Repository
                     Issue issue = ars.First().Issue1;
                     if (issue.Status.ToUpper().Equals("CREATING"))
                     {
-                        issue.Status = "Brainstorming";
+                        issue.Status = "Brainstorming1";
                     }
-                    else if (issue.Status.ToUpper().Equals("BRAINSTORMING"))
+                    else if (issue.Status.ToUpper().Equals("BRAINSTORMING1") || issue.Status.ToUpper().Equals("BRAINSTORMING"))
+                    {
+                        issue.Status = "Brainstorming2";
+                    }
+                    else if (issue.Status.ToUpper().Equals("BRAINSTORMING2"))
                     {
                         issue.Status = "Evaluating";
                     }
@@ -477,7 +289,7 @@ namespace CDDSS_API.Repository
             return false;
         }
 
-        public bool EditIssue(IssueModel im)
+        public bool EditIssue(IssueModel im, string email)
         {
             try
             {
@@ -489,6 +301,29 @@ namespace CDDSS_API.Repository
                 i.RelationType = im.RelationType;
                 ctx.SubmitChanges();
 
+                IQueryable<Tag_Issue> delTags = ctx.Tag_Issues.Where(x => x.Issue == im.Id);
+                ctx.Tag_Issues.DeleteAllOnSubmit(delTags);
+
+                IQueryable<Issue_stakeholder> delStk = ctx.Issue_stakeholders.Where(x => x.Issue == im.Id);
+                ctx.Issue_stakeholders.DeleteAllOnSubmit(delStk);
+
+                IQueryable<Issue_artefact> delArt = ctx.Issue_artefacts.Where(x => x.Issue == im.Id);
+                ctx.Issue_artefacts.DeleteAllOnSubmit(delArt);
+                
+                IQueryable<InfluenceFactor> delInf = ctx.InfluenceFactors.Where(x => x.Issue == im.Id);
+                ctx.InfluenceFactors.DeleteAllOnSubmit(delInf);
+
+                IQueryable<AccessRight> delAR = ctx.AccessRights.Where(x => x.Issue == im.Id);
+                ctx.AccessRights.DeleteAllOnSubmit(delAR);
+
+                ctx.SubmitChanges();
+
+                ModifyTags(im.Id, im.Tags);
+                ModifyStakeholders(im.Id, im.Stakeholders);
+                ModifyArtefacts(im.Id, im.Artefacts);
+                ModifyInfluenceFactors(im.Id, im.InfluenceFactors);
+                ModifyAccessRights(im.Id, im.AccessRights, email);
+
                 return true;
             }
             catch (Exception ex)
@@ -496,6 +331,234 @@ namespace CDDSS_API.Repository
                 Console.WriteLine(ex.Message);
             }
             return false;
+        }
+
+        private void ModifyStakeholders(int issueID, List<StakeholderModel> stakeholders)
+        {
+            var query = from Stakeholders in
+                        (from Stakeholders in ctx.Stakeholders
+                         select new
+                         {
+                             Stakeholders.Id,
+                             Dummy = "x"
+                         })
+                    group Stakeholders by new { Stakeholders.Dummy } into g
+                    select new
+                    {
+                        MaxId = (int)g.Max(p => p.Id)
+                    };
+
+            int stakeholderID, lastStakeholderId;
+            if (query.ToList().Count == 0)
+            {
+                stakeholderID = 1;
+            }
+            else
+            {
+                stakeholderID = query.ToList()[0].MaxId + 1;
+            }
+            foreach (StakeholderModel stakeholder in stakeholders)
+            {
+                if (stakeholder.Id == 0)
+                {
+                    Stakeholder stakeholderPersistent = new Stakeholder
+                    {
+                        Id = stakeholderID,
+                        Name = stakeholder.Name
+                    };
+                    ctx.Stakeholders.InsertOnSubmit(stakeholderPersistent);
+                    lastStakeholderId = stakeholderID;
+                    stakeholderID++;
+                }
+                else
+                {
+                    lastStakeholderId = stakeholder.Id;
+                }
+                Issue_stakeholder issueStakeholder = new Issue_stakeholder
+                {
+                    Stakeholder = lastStakeholderId,
+                    Issue = issueID
+                };
+                ctx.Issue_stakeholders.InsertOnSubmit(issueStakeholder);
+                ctx.SubmitChanges();
+            }
+        }
+
+        private void ModifyTags(int issueID, List<TagModel> tags)
+        {
+            var query = from Tags in
+                        (from Tags in ctx.Tags
+                         select new
+                         {
+                             Tags.Id,
+                             Dummy = "x"
+                         })
+                    group Tags by new { Tags.Dummy } into g
+                    select new
+                    {
+                        MaxId = (int)g.Max(p => p.Id)
+                    };
+            int tagID, lastTagId;
+            if (query.ToList().Count == 0)
+            {
+                tagID = 1;
+            }
+            else
+            {
+                tagID = query.ToList()[0].MaxId + 1;
+            }
+            foreach (TagModel tag in tags)
+            {
+                if (tag.Id == 0)
+                {
+                    Tag tagPersistent = new Tag
+                    {
+                        Id = tagID,
+                        Name = tag.Name
+                    };
+                    ctx.Tags.InsertOnSubmit(tagPersistent);
+                    lastTagId = tagID;
+                }
+                else
+                {
+                    lastTagId = tag.Id;
+                }
+                Tag_Issue tagIssue = new Tag_Issue
+                {
+                    Tag = lastTagId,
+                    Issue = issueID
+                };
+                if (ctx.Tag_Issues.Where(x => x.Tag == tagIssue.Tag && x.Issue == tagIssue.Issue).Count() == 0)
+                {
+                    ctx.Tag_Issues.InsertOnSubmit(tagIssue);
+                    ctx.SubmitChanges();
+                }
+                if (tag.Id == 0)
+                {
+                    lastTagId++;
+                }
+
+            }
+
+            ctx.SubmitChanges();
+        }
+
+        private void ModifyArtefacts(int issueID, List<ArtefactModel> artefacts)
+        {
+            var query = from Artefacts in
+                        (from Artefacts in ctx.Artefacts
+                         select new
+                         {
+                             Artefacts.Id,
+                             Dummy = "x"
+                         })
+                    group Artefacts by new { Artefacts.Dummy } into g
+                    select new
+                    {
+                        MaxId = (int)g.Max(p => p.Id)
+                    };
+
+            int artefactID, lastartefactId;
+            if (query.ToList().Count == 0)
+            {
+                artefactID = 1;
+            }
+            else
+            {
+                artefactID = query.ToList()[0].MaxId + 1;
+            }
+            foreach (ArtefactModel artefact in artefacts)
+            {
+                if (artefact.Id == 0)
+                {
+                    Artefact artefactPersistent = new Artefact
+                    {
+                        Id = artefactID,
+                        Name = artefact.Name
+                    };
+                    ctx.Artefacts.InsertOnSubmit(artefactPersistent);
+                    lastartefactId = artefactID;
+                    artefactID++;
+                }
+                else
+                {
+                    lastartefactId = artefact.Id;
+                }
+                Issue_artefact issueartefact = new Issue_artefact
+                {
+                    Artefact = lastartefactId,
+                    Issue = issueID
+                };
+                ctx.Issue_artefacts.InsertOnSubmit(issueartefact);
+                ctx.SubmitChanges();
+            }
+        }
+
+        private void ModifyInfluenceFactors(int issueID, List<InfluenceFactorModel> influenceFactors){
+            var query = from InfluenceFactors in
+                        (from InfluenceFactors in ctx.InfluenceFactors
+                         select new
+                         {
+                             InfluenceFactors.Id,
+                             Dummy = "x"
+                         })
+                    group InfluenceFactors by new { InfluenceFactors.Dummy } into g
+                    select new
+                    {
+                        MaxId = (int)g.Max(p => p.Id)
+                    };
+
+            int ifID;
+            if (query.ToList().Count == 0)
+            {
+                ifID = 1;
+            }
+            else
+            {
+                ifID = query.ToList()[0].MaxId + 1;
+            }
+            foreach (InfluenceFactorModel iF in influenceFactors)
+            {
+                InfluenceFactor iFPersistent = new InfluenceFactor
+                {
+                    Id = ifID,
+                    Issue = issueID,
+                    Name = iF.Name,
+                    Type = iF.Type,
+                    Characteristic = iF.Characteristic
+                };
+                ctx.InfluenceFactors.InsertOnSubmit(iFPersistent);
+                ctx.SubmitChanges();
+                ifID++;
+            }
+        }
+
+        private void ModifyAccessRights(int issueID, Dictionary<int,char> accessList, string email)
+        {
+            AccessRight ar;
+            int aoID;
+            if (email != null)
+            {
+                aoID = ctx.Users.First(x => x.Email == email).AccessObject1.Id;
+            }
+            else
+            {
+                aoID = -1;
+            }
+            foreach (int accessObjectID in accessList.Keys)
+            {
+                ar = new AccessRight()
+                {
+                    AccessObject = accessObjectID,
+                    Issue = issueID,
+                    Right = accessList[accessObjectID]
+                };
+                if (aoID < 0 || accessObjectID != aoID)
+                {
+                    ctx.AccessRights.InsertOnSubmit(ar);
+                    ctx.SubmitChanges();
+                }
+            }
         }
     }
 }
