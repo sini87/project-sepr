@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
     <webopt:BundleReference runat="server" Path="~/Profile/css" /> 
-    <script src="Scripts/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery-2.1.1.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
             $("#LinkButton1").click(function () {
