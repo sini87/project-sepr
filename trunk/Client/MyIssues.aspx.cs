@@ -25,7 +25,12 @@ namespace Client
         int hyperlinkid = 0;
         int rowID = 0;
         List<Panel> reviewAddPanelList = new List<Panel>();
-
+        List<Panel> reviewShowPanelList = new List<Panel>();
+        List<LinkButton> addReviewHyperlinkList = new List<LinkButton>();
+        List<LinkButton> showReviewHyperlinkList = new List<LinkButton>();
+        RestClient rc;
+        ReviewHelper reviewHelper = new ReviewHelper();
+        
         protected void Page_Preload(object sender, EventArgs e)
         {
             if (!this.User.Identity.IsAuthenticated)
@@ -36,9 +41,11 @@ namespace Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            rc = RestClient.GetInstance(Session.SessionID);
+
             if (this.User.Identity.IsAuthenticated && rc != null)
             {
+
                 rc.EndPoint = "api/Issue/OfUser";
                 rc.Method = HttpVerb.GET;
                 var json = rc.MakeRequest();
@@ -126,17 +133,28 @@ namespace Client
                     addReviewHyperlink.Text = "Add Review";
                     addReviewHyperlink.ID = "hyperlinkaddReview" + hyperlinkid;
                     addReviewHyperlink.Click += new EventHandler(OnAddReviews_Click);
+                    addReviewHyperlink.Style.Add("font-size", "14px");
+                    addReviewHyperlink.Style.Add("margin-left", "45px");
+                    addReviewHyperlink.Style.Add("padding", "5px");
+                    addReviewHyperlinkList.Add(addReviewHyperlink);
+                                        
                     tTitle.Controls.Add(addReviewHyperlink);
                     LinkButton showReviewHyperlink = new LinkButton();
                     showReviewHyperlink.Text = "Show Review";
                     showReviewHyperlink.ID = "hyperlinkshowReview" + hyperlinkid; ;
                     showReviewHyperlink.Click += new EventHandler(OnShowReviews_Click);
+                    showReviewHyperlink.Style.Add("font-size", "14px");
+                    showReviewHyperlink.Style.Add("padding", "5px");
                     tTitle.Controls.Add(showReviewHyperlink);
+                    showReviewHyperlinkList.Add(showReviewHyperlink);
 
-                    Panel reviewPanel = CreateAddReviewPanel(element);
-                    reviewPanel.Visible = false;
+                    Panel addReviewPanel = CreateAddReviewPanel(element); //creates the add-panel
+                    Panel showReviewPanel = CreateShowReviewPanel(element); //creates added reviews
+                    addReviewPanel.Visible = false;
+                    showReviewPanel.Visible = false;
                     
-                    tTitle.Controls.Add(reviewPanel);
+                    tTitle.Controls.Add(addReviewPanel);
+                    tTitle.Controls.Add(showReviewPanel);
                     row.Cells.Add(tTitle);
 
                     string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
@@ -163,21 +181,69 @@ namespace Client
             return null;
         }
 
+        protected Panel CreateShowReviewPanel(IssueModel element)
+        {
+            if (this.User.Identity.IsAuthenticated && rc != null)
+            {
+                Panel showReviewPanel = new Panel();
+                showReviewPanel.ID = "showReviewPanel" + hyperlinkid;
+                reviewHelper.SetShowReviewPanelCSS(showReviewPanel);
+                Table showReviewTable = new Table();
+                showReviewTable.ID = "showReviewTable" + hyperlinkid;
+                ReviewModel issueReview = new ReviewModel();
+                rc.EndPoint = "api/Review?issueId=" + element.Id;
+                rc.Method = HttpVerb.GET;
+                var json = rc.MakeRequest();
+                List<ReviewModel> issueReviewsList = JsonConvert.DeserializeObject<List<ReviewModel>>(json);
+                foreach (var review in issueReviewsList)
+                {
+                    TableRow UserNameRow = new TableRow();
+                    TableCell UserNameCell = new TableCell();
+                    //firstNameCell.Style.Add("padding-left", "5px");
+                    UserNameCell.Style.Add("font-size", "14px");
+                    Label firstNameLabel = new Label();
+                    firstNameLabel.Text = review.UserFirstName+" "+review.UserLastName;
+                    UserNameCell.Controls.Add(firstNameLabel);
+                    UserNameRow.Controls.Add(UserNameCell);
+                    showReviewTable.Controls.Add(UserNameRow);
+
+                    TableRow explanationRow = new TableRow();
+                    TableCell explanationCell = new TableCell();
+                    explanationCell.Style.Add("font-size", "12px");
+                    Label explanationLabel = new Label();
+                    explanationLabel.Text = review.Explanation;
+                    explanationCell.Controls.Add(explanationLabel);
+                    explanationRow.Controls.Add(explanationCell);
+                    showReviewTable.Controls.Add(explanationRow);
+
+                    showReviewPanel.Controls.Add(showReviewTable);
+
+
+                }
+                reviewShowPanelList.Add(showReviewPanel);
+                return showReviewPanel;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         protected Panel CreateAddReviewPanel(IssueModel element)
         {
             Panel reviewPanel = new Panel();
-            reviewPanel.ID = "ReviewPanel" + hyperlinkid;
+            reviewPanel.ID = "addReviewPanel" + hyperlinkid;
+            reviewHelper.SetAddReviewPanelCSS(reviewPanel);
             reviewAddPanelList.Add(reviewPanel);
             Table reviewTable = new Table();
-            reviewTable.Style.Add("margin", "10px");
+            reviewTable.Style.Add("margin", "5px");
             for (int i = 0; i < 5; i++)
             {
                 TableRow issueRow = new TableRow();
                 TableCell issueLabelCell = new TableCell();
                 Label issueLabel = new Label();
                 TextBox reviewTextBox = new TextBox();
-                issueRow.Style.Add("margin-top", "10px");
-                issueLabelCell.Style.Add("padding", "10px");
+                issueLabelCell.Style.Add("padding", "5px");
                 switch (i)
                 {
                     case 0: issueLabel.Text = "IssueID"; reviewTextBox.Text = element.Id.ToString();
@@ -223,27 +289,43 @@ namespace Client
             Response.Redirect("CreateIssue.aspx");
         }
 
-        public void OnShowReviews_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        public void DummyMethod_Click(object sender, EventArgs e)
-        {
-
-        }
-
         public void OnSaveReviewButton_Click(object sender, EventArgs e)
         {
-            Button link = (Button)sender;
-            int pressedbuttonid = getIDNumberOfControl(link.ID);
+            if (this.User.Identity.IsAuthenticated && rc != null)
+            {
+                Button link = (Button)sender;
+                int pressedbuttonid = reviewHelper.getIDNumberOfControl(link.ID);
+                ReviewModel newReview = new ReviewModel();
+                SetNewReviewModel(newReview, pressedbuttonid);
+
+                rc.EndPoint = "api/Review/Add";
+                rc.Method = HttpVerb.POST;
+                rc.ContentType = "application/json"; //+ value.TextBoxFirstname + 
+                rc.PostData = JsonConvert.SerializeObject(newReview);
+                var json = rc.MakeRequest();
+                if (json == "OK")
+                {
+                    Label labelOK = new Label();
+                    labelOK.Text = "Review added!";
+                    reviewAddPanelList[pressedbuttonid].Controls.Add(labelOK);
+                }
+                else
+                {
+                    Label labelNOK = new Label();
+                    labelNOK.Text = "Review NOT added!";
+                    reviewAddPanelList[pressedbuttonid].Controls.Add(labelNOK);
+                }
+            }
+        }
+
+        private void SetNewReviewModel(ReviewModel newReview, int pressedbuttonid)
+        {
             TextBox issueTextBox = (TextBox)reviewAddPanelList[pressedbuttonid].FindControl("issueTextBox" + pressedbuttonid);
             HiddenField issuehiddenfield = (HiddenField)reviewAddPanelList[pressedbuttonid].FindControl("issueHiddenField" + pressedbuttonid);
             TextBox ratingTextBox = (TextBox)reviewAddPanelList[pressedbuttonid].FindControl("ratingTextBox" + pressedbuttonid);
             TextBox explanationTextBox = (TextBox)reviewAddPanelList[pressedbuttonid].FindControl("explanationTextBox" + pressedbuttonid);
             TextBox userFirstNameTextBox = (TextBox)reviewAddPanelList[pressedbuttonid].FindControl("userFirstNameTextBox" + pressedbuttonid);
             TextBox userLastNameTextBox = (TextBox)reviewAddPanelList[pressedbuttonid].FindControl("userLastNameTextBox" + pressedbuttonid);
-            ReviewModel newReview = new ReviewModel();
             newReview.Issue = Convert.ToInt32(issuehiddenfield.Value);
             newReview.Rating = Convert.ToInt32(ratingTextBox.Text);
             newReview.Explanation = explanationTextBox.Text;
@@ -253,43 +335,96 @@ namespace Client
 
         public void OnAddReviews_Click(object sender, EventArgs e)
         {
-
             LinkButton link = (LinkButton)sender;
-            int pressedlinkbuttonid = getIDNumberOfControl(link.ID);
+            int pressedlinkbuttonid = reviewHelper.getIDNumberOfControl(link.ID);
+            foreach (LinkButton button in addReviewHyperlinkList)
+            {
+                button.Style.Add("background-color", "none");
+            }
+            foreach (LinkButton button in showReviewHyperlinkList)
+            {
+                button.Style.Add("background-color", "none");
+            }
+
+            if (reviewHelper.getIDNumberOfControl(link.ID) % 2 == 1)
+            {
+                link.Style.Add("background-color", "#4BB3A7");
+            }
+            else
+            {
+                link.Style.Add("background-color", "#7AD0C7");
+            }
             int i = 0;
             while (i<=dataTable.Rows.Count-1)
             {
-                if (dataTable.Rows[i].ID != null && pressedlinkbuttonid == getIDNumberOfControl(dataTable.Rows[i].ID) && pressedlinkbuttonid == getIDNumberOfControl(reviewAddPanelList[i].ID))
+                if (dataTable.Rows[i].ID != null && pressedlinkbuttonid == reviewHelper.getIDNumberOfControl(dataTable.Rows[i].ID) && pressedlinkbuttonid == reviewHelper.getIDNumberOfControl(reviewAddPanelList[i].ID))
                 {
                     reviewAddPanelList[i].Visible = true;
                 }
                 i++;
             }
-            
+            InvisiblePanels(pressedlinkbuttonid, "addReviewLink");    
         }
 
-        protected int getIDNumberOfControl(String tableRowID)
+        public void OnShowReviews_Click(object sender, EventArgs e)
         {
-            String pressedTableRowNumber=null;
-            for (int i = 0; i <= tableRowID.Length-1; i++)
+            LinkButton link = (LinkButton)sender;
+            int pressedlinkbuttonid = reviewHelper.getIDNumberOfControl(link.ID);
+            foreach (LinkButton button in addReviewHyperlinkList)
             {
-                switch (tableRowID[i])
-                {
-                    case '0': pressedTableRowNumber = pressedTableRowNumber+"0"; break;
-                    case '1': pressedTableRowNumber = pressedTableRowNumber + "1"; break;
-                    case '2': pressedTableRowNumber = pressedTableRowNumber + "2"; break;
-                    case '3': pressedTableRowNumber = pressedTableRowNumber + "3"; break;
-                    case '4': pressedTableRowNumber = pressedTableRowNumber + "4"; break;
-                    case '5': pressedTableRowNumber = pressedTableRowNumber + "5"; break;
-                    case '6': pressedTableRowNumber = pressedTableRowNumber + "6"; break;
-                    case '7': pressedTableRowNumber = pressedTableRowNumber + "7"; break;
-                    case '8': pressedTableRowNumber = pressedTableRowNumber + "8"; break;
-                    case '9': pressedTableRowNumber = pressedTableRowNumber + "9"; break;
-                }
+                button.Style.Add("background-color", "none");
             }
-            return Convert.ToInt32(pressedTableRowNumber);
+            foreach (LinkButton button in showReviewHyperlinkList)
+            {
+                button.Style.Add("background-color", "none");
+            }
+            if (reviewHelper.getIDNumberOfControl(link.ID) % 2 == 1)
+            {
+                link.Style.Add("background-color", "#4BB3A7");
+            }
+            else
+            {
+                link.Style.Add("background-color", "#7AD0C7");
+            }
+            int i = 0;
+            while (i <= dataTable.Rows.Count - 1)
+            {
+                if (dataTable.Rows[i].ID != null && pressedlinkbuttonid == reviewHelper.getIDNumberOfControl(dataTable.Rows[i].ID) && pressedlinkbuttonid == reviewHelper.getIDNumberOfControl(reviewShowPanelList[i].ID))
+                {
+                    reviewShowPanelList[i].Visible = true;
+                }
+                i++;
+            }
+            InvisiblePanels(pressedlinkbuttonid, "showReviewLink");
         }
 
-
+        private void InvisiblePanels(int pressedlinkbuttonid, string linktype)
+        {
+            int i = 0;
+            switch (linktype)
+            {
+                case "showReviewLink":
+                    foreach (Panel panel in reviewAddPanelList)
+                    {
+                        panel.Visible = false;
+                    }
+                    foreach (Panel panel in reviewShowPanelList)
+                    {
+                        if (i != pressedlinkbuttonid) panel.Visible = false;
+                        i++;
+                    } break;
+                case "addReviewLink":
+                    foreach (Panel panel in reviewShowPanelList)
+                    {
+                        panel.Visible = false;
+                    }
+                    foreach (Panel panel in reviewAddPanelList)
+                    {
+                        if (i != pressedlinkbuttonid) panel.Visible = false;
+                        i++;
+                    } break;
+                default: break;
+            }
+        }
     }
 }
