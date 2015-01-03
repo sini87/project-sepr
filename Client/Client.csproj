@@ -467,6 +467,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RestClient.cs" />
+    <Compile Include="ReviewHelper.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
