@@ -16,8 +16,8 @@ namespace Client
         int rowID = 0;
         List<Panel> reviewAddPanelList = new List<Panel>();
         List<Panel> reviewShowPanelList = new List<Panel>();
-        List<LinkButton> addReviewHyperlinkList = new List<LinkButton>();
-        List<LinkButton> showReviewHyperlinkList = new List<LinkButton>();
+        List<LinkButton> addReviewLinkButtonList = new List<LinkButton>();
+        List<LinkButton> showReviewLinkButtonList = new List<LinkButton>();
         RestClient rc;
         Table dataTable = new Table();
         ReviewHelper reviewHelper = new ReviewHelper();
@@ -129,17 +129,19 @@ namespace Client
                     pStatusParent.Controls.Add(pStatus);
                     tTitle.Controls.Add(pStatusParent);
 
-                    LinkButton showReviewHyperlink = new LinkButton();
-                    showReviewHyperlink.Text = "Show Review";
-                    showReviewHyperlink.ID = "hyperlinkshowReview" + hyperlinkid; ;
-                    showReviewHyperlink.Click += new EventHandler(OnShowReviews_Click);
-                    showReviewHyperlink.Style.Add("font-size", "14px");
-                    showReviewHyperlink.Style.Add("margin-left", "45px");
-                    showReviewHyperlink.Style.Add("padding", "5px");
-                    showReviewHyperlinkList.Add(showReviewHyperlink);
-                    tTitle.Controls.Add(showReviewHyperlink);
+                    if (element.Status.ToUpper().Equals("FINISHED"))
+                    {
+                        LinkButton showLinkButton = new LinkButton();
+                        showLinkButton.Text = "Show Review";
+                        showLinkButton.ID = "hyperlinkshowReview" + hyperlinkid; ;
+                        showLinkButton.Click += new EventHandler(OnShowReviews_Click);
+                        showLinkButton.Style.Add("margin-left", "45px");
+                        reviewHelper.SetLinkButtonCSS(showLinkButton);
+                        showReviewLinkButtonList.Add(showLinkButton);
+                        tTitle.Controls.Add(showLinkButton);
+                    }
 
-                    Panel showReviewPanel = CreateShowReviewPanel(element); //creates added reviews
+                    Panel showReviewPanel = reviewHelper.CreateShowReviewPanel(element, rc, reviewShowPanelList, hyperlinkid, this);
                     showReviewPanel.Visible = false;
                     
                     tTitle.Controls.Add(showReviewPanel);
@@ -183,25 +185,28 @@ namespace Client
             {
                 Panel showReviewPanel = new Panel();
                 showReviewPanel.ID = "showReviewPanel" + hyperlinkid;
-                reviewHelper.SetShowReviewPanelCSS(showReviewPanel);
-                Table showReviewTable = new Table();
-                showReviewTable.ID = "showReviewTable" + hyperlinkid;
                 ReviewModel issueReview = new ReviewModel();
                 rc.EndPoint = "api/Review?issueId=" + element.Id;
                 rc.Method = HttpVerb.GET;
                 var json = rc.MakeRequest();
                 List<ReviewModel> issueReviewsList = JsonConvert.DeserializeObject<List<ReviewModel>>(json);
+                int i = 0;
                 foreach (var review in issueReviewsList)
                 {
+                    Panel rowPanel = new Panel();
+                    rowPanel.Style.Add("background-color", "black");
+                    reviewHelper.SetShowReviewPanelCSS(rowPanel, i);
+                    Table showReviewTable = new Table();
+                    //showReviewTable.ID = "showReviewTable" + hyperlinkid;
                     TableRow UserNameRow = new TableRow();
                     TableCell UserNameCell = new TableCell();
-                    //firstNameCell.Style.Add("padding-left", "5px");
                     UserNameCell.Style.Add("font-size", "14px");
                     Label firstNameLabel = new Label();
                     firstNameLabel.Text = review.UserFirstName + " " + review.UserLastName;
                     UserNameCell.Controls.Add(firstNameLabel);
                     UserNameRow.Controls.Add(UserNameCell);
                     showReviewTable.Controls.Add(UserNameRow);
+
 
                     TableRow explanationRow = new TableRow();
                     TableCell explanationCell = new TableCell();
@@ -212,9 +217,9 @@ namespace Client
                     explanationRow.Controls.Add(explanationCell);
                     showReviewTable.Controls.Add(explanationRow);
 
-                    showReviewPanel.Controls.Add(showReviewTable);
-
-
+                    rowPanel.Controls.Add(showReviewTable);
+                    showReviewPanel.Controls.Add(rowPanel);
+                    i++;
                 }
                 reviewShowPanelList.Add(showReviewPanel);
                 return showReviewPanel;
@@ -229,11 +234,11 @@ namespace Client
         {
             LinkButton link = (LinkButton)sender;
             int pressedlinkbuttonid = reviewHelper.getIDNumberOfControl(link.ID);
-            foreach (LinkButton button in addReviewHyperlinkList)
+            foreach (LinkButton button in addReviewLinkButtonList)
             {
                 button.Style.Add("background-color", "none");
             }
-            foreach (LinkButton button in showReviewHyperlinkList)
+            foreach (LinkButton button in showReviewLinkButtonList)
             {
                 button.Style.Add("background-color", "none");
             }
