@@ -129,18 +129,7 @@ namespace Client
                     pStatusParent.Controls.Add(pStatus);
                     tTitle.Controls.Add(pStatusParent);
 
-                    if (element.Status.ToUpper().Equals("EVALUATING"))
-                    {
-                        LinkButton addLinkButton = new LinkButton();
-                        addLinkButton.Text = "Add Review";
-                        addLinkButton.ID = "LinkButtonaddReview" + hyperlinkid;
-                        addLinkButton.Click += new EventHandler(OnAddReviews_Click);
-                        reviewHelper.SetLinkButtonCSS(addLinkButton);
-                        addReviewLinkButtonList.Add(addLinkButton);
-                        tTitle.Controls.Add(addLinkButton);
-
-                    }
-                    else if (element.Status.ToUpper().Equals("FINISHED"))
+                    if (element.Status.ToUpper().Equals("FINISHED"))
                     {
                         LinkButton showLinkButton = new LinkButton();
                         showLinkButton.Text = "Show Review";
@@ -150,6 +139,14 @@ namespace Client
                         tTitle.Controls.Add(showLinkButton);
                         showReviewLinkButtonList.Add(showLinkButton);
 
+                        LinkButton addLinkButton = new LinkButton();
+                        addLinkButton.Text = "Add Review";
+                        addLinkButton.ID = "LinkButtonaddReview" + hyperlinkid;
+                        addLinkButton.Click += new EventHandler(OnAddReviews_Click);
+                        reviewHelper.SetLinkButtonCSS(addLinkButton);
+                        addLinkButton.Style.Add("margin-left", "5px");
+                        addReviewLinkButtonList.Add(addLinkButton);
+                        tTitle.Controls.Add(addLinkButton);
                     }
                     Panel addReviewPanel = reviewHelper.CreateAddReviewPanel(element, reviewAddPanelList, hyperlinkid, this);
                     addReviewPanel.Visible = false;

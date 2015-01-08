@@ -89,7 +89,7 @@ namespace Client
         }
 
         //Creates AddReview Panel
-        public Panel CreateAddReviewPanel(IssueModel element, List<Panel>reviewAddPanelList, int hyperlinkid, MyIssues issues)
+        public Panel CreateAddReviewPanel(IssueModel element, List<Panel>reviewAddPanelList, int hyperlinkid, MyIssues site)
         {
             Panel reviewPanel = new Panel();
             reviewPanel.ID = "addReviewPanel" + hyperlinkid;
@@ -139,7 +139,67 @@ namespace Client
             issueLabelCellButton.Style.Add("padding-top", "10px");
             Button saveReviewButton = new Button();
             saveReviewButton.ID = "saveReviewButton" + hyperlinkid;
-            saveReviewButton.Click += new EventHandler(issues.OnSaveReviewButton_Click);
+            saveReviewButton.Click += new EventHandler(site.OnSaveReviewButton_Click);
+            saveReviewButton.Text = "Save Review";
+            issueLabelCellButton.Controls.Add(saveReviewButton);
+            issueRowButton.Controls.Add(issueLabelCellButton);
+            reviewTable.Controls.Add(issueRowButton);
+            reviewPanel.Controls.Add(reviewTable);
+            return reviewPanel;
+        }
+
+        //Creates AddReview Panel
+        public Panel CreateAddReviewPanel(IssueModel element, List<Panel> reviewAddPanelList, int hyperlinkid, AllIssues site)
+        {
+            Panel reviewPanel = new Panel();
+            reviewPanel.ID = "addReviewPanel" + hyperlinkid;
+            SetAddReviewPanelCSS(reviewPanel);
+            reviewAddPanelList.Add(reviewPanel);
+            Table reviewTable = new Table();
+            for (int i = 0; i < 5; i++)
+            {
+                TableRow issueRow = new TableRow();
+                TableCell issueLabelCell = new TableCell();
+                issueLabelCell.Style.Add("padding", "3px");
+                Label issueLabel = new Label();
+                TextBox reviewTextBox = new TextBox();
+                reviewTextBox.Width = 300;
+                issueLabelCell.Style.Add("padding", "3px");
+                switch (i)
+                {
+                    case 0: issueLabel.Text = "IssueID"; reviewTextBox.Text = element.Id.ToString();
+                        HiddenField issuehiddenfield = new HiddenField();
+                        issuehiddenfield.Value = element.Id.ToString();
+                        issuehiddenfield.ID = "issueHiddenField" + hyperlinkid;
+                        issueLabelCell.Controls.Add(issuehiddenfield);
+                        reviewTextBox.ID = "issueTextBox" + hyperlinkid; break;
+                    case 1: issueLabel.Text = "Rating";
+                        reviewTextBox.Text = element.ReviewRating.ToString();
+                        reviewTextBox.ID = "ratingTextBox" + hyperlinkid; break;
+                    case 2: issueLabel.Text = "Explanation";
+                        reviewTextBox.Text = element.Description;
+                        reviewTextBox.TextMode = TextBoxMode.MultiLine;
+                        reviewTextBox.ID = "explanationTextBox" + hyperlinkid; break;
+                    case 3: issueLabel.Text = "UserFirstName";
+                        reviewTextBox.ID = "userFirstNameTextBox" + hyperlinkid; break;
+                    case 4: issueLabel.Text = "UserLastName";
+                        reviewTextBox.ID = "userLastNameTextBox" + hyperlinkid; break;
+                }
+                issueLabel.Width = 120;
+
+                issueLabelCell.Controls.Add(issueLabel);
+                issueLabelCell.Controls.Add(reviewTextBox);
+                issueRow.Controls.Add(issueLabelCell);
+                reviewTable.Controls.Add(issueRow);
+            }
+            reviewPanel.Controls.Add(reviewTable);
+            TableRow issueRowButton = new TableRow();
+            TableCell issueLabelCellButton = new TableCell();
+            //issueLabelCellButton.Style.Add("padding-left", "122px");
+            issueLabelCellButton.Style.Add("padding-top", "10px");
+            Button saveReviewButton = new Button();
+            saveReviewButton.ID = "saveReviewButton" + hyperlinkid;
+            saveReviewButton.Click += new EventHandler(site.OnSaveReviewButton_Click);
             saveReviewButton.Text = "Save Review";
             issueLabelCellButton.Controls.Add(saveReviewButton);
             issueRowButton.Controls.Add(issueLabelCellButton);
