@@ -20,6 +20,8 @@ namespace CDDSS_API.Models
         public int Criterion { get; set; }
         [DataMember]
         public double Weight { get; set; }
+        [DataMember]
+        public string Acronym { get; set;}
 
         public CriterionWeightModel()
         {
@@ -27,6 +29,7 @@ namespace CDDSS_API.Models
             UserAccesObject = -1;
             Criterion = -1;
             Weight = -1;
+            Acronym = "";
         }
 
         /// <summary>
@@ -41,6 +44,7 @@ namespace CDDSS_API.Models
             UserAccesObject = userAccesObject;
             Criterion = criterion;
             Weight = weight;
+            Acronym = "";
         }
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace CDDSS_API.Models
             UserId = userId;
             Criterion = criterion;
             Weight = weight;
+            Acronym = "";
         }
 
         /// <summary>
@@ -66,6 +71,7 @@ namespace CDDSS_API.Models
         {
             Criterion = criterion;
             Weight = weight;
+            Acronym = "";
         }
 
         public CriterionWeightModel(int userAccesObject, string userId, int criterion, double weight)
@@ -74,6 +80,7 @@ namespace CDDSS_API.Models
             UserId = userId;
             Criterion = criterion;
             Weight = weight;
+            Acronym = "";
         }
     }
 }

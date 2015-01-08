@@ -104,6 +104,11 @@ namespace CDDSS_API.Repository
                             foreach (CriterionWeight cw in cwList)
                             {
                                 cwm = new CriterionWeightModel((int)cw.User1.AccessObject, cw.User, cw.Criterion, cw.Weight);
+                                cwm.Acronym = "";
+                                if (cw.User1.FirstName != null && cw.User1.FirstName.Length > 0)
+                                    cwm.Acronym = cw.User1.FirstName.PadLeft(1);
+                                if (cw.User1.FirstName != null && cw.User1.LastName.Length > 0)
+                                    cwm.Acronym = cwm.Acronym + cw.User1.LastName.PadLeft(1); ;
                                 list.Add(cwm);
                             }
                         }
