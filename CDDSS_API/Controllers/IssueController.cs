@@ -71,6 +71,16 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
+        /// returns a list of issues with title
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/AllIssue/OfUser")]
+        public List<IssueModel> GETAllIssuesByUser()
+        {
+            return issueRep.GetAllUserIssues(RequestContext.Principal.Identity.Name);
+        }
+
+        /// <summary>
         /// deletes an issue
         /// </summary>
         /// <param name="issueId"></param>

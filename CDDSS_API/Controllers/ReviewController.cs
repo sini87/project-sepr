@@ -25,13 +25,13 @@ namespace CDDSS_API.Controllers
         /// adds a new review to the issue of the logged user
         /// ReviewModel: Fields Issue and Rating are required Explanation is optional, other fields are not processed
         /// </summary>
-        /// <param name="reviewModel"></param>
+        /// <param name="newReview"></param>
         /// <returns>OK if added</returns>
         [HttpPost]
         [Route("api/Review/Add")]
-        public HttpResponseMessage AddReview(ReviewModel reviewModel)
+        public HttpResponseMessage AddReview(ReviewModel newReview)
         {
-            if (revRepo.AddReview(reviewModel, RequestContext.Principal.Identity.Name))
+            if (revRepo.AddReview(newReview, RequestContext.Principal.Identity.Name))
             {
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
