@@ -576,5 +576,52 @@ namespace CDDSS_API.Repository
                 }
             }
         }
+
+        public List<IssueModel> GetAllUserIssues(string email)
+        {
+            User user = ctx.Users.First(x => x.Email == email);
+
+
+            var q1 =
+                        from us in ctx.Users
+                        from ar in ctx.AccessRights
+                        where
+                            us.Email == email &&
+                            (ar.Right == 'O' || ar.Right == 'C') &&
+                            ar.AccessObject == us.AccessObject
+                        select new
+                        {
+                            Id = (int?)ar.Issue1.Id,
+                            ar.Issue1.Title,
+                            ar.Issue1.Status,
+                            Rating = ((System.Double?)ar.Issue1.ReviewRating ?? (System.Double?)0)
+                        };
+
+
+            List<IssueModel> list = new List<IssueModel>();
+            IssueModel issueShort;
+            Tag tag;
+            foreach (var t in q1)
+            {
+                issueShort = new IssueModel((int)t.Id, t.Title, t.Status, (double)t.Rating);
+                var query = from Tag_Issue in ctx.Tag_Issues
+                            where
+                              Tag_Issue.Issue == issueShort.Id
+                            select new
+                            {
+                                Tag = Tag_Issue.Tag,
+                                Issue = Tag_Issue.Issue
+                            };
+                foreach (var ti in query)
+                {
+                    tag = ctx.Tags.First(x => x.Id == ti.Tag);
+                    issueShort.Tags.Add(new TagModel(tag.Id, tag.Name));
+                }
+                list.Add(issueShort);
+            }
+
+            DBConnection.Instance.Connection.Close();
+            return list;
+        }
     }
 }
