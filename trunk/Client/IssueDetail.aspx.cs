@@ -1,4 +1,5 @@
 ﻿using CDDSS_API.Models;
+using CDDSS_API.Models.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,8 @@ namespace Client
                     generateUsers(issue);
                     generateCriteria(issue);
                     generateAlternatives(issueAlt);
-                    
+                    generateCriteriaWeight(issue);
+
                     save.Visible = true;
 
                     CDDSS_API.UserShort currentUser = getCurrentUser();
@@ -356,27 +358,91 @@ namespace Client
                 List<CriterionWeightModel> criterionWeight = JsonConvert.DeserializeObject<List<CriterionWeightModel>>(json);
 
                 Table criteriaWeightTable;
-                TableHeaderRow headerRow;
+                TableHeaderRow headerRow = new TableHeaderRow();
                 TableHeaderCell headerCell;
-
-                headerCell = new TableHeaderCell();
-                headerRow = new TableHeaderRow();
-                headerRow.Cells.Add(headerCell);
-
+                TableRow row = new TableRow();
+                TableCell cell;
+                
                 criteriaWeightTable = new Table();
-                criteriaWeightTable.Rows.Add(headerRow);
 
-                foreach (CriterionWeightModel cwm in criterionWeight)
-                {
+                if (criterionWeight.Count > 0) {
                     
-                    if (issue.AccessUserList.Count > 0)
-                    {
-                        foreach (AccessRightModel user in issue.AccessUserList){
-                           // if (User.Identity.Name)
-                        }
-                    }    
-                }
+                    List<string> criterionList = new List<string>();
+                    List<string> userList = new List<string>();
+                    List<double> critWeight = new List<double>();
+                    
+                    userList.Add(getCurrentUser().UserName);
 
+                    foreach (CriterionWeightModel cwm in criterionWeight)
+                    {
+                        
+                        string critName = getCriterionNameById(cwm.Criterion).Name;
+                        if (!criterionList.Contains(critName))
+                        {
+                            criterionList.Add(critName);
+                        }                  
+                        
+                        if (!userList.Contains(cwm.Acronym))
+                        {
+                            userList.Add(cwm.Acronym);
+                        }
+
+                        critWeight.Add(cwm.Weight);
+                    }
+
+                        headerCell = new TableHeaderCell();
+                        headerCell.Text = "";
+                        headerRow.Cells.Add(headerCell);
+
+                        headerCell = new TableHeaderCell();
+                        headerCell.Text = getCurrentUser().UserName;
+                        headerRow.Cells.Add(headerCell);
+
+                        for (int i = 0; i < criterionList.Count; i++)
+                        {
+                            row = new TableRow();
+                            cell = new TableCell();
+
+                            cell.Text = criterionList.ElementAt(i);
+                            row.Cells.Add(cell);
+
+                            cell = new TableCell();
+                            TextBox txtBox = new TextBox();
+                            txtBox.Width = Unit.Point(20);
+                            txtBox.ID = criterionList.ElementAt(i);
+                            cell.Controls.Add(txtBox);
+                            row.Cells.Add(cell);
+
+                            cell = new TableCell();
+                            cell.Text = "";
+                            row.Cells.Add(cell);
+
+                            for (int j = 0; j < userList.Count; j++)
+                            {                                
+                                if (i==0)
+                                {
+                                    headerCell = new TableHeaderCell();
+                                    headerCell.Text = userList.ElementAt(j);
+                                    headerRow.Cells.Add(headerCell);
+                                    criteriaWeightTable.Rows.Add(headerRow);
+                                }
+
+                                if ((i + 1) * j == (userList.Count - 1) * criterionList.Count)
+                                {
+                                    break;
+                                }
+
+                                cell = new TableCell();
+                                cell.Text = "" + critWeight.ElementAt((i+1)*j);
+                                row.Cells.Add(cell);
+                            }
+
+                            criteriaWeightTable.Rows.Add(row);
+                        }
+
+                        
+            }
+                criteriaWeightTable.Width = Unit.Percentage(100);
                 criteriaWeightPanel.Controls.Add(criteriaWeightTable);
             }
             else
@@ -461,6 +527,32 @@ namespace Client
             CDDSS_API.UserShort user = JsonConvert.DeserializeObject<CDDSS_API.UserShort>(json);
 
             return user;
+        }
+
+        protected int getNumberOfIssueUserByIssueId(int id)
+        {
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+
+            rc.EndPoint = "api/Issue/?id=" + id;
+            rc.Method = HttpVerb.GET;
+            var json = rc.MakeRequest();
+
+            IssueModel issue = JsonConvert.DeserializeObject<IssueModel>(json);
+
+            return issue.AccessUserList.Count;
+        }
+
+        protected CriterionModel getCriterionNameById(int id)
+        {
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+
+            rc.EndPoint = "api/Criterion/?id="+id;
+            rc.Method = HttpVerb.GET;
+            var json = rc.MakeRequest();
+
+            CriterionModel crit = JsonConvert.DeserializeObject<CriterionModel>(json);
+
+            return crit;
         }
 
         protected void saveCriteriaCriteriaWeightAlternatives()
