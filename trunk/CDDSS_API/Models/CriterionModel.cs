@@ -31,6 +31,8 @@ namespace CDDSS_API.Models
             Weight = -1;
             Ratings = new List<RatingModel>();
         }
+
+       
     }
 
     

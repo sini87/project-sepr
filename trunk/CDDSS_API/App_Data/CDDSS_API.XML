@@ -689,6 +689,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.IssueController.GETAllIssuesByUser">
+            <summary>
+            returns a list of issues with title
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.IssueController.Delete(System.Int32)">
             <summary>
             deletes an issue
@@ -752,7 +758,7 @@
             adds a new review to the issue of the logged user
             ReviewModel: Fields Issue and Rating are required Explanation is optional, other fields are not processed
             </summary>
-            <param name="reviewModel"></param>
+            <param name="newReview"></param>
             <returns>OK if added</returns>
         </member>
         <member name="M:CDDSS_API.Controllers.ReviewController.GetReviewsFOfIssue(System.Int32)">
