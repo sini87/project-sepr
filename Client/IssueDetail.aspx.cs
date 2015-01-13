@@ -243,19 +243,17 @@ namespace Client
                 headerCellName.Text = "Name";
                 TableHeaderCell headerCellDesc = new TableHeaderCell();
                 headerCellDesc.Text = "Description";
-                TableHeaderCell headerCellWeight = new TableHeaderCell();
-                headerCellWeight.Text = "Weight";
-                                
+                
                 rowHeaderCriteria.Cells.Add(headerCellName);
                 rowHeaderCriteria.Cells.Add(headerCellDesc);
-                rowHeaderCriteria.Cells.Add(headerCellWeight);
+               
 
                 critTable.Rows.Add(rowHeaderCriteria);
 
                 TableRow rowCriteria;
                 TableCell criteriaName;
                 TableCell criteriaDesc;
-                TableCell criteriaWeight;
+                
 
                 foreach (CriterionModel crit in issue.Criterions)
                 {
@@ -269,13 +267,10 @@ namespace Client
                     criteriaDesc.Text = crit.Description;
                     rowCriteria.Cells.Add(criteriaDesc);
 
-                    criteriaWeight = new TableCell();
-                    criteriaWeight.Text += "" + crit.Weight;
-                    rowCriteria.Cells.Add(criteriaWeight);
-
                     critTable.Rows.Add(rowCriteria);
                 }
 
+                critTable.Width = Unit.Percentage(100);
                 criteriaPanel.Controls.Add(critTable);
             }
             else
@@ -370,77 +365,94 @@ namespace Client
                     List<string> criterionList = new List<string>();
                     List<string> userList = new List<string>();
                     List<double> critWeight = new List<double>();
-                    
+                                        
                     userList.Add(getCurrentUser().UserName);
 
                     foreach (CriterionWeightModel cwm in criterionWeight)
                     {
-                        
-                        string critName = getCriterionNameById(cwm.Criterion).Name;
-                        if (!criterionList.Contains(critName))
-                        {
-                            criterionList.Add(critName);
-                        }                  
-                        
+                        CriterionModel crit = getCriterionNameById(cwm.Criterion);
+                        string name = crit.Name;
+                        string weight = ""+crit.Weight;
+ 
                         if (!userList.Contains(cwm.Acronym))
                         {
                             userList.Add(cwm.Acronym);
                         }
 
+                        if (!criterionList.Contains(name + ";" + weight))
+                        {
+                            criterionList.Add(name + ";" + weight);
+                        }
+
                         critWeight.Add(cwm.Weight);
                     }
 
-                        headerCell = new TableHeaderCell();
-                        headerCell.Text = "";
-                        headerRow.Cells.Add(headerCell);
+                    headerCell = new TableHeaderCell();
+                    headerCell.Text = "";
+                    headerRow.Cells.Add(headerCell);
 
-                        headerCell = new TableHeaderCell();
-                        headerCell.Text = getCurrentUser().UserName;
-                        headerRow.Cells.Add(headerCell);
+                    headerCell = new TableHeaderCell();
+                    headerCell.Text = "Weight";
+                    headerRow.Cells.Add(headerCell); 
 
-                        for (int i = 0; i < criterionList.Count; i++)
+                    headerCell = new TableHeaderCell();
+                    headerCell.Text = "My Rating";
+                    headerRow.Cells.Add(headerCell);
+
+
+
+                    for (int k = 1; k < userList.Count; k++)
+                    {
+                        headerCell = new TableHeaderCell();
+                        headerCell.Text = userList.ElementAt(k);
+
+                        headerRow.Cells.Add(headerCell);
+                    }
+
+                    criteriaWeightTable.Rows.Add(headerRow);
+
+                        int i = 0;
+                        int j = 0;
+                        int cnt = 0;
+
+                        while (i < criterionList.Count && !(cnt >= criterionWeight.Count))
                         {
                             row = new TableRow();
+                            
+                            string[] crit = criterionList.ElementAt(i).Split(';');
+                            
                             cell = new TableCell();
+                            cell.Text = crit[0];
+                            row.Cells.Add(cell);
 
-                            cell.Text = criterionList.ElementAt(i);
+                            cell = new TableCell();
+                            cell.Text = crit[1];
                             row.Cells.Add(cell);
 
                             cell = new TableCell();
                             TextBox txtBox = new TextBox();
-                            txtBox.Width = Unit.Point(20);
+                            txtBox.Width = Unit.Point(40);
                             txtBox.ID = criterionList.ElementAt(i);
+                            txtBox.Text = "";
                             cell.Controls.Add(txtBox);
                             row.Cells.Add(cell);
-
-                            cell = new TableCell();
-                            cell.Text = "";
-                            row.Cells.Add(cell);
-
-                            for (int j = 0; j < userList.Count; j++)
-                            {                                
-                                if (i==0)
-                                {
-                                    headerCell = new TableHeaderCell();
-                                    headerCell.Text = userList.ElementAt(j);
-                                    headerRow.Cells.Add(headerCell);
-                                    criteriaWeightTable.Rows.Add(headerRow);
-                                }
-
-                                if ((i + 1) * j == (userList.Count - 1) * criterionList.Count)
-                                {
-                                    break;
-                                }
-
+                                                                                    
+                            while (j < userList.Count-1 && !(cnt >= criterionWeight.Count))
+                            {
                                 cell = new TableCell();
-                                cell.Text = "" + critWeight.ElementAt((i+1)*j);
+                                cell.Text = "" + critWeight.ElementAt(cnt);
                                 row.Cells.Add(cell);
+                                cnt++;
+                                j++;
                             }
 
-                            criteriaWeightTable.Rows.Add(row);
-                        }
+                            j = 0;
+                            i++;
+                            cnt = i * criterionList.Count + i;
 
-                        
+                           
+                            criteriaWeightTable.Rows.Add(row);                            
+                        }                        
             }
                 criteriaWeightTable.Width = Unit.Percentage(100);
                 criteriaWeightPanel.Controls.Add(criteriaWeightTable);
