@@ -1,4 +1,5 @@
-﻿using CDDSS_API.Models;
+﻿using CDDSS_API;
+using CDDSS_API.Models;
 using CDDSS_API.Models.Domain;
 using Newtonsoft.Json;
 using System;
@@ -14,6 +15,7 @@ namespace Client
     public partial class IssueDetail : System.Web.UI.Page
     {
         IssueModel issue;
+        List<CriterionWeightModel> criterionWeight;
 
         protected void Page_Preload(object sender, EventArgs e)
         {
@@ -60,13 +62,39 @@ namespace Client
                     generateArtefacts(issue);
                     generateDocuments(issue);
                     generateUsers(issue);
-                    generateCriteria(issue);
-                    generateAlternatives(issueAlt);
-                    generateCriteriaWeight(issue);
+                    
+                    if (issue.Status.ToUpper().Equals("BRAINSTORMING"))
+                    {
+                        headingCriteria.Visible = true;
+                        generateCriteria(issue);
+                    }
 
+                    if (issue.Status.ToUpper().Equals("BRAINSTORMING1"))
+                    {
+                        headingCriteria.Visible = true;
+                        generateCriteria(issue);
+
+                        headingCriteriaWeight.Visible = true;
+                        generateCriteriaWeight(issue);
+                    }
+
+                    if (issue.Status.ToUpper().Equals("BRAINSTORMING2") 
+                        || issue.Status.ToUpper().Equals("FINISHED") 
+                        || issue.Status.ToUpper().Equals("EVALUATING"))
+                    {
+                        headingCriteria.Visible = true;
+                        generateCriteria(issue);
+
+                        headingCriteriaWeight.Visible = true;
+                        generateCriteriaWeight(issue);
+
+                        hiddenAlternatives.Visible = true;
+                        generateAlternatives(issueAlt);
+                    }
+                    
                     save.Visible = true;
 
-                    CDDSS_API.UserShort currentUser = getCurrentUser();
+                    UserShort currentUser = getCurrentUser();
                     
                     foreach (AccessRightModel arm in issue.AccessUserList)
                     {
@@ -350,7 +378,7 @@ namespace Client
                 rc.EndPoint = "api/CriterionWeight?issueId=" + issue.Id;
                 rc.Method = HttpVerb.GET;
                 var json = rc.MakeRequest();
-                List<CriterionWeightModel> criterionWeight = JsonConvert.DeserializeObject<List<CriterionWeightModel>>(json);
+                criterionWeight = JsonConvert.DeserializeObject<List<CriterionWeightModel>>(json);
 
                 Table criteriaWeightTable;
                 TableHeaderRow headerRow = new TableHeaderRow();
@@ -432,7 +460,7 @@ namespace Client
                             cell = new TableCell();
                             TextBox txtBox = new TextBox();
                             txtBox.Width = Unit.Point(40);
-                            txtBox.ID = criterionList.ElementAt(i);
+                            txtBox.ID = "txt_"+criterionList.ElementAt(i);
                             txtBox.Text = "";
                             cell.Controls.Add(txtBox);
                             row.Cells.Add(cell);
@@ -528,7 +556,7 @@ namespace Client
             }
         }
 
-        protected CDDSS_API.UserShort getCurrentUser()
+        protected UserShort getCurrentUser()
         {
             RestClient rc = RestClient.GetInstance(Session.SessionID);
 
@@ -536,7 +564,7 @@ namespace Client
             rc.Method = HttpVerb.GET;
             var json = rc.MakeRequest();
 
-            CDDSS_API.UserShort user = JsonConvert.DeserializeObject<CDDSS_API.UserShort>(json);
+            UserShort user = JsonConvert.DeserializeObject<UserShort>(json);
 
             return user;
         }
@@ -637,14 +665,47 @@ namespace Client
             }
         }
 
+        protected void saveCriteriaWeights()
+        {
+            if (criterionWeight != null)
+            {
+                RestClient rc = RestClient.GetInstance(Session.SessionID);
+
+                foreach (CriterionWeightModel cwm in criterionWeight)
+                {
+                    foreach (AccessRightModel user in issue.AccessUserList)
+                    {
+                        if (getCurrentUser().Email.Equals(user.User.Email))
+                        {
+                            string txtID = "txt_" + getCriterionNameById(cwm.Criterion).Name;
+                            TextBox box = (TextBox)Session[txtID];
+
+                            if (box != null)
+                            {
+                                cwm.Weight = double.Parse(box.Text);
+
+                                rc.EndPoint = "api/CriterionWeight/Update";
+                                rc.Method = HttpVerb.POST;
+                                var json = JsonConvert.SerializeObject(cwm);
+                                rc.PostData = json;
+                                rc.MakeRequest();
+                            }
+                        }
+                    }
+                }
+                }    
+            }
+
         protected void save_Click(object sender, EventArgs e)
         {
+            //saveCriteriaWeights();
             saveCriteriaCriteriaWeightAlternatives();
             Response.Redirect("IssueDetail?issueId=" + issue.Id);
          }
 
         protected void saveNext_Click(object sender, EventArgs e)
         {
+            //saveCriteriaWeights();
             saveCriteriaCriteriaWeightAlternatives();
             RestClient rc = RestClient.GetInstance(Session.SessionID);
             
