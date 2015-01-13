@@ -78,7 +78,7 @@
     
     <hr />
 
-    <h3>Criteria</h3>
+    <h3 runat="server" visible="false" id="headingCriteria">Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
     <div id="criteria">
         <a id="btAddCriteria" class="crit">add criteria</a>
@@ -88,7 +88,7 @@
     <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
     <hr />
 
-    <h3>Criteria Weight</h3>
+    <h3 runat="server" visible="false" id="headingCriteriaWeight">Criteria Weight</h3>
     <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
     <%--<div id="criteriaWeight">
         <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
@@ -98,9 +98,9 @@
     <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
     <hr />
        
-    <h3>Alternatives</h3>
+    <h3 runat="server" visible="false" id="headingAlternatives">Alternatives</h3>
     <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
-    <div id="alternative">
+    <div runat="server" id="alternative">
         <a id="btAddAlt" class="alt">add alternative</a>
         <a id="btRemoveAlt" class="alt">remove alternative</a>
         <a id="btRemoveAllAlt" class="alt">remove all</a><br />

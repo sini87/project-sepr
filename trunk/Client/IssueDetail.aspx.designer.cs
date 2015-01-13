@@ -112,6 +112,15 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel users;
         
         /// <summary>
+        /// headingCriteria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl headingCriteria;
+        
+        /// <summary>
         /// criteriaPanel control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenCriteria;
+        
+        /// <summary>
+        /// headingCriteriaWeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl headingCriteriaWeight;
         
         /// <summary>
         /// criteriaWeightPanel control.
@@ -148,6 +166,15 @@ namespace Client {
         protected global::System.Web.UI.WebControls.HiddenField hiddenCriteriaWeight;
         
         /// <summary>
+        /// headingAlternatives control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl headingAlternatives;
+        
+        /// <summary>
         /// alternativesPanel control.
         /// </summary>
         /// <remarks>
@@ -155,6 +182,15 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel alternativesPanel;
+        
+        /// <summary>
+        /// alternative control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alternative;
         
         /// <summary>
         /// hiddenAlternatives control.
