@@ -57,6 +57,7 @@ td a {
     font-family: 'Maven Pro', sans-serif !important;
     color:#999999 !important;
     font-size:18px !important;
+    text-decoration: none;
 }
 
 td a:hover {
@@ -168,6 +169,14 @@ label {
 
 #site-nav {
     display:block !important;
+}
+
+#MainContent_LinkButton1 {
+    color:#727272 !important;
+}
+
+#MainContent_LinkButton1:hover {
+    color:#00796B !important;
 }
 
 /********************
