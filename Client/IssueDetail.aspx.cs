@@ -16,6 +16,8 @@ namespace Client
     {
         IssueModel issue;
         List<CriterionWeightModel> criterionWeight;
+        Table criteriaWeightTable;
+        int col;
 
         protected void Page_Preload(object sender, EventArgs e)
         {
@@ -23,15 +25,25 @@ namespace Client
             {
                 Server.Transfer("Default.aspx");
             }
+
             UserSession us = SessionManager.GetUserSession(Session.SessionID);
+           
             if (us.CriteriaWeightTB.ID != null && us.CriteriaWeightTB.ID.Length > 0)
             {
                 criteriaWeightPanel.Controls.Add(us.CriteriaWeightTB);
             }
+
+            
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                UserSession us = SessionManager.GetUserSession(Session.SessionID);
+                us.CriteriaWeightTB = new Table();
+            }
+
             try
             {
                 RestClient rc = RestClient.GetInstance(Session.SessionID);
@@ -68,20 +80,33 @@ namespace Client
                     generateDocuments(issue);
                     generateUsers(issue);
                     
-                    if (issue.Status.ToUpper().Equals("BRAINSTORMING1") || issue.Status.ToUpper().Equals("BRAINSTORMING2"))
+                    if (issue.Status.ToUpper().Equals("BRAINSTORMING1"))
+                    {
+                        headingCriteria.Visible = true;
+                        generateCriteria(issue);
+                    }
+
+                    if (issue.Status.ToUpper().Equals("BRAINSTORMING2"))
                     {
                         headingCriteria.Visible = true;
                         generateCriteria(issue);
 
+                        if (issue.CriterionWeights.Count > 0)
+                        {
                         headingCriteriaWeight.Visible = true;
                         generateCriteriaWeight(issue);
+                            col = 2;
+                    }
+                        else if (issue.CriterionWeights.Count == 0)
+                        {
+                            headingCriteriaWeight.Visible = true;
+                            generateCriteriaWeightForNewIssue(issue);
+                            col = 1;
 
-                        headingAlternatives.Visible = true;
-                        generateAlternatives(issueAlt);
+                        }
                     }
 
-                    if (issue.Status.ToUpper().Equals("BRAINSTORMING2") 
-                        || issue.Status.ToUpper().Equals("FINISHED") 
+                    if (issue.Status.ToUpper().Equals("FINISHED") 
                         || issue.Status.ToUpper().Equals("EVALUATING"))
                     {
                         headingCriteria.Visible = true;
@@ -92,6 +117,16 @@ namespace Client
 
                         headingAlternatives.Visible = true;
                         generateAlternatives(issueAlt);
+                    }
+                    
+                    if (issue.Decision != null)
+                    {
+                        HyperLink hpl = new HyperLink();
+                        hpl.NavigateUrl = "~/FinalDecision.aspx?IssueId=" + issue.Id;
+                        hpl.Text = "view final descision";
+
+                        finalDescision.Controls.Add(hpl);
+                        finalDescision.Visible = true;
                     }
                     
                     save.Visible = true;
@@ -139,29 +174,14 @@ namespace Client
 
         protected void generateRating(IssueModel issue)
         {
-            /*
-             * SCHMIDI CHANGE NOW ITS LIKE IN ISSUE LIST
-             * Label lRating = new Label();
+            Label lRating = new Label();
             lRating.Text = ""+issue.ReviewRating;
-            rating.Controls.Add(lRating);*/
-
-            Panel pRating;
-
-            pRating = new Panel();
-            pRating.CssClass = "table_rating col-lg-12";
-            TextBox tbRating = new TextBox();
-            tbRating.CssClass = "rating rating5";
-            tbRating.Attributes.Add("readonly", "readonly");
-            tbRating.Text = issue.ReviewRating.ToString();
-            pRating.Controls.Add(tbRating);
-            rating.Controls.Add(pRating);
+            rating.Controls.Add(lRating);
         }
 
         protected void generateTags(IssueModel issue)
         {
-            /*
-             * SCHMIDI CHANGE NOW ITS LIKE IN ISSUE LIST
-             * HtmlGenericControl div;
+            HtmlGenericControl div;
             Label lTags;
 
             foreach (TagModel tTag in issue.Tags)
@@ -171,62 +191,14 @@ namespace Client
                 lTags.Text += tTag.Name;
                 div.Controls.Add(lTags);
                 tag.Controls.Add(div);
-            }*/
-
-            Panel pTags;
-            Panel pTag;
-
-            pTags = new Panel();
-            pTags.CssClass = "table_tags col-lg-12";
-            foreach (TagModel tagElement in issue.Tags)
-            {
-                pTag = new Panel();
-                pTag.CssClass = "table_tag";
-                pTag.Controls.Add(new LiteralControl(tagElement.Name));
-                pTags.Controls.Add(pTag);
             }
-            tag.Controls.Add(pTags);
         }
 
         protected void generateStatus(IssueModel issue)
         {
-            /*
-             * SCHMIDI CHANGE NOW ITS LIKE IN ISSUE LIST
-             * Label lStatus = new Label();
+            Label lStatus = new Label();
             lStatus.Text = issue.Status;
-            status.Controls.Add(lStatus);*/
-
-            Panel pStatus, pStatusParent;
-
-            pStatusParent = new Panel();
-            pStatusParent.CssClass = "col-lg-12 table_status";
-            pStatus = new Panel();
-            pStatus.Controls.Add(new LiteralControl(issue.Status));
-            if (issue != null)
-            {
-                if (issue.Status.ToUpper().Equals("CREATING"))
-                {
-                    pStatus.CssClass = "status_creating";
-                }
-                else if (issue.Status.ToUpper().Equals("BRAINSTORMING1") || issue.Status.ToUpper().Equals("BRAINSTORMING2"))
-                {
-                    pStatus.CssClass = "status_brainstorming";
-                }
-                else if (issue.Status.ToUpper().Equals("EVALUATING"))
-                {
-                    pStatus.CssClass = "status_evaluating";
-                }
-                else if (issue.Status.ToUpper().Equals("FINISHED"))
-                {
-                    pStatus.CssClass = "status_finished";
-                }
-                else
-                {
-                    pStatus.CssClass = "status_reviewed";
-                }
-            }
-            pStatusParent.Controls.Add(pStatus);
-            status.Controls.Add(pStatusParent);
+            status.Controls.Add(lStatus);
         }
 
         protected void generateDescription(IssueModel issue)
@@ -468,7 +440,7 @@ namespace Client
                 var json = rc.MakeRequest();
                 criterionWeight = JsonConvert.DeserializeObject<List<CriterionWeightModel>>(json);
 
-                Table criteriaWeightTable;
+                
                 TableHeaderRow headerRow = new TableHeaderRow();
                 TableHeaderCell headerCell;
                 TableRow row = new TableRow();
@@ -483,7 +455,10 @@ namespace Client
                     List<string> userList = new List<string>();
                     List<double> critWeight = new List<double>();
                                         
-                    userList.Add(getCurrentUser().UserName);
+                    //userList.Add(getCurrentUser().UserName);
+
+                    string currentUserAcr = getCurrentUser().FirstName.Substring(0, 1) + getCurrentUser().LastName.Substring(0, 1);
+                    bool weightDone = false;
 
                     foreach (CriterionWeightModel cwm in criterionWeight)
                     {
@@ -493,6 +468,12 @@ namespace Client
  
                         if (!userList.Contains(cwm.Acronym))
                         {
+
+                            if (cwm.Acronym.Equals(currentUserAcr))
+                            {
+                                weightDone = true;
+                            }
+
                             userList.Add(cwm.Acronym);
                         }
 
@@ -516,29 +497,17 @@ namespace Client
                     headerCell.Text = "My Rating";
                     headerRow.Cells.Add(headerCell);
 
+                    int k = 0;
 
+                    if (weightDone)
+                    {
+                        k = 1;
+                    }
 
-                    for (int k = 1; k < userList.Count; k++)
+                    for (int m = k; m < userList.Count; m++)
                     {
                         headerCell = new TableHeaderCell();
-
-                        HyperLink link = new HyperLink();
-                        link.ID = "acronym_link";
-                        Label acronym = new Label();
-                        acronym.CssClass = "acronym_down";
-
-                        if (userList.ElementAt(k) != null)
-                        {
-                            acronym.Text = userList.ElementAt(k);
-                        }
-                        if (acronym.Text.Equals(""))
-                        {
-                            acronym.Text = "&nbsp;";
-                        }
-                        link.Controls.Add(acronym);
-                        headerCell.Controls.Add(link);
-
-                        //headerCell.Text = userList.ElementAt(k);
+                        headerCell.Text = userList.ElementAt(k);
 
                         headerRow.Cells.Add(headerCell);
                     }
@@ -573,19 +542,26 @@ namespace Client
                             
                            
                                                                                     
-                            while (j < userList.Count-1 && !(cnt >= criterionWeight.Count))
+                            while (j < userList.Count && !(cnt >= criterionWeight.Count))
+                            {
+                                if (weightDone && j == 0)
+                                {
+                                    txtBox.Text = "" + critWeight.ElementAt(cnt);
+                                }
+                                else
                             {
                                 cell = new TableCell();
                                 cell.Text = "" + critWeight.ElementAt(cnt);
                                 row.Cells.Add(cell);
+                                }
+                                
                                 cnt++;
                                 j++;
                             }
 
-                            j = 0;
                             i++;
-                            cnt = i * criterionList.Count + i;
-
+                            cnt = i * j;
+                            j = 0;
                            
                             criteriaWeightTable.Rows.Add(row);                            
                         }                        
@@ -601,6 +577,98 @@ namespace Client
                 noCrit.Text = "No Criterion Weights";
                 criteriaWeightPanel.Controls.Add(noCrit);
             }
+        }
+
+        protected void generateCriteriaWeightForNewIssue(IssueModel issue)
+        {
+            foreach (Control c in criteriaWeightPanel.Controls)
+            {
+                if (c.ID.Equals("CriteriaWeightTable"))
+                    return;
+            }
+            
+                RestClient rc = RestClient.GetInstance(Session.SessionID);
+
+                rc.EndPoint = "api/CriterionWeight?issueId=" + issue.Id;
+                rc.Method = HttpVerb.GET;
+                var json = rc.MakeRequest();
+                criterionWeight = JsonConvert.DeserializeObject<List<CriterionWeightModel>>(json);
+
+
+                TableHeaderRow headerRow = new TableHeaderRow();
+                TableHeaderCell headerCell;
+                TableRow row = new TableRow();
+                TableCell cell;
+
+                criteriaWeightTable = new Table();
+                criteriaWeightTable.ID = "CriteriaWeightTable";
+
+                
+                    List<string> criterionList = new List<string>();
+                    List<string> userList = new List<string>();
+                    
+                    string currentUserAcr = getCurrentUser().FirstName.Substring(0, 1) + getCurrentUser().LastName.Substring(0, 1);
+
+                    foreach (AccessRightModel arm in issue.AccessUserList)
+                    {
+                        userList.Add(arm.User.FirstName.Substring(0, 1) + arm.User.LastName.Substring(0, 1));
+        }
+
+                    foreach (CriterionModel crit in issue.Criterions)
+                    {
+                        criterionList.Add(crit.Name);
+                    }
+
+                    headerCell = new TableHeaderCell();
+                    headerCell.Text = "";
+                    headerRow.Cells.Add(headerCell);
+
+                    headerCell = new TableHeaderCell();
+                    headerCell.Text = "Weight";
+                    headerRow.Cells.Add(headerCell);
+
+                    for (int i = 0; i < criterionList.Count; i++)
+                    {
+                        row = new TableRow();
+
+                        cell = new TableCell();
+                        cell.Text = criterionList.ElementAt(i);
+                        row.Cells.Add(cell);
+                        
+                        cell = new TableCell();
+                        TextBox txtBox = new TextBox();
+                        txtBox.Width = Unit.Point(40);
+                        txtBox.ID = "txt_" + criterionList.ElementAt(i);
+                        txtBox.Text = "";
+                        cell.Controls.Add(txtBox);
+                        row.Cells.Add(cell);
+
+                        for (int j = 0; j < userList.Count; j++)
+                        {
+                            if (i == 0)
+                            {
+                                headerCell = new TableHeaderCell();
+                                headerCell.Text = userList.ElementAt(j);
+                                headerRow.Cells.Add(headerCell);
+                            }
+
+                            cell = new TableCell();
+                            cell.Text = "";
+                            row.Cells.Add(cell);
+                        }
+
+                        if (i == 0)
+                        {
+                            criteriaWeightTable.Rows.Add(headerRow);
+                        }
+
+                        criteriaWeightTable.Rows.Add(row);
+                    }
+
+                    criteriaWeightTable.Width = Unit.Percentage(100);
+                    criteriaWeightPanel.Controls.Add(criteriaWeightTable);
+                    UserSession us = SessionManager.GetUserSession(Session.SessionID);
+                    us.CriteriaWeightTB = criteriaWeightTable;
         }
 
         protected void generateAlternatives(List<AlternativeModel> alternatives)
@@ -705,7 +773,7 @@ namespace Client
             return crit;
         }
 
-        protected void saveCriteriaCriteriaWeightAlternatives()
+        protected void saveCriteriaWeightAlternatives()
         {
 
             RestClient rc = RestClient.GetInstance(Session.SessionID);
@@ -738,18 +806,6 @@ namespace Client
                 }
             }
 
-            if (!hidCritWeightValue.Equals(""))
-            {
-                hidCritWeightValue = hidCritWeightValue.Remove(hidCritWeightValue.Length - 1, 1);
-                String[] critWeigt = hidCritWeightValue.Split(';');
-
-                int i = 0;
-                while (i < critWeigt.Length)
-                {
-
-                }
-            }
-
             if (!hidAlternativeValue.Equals(""))
             {
                 hidAlternativeValue = hidAlternativeValue.Remove(hidAlternativeValue.Length - 1, 1);
@@ -777,46 +833,58 @@ namespace Client
 
         protected void saveCriteriaWeights()
         {
-            if (criterionWeight != null)
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            List<CriterionWeightModel> cwmList = new List<CriterionWeightModel>();
+            
+            double weight;
+
+                    foreach (CriterionModel cr in issue.Criterions)
             {
-                RestClient rc = RestClient.GetInstance(Session.SessionID);
-
-                foreach (CriterionWeightModel cwm in criterionWeight)
-                {
-                    foreach (AccessRightModel user in issue.AccessUserList)
-                    {
-                        if (getCurrentUser().Email.Equals(user.User.Email))
+                        foreach (TableRow tr in us.CriteriaWeightTB.Controls)
                         {
-                            string txtID = "txt_" + getCriterionNameById(cwm.Criterion).Name;
-                            TextBox box = (TextBox)Session[txtID];
+                            string cell = tr.Cells[0].Text;
+                            string text = getCriterionNameById(cr.Id).Name;
 
-                            if (box != null)
+                            if (tr.Cells[0].Text.Equals(getCriterionNameById(cr.Id).Name))
+                {
+                                TextBox tbx = (TextBox)tr.Cells[col].Controls[0];
+
+                                if (tbx.Text != "" && tbx.Text != null)
+                    {
+                                    weight = double.Parse(tbx.Text);
+                                }
+                                else
+                        {
+                                    weight = 0.0;
+                                }
+
+                                cwmList.Add(new CriterionWeightModel(cr.Id, weight));
+                            }
+                        }
+                   }
+
+                    if (cwmList.Count > 0)
                             {
-                                cwm.Weight = double.Parse(box.Text);
-
-                                rc.EndPoint = "api/CriterionWeight/Update";
+                        RestClient rc = RestClient.GetInstance(Session.SessionID);
+                        rc.EndPoint = "api/CriterionWeight/Add";
                                 rc.Method = HttpVerb.POST;
-                                var json = JsonConvert.SerializeObject(cwm);
+                        var json = JsonConvert.SerializeObject(cwmList);
                                 rc.PostData = json;
                                 rc.MakeRequest();
                             }
                         }
-                    }
-                }
-                }    
-            }
 
         protected void save_Click(object sender, EventArgs e)
         {
             saveCriteriaWeights();
-            saveCriteriaCriteriaWeightAlternatives();
+            saveCriteriaWeightAlternatives();
             Response.Redirect("IssueDetail?issueId=" + issue.Id);
          }
 
         protected void saveNext_Click(object sender, EventArgs e)
         {
-            //saveCriteriaWeights();
-            saveCriteriaCriteriaWeightAlternatives();
+            saveCriteriaWeights();
+            saveCriteriaWeightAlternatives();
             RestClient rc = RestClient.GetInstance(Session.SessionID);
             
             rc.EndPoint = "api/Issue/" + issue.Id + "/nextStage";

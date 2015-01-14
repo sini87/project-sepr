@@ -211,15 +211,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel alternativesPanel;
         
         /// <summary>
-        /// alternative control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alternative;
-        
-        /// <summary>
         /// hiddenAlternatives control.
         /// </summary>
         /// <remarks>
@@ -227,6 +218,15 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenAlternatives;
+        
+        /// <summary>
+        /// finalDescision control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel finalDescision;
         
         /// <summary>
         /// save control.
