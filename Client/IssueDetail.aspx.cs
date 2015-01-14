@@ -136,14 +136,29 @@ namespace Client
 
         protected void generateRating(IssueModel issue)
         {
-            Label lRating = new Label();
+            /*
+             * SCHMIDI CHANGE NOW ITS LIKE IN ISSUE LIST
+             * Label lRating = new Label();
             lRating.Text = ""+issue.ReviewRating;
-            rating.Controls.Add(lRating);
+            rating.Controls.Add(lRating);*/
+
+            Panel pRating;
+
+            pRating = new Panel();
+            pRating.CssClass = "table_rating col-lg-12";
+            TextBox tbRating = new TextBox();
+            tbRating.CssClass = "rating rating5";
+            tbRating.Attributes.Add("readonly", "readonly");
+            tbRating.Text = issue.ReviewRating.ToString();
+            pRating.Controls.Add(tbRating);
+            rating.Controls.Add(pRating);
         }
 
         protected void generateTags(IssueModel issue)
         {
-            HtmlGenericControl div;
+            /*
+             * SCHMIDI CHANGE NOW ITS LIKE IN ISSUE LIST
+             * HtmlGenericControl div;
             Label lTags;
 
             foreach (TagModel tTag in issue.Tags)
@@ -153,14 +168,58 @@ namespace Client
                 lTags.Text += tTag.Name;
                 div.Controls.Add(lTags);
                 tag.Controls.Add(div);
+            }*/
+
+            Panel pTags;
+            Panel pTag;
+
+            pTags = new Panel();
+            pTags.CssClass = "table_tags col-lg-12";
+            foreach (TagModel tagElement in issue.Tags)
+            {
+                pTag = new Panel();
+                pTag.CssClass = "table_tag";
+                pTag.Controls.Add(new LiteralControl(tagElement.Name));
+                pTags.Controls.Add(pTag);
             }
+            tag.Controls.Add(pTags);
         }
 
         protected void generateStatus(IssueModel issue)
         {
-            Label lStatus = new Label();
+            /*
+             * SCHMIDI CHANGE NOW ITS LIKE IN ISSUE LIST
+             * Label lStatus = new Label();
             lStatus.Text = issue.Status;
-            status.Controls.Add(lStatus);
+            status.Controls.Add(lStatus);*/
+
+            Panel pStatus, pStatusParent;
+
+            pStatusParent = new Panel();
+            pStatusParent.CssClass = "col-lg-12 table_status";
+            pStatus = new Panel();
+            pStatus.Controls.Add(new LiteralControl(issue.Status));
+            if (issue != null)
+            {
+                if (issue.Status.ToUpper().Equals("CREATING"))
+                {
+                    pStatus.CssClass = "status_creating";
+                }
+                else if (issue.Status.ToUpper().Equals("BRAINSTORMING1") || issue.Status.ToUpper().Equals("BRAINSTORMING2"))
+                {
+                    pStatus.CssClass = "status_brainstorming";
+                }
+                else if (issue.Status.ToUpper().Equals("FINISHED"))
+                {
+                    pStatus.CssClass = "status_finished";
+                }
+                else
+                {
+                    pStatus.CssClass = "status_reviewed";
+                }
+            }
+            pStatusParent.Controls.Add(pStatus);
+            status.Controls.Add(pStatusParent);
         }
 
         protected void generateDescription(IssueModel issue)

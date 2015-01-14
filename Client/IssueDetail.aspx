@@ -3,6 +3,9 @@
 
     <webopt:BundleReference runat="server" Path="~/issueDetail/css" /> 
 
+    <script src="../Scripts/rating.js"></script>
+    <script src="../Scripts/myrating.js"></script>
+
     <script src="../Scripts/AddCriteria.js"></script>
     <script src="../Scripts/AddCriteriaWeight.js"></script>
     <script src="../Scripts/AddAlternative.js"></script>
@@ -45,19 +48,17 @@
 
     <hr />
 
-    <h3>Title</h3>
+    <asp:Panel runat="server" ID="issueTitle"></asp:Panel>
+    <asp:Panel runat="server" ID="rating" />
+    <asp:Panel runat="server" ID="tag" class="tag"></asp:Panel>
+    <asp:Panel runat="server" ID="status"></asp:Panel>
 
-    <asp:Panel runat="server" ID="issueTitle"></asp:Panel><br />
-    <h3>Rating</h3>
-    <asp:Panel runat="server" ID="rating" /><br />
-    <h3>Tags</h3>
-    <asp:Panel runat="server" ID="tag" class="tag"></asp:Panel><br />
-    <h3>Status</h3>
-    <asp:Panel runat="server" ID="status"></asp:Panel><br />
-    <h3>Description</h3><br />
-    <asp:Panel runat="server" ID="description"></asp:Panel><br />
+    <h3>Description</h3>
+    <asp:Panel runat="server" ID="description"></asp:Panel>
+
     <h3>Relation</h3>
-    <asp:Panel runat="server" ID="relations"></asp:Panel><br />
+    <asp:Panel runat="server" ID="relations"></asp:Panel>
+
     <hr />
 
     <h3>Stakeholder</h3><br />
