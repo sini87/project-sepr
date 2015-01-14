@@ -407,7 +407,25 @@ namespace Client
                     rowUser = new TableRow();
                     
                     userPic = new TableCell();
-                    userPic.Text = "<img src=" + "\"../Images/avatar_woman.png\"" + "/>";
+
+                    HyperLink link = new HyperLink();
+                    link.ID = "acronym_link";
+                    Label acronym = new Label();
+                    acronym.CssClass = "acronym_down";
+                    
+                    if (user != null && user.User != null && user.User.FirstName != null && user.User.LastName != null)
+                    {
+                        if (user.User.FirstName != "" && user.User.LastName != "")
+                        {
+                            acronym.Text = user.User.FirstName.Substring(0, 1) + user.User.LastName.Substring(0, 1);
+                        }
+                    }
+                    if (acronym.Text.Equals(""))
+                    {
+                        acronym.Text = "&nbsp;";
+                    }
+                    link.Controls.Add(acronym);
+                    userPic.Controls.Add(link);
                     rowUser.Cells.Add(userPic);
 
                     userName = new TableCell();

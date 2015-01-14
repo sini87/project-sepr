@@ -129,10 +129,37 @@ h3, .h3 {
     background-color:#FFD203;
 }
 
-#MainContent_description, #MainContent_relations {
+#MainContent_description, #MainContent_relations, #MainContent_stakeholder, #MainContent_factors,
+#MainContent_artefacts, #MainContent_documents, #MainContent_users {
     font-family: 'Maven Pro', sans-serif;
     font-size:18px;
     color:#727272;
+}
+
+.acronym_down {
+    font-family: "Maven Pro",sans-serif !important;
+    color: #009688 !important;
+    font-size: 1.45em !important;
+    text-align: center !important;
+    line-height: 60px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+}
+
+#MainContent_acronym_link {
+    font-family: "Maven Pro",sans-serif !important;
+    color: #009688 !important;
+    display: inline-block !important;
+    background: url("../Images/avatar_woman.png") no-repeat scroll center center transparent !important;
+    text-align: center !important;
+    line-height: 60px !important;
+    width: 66px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+}
+
+#MainContent_users {
+    margin-top: 5px;
 }
 
 /********************
