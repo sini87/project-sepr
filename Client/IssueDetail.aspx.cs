@@ -212,6 +212,10 @@ namespace Client
                 {
                     pStatus.CssClass = "status_brainstorming";
                 }
+                else if (issue.Status.ToUpper().Equals("EVALUATING"))
+                {
+                    pStatus.CssClass = "status_evaluating";
+                }
                 else if (issue.Status.ToUpper().Equals("FINISHED"))
                 {
                     pStatus.CssClass = "status_finished";
@@ -517,7 +521,24 @@ namespace Client
                     for (int k = 1; k < userList.Count; k++)
                     {
                         headerCell = new TableHeaderCell();
-                        headerCell.Text = userList.ElementAt(k);
+
+                        HyperLink link = new HyperLink();
+                        link.ID = "acronym_link";
+                        Label acronym = new Label();
+                        acronym.CssClass = "acronym_down";
+
+                        if (userList.ElementAt(k) != null)
+                        {
+                            acronym.Text = userList.ElementAt(k);
+                        }
+                        if (acronym.Text.Equals(""))
+                        {
+                            acronym.Text = "&nbsp;";
+                        }
+                        link.Controls.Add(acronym);
+                        headerCell.Controls.Add(link);
+
+                        //headerCell.Text = userList.ElementAt(k);
 
                         headerRow.Cells.Add(headerCell);
                     }
