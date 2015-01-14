@@ -9,6 +9,7 @@ namespace Client
     public class UserSession
     {
         private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, alternativesTRs, criteriaWeightTRs;
+        private Table criterionWeightTB;
         private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextALTKey, nextCRITWKey;
         
         public UserSession()
@@ -26,6 +27,7 @@ namespace Client
             alternativesTRs = new List<TableRow>();
             nextCRITWKey = 0;
             criteriaWeightTRs = new List<TableRow>();
+            criterionWeightTB = new Table();
         }
 
         public void CreateIssueEntered()
@@ -43,6 +45,19 @@ namespace Client
             alternativesTRs = new List<TableRow>();
             nextCRITWKey = 0;
             criteriaWeightTRs = new List<TableRow>();
+        }
+
+        public Table CriteriaWeightTB
+        {
+            get
+            {
+                return criterionWeightTB;
+            }
+
+            set
+            {
+                criterionWeightTB = value;
+            }
         }
 
         public List<TableRow> TagsTRs
