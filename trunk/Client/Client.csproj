@@ -220,6 +220,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="CreateIssue.aspx" />
+    <Content Include="Descision.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\accent.png" />
     <Content Include="Content\themes\base\minified\images\bootstrap-theme.css.map" />
@@ -388,6 +389,13 @@
     </Compile>
     <Compile Include="CreateIssue.aspx.designer.cs">
       <DependentUpon>CreateIssue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Descision.aspx.cs">
+      <DependentUpon>Descision.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Descision.aspx.designer.cs">
+      <DependentUpon>Descision.aspx</DependentUpon>
     </Compile>
     <Compile Include="IssueDetail.aspx.cs">
       <DependentUpon>IssueDetail.aspx</DependentUpon>
