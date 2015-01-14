@@ -23,6 +23,11 @@ namespace Client
             {
                 Server.Transfer("Default.aspx");
             }
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            if (us.CriteriaWeightTB.ID != null && us.CriteriaWeightTB.ID.Length > 0)
+            {
+                criteriaWeightPanel.Controls.Add(us.CriteriaWeightTB);
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -63,13 +68,7 @@ namespace Client
                     generateDocuments(issue);
                     generateUsers(issue);
                     
-                    if (issue.Status.ToUpper().Equals("BRAINSTORMING"))
-                    {
-                        headingCriteria.Visible = true;
-                        generateCriteria(issue);
-                    }
-
-                    if (issue.Status.ToUpper().Equals("BRAINSTORMING1"))
+                    if (issue.Status.ToUpper().Equals("BRAINSTORMING1") || issue.Status.ToUpper().Equals("BRAINSTORMING2"))
                     {
                         headingCriteria.Visible = true;
                         generateCriteria(issue);
@@ -371,7 +370,12 @@ namespace Client
 
         protected void generateCriteriaWeight(IssueModel issue)
         {
-            if (issue.CriterionWeights.Count > 0)
+            foreach (Control c in criteriaWeightPanel.Controls)
+            {
+                if (c.ID.Equals("CriteriaWeightTable"))
+                    return;
+            }
+            if ((issue.CriterionWeights.Count > 0))
             {
                 RestClient rc = RestClient.GetInstance(Session.SessionID);
 
@@ -387,6 +391,7 @@ namespace Client
                 TableCell cell;
                 
                 criteriaWeightTable = new Table();
+                criteriaWeightTable.ID = "CriteriaWeightTable";
 
                 if (criterionWeight.Count > 0) {
                     
@@ -464,6 +469,8 @@ namespace Client
                             txtBox.Text = "";
                             cell.Controls.Add(txtBox);
                             row.Cells.Add(cell);
+                            
+                           
                                                                                     
                             while (j < userList.Count-1 && !(cnt >= criterionWeight.Count))
                             {
@@ -484,6 +491,8 @@ namespace Client
             }
                 criteriaWeightTable.Width = Unit.Percentage(100);
                 criteriaWeightPanel.Controls.Add(criteriaWeightTable);
+                UserSession us = SessionManager.GetUserSession(Session.SessionID);
+                us.CriteriaWeightTB = criteriaWeightTable;
             }
             else
             {
@@ -698,7 +707,7 @@ namespace Client
 
         protected void save_Click(object sender, EventArgs e)
         {
-            //saveCriteriaWeights();
+            saveCriteriaWeights();
             saveCriteriaCriteriaWeightAlternatives();
             Response.Redirect("IssueDetail?issueId=" + issue.Id);
          }
