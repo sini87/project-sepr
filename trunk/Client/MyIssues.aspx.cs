@@ -123,10 +123,12 @@ namespace Client
                     if (element.Status.ToUpper().Equals("FINISHED"))
                     {
                         LinkButton showLinkButton = reviewHelper.CreateShowLinkButton(hyperlinkid);
+                        showLinkButton.CssClass = "review_link";
                         showLinkButton.Click += new EventHandler(OnShowReviews_Click);
                         tTitle.Controls.Add(showLinkButton);
 
                         LinkButton addLinkButton = reviewHelper.CreateAddLinkButton(hyperlinkid);
+                        addLinkButton.CssClass = "review_link";
                         addLinkButton.Click += new EventHandler(OnAddReviews_Click);
                         tTitle.Controls.Add(addLinkButton);
                     }
