@@ -8,8 +8,8 @@ namespace Client
 {
     public class UserSession
     {
-        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, alternativesTRs;
-        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextALTKey;
+        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, alternativesTRs, criteriaWeightTRs;
+        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextALTKey, nextCRITWKey;
         
         public UserSession()
         {
@@ -24,6 +24,8 @@ namespace Client
             documentsTRs = new List<TableRow>();
             nextALTKey = 0;
             alternativesTRs = new List<TableRow>();
+            nextCRITWKey = 0;
+            criteriaWeightTRs = new List<TableRow>();
         }
 
         public void CreateIssueEntered()
@@ -39,6 +41,8 @@ namespace Client
             documentsTRs = new List<TableRow>();
             nextALTKey = 0;
             alternativesTRs = new List<TableRow>();
+            nextCRITWKey = 0;
+            criteriaWeightTRs = new List<TableRow>();
         }
 
         public List<TableRow> TagsTRs
@@ -86,6 +90,14 @@ namespace Client
             get
             {
                 return alternativesTRs;
+            }
+        }
+
+        public List<TableRow> CriteriaWeightsTRs
+        {
+            get
+            {
+                return criteriaWeightTRs;
             }
         }
 
@@ -146,6 +158,15 @@ namespace Client
             {
                 nextALTKey++;
                 return nextALTKey.ToString();
+            }
+        }
+
+        public string NextCRITWEIGHTID
+        {
+            get
+            {
+                nextCRITWKey++;
+                return nextCRITWKey.ToString();
             }
         }
     }
