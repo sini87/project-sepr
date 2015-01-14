@@ -135,7 +135,7 @@ h2, .h2 {
     padding-left:45px;
 }
 
-.status_creating, .status_brainstorming, .status_finished, .status_reviewed {
+.status_creating, .status_brainstorming, .status_finished, .status_reviewed, .status_evaluating {
     border:1px solid #DBDBDB;
 
     font-family: 'Maven Pro', sans-serif;
@@ -158,6 +158,10 @@ h2, .h2 {
 
 .status_brainstorming {
     background-color:#FF9B49;
+}
+
+.status_evaluating {
+    background-color:#CE7AFF;
 }
 
 .status_finished {
