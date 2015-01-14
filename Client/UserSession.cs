@@ -8,8 +8,8 @@ namespace Client
 {
     public class UserSession
     {
-        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs;
-        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey;
+        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, alternativesTRs;
+        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextALTKey;
         
         public UserSession()
         {
@@ -22,6 +22,8 @@ namespace Client
             artefactsTRs = new List<TableRow>();
             nextATRKey = 0;
             documentsTRs = new List<TableRow>();
+            nextALTKey = 0;
+            alternativesTRs = new List<TableRow>();
         }
 
         public void CreateIssueEntered()
@@ -35,6 +37,8 @@ namespace Client
             artefactsTRs = new List<TableRow>();
             nextATRKey = 0;
             documentsTRs = new List<TableRow>();
+            nextALTKey = 0;
+            alternativesTRs = new List<TableRow>();
         }
 
         public List<TableRow> TagsTRs
@@ -74,6 +78,14 @@ namespace Client
             get
             {
                 return documentsTRs;
+            }
+        }
+
+        public List<TableRow> AlternativesTRs
+        {
+            get
+            {
+                return alternativesTRs;
             }
         }
 
@@ -122,6 +134,18 @@ namespace Client
             {
                 nextATRKey++;
                 return nextATRKey.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Next id for alternative table row
+        /// </summary>
+        public string NextALTID
+        {
+            get
+            {
+                nextALTKey++;
+                return nextALTKey.ToString();
             }
         }
     }
