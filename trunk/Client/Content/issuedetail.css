@@ -162,6 +162,68 @@ h3, .h3 {
     margin-top: 5px;
 }
 
+#save {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 26px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 8px !important;
+    padding-left:35px;
+    padding-right:35px;
+    padding-top:10px;
+    padding-bottom:10px;
+    width: auto;
+}
+
+#save:hover {
+    background-color: #00796B !important;
+}
+
+#saveNext {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 26px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 8px !important;
+    padding-left:35px;
+    padding-right:35px;
+    padding-top:10px;
+    padding-bottom:10px;
+    width: auto;
+}
+
+#saveNext:hover {
+    background-color: #00796B !important;
+}
+
+.crit, .critWeight, .alt {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#999999 !important;
+    font-size:14px !important;
+    text-decoration:underline !important;
+    cursor:pointer;
+}
+
+.crit:hover, .critWeight:hover, .alt:hover {
+    color:#00796B !important;
+}
+
+#MainContent_criteriaPanel > table > tbody > tr > td, 
+#MainContent_criteriaWeightPanel > table > tbody > tr > td,
+#MainContent_alternativesPanel > table > tbody > tr > td {
+    font-family: 'Maven Pro', sans-serif;
+    font-size:18px;
+    color:#727272;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/
@@ -208,6 +270,44 @@ header {
 
 #site-nav-sign {
     font-size: 2em;
+}
+
+}
+
+@media only screen and (max-width: 640px) {
+
+#save {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 20px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 5px !important;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    width: auto;
+}
+
+#saveNext {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 20px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 5px !important;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    width: auto;
 }
 
 }

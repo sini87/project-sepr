@@ -113,7 +113,16 @@
                 <a id="btRemoveAllCriteria" class="crit">remove all</a><br />
             </div>
             <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
-            <hr />
+
+        </div>
+
+    </div>
+
+    <div class="row">
+            
+        <hr />
+
+        <div class="col-lg-12">
 
             <h3 runat="server" visible="false" id="headingCriteriaWeight">Criteria Weight</h3>
             <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
@@ -122,8 +131,17 @@
                 <a id="btRemoveCriteriaWeight" class="critWeight">remove criteria weight</a>
                 <a id="btRemoveAllCriteriaWeight" class="critWeight">remove all</a><br />
             </div>
-            <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
-            <hr />
+            <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/>
+            
+        </div>
+
+    </div>
+             
+    <div class="row">
+            
+        <hr />
+
+        <div class="col-lg-12">
        
             <h3 runat="server" visible="false" id="headingAlternatives">Alternatives</h3>
             <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
@@ -133,9 +151,6 @@
                 <a id="btRemoveAllAlt" class="alt">remove all</a><br />
             </div>
             <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
-
-            <br />
-            <br />
 
         </div>
 

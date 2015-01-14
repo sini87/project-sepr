@@ -75,6 +75,9 @@ namespace Client
 
                         headingCriteriaWeight.Visible = true;
                         generateCriteriaWeight(issue);
+
+                        headingAlternatives.Visible = true;
+                        generateAlternatives(issueAlt);
                     }
 
                     if (issue.Status.ToUpper().Equals("BRAINSTORMING2") 
@@ -87,7 +90,7 @@ namespace Client
                         headingCriteriaWeight.Visible = true;
                         generateCriteriaWeight(issue);
 
-                        hiddenAlternatives.Visible = true;
+                        headingAlternatives.Visible = true;
                         generateAlternatives(issueAlt);
                     }
                     
