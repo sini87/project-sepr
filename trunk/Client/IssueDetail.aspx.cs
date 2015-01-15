@@ -17,8 +17,7 @@ namespace Client
         IssueModel issue;
         List<CriterionWeightModel> criterionWeight;
         Table criteriaWeightTable;
-        int col;
-
+        
         protected void Page_Preload(object sender, EventArgs e)
         {
             if (!this.User.Identity.IsAuthenticated)
@@ -93,16 +92,13 @@ namespace Client
 
                         if (issue.CriterionWeights.Count > 0)
                         {
-                        headingCriteriaWeight.Visible = true;
-                        generateCriteriaWeight(issue);
-                            col = 2;
-                    }
+                            headingCriteriaWeight.Visible = true;
+                            generateCriteriaWeight(issue);
+                        }
                         else if (issue.CriterionWeights.Count == 0)
                         {
                             headingCriteriaWeight.Visible = true;
                             generateCriteriaWeightForNewIssue(issue);
-                            col = 1;
-
                         }
                     }
 
@@ -624,6 +620,10 @@ namespace Client
                     headerRow.Cells.Add(headerCell);
 
                     headerCell = new TableHeaderCell();
+                    headerCell.Text = "";
+                    headerRow.Cells.Add(headerCell);
+
+                    headerCell = new TableHeaderCell();
                     headerCell.Text = "Weight";
                     headerRow.Cells.Add(headerCell);
 
@@ -634,7 +634,11 @@ namespace Client
                         cell = new TableCell();
                         cell.Text = criterionList.ElementAt(i);
                         row.Cells.Add(cell);
-                        
+
+                        cell = new TableCell();
+                        cell.Text = "";
+                        row.Cells.Add(cell);
+
                         cell = new TableCell();
                         TextBox txtBox = new TextBox();
                         txtBox.Width = Unit.Point(40);
@@ -847,7 +851,7 @@ namespace Client
 
                             if (tr.Cells[0].Text.Equals(getCriterionNameById(cr.Id).Name))
                 {
-                                TextBox tbx = (TextBox)tr.Cells[col].Controls[0];
+                                TextBox tbx = (TextBox)tr.Cells[2].Controls[0];
 
                                 if (tbx.Text != "" && tbx.Text != null)
                     {
