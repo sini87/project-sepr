@@ -106,9 +106,9 @@ namespace CDDSS_API.Repository
                                 cwm = new CriterionWeightModel((int)cw.User1.AccessObject, cw.User, cw.Criterion, cw.Weight);
                                 cwm.Acronym = "";
                                 if (cw.User1.FirstName != null && cw.User1.FirstName.Length > 0)
-                                    cwm.Acronym = cw.User1.FirstName.Substring(0, 1);
+                                    cwm.Acronym = cw.User1.FirstName.Substring(0,1);
                                 if (cw.User1.FirstName != null && cw.User1.LastName.Length > 0)
-                                    cwm.Acronym = cwm.Acronym + cw.User1.LastName.Substring(0, 1);
+                                    cwm.Acronym = cwm.Acronym + cw.User1.LastName.Substring(0,1); ;
                                 list.Add(cwm);
                             }
                         }
