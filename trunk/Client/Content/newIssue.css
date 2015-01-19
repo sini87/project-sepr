@@ -85,25 +85,6 @@ h2, .h2 {
     background-color: #00796B !important;
 }
 
-#MainContent_UploadButton {
-    font-family: 'Maven Pro', sans-serif !important;
-    color:#ffffff !important;
-
-    background-color: #009688 !important;
-    border: 0px !important;
-    cursor: pointer;
-    
-    width: auto;
-}
-
-#MainContent_UploadButton:hover {
-    background-color: #00796B !important;
-}
-
-#MainContent_FileUpload1 {
-    width: 97%;
-}
-
 .margintop {
     margin-top:50px;
 }
@@ -164,7 +145,6 @@ label {
     margin-right:4px !important;
 
     padding:4px !important;
-    text-decoration: none !important;
 }
 
 .delete_button:hover {
@@ -179,7 +159,7 @@ label {
 }
 
 .dropdown_tag_small {
-    width: 48%;
+    width: 100px;
     height: 32px !important;
     margin-right:4px;
 }

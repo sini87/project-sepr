@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="All Issues" Language="C#" MasterPageFile="~/LoggedIn.Master" AutoEventWireup="true" CodeBehind="AllIssues.aspx.cs" Inherits="Client.AllIssues" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <webopt:BundleReference runat="server" Path="~/allIssues/css" /> 
+    <webopt:BundleReference runat="server" Path="~/myIssues/css" /> 
 
     <script src="../Scripts/rating.js"></script>
     <script src="../Scripts/myrating.js"></script>

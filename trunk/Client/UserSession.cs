@@ -8,9 +8,8 @@ namespace Client
 {
     public class UserSession
     {
-        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, alternativesTRs, criteriaWeightTRs;
-        private Table criterionWeightTB;
-        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextALTKey, nextCRITWKey;
+        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs;
+        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey;
         
         public UserSession()
         {
@@ -23,11 +22,6 @@ namespace Client
             artefactsTRs = new List<TableRow>();
             nextATRKey = 0;
             documentsTRs = new List<TableRow>();
-            nextALTKey = 0;
-            alternativesTRs = new List<TableRow>();
-            nextCRITWKey = 0;
-            criteriaWeightTRs = new List<TableRow>();
-            criterionWeightTB = new Table();
         }
 
         public void CreateIssueEntered()
@@ -41,23 +35,6 @@ namespace Client
             artefactsTRs = new List<TableRow>();
             nextATRKey = 0;
             documentsTRs = new List<TableRow>();
-            nextALTKey = 0;
-            alternativesTRs = new List<TableRow>();
-            nextCRITWKey = 0;
-            criteriaWeightTRs = new List<TableRow>();
-        }
-
-        public Table CriteriaWeightTB
-        {
-            get
-            {
-                return criterionWeightTB;
-            }
-
-            set
-            {
-                criterionWeightTB = value;
-            }
         }
 
         public List<TableRow> TagsTRs
@@ -97,22 +74,6 @@ namespace Client
             get
             {
                 return documentsTRs;
-            }
-        }
-
-        public List<TableRow> AlternativesTRs
-        {
-            get
-            {
-                return alternativesTRs;
-            }
-        }
-
-        public List<TableRow> CriteriaWeightsTRs
-        {
-            get
-            {
-                return criteriaWeightTRs;
             }
         }
 
@@ -161,27 +122,6 @@ namespace Client
             {
                 nextATRKey++;
                 return nextATRKey.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Next id for alternative table row
-        /// </summary>
-        public string NextALTID
-        {
-            get
-            {
-                nextALTKey++;
-                return nextALTKey.ToString();
-            }
-        }
-
-        public string NextCRITWEIGHTID
-        {
-            get
-            {
-                nextCRITWKey++;
-                return nextCRITWKey.ToString();
             }
         }
     }

@@ -78,7 +78,7 @@
     
     <hr />
 
-    <h3 runat="server" visible="false" id="headingCriteria">Criteria</h3>
+    <h3>Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
     <div id="criteria">
         <a id="btAddCriteria" class="crit">add criteria</a>
@@ -88,7 +88,7 @@
     <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
     <hr />
 
-    <h3 runat="server" visible="false" id="headingCriteriaWeight">Criteria Weight</h3>
+    <h3>Criteria Weight</h3>
     <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
     <%--<div id="criteriaWeight">
         <a id="btAddCriteriaWeight" class="critWeight">add criteria weight</a>
@@ -98,7 +98,7 @@
     <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
     <hr />
        
-    <h3 runat="server" visible="false" id="headingAlternatives">Alternatives</h3>
+    <h3>Alternatives</h3>
     <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
     <div id="alternative">
         <a id="btAddAlt" class="alt">add alternative</a>
@@ -110,8 +110,6 @@
     <br />
     <br />
     
-    <asp:Panel runat="server" ID="finalDescision" Visible="false"></asp:Panel>
-    <br />
 <asp:Button ID="save" runat="server" Text="Save" OnClientClick="return getData(); return false;" ClientIDMode="Static" OnClick="save_Click" Visible="false"/>
 <asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" OnClientClick="return getData(); return false;" ClientIDMode="Static" Visible="false" OnClick="saveNext_Click"/>
 
