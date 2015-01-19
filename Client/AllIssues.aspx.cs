@@ -106,13 +106,9 @@ namespace Client
                         {
                             pStatus.CssClass = "status_creating";
                         }
-                        else if (element.Status.ToUpper().Equals("BRAINSTORMING1") || element.Status.ToUpper().Equals("BRAINSTORMING2"))
+                        else if (element.Status.ToUpper().Equals("BRAINSTORMING"))
                         {
                             pStatus.CssClass = "status_brainstorming";
-                        }
-                        else if (element.Status.ToUpper().Equals("EVALUATING"))
-                        {
-                            pStatus.CssClass = "status_evaluating";
                         }
                         else if (element.Status.ToUpper().Equals("FINISHED"))
                         {
@@ -129,7 +125,6 @@ namespace Client
                     if (element.Status.ToUpper().Equals("FINISHED"))
                     {
                         LinkButton showLinkButton = reviewHelper.CreateShowLinkButton(hyperlinkid);
-                        showLinkButton.CssClass = "review_link";
                         showLinkButton.Click += new EventHandler(OnShowReviews_Click);
                         tTitle.Controls.Add(showLinkButton);
 
@@ -137,7 +132,6 @@ namespace Client
                         if (contains)
                         {
                             LinkButton addLinkButton = reviewHelper.CreateAddLinkButton(hyperlinkid);
-                            addLinkButton.CssClass = "review_link";
                             addLinkButton.Click += new EventHandler(OnAddReviews_Click);
                             tTitle.Controls.Add(addLinkButton);
                         }
