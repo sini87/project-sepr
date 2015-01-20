@@ -13,103 +13,256 @@ namespace Client {
     public partial class IssueDetail {
         
         /// <summary>
-        /// issueTitle control.
+        /// issueTitlePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel issueTitle;
+        protected global::System.Web.UI.WebControls.Panel issueTitlePanel;
         
         /// <summary>
-        /// rating control.
+        /// titleText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel rating;
+        protected global::System.Web.UI.WebControls.TextBox titleText;
         
         /// <summary>
-        /// tag control.
+        /// ratingPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel tag;
+        protected global::System.Web.UI.WebControls.Panel ratingPanel;
         
         /// <summary>
-        /// status control.
+        /// ratingLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel status;
+        protected global::System.Web.UI.WebControls.Label ratingLabel;
         
         /// <summary>
-        /// description control.
+        /// tagPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel description;
+        protected global::System.Web.UI.WebControls.Panel tagPanel;
         
         /// <summary>
-        /// relations control.
+        /// addTagButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel relations;
+        protected global::System.Web.UI.WebControls.LinkButton addTagButton;
         
         /// <summary>
-        /// stakeholder control.
+        /// statusPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel stakeholder;
+        protected global::System.Web.UI.WebControls.Panel statusPanel;
         
         /// <summary>
-        /// factors control.
+        /// statusLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel factors;
+        protected global::System.Web.UI.WebControls.Label statusLabel;
         
         /// <summary>
-        /// artefacts control.
+        /// descriptionPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel artefacts;
+        protected global::System.Web.UI.WebControls.Panel descriptionPanel;
         
         /// <summary>
-        /// documents control.
+        /// descriptionText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel documents;
+        protected global::System.Web.UI.WebControls.TextBox descriptionText;
         
         /// <summary>
-        /// users control.
+        /// relationsPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel users;
+        protected global::System.Web.UI.WebControls.Panel relationsPanel;
+        
+        /// <summary>
+        /// relationTypeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label relationTypeLabel;
+        
+        /// <summary>
+        /// relatedIssueLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink relatedIssueLink;
+        
+        /// <summary>
+        /// stakeholderPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel stakeholderPanel;
+        
+        /// <summary>
+        /// stakeholderTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table stakeholderTable;
+        
+        /// <summary>
+        /// addStakeholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addStakeholder;
+        
+        /// <summary>
+        /// factorsPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel factorsPanel;
+        
+        /// <summary>
+        /// factorsTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table factorsTable;
+        
+        /// <summary>
+        /// addFactor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addFactor;
+        
+        /// <summary>
+        /// artefactsPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel artefactsPanel;
+        
+        /// <summary>
+        /// artefactsTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table artefactsTable;
+        
+        /// <summary>
+        /// addArtefact control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addArtefact;
+        
+        /// <summary>
+        /// documentsPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel documentsPanel;
+        
+        /// <summary>
+        /// documentsTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table documentsTable;
+        
+        /// <summary>
+        /// addDocumentBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addDocumentBtn;
+        
+        /// <summary>
+        /// usersPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel usersPanel;
+        
+        /// <summary>
+        /// usersTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table usersTable;
+        
+        /// <summary>
+        /// addUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addUser;
         
         /// <summary>
         /// criteriaPanel control.

@@ -52,15 +52,15 @@ namespace Client
             Issue = null;
         }
 
-        public static RestClient GetInstance(string email)
+        public static RestClient GetInstance(string sessionID)
         {
-            if (!sessionRCDict.ContainsKey(email))
+            if (!sessionRCDict.ContainsKey(sessionID))
             {
                 return null;
             }
             else
             {
-                return sessionRCDict[email];
+                return sessionRCDict[sessionID];
             }
 
         }
