@@ -11,6 +11,7 @@ namespace CDDSS_API.Repository
     {
         public List<TagModel> GetAllTags()
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<TagModel> list = new List<TagModel>();
             foreach (Tag tag in ctx.Tags.ToList())
             {

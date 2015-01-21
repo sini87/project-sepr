@@ -8,14 +8,11 @@ namespace CDDSS_API.Repository
 {
     public class RepositoryBase
     {
-        protected static DataClassesDataContext ctx;
+        
 
         public RepositoryBase()
         {
-            if (ctx == null)
-            {
-                ctx = new DataClassesDataContext();
-            }
+            
         }
     }
 }

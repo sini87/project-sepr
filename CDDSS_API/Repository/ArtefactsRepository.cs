@@ -10,6 +10,7 @@ namespace CDDSS_API.Repository
     public class ArtefactsRepository : RepositoryBase
     {
          public List<ArtefactModel> GetAllArtefacts(){
+             DataClassesDataContext ctx = new DataClassesDataContext();
              List<ArtefactModel> list = new List<ArtefactModel>();
              foreach (Artefact art in ctx.Artefacts)
              {

@@ -20,6 +20,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         public List<UserShort> GetUsers() 
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from user in ctx.Users
                         select new
                         {
@@ -43,6 +44,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         public UserShort GetUserByEmail(string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from user in ctx.Users where user.Email == email
                         select new
                         {
@@ -61,6 +63,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         public UserShort GetUserDetailByEmail(string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from user in ctx.Users
                         where user.Email == email
                         select new
@@ -90,6 +93,7 @@ namespace CDDSS_API.Repository
         /// <returns>true if update is successful</returns>
         public bool EditUser(UserShort user, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             try
             {
                 User u = ctx.Users.First(x => x.Email == email);
@@ -118,6 +122,7 @@ namespace CDDSS_API.Repository
         /// <param name="email"></param>
         public void CreateAccessObjectForUser(string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from AccessObjects in
                             (from AccessObjects in ctx.AccessObjects
                              select new
