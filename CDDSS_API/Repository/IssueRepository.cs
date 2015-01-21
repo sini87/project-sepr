@@ -97,7 +97,15 @@ namespace CDDSS_API.Repository
                 cm.Issue = cr.Issue;
                 cm.Name = cr.Name;
                 cm.Description = cr.Description;
-                cm.Weight = (double)cr.Weight;
+                if (cr.Weight != null)
+                {
+                    cm.Weight = (double)cr.Weight;
+                }
+                else
+                {
+                    cm.Weight = -1;
+                }
+                
                 model.Criterions.Add(cm);
                 foreach (CriterionWeight cw in ctx.CriterionWeights.Where(x => x.Criterion == cm.Id))
                 {
@@ -106,6 +114,7 @@ namespace CDDSS_API.Repository
                     cwm.UserAccesObject = (int)cw.User1.AccessObject;
                     cwm.UserId = cw.User;
                     cwm.Weight = cw.Weight;
+                    cwm.Acronym = cw.User1.FirstName.Substring(0,1) + cw.User1.LastName.Substring(0,1);
                     model.CriterionWeights.Add(cwm);
                 }
             }

@@ -4,6 +4,7 @@ using CDDSS_API.Models.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -22,16 +23,21 @@ namespace Client
             //    Server.Transfer("Default.aspx");
             //}
 
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
 
             if (Request["issueId"] == null || Request["issueId"].Length == 0)
             {
-                Server.Transfer("IssueDetail.aspx?issueId=1");
+                Server.Transfer("IssueDetail.aspx?issueId=101");
                 return;
             }
             if (!IsPostBack)
             {
-                RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
-                SessionManager.AddUserSession(Session.SessionID);
+                if (!User.Identity.IsAuthenticated)
+                {
+                    RestClient.Login("bill.gates@gmx.at", "passme", Session.SessionID);
+                    SessionManager.AddUserSession(Session.SessionID);
+                }
+                
                 UserSession us = SessionManager.GetUserSession(Session.SessionID);
                 us.DetailIssue = null;
                 us.CreateIssueEntered();
@@ -90,6 +96,12 @@ namespace Client
                 foreach (TableRow tr in us.DocumentsTRs)
                 {
                     ((Button)tr.Cells[1].Controls[0]).Click += delDocBtn_Click;
+                }
+
+                //events for criteria
+                foreach (TableRow tr in us.CriteriaTRs)
+                {
+                    ((Button)tr.Cells[2].Controls[0]).Click += delCritBtn_Click;
                 }
             }
         }
@@ -160,6 +172,11 @@ namespace Client
                 buildArtefacts(issue, us);
                 buildFactors(issue, us);
                 buildDocuments(issue, us);
+                buildCriterias(issue, us);
+                if (!statusLabel.Text.ToUpper().Equals("CREATING") && !statusLabel.Text.ToUpper().Equals("BRAINSTORMING1"))
+                {
+                    buildCriteriaWeights(issue, us);
+                }
             }
             else
             {
@@ -191,11 +208,191 @@ namespace Client
                 foreach (TableRow tr in us.DocumentsTRs)
                 {
                     documentsTable.Rows.Add(tr);
+                    if (tr.Cells[0].Controls[0].GetType() == typeof(FileUpload))
+                    {
+                        FileUpload fu = (FileUpload)tr.Cells[0].Controls[0];
+                        if (fu.HasFile)
+                        {
+                            string fn = fu.FileName;
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                byte[] bytes = new byte[fu.FileContent.Length];
+                                fu.FileContent.Read(bytes, 0, (int)fu.FileContent.Length);
+                                ms.Write(bytes, 0, (int)fu.FileContent.Length);
+                                rc.AddFile(fu.FileName, ms);
+                            }
+                            tr.Cells[0].Controls.Clear();
+                            Label lbl = new Label();
+                            lbl.ID = "docLBL" + fn;
+                            lbl.Text = fn;
+                            tr.Cells[0].Controls.Add(lbl);
+                        }
+                    }
+                }
+
+                foreach (TableRow tr in us.CriteriaTRs)
+                {
+                    criteriaTable.Rows.Add(tr);
+                }
+
+                foreach (TableRow tr in us.CriterionWeightTRs)
+                {
+                    criteriaWeightTable.Rows.Add(tr);
                 }
             }
 
 
             doPermissions(issue, rc);
+
+            foreach (string str in us.Messages)
+            {
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(),"Warning!","alert('" + str + "');",true);
+            }
+            us.Messages.Clear();
+        }
+
+        private void buildCriteriaWeights(IssueModel issue, UserSession us)
+        {
+            TableRow tr;
+            TableCell critTC, weightTC; 
+            TextBox weightTXT;
+            Label critLbl, weightLbl;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            int userAO = int.Parse(usersTable.ID.Replace("USR",""));
+
+            TableHeaderRow thr = new TableHeaderRow();
+            thr.ID = "critTHR";
+            TableHeaderCell thc = new TableHeaderCell();
+            thc.ID = "critTHC";
+            thr.Cells.Add(thc);
+            thc = new TableHeaderCell();
+            thc.ID = rc.User.AccessObject.ToString();
+            thc.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
+            thr.Cells.Add(thc);
+            criteriaWeightTable.Rows.Add(thr);
+            
+            foreach (CriterionModel cm in issue.Criterions)
+            {
+                tr = new TableRow();
+                tr.ID = "critWTR" + cm.Id;
+                critTC = new TableCell();
+                critTC.ID = "critNameWTC" + cm.Id;
+                critLbl = new Label();
+                critLbl.ID = "critWLBL" + cm.Id;
+                if (issue.Status.Equals("Brainstorming2"))
+                {
+                    critLbl.Text = cm.Name + " ";
+                }
+                else
+                {
+                    critLbl.Text = (cm.Weight * 100) + "% " + cm.Name;
+                }
+                weightTXT = new TextBox();
+                weightTXT.ID = "critWTXT" + cm.Id;
+                RegularExpressionValidator validator = new RegularExpressionValidator();
+                validator.ErrorMessage = "For Criteria Weight only numbers are allowed";
+                validator.ControlToValidate = weightTXT.ID;
+                validator.ValidationExpression = @"\d+,\d+|\d+";
+                weightTC = new TableCell();
+                weightTC.ID = "critWeigtWTC" + cm.Id;
+                critTC.Controls.Add(critLbl);
+                weightTC.Controls.Add(weightTXT);
+                weightTC.Controls.Add(validator);
+                tr.Cells.Add(critTC);
+                tr.Cells.Add(weightTC);
+                criteriaWeightTable.Rows.Add(tr);
+            }
+
+            tr = new TableRow();
+            foreach (CriterionWeightModel cwm in issue.CriterionWeights)
+            {
+                foreach (TableRow t in criteriaWeightTable.Rows)
+                {
+                    if (t.ID.Equals("critWTR" + cwm.Criterion))
+                    {
+                        tr = t;
+                        break;
+                    }
+                }
+
+                thc = null;
+                foreach (TableHeaderCell tc in thr.Cells)
+                {
+                    if (tc.ID.Equals(cwm.UserAccesObject.ToString()))
+                    {
+                        thc = tc;
+                    }
+                }
+                
+                if (thc == null)
+                {
+                    thc = new TableHeaderCell();
+                    thc.ID = cwm.UserAccesObject.ToString();
+                    thc.Text = cwm.Acronym;
+                    thr.Cells.Add(thc);
+                }
+
+                if (cwm.UserAccesObject == userAO)
+                {
+                    weightTXT = (TextBox)tr.Cells[1].Controls[0];
+                    ((TableCell)weightTXT.Parent).ID = "critWeigtWTC-" + cwm.Criterion;
+                    weightTXT.Text = (cwm.Weight * 100).ToString();
+                }
+                else
+                {
+                    weightLbl = new Label();
+                    weightLbl.ID = cwm.Criterion + "-" + cwm.UserAccesObject;
+                    weightLbl.Text = (cwm.Weight * 100).ToString();
+                    weightTC = new TableCell();
+                    weightTC.ID = "weightWTC" + weightLbl.ID;
+                    weightTC.Controls.Add(weightLbl);
+                    tr.Cells.Add(weightTC);
+                }
+            }
+
+            foreach (TableRow t in criteriaWeightTable.Rows)
+            {
+                us.CriterionWeightTRs.Add(t);
+            }
+            
+        }
+
+        private void buildCriterias(IssueModel issue, UserSession us)
+        {
+            TableRow tr;
+            TableCell critDescTC, critTC, delCritTC;
+            TextBox critTXT, critDescTXT;
+            Button delCritBtn;
+
+            foreach (CriterionModel crit in issue.Criterions)
+            {
+                tr = new TableRow();
+                tr.ID = "critTR" + crit.Id;
+                critTC = new TableCell();
+                critTC.ID = "critTC" + crit.Id;
+                critDescTC = new TableCell();
+                critDescTC.ID = "critDescTC" + crit.Id;
+                delCritTC = new TableCell();
+                delCritTC.ID = "delCritTC" + crit.Id;
+                critTXT = new TextBox();
+                critTXT.ID = "critTXT" + crit.Id;
+                critTXT.Text = crit.Name;
+                critDescTXT = new TextBox();
+                critDescTXT.ID = "critDescTXT" + crit.Id;
+                critDescTXT.Text = crit.Description;
+                delCritBtn = new Button();
+                delCritBtn.Text = "X";
+                delCritBtn.ID = "delCritBtn" + crit.Id;
+                delCritBtn.Click += delCritBtn_Click;
+                critDescTC.Controls.Add(critDescTXT);
+                critTC.Controls.Add(critTXT);
+                delCritTC.Controls.Add(delCritBtn);
+                tr.Cells.Add(critTC);
+                tr.Cells.Add(critDescTC);
+                tr.Cells.Add(delCritTC);
+                criteriaTable.Rows.Add(tr);
+                us.CriteriaTRs.Add(tr);
+            }
         }
 
         private void buildDocuments(IssueModel issue, UserSession us)
@@ -386,6 +583,17 @@ namespace Client
                 tr.Cells.Add(delTC);
                 usersTable.Rows.Add(tr);
                 us.AccessRTRs.Add(tr);
+
+                if (User.Identity.IsAuthenticated && ar.User.Email.Equals(User.Identity.Name))
+                {
+                    usersTable.ID = "USR" + ar.User.AccessObject.ToString();
+                }
+            }
+
+            //delete
+            if (!User.Identity.IsAuthenticated)
+            {
+                usersTable.ID = "USR1";
             }
         }
 
@@ -476,6 +684,27 @@ namespace Client
             }
         }
 
+        void delCritBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            int id = int.Parse(t.ID.Replace("critTR",""));
+
+            if (id > 0)
+            {
+                us.CriteriasToDelete.Add(id);
+            }
+
+            criteriaTable.Rows.Remove(t);
+            us.CriteriaTRs.Clear();
+
+            foreach (TableRow tr in criteriaTable.Rows)
+            {
+                us.CriteriaTRs.Add(tr);
+            }
+        }
+
         protected void doPermissions(IssueModel issue, RestClient rc)
         {
             char accessRight;
@@ -498,6 +727,71 @@ namespace Client
                 addArtefact.Visible = false;
                 addStakeholder.Visible = false;
                 addFactor.Visible = false;
+                addCriteriaButton.Visible = false;
+                addDocumentBtn.Visible = false;
+                addTagButton.Visible = false;
+                
+                for (int i = 1; i < criteriaWeightTable.Rows.Count; i++)
+                {
+                    ((TextBox)criteriaWeightTable.Rows[i].Cells[1].Controls[0]).Visible = false;
+                }
+
+                //disable delete tags
+                foreach (Control c in tagPanel.Controls)
+                {
+                    if (c.GetType() == typeof(Button))
+                    {
+                        ((Button)c).Enabled = false;
+                    }
+                }
+
+                //disable delete factors
+                int cnt = 0;
+                foreach (TableRow tr in factorsTable.Rows)
+                {
+                    if (cnt > 0)
+                    {
+                        ((Button)tr.Cells[3].Controls[0]).Visible = false;
+                        ((CheckBox)tr.Cells[2].Controls[0]).Enabled = false;
+                        ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+                        ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
+                    }
+                    cnt++;
+                }
+                
+                //disable artefact delete
+                foreach (TableRow tr in artefactsTable.Rows)
+                {
+                    ((Button)tr.Cells[1].Controls[0]).Visible = false;
+                }
+
+                //disable document delete
+                foreach (TableRow tr in documentsTable.Rows)
+                {
+                    ((Button)tr.Cells[1].Controls[0]).Visible = false;
+                }
+
+                //criteria table permissions
+                foreach (TableRow tr in criteriaTable.Rows)
+                {
+                    ((Button)tr.Cells[2].Controls[0]).Visible = false;
+                    ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
+                    ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+                }
+
+                //stakeholder table
+                foreach (TableRow tr in stakeholderTable.Rows)
+                {
+                    ((Label)tr.Cells[0].Controls[0]).Enabled = false;
+                    ((Button)tr.Cells[1].Controls[0]).Visible = false;
+                }
+
+                //critweight TC
+                foreach (TableRow tr in criteriaWeightTable.Rows)
+                {
+                    tr.Cells[1].Visible = false;
+                }
+
             }
             else
             {
@@ -508,6 +802,27 @@ namespace Client
                 addArtefact.Visible = true;
                 addStakeholder.Visible = true;
                 addFactor.Visible = true;
+
+                if (issue.Status.ToUpper().Equals("CREATING"))
+                {
+                    criteriaWeightPanel.Visible = false;
+                }
+                if (issue.Status.Equals("Brainstorming1"))
+                {
+                    addCriteriaButton.Visible = true;
+                    criteriaWeightPanel.Visible = false;
+                }
+                else
+                {
+                    addCriteriaButton.Visible = false;
+                    foreach (TableRow tr in criteriaTable.Rows)
+                    {
+                        ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
+                        ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+                        ((Button)tr.Cells[2].Controls[0]).Visible = false;
+                    }
+                    criteriaWeightPanel.Visible = true;
+                }
             }
 
             if (accessRight.Equals('O'))
@@ -535,6 +850,16 @@ namespace Client
                     }
                 }
                 addUser.Visible = false;
+            }
+
+            //STATUS ONLY - disable criteria weight textboxes when status not in BR2
+            if (!issue.Status.ToUpper().Equals("BRAINSTORMING2"))
+            {
+                for (int i = 1; i < criteriaWeightTable.Rows.Count; i++ )
+                {
+                    TableRow tr = criteriaWeightTable.Rows[i];
+                    ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+                }
             }
         }
 
@@ -566,7 +891,15 @@ namespace Client
 
         protected void saveIssue()
         {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
             IssueModel issue = new IssueModel();
+
+            if (statusLabel.Text.Equals("Brainstorming2") && !checkCriteriaWeights())
+            {
+                us.Messages.Add("Changes not saved! Sum of Crieria Weights must be 100");
+                return;
+            }
+
             issue.Id = int.Parse(Request["issueId"]);
             issue.Title = titleText.Text;
             issue.Description = descriptionText.Text;
@@ -671,6 +1004,80 @@ namespace Client
             rc.Method = HttpVerb.POST;
             rc.PostData = JsonConvert.SerializeObject(issue);
             string res = rc.MakeRequest();
+
+            //add new documents and delete old ones
+            rc.UploadFilesToRemoteUrl(issue.Id);
+            foreach (string doc in us.DocsToDelete)
+            {
+                rc.EndPoint = "api/Document?issueId=" + issue.Id + "&filename=" + doc;
+                rc.Method = HttpVerb.DELETE;
+                rc.MakeRequest();
+            }
+
+            //save criterias
+            foreach (TableRow tr in criteriaTable.Rows)
+            {
+                int id = int.Parse(tr.ID.Replace("critTR", ""));
+                CriterionModel cm = new CriterionModel();
+                rc.EndPoint = "api/Criterion";
+                cm.Name = ((TextBox)tr.Cells[0].Controls[0]).Text;
+                cm.Description = ((TextBox)tr.Cells[1].Controls[0]).Text;
+                cm.Issue = issue.Id;
+                if (id < 0)
+                {
+                    rc.Method = HttpVerb.POST;
+                }
+                else
+                {
+                    rc.Method = HttpVerb.PUT;
+                    cm.Id = id;
+                }
+                rc.PostData = JsonConvert.SerializeObject(cm);
+                rc.MakeRequest();
+            }
+            foreach (int id in us.CriteriasToDelete)
+            {
+                rc.EndPoint = "api/Criterion/" + id;
+                rc.Method = HttpVerb.DELETE;
+                rc.MakeRequest();
+            }
+
+            if (statusLabel.Text.Equals("Brainstorming2"))
+            {
+                saveCriteriaWeights(rc);
+            }
+            
+            
+        }
+
+        private void saveCriteriaWeights(RestClient rc)
+        {
+            //saveCriteriaWeigts
+            List<CriterionWeightModel> cwmList = new List<CriterionWeightModel>();
+            bool insert;
+            insert = true;
+            int crID;
+            if (criteriaWeightTable.Rows.Count > 1 && int.Parse(criteriaWeightTable.Rows[1].Cells[1].ID.Replace("critWeigtWTC","")) < 0)
+            {
+                insert = false;
+            }
+            for (int i = 1; i < criteriaWeightTable.Rows.Count; i++)
+            {
+                TableRow tr = criteriaWeightTable.Rows[i];
+                crID = int.Parse(tr.ID.Replace("critWTR", ""));
+                cwmList.Add(new CriterionWeightModel(crID, double.Parse(((TextBox)tr.Cells[1].Controls[0]).Text) / 100));
+            }
+            if (insert)
+            {
+                rc.EndPoint = "api/CriterionWeight/Add";
+            }
+            else
+            {
+                rc.EndPoint = "api/CriterionWeight/Update";
+            }
+            rc.Method = HttpVerb.POST;
+            rc.PostData = JsonConvert.SerializeObject(cwmList);
+            rc.MakeRequest();
         }
 
         protected void addTagButton_Click(object sender, EventArgs e)
@@ -960,6 +1367,86 @@ namespace Client
         {
             FileUpload fileUpload = new FileUpload();
             fileUpload.Visible = true;
+            fileUpload.Attributes.Add("onchange", "this.form.submit()");
+            
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            string id = us.NextDocTRKey;
+            TableRow tr = new TableRow();
+            tr.ID = "docTR" + id;
+            TableCell docTC = new TableCell();
+            docTC.ID = "docTC" + id;
+            docTC.Controls.Add(fileUpload);
+            Button delDocBtn = new Button();
+            delDocBtn.Click += delDocBtn_Click;
+            delDocBtn.ID = "delDocBTN" + id;
+            delDocBtn.Text = "X";
+            TableCell delDocTC = new TableCell();
+            delDocTC.ID = "delDocTC" + id;
+            delDocTC.Controls.Add(delDocBtn);
+            tr.Cells.Add(docTC);
+            tr.Cells.Add(delDocTC);
+            documentsTable.Rows.Add(tr);
+            us.DocumentsTRs.Add(tr);
+        }
+
+        protected void addCriteriaButton_Click(object sender, EventArgs e)
+        {
+            TableRow tr;
+            TableCell critDescTC, critTC, delCritTC;
+            TextBox critTXT, critDescTXT;
+            Button delCritBtn;
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            string id = us.NextCritTRKey;
+
+            tr = new TableRow();
+            tr.ID = "critTR-" + id;
+            critTC = new TableCell();
+            critTC.ID = "critTC-" + id;
+            critDescTC = new TableCell();
+            critDescTC.ID = "critDescTC-" + id;
+            delCritTC = new TableCell();
+            delCritTC.ID = "delCritTC-" + id;
+            critTXT = new TextBox();
+            critTXT.ID = "critTXT-" + id;
+            critDescTXT = new TextBox();
+            critDescTXT.ID = "critDescTXT-" + id;
+            delCritBtn = new Button();
+            delCritBtn.Text = "X";
+            delCritBtn.ID = "delCritBtn-" + id;
+            delCritBtn.Click += delCritBtn_Click;
+            critDescTC.Controls.Add(critDescTXT);
+            critTC.Controls.Add(critTXT);
+            delCritTC.Controls.Add(delCritBtn);
+            tr.Cells.Add(critTC);
+            tr.Cells.Add(critDescTC);
+            tr.Cells.Add(delCritTC);
+            criteriaTable.Rows.Add(tr);
+            us.CriteriaTRs.Add(tr);
+        }
+
+        private bool checkCriteriaWeights()
+        {
+            double sum = 0;
+            TextBox txt;
+            TableRow tr;
+            for (int i = 1; i < criteriaWeightTable.Rows.Count; i++ )
+            {
+                tr = criteriaWeightTable.Rows[i];
+                txt = (TextBox)tr.Cells[1].Controls[0];
+                if (txt.Text.Length > 0)
+                {
+                    sum = sum + double.Parse(txt.Text);
+                }
+            }
+
+            if (sum == 100)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }

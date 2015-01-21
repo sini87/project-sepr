@@ -86,9 +86,9 @@ namespace CDDSS_API.Controllers
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public HttpResponseMessage Delete(int id, String name)
+        public HttpResponseMessage Delete(int id)
         {
-            if (cRep.DeleteCriterion(id, name))
+            if (cRep.DeleteCriterion(id))
                 return Request.CreateResponse(HttpStatusCode.OK, "Criterion deleted!");
             else return Request.CreateResponse(HttpStatusCode.NotModified, "Criterion not deleted!");
         }

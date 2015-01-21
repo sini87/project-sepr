@@ -10,37 +10,14 @@ namespace Client
 {
     public class UserSession
     {
-        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, accessRTRs;
-
-        public List<TableRow> AccessRTRs
-        {
-            get { return accessRTRs; }
-            set { accessRTRs = value; }
-        }
-        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextAccessTRKey;
+        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, accessRTRs, criteriaTRs, criterionWeightTRs;
+        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextAccessTRKey, nextDocTRKey, nextCritTRKey;
         private IssueModel detailIssue;
         private List<Control> issueTags;
         private TextBox titleText, descriptionText;
-        private List<String> docsToDelete;
-
-        public List<String> DocsToDelete
-        {
-            get { return docsToDelete; }
-            set { docsToDelete = value; }
-        }
-
-        public TextBox DescriptionText
-        {
-            get { return descriptionText; }
-            set { descriptionText = value; }
-        }
-
-        public TextBox TitleText
-        {
-            get { return titleText; }
-            set { titleText = value; }
-        }
-        
+        private List<String> docsToDelete, messages;
+        private List<int> criteriasToDelete;
+       
         public UserSession()
         {
             tagsTRs = new List<TableRow>();
@@ -54,10 +31,16 @@ namespace Client
             documentsTRs = new List<TableRow>();
             detailIssue = null;
             docsToDelete = new List<string>();
+            messages = new List<string>();
 
             issueTags = new List<Control>();
             accessRTRs = new List<TableRow>();
             nextAccessTRKey = 0;
+            nextDocTRKey = 0;
+            criteriaTRs = new List<TableRow>();
+            nextCritTRKey = 0;
+            criteriasToDelete = new List<int>();
+            criterionWeightTRs = new List<TableRow>();
         }
 
         public void CreateIssueEntered()
@@ -76,6 +59,17 @@ namespace Client
             accessRTRs = new List<TableRow>();
             nextAccessTRKey = 0;
             docsToDelete = new List<string>();
+            nextDocTRKey = 0;
+            criteriaTRs = new List<TableRow>();
+            nextCritTRKey = 0;
+            criteriasToDelete = new List<int>();
+            criterionWeightTRs = new List<TableRow>();
+        }
+
+        public List<int> CriteriasToDelete
+        {
+            get { return criteriasToDelete; }
+            set { criteriasToDelete = value; }
         }
 
         public int NextAccesTRKey
@@ -195,5 +189,68 @@ namespace Client
                 return nextATRKey.ToString();
             }
         }
+
+        public List<String> DocsToDelete
+        {
+            get { return docsToDelete; }
+            set { docsToDelete = value; }
+        }
+
+        public TextBox DescriptionText
+        {
+            get { return descriptionText; }
+            set { descriptionText = value; }
+        }
+
+        public TextBox TitleText
+        {
+            get { return titleText; }
+            set { titleText = value; }
+        }
+
+        public string NextCritTRKey
+        {
+            get
+            {
+                nextCritTRKey++;
+                return nextCritTRKey.ToString();
+            }
+        }
+
+        public List<TableRow> CriteriaTRs
+        {
+            get { return criteriaTRs; }
+            set { criteriaTRs = value; }
+        }
+
+        public List<TableRow> AccessRTRs
+        {
+            get { return accessRTRs; }
+            set { accessRTRs = value; }
+        }
+
+        /// <summary>
+        /// returns next key for document table
+        /// </summary>
+        public string NextDocTRKey
+        {
+            get
+            {
+                nextDocTRKey++;
+                return nextDocTRKey.ToString();
+            }
+        }
+
+        public List<TableRow> CriterionWeightTRs
+        {
+            get { return criterionWeightTRs; }
+            set { criterionWeightTRs = value; }
+        }
+
+        public List<String> Messages
+        {
+            get { return messages; }
+        }
+ 
     }
 }

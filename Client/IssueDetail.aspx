@@ -84,15 +84,14 @@
 
     <h3>Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
-    <div id="criteria">
-        <a id="btAddCriteria" class="crit">add criteria</a>
-        <a id="btRemoveCriteria" class="crit">remove criteria</a>
-        <a id="btRemoveAllCriteria" class="crit">remove all</a><br />
-    </div>
+        <asp:Table ID="criteriaTable" runat="server"></asp:Table>
+        <asp:LinkButton ID="addCriteriaButton" runat="server" OnClick="addCriteriaButton_Click">add</asp:LinkButton>
     <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
 
-    <h3>Criteria Weight</h3>
-    <asp:Panel runat="server" ID="criteriaWeightPanel"></asp:Panel>
+    <asp:Panel runat="server" ID="criteriaWeightPanel">
+        <h3>Criteria Weight</h3>
+        <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
+    </asp:Panel>
 
     <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
        
