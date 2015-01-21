@@ -54,6 +54,34 @@ namespace CDDSS_API.Repository
         }
 
         /// <summary>
+        /// Returns all Ratings for an Issue of current user
+        /// </summary>
+        /// <returns></returns>
+        internal List<RatingModel> getAllRatings(int issueID, string eMail)
+        {
+            IEnumerable<User> q = from Users in ctx.Users
+                                      where Users.Email == eMail
+                                      select Users;
+
+            string usr = q.First().Id;
+
+            List<RatingModel> ratingList = new List<RatingModel>();
+            CriterionRepository cRep = new CriterionRepository();
+
+
+            foreach (var r in ctx.Rating.Where(x => x.Alternative1.Issue == issueID && x.User == usr))
+            {
+                RatingModel rating = new RatingModel();
+                rating.CriterionID = r.Criterion;
+                rating.AlternativeID = r.Alternative;
+                rating.User = r.User;
+                rating.Rating1 = r.Rating1;
+                ratingList.Add(rating);
+            }
+            return ratingList;
+        }
+
+        /// <summary>
         /// Inserts a Rating
         /// </summary>
         /// <param name="ratingModel"></param>
@@ -71,6 +99,47 @@ namespace CDDSS_API.Repository
             rating.Rating1 = ratingModel.Rating1;
             ctx.Rating.InsertOnSubmit(rating);
             ctx.SubmitChanges();
+            return true;
+        }
+
+        internal bool AddRatingForIssue(List<RatingModel> rl, string eMail)
+        {
+            IEnumerable<User> query = from Users in ctx.Users
+                                      where Users.Email == eMail
+                                      select Users;
+
+            foreach (RatingModel ratingModel in rl)
+            {
+                Rating rating = new Rating();
+                rating.Alternative = ratingModel.AlternativeID;
+                rating.Criterion = ratingModel.CriterionID;
+                rating.User = query.First().Id;
+                rating.Rating1 = ratingModel.Rating1;
+                ctx.Rating.InsertOnSubmit(rating);
+                ctx.SubmitChanges();
+            }
+            return true;
+        }
+
+        internal bool UpdateRatingForIssue(List<RatingModel> rl, string eMail)
+        {
+            IEnumerable<User> query = from Users in ctx.Users
+                                      where Users.Email == eMail
+                                      select Users;
+
+            Rating rating;
+            IQueryable<Rating> qu;
+            string usr = query.First().Id;
+            foreach (RatingModel ratingModel in rl)
+            {
+                qu = ctx.Rating.Where(x => x.User == usr && x.Alternative == ratingModel.AlternativeID && x.Criterion == ratingModel.CriterionID);
+                if (qu.Count() > 0)
+                {
+                    rating = qu.First();
+                    rating.Rating1 = ratingModel.Rating1;
+                    ctx.SubmitChanges();
+                }
+            }
             return true;
         }
 

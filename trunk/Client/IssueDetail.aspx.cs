@@ -27,14 +27,14 @@ namespace Client
 
             if (Request["issueId"] == null || Request["issueId"].Length == 0)
             {
-                Server.Transfer("IssueDetail.aspx?issueId=101");
+                Server.Transfer("IssueDetail.aspx?issueId=1");
                 return;
             }
             if (!IsPostBack)
             {
                 if (!User.Identity.IsAuthenticated)
                 {
-                    RestClient.Login("bill.gates@gmx.at", "passme", Session.SessionID);
+                    RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
                     SessionManager.AddUserSession(Session.SessionID);
                 }
                 
@@ -102,6 +102,12 @@ namespace Client
                 foreach (TableRow tr in us.CriteriaTRs)
                 {
                     ((Button)tr.Cells[2].Controls[0]).Click += delCritBtn_Click;
+                }
+
+                //events for alternatives
+                for (int i = 1; i < us.AlternativesTRs.Count; i++ )
+                {
+                    ((Button)us.AlternativesTRs[i].Cells[3].Controls[0]).Click += delAltBtn_Click;
                 }
             }
         }
@@ -173,10 +179,20 @@ namespace Client
                 buildFactors(issue, us);
                 buildDocuments(issue, us);
                 buildCriterias(issue, us);
-                if (!statusLabel.Text.ToUpper().Equals("CREATING") && !statusLabel.Text.ToUpper().Equals("BRAINSTORMING1"))
+                if (!statusLabel.Text.ToUpper().Equals("CREATING"))
                 {
-                    buildCriteriaWeights(issue, us);
+                    if (!statusLabel.Text.ToUpper().Equals("BRAINSTORMING1"))
+                    {
+                        buildCriteriaWeights(issue, us);
+                    }
+                    List<AlternativeModel> altList = buildAlternatives(issue, us);
+
+                    if (statusLabel.Text.ToUpper().Equals("EVALUATING"))
+                    {
+                        buildRating(issue, us, altList);
+                    }
                 }
+                
             }
             else
             {
@@ -239,6 +255,16 @@ namespace Client
                 {
                     criteriaWeightTable.Rows.Add(tr);
                 }
+
+                foreach (TableRow tr in us.AlternativesTRs)
+                {
+                    alternativesTable.Rows.Add(tr);
+                }
+
+                foreach (TableRow tr in us.RatingsTRs)
+                {
+                    evaluationTable.Rows.Add(tr);
+                }
             }
 
 
@@ -249,6 +275,140 @@ namespace Client
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(),"Warning!","alert('" + str + "');",true);
             }
             us.Messages.Clear();
+        }
+
+        private void buildRating(IssueModel issue, UserSession us, List<AlternativeModel> altList)
+        {
+            TableHeaderRow thr = new TableHeaderRow();
+            TableHeaderCell thc;
+            TableRow tr;
+            TableCell tc;
+            TextBox txt;
+            List<RatingModel> ratings;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            Dictionary<string,double> dict = new Dictionary<string,double>();
+
+            evaluationTable.Rows.Clear();
+            us.RatingsTRs.Clear();
+
+            evaluationPanel.Visible = true;
+
+            rc.EndPoint = "api/Rating/All";
+            rc.Method = HttpVerb.GET;
+            ratings = JsonConvert.DeserializeObject<List<RatingModel>>(rc.MakeRequest("?issueID=" + issue.Id));
+            
+            foreach (RatingModel rat in ratings)
+            {
+                dict.Add(rat.CriterionID + "x" + rat.AlternativeID, rat.Rating1);
+            }
+
+            
+            thc = new TableHeaderCell();
+            Random random = new Random();
+
+            thc.ID = "evalTHC" + random.Next(1, 100000);
+            thr.Cells.Add(thc);
+            foreach (AlternativeModel alt in altList)
+            {
+                thc = new TableHeaderCell();
+                thc.ID = "evalAltTHC" + alt.Id;
+                thc.Text = alt.Name;
+                thr.Cells.Add(thc);
+            }
+            thr.ID = "ratingTHR-1";
+            us.RatingsTRs.Add(thr);
+            evaluationTable.Rows.Add(thr);
+            
+            foreach (CriterionModel cm in issue.Criterions)
+            {
+                tr = new TableRow();
+                thc = new TableHeaderCell();
+                thc.ID = "evalCrTHC" + cm.Id;
+                thc.Text = cm.Name;
+                tr.Cells.Add(thc);
+                foreach (AlternativeModel alt in altList)
+                {
+                    tc = new TableCell();
+                    tc.ID = cm.Id + "x" + alt.Id;
+                    txt = new TextBox();
+                    txt.ID = "evalTXT" + tc.ID;
+                    tc.Controls.Add(txt);
+                    tr.Cells.Add(tc);
+
+                    if (dict.Keys.Contains(tc.ID))
+                    {
+                        txt.Text = dict[tc.ID].ToString();
+                        thr.ID = "ratingTHR1";
+                    }
+                }
+                us.RatingsTRs.Add(tr);
+                evaluationTable.Rows.Add(tr);
+            }
+        }
+
+        private List<AlternativeModel> buildAlternatives(IssueModel issue, UserSession us)
+        {
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            TableRow tr;
+            TableCell altTC, descAltTC, altReasonTC, delAltTC, altRatTC;
+            TextBox altTXT, descAltTXT, altReasonTXT;
+            Button delAltBtn;
+            Label altRatLbl;
+            List<AlternativeModel> altList;
+            rc.EndPoint = "api/Alternative";
+            rc.Method = HttpVerb.GET;
+            altList = JsonConvert.DeserializeObject<List<AlternativeModel>>(rc.MakeRequest("?issueId="+issue.Id));
+
+            foreach (AlternativeModel alt in altList)
+            {
+                tr = new TableRow();
+                tr.ID = "altTR" + alt.Id;
+                altTC = new TableCell();
+                altTC.ID = "altTC" + alt.Id;
+                altTXT = new TextBox();
+                altTXT.ID = "altTXT" + alt.Id;
+                altTXT.Text = alt.Name;
+                altTC.Controls.Add(altTXT);
+                tr.Cells.Add(altTC);
+
+                descAltTC = new TableCell();
+                descAltTC.ID = "desAltTC" + alt.Id;
+                descAltTXT = new TextBox();
+                descAltTXT.ID = "desActTXT" + alt.Id;
+                descAltTXT.Text = alt.Description;
+                descAltTC.Controls.Add(descAltTXT);
+                tr.Cells.Add(descAltTC);
+
+                altReasonTC = new TableCell();
+                altReasonTC.ID = "altReasonTC" + alt.Id;
+                altReasonTXT = new TextBox();
+                altReasonTXT.ID = "altReasonTXT" + alt.Id;
+                altReasonTXT.Text = alt.Reason;
+                altReasonTC.Controls.Add(altReasonTXT);
+                tr.Cells.Add(altReasonTC);
+
+                delAltBtn = new Button();
+                delAltBtn.ID = "delAltBtn" + alt.Id;
+                delAltBtn.Text = "X";
+                delAltBtn.Click += delAltBtn_Click;
+                delAltTC = new TableCell();
+                delAltTC.ID = "delAltTC" + alt.Id;
+                delAltTC.Controls.Add(delAltBtn);
+                tr.Cells.Add(delAltTC);
+
+                altRatTC = new TableCell();
+                altRatTC.ID = "altRatTC" + alt.Id;
+                altRatLbl = new Label();
+                altRatLbl.ID = "altRatLbl" + alt.Id;
+                altRatLbl.Text = alt.Rating.ToString();
+                altRatTC.Controls.Add(altRatLbl);
+                tr.Cells.Add(altRatTC);
+
+                alternativesTable.Rows.Add(tr);
+                us.AlternativesTRs.Add(tr);
+            }
+
+            return altList;
         }
 
         private void buildCriteriaWeights(IssueModel issue, UserSession us)
@@ -705,6 +865,26 @@ namespace Client
             }
         }
 
+        protected void delAltBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+            int id = int.Parse(t.ID.Replace("altTR", ""));
+
+            if (id > 0)
+            {
+                us.AlternativesToDelete.Add(id);
+            }
+
+            alternativesTable.Rows.Remove(t);
+            us.AlternativesTRs.Clear();
+
+            for (int i = 1; i < alternativesTable.Rows.Count; i++ )
+            {
+                us.AlternativesTRs.Add(alternativesTable.Rows[i]);
+            }
+        }
+        
         protected void doPermissions(IssueModel issue, RestClient rc)
         {
             char accessRight;
@@ -721,77 +901,36 @@ namespace Client
             {
                 //disable ALL
 
+                disableArtefactsEdit();
+                disableDocumentsEdit();
+                disableStakeholdersEdit();
+                disableAlternativesEdit();
+                disableFactorsEdit();
+
                 descriptionText.Enabled = false;
                 titleText.Enabled = false;
-                save.Visible = false;
-                addArtefact.Visible = false;
-                addStakeholder.Visible = false;
-                addFactor.Visible = false;
-                addCriteriaButton.Visible = false;
-                addDocumentBtn.Visible = false;
-                addTagButton.Visible = false;
                 
+                
+
+                save.Visible = false;
+
+                //
                 for (int i = 1; i < criteriaWeightTable.Rows.Count; i++)
                 {
                     ((TextBox)criteriaWeightTable.Rows[i].Cells[1].Controls[0]).Visible = false;
                 }
 
                 //disable delete tags
-                foreach (Control c in tagPanel.Controls)
-                {
-                    if (c.GetType() == typeof(Button))
-                    {
-                        ((Button)c).Enabled = false;
-                    }
-                }
+                disableTags();
 
-                //disable delete factors
-                int cnt = 0;
-                foreach (TableRow tr in factorsTable.Rows)
-                {
-                    if (cnt > 0)
-                    {
-                        ((Button)tr.Cells[3].Controls[0]).Visible = false;
-                        ((CheckBox)tr.Cells[2].Controls[0]).Enabled = false;
-                        ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
-                        ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
-                    }
-                    cnt++;
-                }
+                disableCriteria();
                 
-                //disable artefact delete
-                foreach (TableRow tr in artefactsTable.Rows)
-                {
-                    ((Button)tr.Cells[1].Controls[0]).Visible = false;
-                }
-
-                //disable document delete
-                foreach (TableRow tr in documentsTable.Rows)
-                {
-                    ((Button)tr.Cells[1].Controls[0]).Visible = false;
-                }
-
-                //criteria table permissions
-                foreach (TableRow tr in criteriaTable.Rows)
-                {
-                    ((Button)tr.Cells[2].Controls[0]).Visible = false;
-                    ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
-                    ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
-                }
-
-                //stakeholder table
-                foreach (TableRow tr in stakeholderTable.Rows)
-                {
-                    ((Label)tr.Cells[0].Controls[0]).Enabled = false;
-                    ((Button)tr.Cells[1].Controls[0]).Visible = false;
-                }
 
                 //critweight TC
                 foreach (TableRow tr in criteriaWeightTable.Rows)
                 {
                     tr.Cells[1].Visible = false;
                 }
-
             }
             else
             {
@@ -822,6 +961,11 @@ namespace Client
                         ((Button)tr.Cells[2].Controls[0]).Visible = false;
                     }
                     criteriaWeightPanel.Visible = true;
+                }
+
+                if (issue.Status.ToUpper().Equals("EVALUATING"))
+                {
+                    evaluationPanel.Visible = true;
                 }
             }
 
@@ -861,6 +1005,117 @@ namespace Client
                     ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
                 }
             }
+
+            if (issue.Status.ToUpper().Equals("CREATING"))
+            {
+                alternativesPanel.Visible = false;
+            }
+
+            if (!issue.Status.ToUpper().Equals("FINISHED"))
+            {
+                for (int i = 1; i < alternativesTable.Rows.Count; i++)
+                {
+                    alternativesTable.Rows[i].Cells[4].Visible = false;
+                }
+            }
+
+            if (issue.Status.ToUpper().Equals("FINISHED"))
+            {
+                for (int i = 1; i < alternativesTable.Rows.Count; i++)
+                {
+                    alternativesTable.Rows[i].Cells[3].Visible = false;
+                }
+            }
+
+            if (issue.Status.ToUpper().Equals("FINISHED") || issue.Status.ToUpper().Equals("EVALUATING"))
+            {
+                disableStakeholdersEdit();
+                disableFactorsEdit();
+                disableDocumentsEdit();
+                disableAlternativesEdit();
+                disableArtefactsEdit();
+                disableCriteria();
+                disableTags();
+            }
+        }
+
+        public void disableCriteria()
+        {
+            foreach (TableRow tr in criteriaTable.Rows)
+            {
+                ((Button)tr.Cells[2].Controls[0]).Visible = false;
+                ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
+                ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+            }
+            addCriteriaButton.Visible = false;
+        }
+
+        private void disableTags()
+        {
+            foreach (Control c in tagPanel.Controls)
+            {
+                if (c.GetType() == typeof(Button))
+                {
+                    ((Button)c).Enabled = false;
+                }
+            }
+            addTagButton.Visible = false;
+        }
+
+        private void disableStakeholdersEdit() {
+            foreach (TableRow tr in stakeholderTable.Rows)
+            {
+                ((Button)tr.Cells[1].Controls[0]).Visible = false;
+            }
+            addStakeholder.Visible = false;
+        }
+
+        private void disableFactorsEdit()
+        {
+            int cnt = 0;
+            foreach (TableRow tr in factorsTable.Rows)
+            {
+                if (cnt > 0)
+                {
+                    ((Button)tr.Cells[3].Controls[0]).Visible = false;
+                    ((CheckBox)tr.Cells[2].Controls[0]).Enabled = false;
+                    ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+                    ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
+                }
+                cnt++;
+            }
+            addFactor.Visible = false;
+        }
+
+        private void disableDocumentsEdit()
+        {
+            foreach (TableRow tr in documentsTable.Rows)
+            {
+                ((Button)tr.Cells[1].Controls[0]).Visible = false;
+            }
+            addDocumentBtn.Visible = false;
+        }
+
+        private void disableArtefactsEdit()
+        {
+            foreach (TableRow tr in artefactsTable.Rows)
+            {
+                ((Button)tr.Cells[1].Controls[0]).Visible = false;
+            }
+            addArtefact.Visible = false;
+        }
+
+        private void disableAlternativesEdit()
+        {
+            //alternatives
+            for (int i = 1; i < alternativesTable.Rows.Count; i++)
+            {
+                ((TextBox)alternativesTable.Rows[i].Cells[0].Controls[0]).Enabled = false;
+                ((TextBox)alternativesTable.Rows[i].Cells[1].Controls[0]).Enabled = false;
+                ((TextBox)alternativesTable.Rows[i].Cells[2].Controls[0]).Enabled = false;
+                ((Button)alternativesTable.Rows[i].Cells[3].Controls[0]).Visible = false;
+            }
+            addAlternativeButton.Visible = false;
         }
 
         void tagButton_Click(object sender, EventArgs e)
@@ -1000,10 +1255,13 @@ namespace Client
             issue.InfluenceFactors = factors;
 
             RestClient rc = RestClient.GetInstance(Session.SessionID);
-            rc.EndPoint = "api/Issue/Edit";
-            rc.Method = HttpVerb.POST;
-            rc.PostData = JsonConvert.SerializeObject(issue);
-            string res = rc.MakeRequest();
+            if (!issue.Status.ToUpper().Equals("EVALUATING") || !issue.Status.ToUpper().Equals("FINISHED"))
+            {
+                rc.EndPoint = "api/Issue/Edit";
+                rc.Method = HttpVerb.POST;
+                rc.PostData = JsonConvert.SerializeObject(issue);
+                string res = rc.MakeRequest();
+            }
 
             //add new documents and delete old ones
             rc.UploadFilesToRemoteUrl(issue.Id);
@@ -1046,8 +1304,88 @@ namespace Client
             {
                 saveCriteriaWeights(rc);
             }
+
+            if (statusLabel.Text.ToUpper().Equals("BRAINSTORMING1") || statusLabel.Text.ToUpper().Equals("BRAINSTORMING2"))
+            {
+                saveAlternatives(rc);
+            }
+
+            if (statusLabel.Text.ToUpper().Equals("EVALUATING"))
+            {
+                saveRating(rc);
+            }
+        }
+
+        private void saveRating(RestClient rc)
+        {
+            TableRow tr;
+            TextBox txt;
+            List<RatingModel> ratList = new List<RatingModel>();
+            RatingModel rat;
+
+            if (evaluationTable.Rows.Count == 0)
+            {
+                return;
+            }
+
+            for(int i = 1; i < evaluationTable.Rows.Count; i++){
+
+                for (int j = 1; j < evaluationTable.Rows[i].Cells.Count; j++ )
+                {
+                    txt = (TextBox)evaluationTable.Rows[i].Cells[j].Controls[0];
+                    rat = new RatingModel();
+                    rat.Rating1 = double.Parse(txt.Text);
+                    rat.AlternativeID = int.Parse(evaluationTable.Rows[i].Cells[j].ID.Split('x')[1]);
+                    rat.CriterionID = int.Parse(evaluationTable.Rows[i].Cells[j].ID.Split('x')[0]);
+                    ratList.Add(rat);
+                }
+            }
+
             
-            
+            rc.PostData = JsonConvert.SerializeObject(ratList);
+            rc.Method = HttpVerb.POST;
+            if (int.Parse(evaluationTable.Rows[0].ID.Replace("ratingTHR","")) < 0){
+                rc.EndPoint = "api/Rating/All";
+            }else{
+                rc.EndPoint = "api/Rating/UpdateAllForIssue";
+            }
+            rc.MakeRequest();
+        }
+
+        private void saveAlternatives(RestClient rc)
+        {
+            AlternativeModel alt;
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow tr;
+            for (int i = 1; i < alternativesTable.Rows.Count; i++)
+            {
+                tr = alternativesTable.Rows[i];
+                alt = new AlternativeModel();
+                alt.Id = int.Parse(tr.ID.Replace("altTR", ""));
+                alt.Name = ((TextBox)tr.Cells[0].Controls[0]).Text;
+                alt.Description = ((TextBox)tr.Cells[1].Controls[0]).Text;
+                alt.Reason = ((TextBox)tr.Cells[2].Controls[0]).Text;
+                alt.Issue = int.Parse(Request["issueId"]);
+                if (alt.Id >= 0)
+                {
+                    rc.EndPoint = "api/Alternative/Update";
+                }
+                else
+                {
+                    rc.EndPoint = "api/Alternative/Create";
+                }
+
+                rc.Method = HttpVerb.POST;
+                rc.PostData = JsonConvert.SerializeObject(alt);
+                rc.MakeRequest();
+            }
+
+            foreach (int altId in us.AlternativesToDelete)
+            {
+                rc.EndPoint = "api/Alternative?alternativeId=" + altId;
+                rc.Method = HttpVerb.DELETE;
+                rc.MakeRequest();
+            }
         }
 
         private void saveCriteriaWeights(RestClient rc)
@@ -1424,6 +1762,8 @@ namespace Client
             us.CriteriaTRs.Add(tr);
         }
 
+        
+
         private bool checkCriteriaWeights()
         {
             double sum = 0;
@@ -1447,6 +1787,59 @@ namespace Client
             {
                 return false;
             }
+        }
+
+        protected void addAlternativeButton_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow tr;
+            TableCell altTC, descAltTC, altReasonTC, delAltTC, altRatTC;
+            TextBox altTXT, descAltTXT, altReasonTXT;
+            Button delAltBtn;
+            Label altRatLbl;
+            int id = us.NextAltKey;
+
+            tr = new TableRow();
+            tr.ID = "altTR-" + id;
+            altTC = new TableCell();
+            altTC.ID = "altTC-" + id;
+            altTXT = new TextBox();
+            altTXT.ID = "altTXT-" + id;
+            altTC.Controls.Add(altTXT);
+            tr.Cells.Add(altTC);
+
+            descAltTC = new TableCell();
+            descAltTC.ID = "desAltTC-" + id;
+            descAltTXT = new TextBox();
+            descAltTXT.ID = "desActTXT-" + id;
+            descAltTC.Controls.Add(descAltTXT);
+            tr.Cells.Add(descAltTC);
+
+            altReasonTC = new TableCell();
+            altReasonTC.ID = "altReasonTC-" + id;
+            altReasonTXT = new TextBox();
+            altReasonTXT.ID = "altReasonTXT-" + id;
+            altReasonTC.Controls.Add(altReasonTXT);
+            tr.Cells.Add(altReasonTC);
+
+            delAltBtn = new Button();
+            delAltBtn.ID = "delAltBtn-" + id;
+            delAltBtn.Text = "X";
+            delAltBtn.Click += delAltBtn_Click;
+            delAltTC = new TableCell();
+            delAltTC.ID = "delAltTC-" + id;
+            delAltTC.Controls.Add(delAltBtn);
+            tr.Cells.Add(delAltTC);
+
+            altRatTC = new TableCell();
+            altRatTC.ID = "altRatTC-" + id;
+            altRatLbl = new Label();
+            altRatLbl.ID = "altRatLbl-" + id;
+            altRatTC.Controls.Add(altRatLbl);
+            tr.Cells.Add(altRatTC);
+
+            alternativesTable.Rows.Add(tr);
+            us.AlternativesTRs.Add(tr);
         }
 
     }

@@ -10,17 +10,17 @@ namespace CDDSS_API.Models
     public class RatingModel
     {
         [DataMember]
-        internal int CriterionID { get; set; }
+        public int CriterionID { get; set; }
         [DataMember]
-        internal int AlternativeID { get; set; }
+        public int AlternativeID { get; set; }
         [DataMember]
-        internal string User { get; set; }
+        public string User { get; set; }
         [DataMember]
-        internal Double Rating1 { get; set; }
+        public Double Rating1 { get; set; }
         //[DataMember]
         //internal int UserID { get; set; }
 
-        internal RatingModel()
+        public RatingModel()
         {
             CriterionID = -1;
             AlternativeID = -1;
@@ -36,6 +36,13 @@ namespace CDDSS_API.Models
             User = user;
             Rating1 = rating;
          //   UserID = userID;
+        }
+
+        internal RatingModel(int criterionID, int alternativeID, Double rating)
+        {
+            CriterionID = criterionID;
+            AlternativeID = alternativeID;
+            Rating1 = rating;
         }
     }
 }

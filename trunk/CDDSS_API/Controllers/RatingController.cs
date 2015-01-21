@@ -56,7 +56,35 @@ namespace CDDSS_API.Controllers
         }
 
         /// <summary>
-        /// Updates a Rating
+        /// Inserts new Ratings for an issue of the current user
+        /// </summary>
+        /// <param name="rating"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/Rating/All")]
+        public HttpResponseMessage Post(List<RatingModel> rating)
+        {
+            if (rRep.AddRatingForIssue(rating, User.Identity.Name))
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Rating created!");
+            }
+            else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT created!");
+
+        }
+
+        /// <summary>
+        /// Returns all Ratings
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/Rating/All")]
+        public List<RatingModel> getAllRatings(int issueID)
+        {
+            return rRep.getAllRatings(issueID, User.Identity.Name);
+        }
+
+        /// <summary>
+        /// Updates rating for an issue of the current user
         /// </summary>
         /// <param name="alternativeId"></param>
         /// <param name="criterionId"></param>
@@ -64,6 +92,20 @@ namespace CDDSS_API.Controllers
         public HttpResponseMessage Put(RatingModel rating)
         {
             if (rRep.UpdateRating(rating)) return Request.CreateResponse(HttpStatusCode.OK, "Rating updated!");
+            else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT updated!");
+        }
+
+        // <summary>
+        /// Updates a Rating
+        /// </summary>
+        /// <param name="alternativeId"></param>
+        /// <param name="criterionId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/Rating/UpdateAllForIssue")]
+        public HttpResponseMessage Put(List<RatingModel> rating)
+        {
+            if (rRep.UpdateRatingForIssue(rating, User.Identity.Name)) return Request.CreateResponse(HttpStatusCode.OK, "Rating updated!");
             else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT updated!");
         }
 
