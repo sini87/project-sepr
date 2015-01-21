@@ -105,7 +105,7 @@ namespace CDDSS_API.Repository
             criterionLinq.Id = criterion.Id+1;
             criterionLinq.Name = criterion.Name;
             criterionLinq.Description = criterion.Description;
-            criterionLinq.Weight = criterion.Weight;
+            criterionLinq.Weight = 0;
             criterionLinq.Issue = criterion.Issue;
             
             //TODO CREATE RATING
@@ -147,13 +147,12 @@ namespace CDDSS_API.Repository
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Boolean DeleteCriterion(int id, String name)
+        public Boolean DeleteCriterion(int id)
         {
             Criterion criterion = new Criterion();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                             where
-                                              Criterion.Id == id &&
-                                              Criterion.Name == name
+                                              Criterion.Id == id
                                             select Criterion;
             if (query1.Count() > 0)
             {
@@ -161,8 +160,7 @@ namespace CDDSS_API.Repository
                 ctx.SubmitChanges();
                 query1 = from Criterion in ctx.Criterion
                                             where
-                                              Criterion.Id == id &&
-                                              Criterion.Name == name
+                                              Criterion.Id == id
                                               select Criterion;
                 if (query1.Count() == 0) return true;
                 else return false;

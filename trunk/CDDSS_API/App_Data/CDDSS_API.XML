@@ -545,7 +545,7 @@
             <param name="IssueID"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.Delete(System.Int32,System.String)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.Delete(System.Int32)">
             <summary>
             Deletes a specific Criterion from Issue
             </summary>
@@ -897,7 +897,7 @@
             <param name="criterion"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Repository.CriterionRepository.DeleteCriterion(System.Int32,System.String)">
+        <member name="M:CDDSS_API.Repository.CriterionRepository.DeleteCriterion(System.Int32)">
             <summary>
             Deletes a Criterion
             </summary>

@@ -274,6 +274,24 @@ namespace Client {
         protected global::System.Web.UI.WebControls.Panel criteriaPanel;
         
         /// <summary>
+        /// criteriaTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table criteriaTable;
+        
+        /// <summary>
+        /// addCriteriaButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton addCriteriaButton;
+        
+        /// <summary>
         /// hiddenCriteria control.
         /// </summary>
         /// <remarks>
@@ -290,6 +308,15 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel criteriaWeightPanel;
+        
+        /// <summary>
+        /// criteriaWeightTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table criteriaWeightTable;
         
         /// <summary>
         /// hiddenCriteriaWeight control.
