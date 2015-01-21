@@ -95,14 +95,27 @@
 
     <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
        
-    <h3>Alternatives</h3>
-    <asp:Panel runat="server" ID="alternativesPanel"></asp:Panel>
-    <div id="alternative">
-        <a id="btAddAlt" class="alt">add alternative</a>
-        <a id="btRemoveAlt" class="alt">remove alternative</a>
-        <a id="btRemoveAllAlt" class="alt">remove all</a><br />
-    </div>
+    
+    <asp:Panel runat="server" ID="alternativesPanel">
+        <h3>Alternatives</h3>
+        <asp:Table ID="alternativesTable" runat="server">
+            <asp:TableHeaderRow runat="server" ForeColor="Red">  
+                <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
+                <asp:TableHeaderCell>Description</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Reason</asp:TableHeaderCell>
+                <asp:TableHeaderCell></asp:TableHeaderCell>
+                <asp:TableHeaderCell>Rating</asp:TableHeaderCell>
+            </asp:TableHeaderRow>  
+        </asp:Table>
+        <asp:LinkButton ID="addAlternativeButton" runat="server" OnClick="addAlternativeButton_Click">add</asp:LinkButton>
+    </asp:Panel>
     <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
+    
+    <asp:Panel ID="evaluationPanel" runat="server" Visible="false">
+        <h3>Rating</h3>
+        <asp:Table ID="evaluationTable" runat="server"></asp:Table>
+    </asp:Panel>
+    <asp:HiddenField ID="HiddenField1" runat="server" ClientIDMode="Static"/>
     
     <asp:Button ID="save" runat="server" Text="Save" OnClick="save_Click" Visible="false"/>
     <asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" Visible="false" OnClick="saveNext_Click"/>

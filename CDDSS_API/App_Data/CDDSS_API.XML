@@ -737,14 +737,28 @@
             <param name="rating"></param>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.Post(System.Collections.Generic.List{CDDSS_API.Models.RatingModel})">
+            <summary>
+            Inserts new Ratings for an issue of the current user
+            </summary>
+            <param name="rating"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.getAllRatings(System.Int32)">
+            <summary>
+            Returns all Ratings
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Controllers.RatingController.Put(CDDSS_API.Models.RatingModel)">
             <summary>
-            Updates a Rating
+            Updates rating for an issue of the current user
             </summary>
             <param name="alternativeId"></param>
             <param name="criterionId"></param>
             <returns></returns>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:CDDSS_API.Controllers.RatingController.Put(System.Collections.Generic.List{CDDSS_API.Models.RatingModel})" -->
         <member name="M:CDDSS_API.Controllers.RatingController.Delete(System.Int32,System.Int32)">
             <summary>
             Deletes a Rating
@@ -969,6 +983,12 @@
         <member name="M:CDDSS_API.Repository.RatingRepository.getAllRatings">
             <summary>
             Returns all Ratings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.getAllRatings(System.Int32,System.String)">
+            <summary>
+            Returns all Ratings for an Issue of current user
             </summary>
             <returns></returns>
         </member>

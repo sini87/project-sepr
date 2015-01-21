@@ -10,13 +10,13 @@ namespace Client
 {
     public class UserSession
     {
-        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, accessRTRs, criteriaTRs, criterionWeightTRs;
-        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextAccessTRKey, nextDocTRKey, nextCritTRKey;
+        private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, accessRTRs, criteriaTRs, criterionWeightTRs, alternativesTRs, ratingsTRs;
+        private int nextTTRKey, nextSTRKey, nextFTRKey, nextATRKey, nextAccessTRKey, nextDocTRKey, nextCritTRKey, nextAltKey;
         private IssueModel detailIssue;
         private List<Control> issueTags;
         private TextBox titleText, descriptionText;
         private List<String> docsToDelete, messages;
-        private List<int> criteriasToDelete;
+        private List<int> criteriasToDelete, alternativesToDelete;
        
         public UserSession()
         {
@@ -41,6 +41,10 @@ namespace Client
             nextCritTRKey = 0;
             criteriasToDelete = new List<int>();
             criterionWeightTRs = new List<TableRow>();
+            alternativesTRs = new List<TableRow>();
+            nextAltKey = 0;
+            alternativesToDelete = new List<int>();
+            ratingsTRs = new List<TableRow>();
         }
 
         public void CreateIssueEntered()
@@ -64,6 +68,9 @@ namespace Client
             nextCritTRKey = 0;
             criteriasToDelete = new List<int>();
             criterionWeightTRs = new List<TableRow>();
+            alternativesTRs = new List<TableRow>();
+            nextAltKey = 0;
+            alternativesToDelete = new List<int>();
         }
 
         public List<int> CriteriasToDelete
@@ -251,6 +258,32 @@ namespace Client
         {
             get { return messages; }
         }
+
+        public List<TableRow> AlternativesTRs
+        {
+            get { return alternativesTRs; }
+            set { alternativesTRs = value; }
+        }
  
+        public int NextAltKey
+        {
+            get {
+                nextAltKey++;
+                return nextAltKey; 
+            }
+            set { nextAltKey = value; }
+        }
+
+        public List<int> AlternativesToDelete
+        {
+            get { return alternativesToDelete; }
+            set { alternativesToDelete = value; }
+        }
+
+        public List<TableRow> RatingsTRs
+        {
+            get { return ratingsTRs; }
+            set { ratingsTRs = value; }
+        }
     }
 }
