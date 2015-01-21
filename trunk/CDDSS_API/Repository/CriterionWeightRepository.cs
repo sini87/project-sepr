@@ -11,6 +11,7 @@ namespace CDDSS_API.Repository
     {
         public bool AddCriterionWeights(List<CriterionWeightModel> list, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             CriterionWeight cw;
 
             try
@@ -36,7 +37,8 @@ namespace CDDSS_API.Repository
         }
 
         public bool DeleteCriterionWeights(int issueId, string email)
-        {            
+        {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IQueryable<CriterionWeight> cwList;
             try
             {
@@ -61,6 +63,7 @@ namespace CDDSS_API.Repository
 
         public bool UpdateCriterionWeights(List<CriterionWeightModel> list, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IQueryable<CriterionWeight> cwList;
             CriterionWeight cw;
             try
@@ -87,6 +90,7 @@ namespace CDDSS_API.Repository
 
         public List<CriterionWeightModel> GetCriterionWeights(int issueId)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<CriterionWeightModel> list = new List<CriterionWeightModel>();
             IEnumerable<Criterion> cList;
             IEnumerable<CriterionWeight> cwList;

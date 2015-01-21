@@ -11,6 +11,7 @@ namespace CDDSS_API.Repository
     {
         public List<AlternativeModel> GetAlternativesByIssueId(int issueId)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<AlternativeModel> list = new List<AlternativeModel>();
             AlternativeModel altModel;
 
@@ -41,6 +42,7 @@ namespace CDDSS_API.Repository
 
         public bool CreateAlternativeForIssue(AlternativeModel altModel)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             Alternative alt = new Alternative();
 
             try
@@ -87,6 +89,7 @@ namespace CDDSS_API.Repository
 
         public bool UpdateAlternative(AlternativeModel altModel)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Alternatives.Where(x => x.Id == altModel.Id).ToList().Count <= 0){
                 return false;
             }else{
@@ -103,6 +106,7 @@ namespace CDDSS_API.Repository
 
         public bool DeleteAlternative(int altId)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Alternatives.Where(x => x.Id == altId).ToList().Count <= 0)
             {
                 return false;

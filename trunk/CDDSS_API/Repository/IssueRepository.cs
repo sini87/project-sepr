@@ -14,6 +14,7 @@ namespace CDDSS_API.Repository
     {
         public List<IssueModel> GetAllIssues(string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<IssueModel> list = new List<IssueModel>();
 
             User user = ctx.Users.Where(x => x.Email == email).First();
@@ -41,6 +42,7 @@ namespace CDDSS_API.Repository
 
         public IssueModel GetIssueDetailed(int issueID)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IssueModel model = new IssueModel();
             IEnumerable<Issue> iL = ctx.Issues.Where(x => x.Id == issueID);
             if (iL.Count() <= 0)
@@ -139,6 +141,7 @@ namespace CDDSS_API.Repository
 
         public List<IssueModel> GetUserIssues(string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             User user = ctx.Users.First(x => x.Email == email);
 
 
@@ -192,6 +195,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         public int CreateIssue(IssueModel issue, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Issues in
                             (from Issues in ctx.Issues
                              select new
@@ -264,6 +268,7 @@ namespace CDDSS_API.Repository
 
         public bool DeleteIssue(int issueId, string ownerEmail)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IEnumerable<AccessRight> ars = ctx.Users.Where(x => x.Email == ownerEmail).First().AccessObject1.AccessRights.Where(x => x.Issue == issueId);
             if (ars.Count() > 0)
             {
@@ -280,6 +285,7 @@ namespace CDDSS_API.Repository
 
         public bool NextStage(int issueId, string ownerEmail)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IEnumerable<AccessRight> ars = ctx.Users.Where(x => x.Email == ownerEmail).First().AccessObject1.AccessRights.Where(x => x.Issue == issueId);
             if (ars.Count() > 0)
             {
@@ -316,6 +322,7 @@ namespace CDDSS_API.Repository
 
         public bool EditIssue(IssueModel im, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             try
             {
                 Issue i = ctx.Issues.Where(x => x.Id == im.Id).First();
@@ -360,6 +367,7 @@ namespace CDDSS_API.Repository
 
         private void ModifyStakeholders(int issueID, List<StakeholderModel> stakeholders)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Stakeholders in
                         (from Stakeholders in ctx.Stakeholders
                          select new
@@ -411,6 +419,7 @@ namespace CDDSS_API.Repository
 
         private void ModifyTags(int issueID, List<TagModel> tags)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Tags in
                         (from Tags in ctx.Tags
                          select new
@@ -470,6 +479,7 @@ namespace CDDSS_API.Repository
 
         private void ModifyArtefacts(int issueID, List<ArtefactModel> artefacts)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Artefacts in
                         (from Artefacts in ctx.Artefacts
                          select new
@@ -520,6 +530,7 @@ namespace CDDSS_API.Repository
         }
 
         private void ModifyInfluenceFactors(int issueID, List<InfluenceFactorModel> influenceFactors){
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from InfluenceFactors in
                         (from InfluenceFactors in ctx.InfluenceFactors
                          select new
@@ -560,6 +571,7 @@ namespace CDDSS_API.Repository
 
         private void ModifyAccessRights(int issueID, Dictionary<int,char> accessList, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             AccessRight ar;
             int aoID;
             if (email != null)
@@ -588,6 +600,7 @@ namespace CDDSS_API.Repository
 
         public List<IssueModel> GetAllUserIssues(string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             User user = ctx.Users.First(x => x.Email == email);
 
 

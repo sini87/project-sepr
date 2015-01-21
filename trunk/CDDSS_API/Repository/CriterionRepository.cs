@@ -17,6 +17,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         internal CriterionModel GetCriterion(int id)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             CriterionModel criterion = new CriterionModel();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                         where
@@ -45,6 +46,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         internal List<CriterionModel> getAllCriterias()
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<CriterionModel> criterionList = new List<CriterionModel>();
             var query = from Criterion in ctx.Criterion
                         select Criterion;
@@ -63,6 +65,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         internal bool isDuplicate(CriterionModel criterion)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             int i = 0;
             var query = from Criterion in ctx.Criterion
                         where
@@ -85,6 +88,7 @@ namespace CDDSS_API.Repository
         /// <param name="criterion"></param>
         internal void AddCriterion(CriterionModel criterion)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             Criterion criterionLinq = new Criterion();
             var query = from Criterion in
                             (from Criterion in ctx.Criterion
@@ -120,6 +124,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         internal Boolean UpdateCriterion(CriterionModel criterion)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                             where
                                               Criterion.Id == criterion.Id
@@ -149,6 +154,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         public Boolean DeleteCriterion(int id)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             Criterion criterion = new Criterion();
             IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
                                             where
@@ -176,6 +182,7 @@ namespace CDDSS_API.Repository
         /// <returns></returns>
         public Boolean SetCriterionWeight(int id, Double weight)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             IEnumerable<Criterion> query = from Criterion in ctx.Criterion
                         where
                           Criterion.Weight == Criterion.Weight

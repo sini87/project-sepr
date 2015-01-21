@@ -1255,15 +1255,34 @@ namespace Client
             issue.InfluenceFactors = factors;
 
             RestClient rc = RestClient.GetInstance(Session.SessionID);
-            if (!issue.Status.ToUpper().Equals("EVALUATING") || !issue.Status.ToUpper().Equals("FINISHED"))
+            if (!issue.Status.ToUpper().Equals("EVALUATING") && !issue.Status.ToUpper().Equals("FINISHED"))
             {
                 rc.EndPoint = "api/Issue/Edit";
                 rc.Method = HttpVerb.POST;
                 rc.PostData = JsonConvert.SerializeObject(issue);
                 string res = rc.MakeRequest();
+                saveDocuments(rc, issue, us);
             }
 
-            //add new documents and delete old ones
+            if (statusLabel.Text.Equals("Brainstorming2"))
+            {
+                saveCriteriaWeights(rc);
+            }
+
+            if (statusLabel.Text.ToUpper().Equals("BRAINSTORMING1") || statusLabel.Text.ToUpper().Equals("BRAINSTORMING2"))
+            {
+                saveAlternatives(rc);
+                saveCriterias(rc, issue, us);
+            }
+
+            if (statusLabel.Text.ToUpper().Equals("EVALUATING"))
+            {
+                saveRating(rc);
+            }
+        }
+
+        private void saveDocuments(RestClient rc, IssueModel issue, UserSession us)
+        {
             rc.UploadFilesToRemoteUrl(issue.Id);
             foreach (string doc in us.DocsToDelete)
             {
@@ -1271,8 +1290,10 @@ namespace Client
                 rc.Method = HttpVerb.DELETE;
                 rc.MakeRequest();
             }
+        }
 
-            //save criterias
+        private void saveCriterias(RestClient rc, IssueModel issue, UserSession us)
+        {
             foreach (TableRow tr in criteriaTable.Rows)
             {
                 int id = int.Parse(tr.ID.Replace("critTR", ""));
@@ -1293,26 +1314,12 @@ namespace Client
                 rc.PostData = JsonConvert.SerializeObject(cm);
                 rc.MakeRequest();
             }
+
             foreach (int id in us.CriteriasToDelete)
             {
                 rc.EndPoint = "api/Criterion/" + id;
                 rc.Method = HttpVerb.DELETE;
                 rc.MakeRequest();
-            }
-
-            if (statusLabel.Text.Equals("Brainstorming2"))
-            {
-                saveCriteriaWeights(rc);
-            }
-
-            if (statusLabel.Text.ToUpper().Equals("BRAINSTORMING1") || statusLabel.Text.ToUpper().Equals("BRAINSTORMING2"))
-            {
-                saveAlternatives(rc);
-            }
-
-            if (statusLabel.Text.ToUpper().Equals("EVALUATING"))
-            {
-                saveRating(rc);
             }
         }
 

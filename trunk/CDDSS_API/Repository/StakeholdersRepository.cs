@@ -11,6 +11,7 @@ namespace CDDSS_API.Repository
     {
         public List<StakeholderModel> GetAllStakeholders()
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<StakeholderModel> list = new List<StakeholderModel>();
             foreach (Stakeholder st in ctx.Stakeholders)
             {

@@ -11,6 +11,7 @@ namespace CDDSS_API.Repository
     {
         public bool CreateDecision(DecisionModel decision)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Decisions.Where(x => x.IssueId == decision.IssueID).Count() == 0)
             {
                 Decision decPersistent = new Decision();
@@ -26,6 +27,7 @@ namespace CDDSS_API.Repository
 
         public bool DeleteDecision(int issueID)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Decisions.Where(x => x.IssueId == issueID).Count() > 0)
             {
                 Decision dec = ctx.Decisions.Where(x => x.IssueId == issueID).First();
@@ -38,6 +40,7 @@ namespace CDDSS_API.Repository
 
         public bool EditDecision(DecisionModel decision)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Decisions.Where(x => x.IssueId == decision.IssueID).Count() > 0)
             {
                 Decision dec = ctx.Decisions.Where(x => x.IssueId == decision.IssueID).First();
@@ -51,6 +54,7 @@ namespace CDDSS_API.Repository
 
         public DecisionModel GetDecision(int issueID)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Decisions.Where(x => x.IssueId == issueID).Count() > 0)
             {
                 Decision dec = ctx.Decisions.Where(x => x.IssueId == issueID).First();

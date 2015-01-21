@@ -19,6 +19,7 @@ namespace CDDSS_API.Repository
         /// <returns>list of documents</returns>
         public List<string> GetFilesByIssueId(int issueId)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Documents in ctx.Documents
                         where
                           Documents.Issue == 1
@@ -43,6 +44,7 @@ namespace CDDSS_API.Repository
         /// <returns>true if file already exists</returns>
         public bool CheckFileExists(int issue, string filename)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (ctx.Documents.Where(x => x.Issue == issue && x.Name == filename).Count() == 0)
             {
                 return false;
@@ -62,6 +64,7 @@ namespace CDDSS_API.Repository
         /// <returns>returns false if upload was not successful, because a file with the same filename  exists</returns>
         public bool UploadFile(int issue, string filename, Stream inputStream )
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             if (!CheckFileExists(issue, filename))
             {
                 Document entity = new Document();
@@ -88,6 +91,7 @@ namespace CDDSS_API.Repository
         /// <returns>stream of the file</returns>
         public Stream GetFile(int issueId, string filename)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Documents in ctx.Documents
                         where
                           Documents.Issue == 1 &&
@@ -109,6 +113,7 @@ namespace CDDSS_API.Repository
 
         public bool DeleteDocument(int issueId, string filename)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             Document doc = ctx.Documents.Where(x => x.Issue == issueId).First(x => x.Name == filename);
             if (doc != null)
             {

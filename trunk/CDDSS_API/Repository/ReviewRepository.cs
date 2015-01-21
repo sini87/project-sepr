@@ -12,6 +12,7 @@ namespace CDDSS_API.Repository
     {
         public bool AddReview(ReviewModel rm, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             try { 
                 string userId = ctx.Users.Where(x => x.Email == email).First().Id;
                 if (ctx.Reviews.Where(x => x.User == userId && x.Issue == rm.Issue).Count() == 0) { 
@@ -35,6 +36,7 @@ namespace CDDSS_API.Repository
 
         public List<ReviewModel> GetReviewsOfIssue(int issueId)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             List<ReviewModel> rmList = new List<ReviewModel>();
             ReviewModel rm;
 
@@ -61,6 +63,7 @@ namespace CDDSS_API.Repository
 
         public bool EditReview(ReviewModel rm, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             try
             {
                 string userId = ctx.Users.Where(x => x.Email == email).First().Id;
@@ -84,6 +87,7 @@ namespace CDDSS_API.Repository
 
         public bool DeleteReview(int issueId, string email)
         {
+            DataClassesDataContext ctx = new DataClassesDataContext();
             try
             {
                 string userId = ctx.Users.Where(x => x.Email == email).First().Id;
