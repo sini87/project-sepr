@@ -116,7 +116,19 @@
         <asp:Table ID="evaluationTable" runat="server"></asp:Table>
     </asp:Panel>
     <asp:HiddenField ID="HiddenField1" runat="server" ClientIDMode="Static"/>
+
+    <asp:Panel ID="decisionPanel" runat="server" Visible="false">
+        <h3>Decision</h3>
+        <asp:Label ID="decisionLBL" runat="server" Text="Label"></asp:Label></br>
+        <asp:TextBox ID="decisionTXT" runat="server" TextMode="MultiLine" Height ="50" Enabled="false"></asp:TextBox>
+    </asp:Panel>
+    <asp:HiddenField ID="HiddenField2" runat="server" ClientIDMode="Static"/>
     
+    <asp:Panel ID="reviewPanel" runat="server" Visible="false">
+        <h3>Reviews</h3>
+    </asp:Panel>
+    <asp:HiddenField ID="HiddenField3" runat="server" ClientIDMode="Static"/>
+
     <asp:Button ID="save" runat="server" Text="Save" OnClick="save_Click" Visible="false"/>
     <asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" Visible="false" OnClick="saveNext_Click"/>
 

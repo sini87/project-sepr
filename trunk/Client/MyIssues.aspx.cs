@@ -137,6 +137,17 @@ namespace Client
                     showReviewPanel.Visible = false;
                     tTitle.Controls.Add(showReviewPanel);
 
+                    ///
+                    if (element.Status.Equals("Finished"))
+                    {
+                        LinkButton finalDecision_linkButton = new LinkButton();
+                        finalDecision_linkButton.ID = element.Id.ToString();
+                        finalDecision_linkButton.Text = "Final Decision";
+                        finalDecision_linkButton.Click += finalDecision_linkButton_Click;
+                        tTitle.Controls.Add(finalDecision_linkButton);
+                    }
+                    ///
+
                     row.Cells.Add(tTitle);
 
                     string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
@@ -161,6 +172,12 @@ namespace Client
                 return dataTable;
             }
             return null;
+        }
+
+        void finalDecision_linkButton_Click(object sender, EventArgs e)
+        {
+            LinkButton lb = (LinkButton)sender;
+            Server.Transfer("FinalDecision.aspx?IssueId=" + lb.ID);
         }
 
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
