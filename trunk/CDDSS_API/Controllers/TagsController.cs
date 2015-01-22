@@ -28,5 +28,41 @@ namespace CDDSS_API.Controllers
         {
             return tagsRepo.GetAllTags();
         }
+
+        /// <summary>
+        /// returns all Tags of an Issue
+        /// </summary>
+        /// <param name="Issueid"></param>
+        /// <returns></returns>
+        public List<TagModel> GetTagByIssue(int Issueid)
+        {
+           return tagsRepo.getTagsOfIssue(Issueid);
+        }
+
+        /// <summary>
+        /// Edits a specific Tag
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public HttpResponseMessage Put(TagModel tag)
+        {
+            if (tagsRepo.EditTag(tag))
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Tag updated!");
+            }
+            else return Request.CreateResponse(HttpStatusCode.NotModified, "Tag NOT updated!");
+            
+        }
+
+        /// <summary>
+        /// Delets a specific Tag
+        /// </summary>
+        /// <param name="tagID"></param>
+        /// <returns></returns>
+        public HttpResponseMessage DeleteTag(int tagID)
+        {
+            if (tagsRepo.DeleteTag(tagID)) return Request.CreateResponse(HttpStatusCode.OK, "Tag deleted!");
+            else return Request.CreateResponse(HttpStatusCode.NotFound, "Tag NOT deleted!");
+        }
     }
 }
