@@ -329,8 +329,12 @@ namespace CDDSS_API.Repository
 
                 i.Title = im.Title;
                 i.Description = im.Description;
-                i.RelatedTo = im.RelatedTo;
-                i.RelationType = im.RelationType;
+                if (im.RelatedTo > 0)
+                {
+                    i.RelatedTo = im.RelatedTo;
+                    i.RelationType = im.RelationType;
+                }
+                
                 ctx.SubmitChanges();
 
                 IQueryable<Tag_Issue> delTags = ctx.Tag_Issues.Where(x => x.Issue == im.Id);

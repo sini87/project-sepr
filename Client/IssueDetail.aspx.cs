@@ -18,10 +18,10 @@ namespace Client
 
         protected void Page_Preload(object sender, EventArgs e)
         {
-            //if (!this.User.Identity.IsAuthenticated)
-            //{
-            //    Server.Transfer("Default.aspx");
-            //}
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                Server.Transfer("Default.aspx");
+            }
 
             RestClient rc = RestClient.GetInstance(Session.SessionID);
 
@@ -32,11 +32,11 @@ namespace Client
             }
             if (!IsPostBack)
             {
-                if (!User.Identity.IsAuthenticated)
-                {
-                    RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
-                    SessionManager.AddUserSession(Session.SessionID);
-                }
+                //if (!User.Identity.IsAuthenticated)
+                //{
+                //    RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
+                //    SessionManager.AddUserSession(Session.SessionID);
+                //}
                 
                 UserSession us = SessionManager.GetUserSession(Session.SessionID);
                 us.DetailIssue = null;
@@ -118,6 +118,7 @@ namespace Client
             RestClient rc = RestClient.GetInstance(Session.SessionID);
             UserSession us = SessionManager.GetUserSession(Session.SessionID);
             IssueModel issue;
+            List<AlternativeModel> altList = new List<AlternativeModel>();
 
             if (!IsPostBack) { 
                 rc.EndPoint = "api/Issue?issueId=" + issueID;
@@ -185,7 +186,7 @@ namespace Client
                     {
                         buildCriteriaWeights(issue, us);
                     }
-                    List<AlternativeModel> altList = buildAlternatives(issue, us);
+                    altList = buildAlternatives(issue, us);
 
                     if (statusLabel.Text.ToUpper().Equals("EVALUATING"))
                     {
@@ -275,6 +276,51 @@ namespace Client
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(),"Warning!","alert('" + str + "');",true);
             }
             us.Messages.Clear();
+
+            //final decision && reviews
+            if (issue.Status.ToUpper().Equals("FINISHED"))
+            {
+                rc.EndPoint = "api/Decision";
+                rc.Method = HttpVerb.GET;
+                DecisionModel dm = JsonConvert.DeserializeObject<DecisionModel>(rc.MakeRequest("?issueID=" + issue.Id));
+                if (dm != null)
+                {
+                    foreach (AlternativeModel am in altList)
+                    {
+                        if (am.Id == dm.AlternativeID)
+                        {
+                            decisionLBL.Text = am.Name;
+                        }
+                    }
+                    
+                    decisionTXT.Text = dm.Explanation;
+                    decisionPanel.Visible = true;
+                }
+               
+                rc.EndPoint = "api/Review";
+                rc.Method = HttpVerb.GET;
+                List<ReviewModel> rList = JsonConvert.DeserializeObject<List<ReviewModel>>(rc.MakeRequest("?issueId=" + issue.Id));
+                if (rList.Count > 0)
+                {
+                    foreach (ReviewModel rm in rList)
+                    {
+                        Label lbl = new Label();
+                        lbl.Text = rm.UserFirstName + " " + rm.UserLastName;
+                        TextBox txt = new TextBox();
+                        txt.Text = rm.Explanation;
+                        txt.TextMode = TextBoxMode.MultiLine;
+                        txt.Height = 50;
+                        txt.Enabled = false;
+                        reviewPanel.Controls.Add(lbl);
+                        reviewPanel.Controls.Add(new LiteralControl("<br />"));
+                        reviewPanel.Controls.Add(txt);
+                        reviewPanel.Controls.Add(new LiteralControl("<br />"));
+
+                    }
+                    reviewPanel.Visible = true;
+                }
+            }
+            
         }
 
         private void buildRating(IssueModel issue, UserSession us, List<AlternativeModel> altList)
@@ -1025,6 +1071,11 @@ namespace Client
                 {
                     alternativesTable.Rows[i].Cells[3].Visible = false;
                 }
+                save.Visible = false;
+                saveNext.Visible = false;
+                descriptionPanel.Enabled = false;
+                titleText.Enabled = false;
+                addUser.Visible = false;
             }
 
             if (issue.Status.ToUpper().Equals("FINISHED") || issue.Status.ToUpper().Equals("EVALUATING"))

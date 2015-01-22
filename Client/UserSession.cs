@@ -17,6 +17,9 @@ namespace Client
         private TextBox titleText, descriptionText;
         private List<String> docsToDelete, messages;
         private List<int> criteriasToDelete, alternativesToDelete;
+        private int finalDecisionIssueId;
+        private List<RadioButton> finDecAlternativesRBs;
+        private bool finalDecisionExists;
        
         public UserSession()
         {
@@ -45,6 +48,7 @@ namespace Client
             nextAltKey = 0;
             alternativesToDelete = new List<int>();
             ratingsTRs = new List<TableRow>();
+            finDecAlternativesRBs = new List<RadioButton>();
         }
 
         public void CreateIssueEntered()
@@ -71,6 +75,7 @@ namespace Client
             alternativesTRs = new List<TableRow>();
             nextAltKey = 0;
             alternativesToDelete = new List<int>();
+            finDecAlternativesRBs = new List<RadioButton>();
         }
 
         public List<int> CriteriasToDelete
@@ -285,5 +290,46 @@ namespace Client
             get { return ratingsTRs; }
             set { ratingsTRs = value; }
         }
+
+        public bool FinalDecisionExists
+        {
+            get
+            {
+                return finalDecisionExists;
+            }
+
+            set
+            {
+                finalDecisionExists = value;
+            }
+        }
+
+        public List<RadioButton> FinDecAlternativesRBs
+        {
+            get
+            {
+                return finDecAlternativesRBs;
+            }
+
+            set
+            {
+                finDecAlternativesRBs = value;
+            }
+        }
+
+        public int FinalDecisionIssueId
+        {
+            get
+            {
+                return finalDecisionIssueId;
+            }
+
+            set
+            {
+                finalDecisionIssueId = value;
+            }
+        }
+
     }
+
 }
