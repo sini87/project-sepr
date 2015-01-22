@@ -129,6 +129,14 @@ namespace Client
                         LinkButton addLinkButton = reviewHelper.CreateAddLinkButton(hyperlinkid);
                         addLinkButton.Click += new EventHandler(OnAddReviews_Click);
                         tTitle.Controls.Add(addLinkButton);
+
+                        LinkButton finalDecision_linkButton = new LinkButton();
+                        reviewHelper.SetLinkButtonCSS(finalDecision_linkButton);
+                        finalDecision_linkButton.Style.Add("margin-left", "5px");
+                        finalDecision_linkButton.ID = element.Id.ToString();
+                        finalDecision_linkButton.Text = "Final Decision";
+                        finalDecision_linkButton.Click += finalDecision_linkButton_Click;
+                        tTitle.Controls.Add(finalDecision_linkButton);
                     }
                     Panel addReviewPanel = reviewHelper.CreateAddReviewPanel(element, hyperlinkid, this);
                     addReviewPanel.Visible = false;
@@ -136,15 +144,12 @@ namespace Client
                     Panel showReviewPanel = reviewHelper.CreateShowReviewPanel(element, rc, hyperlinkid, this);
                     showReviewPanel.Visible = false;
                     tTitle.Controls.Add(showReviewPanel);
+                    
 
                     ///
                     if (element.Status.Equals("Finished"))
                     {
-                        LinkButton finalDecision_linkButton = new LinkButton();
-                        finalDecision_linkButton.ID = element.Id.ToString();
-                        finalDecision_linkButton.Text = "Final Decision";
-                        finalDecision_linkButton.Click += finalDecision_linkButton_Click;
-                        tTitle.Controls.Add(finalDecision_linkButton);
+                        
                     }
                     ///
 
