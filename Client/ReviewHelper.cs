@@ -241,6 +241,7 @@ namespace Client
             {
                 TableRow issueRow = new TableRow();
                 TableCell issueLabelCell = new TableCell();
+                Label issueLabel;
                 issueLabelCell.Style.Add("padding", "3px");
                 issueLabelCell.Style.Add("padding", "3px");
                 switch (i)
@@ -254,16 +255,21 @@ namespace Client
                         //reviewTextBox.ID = "issueTextBox" + hyperlinkid;
                         break;
                     case 1:
-                        HiddenField ratinghiddenfield = new HiddenField();
-                        ratinghiddenfield.Value = element.Id.ToString();
-                        ratinghiddenfield.ID = "ratingHiddenField" + hyperlinkid;
-                        issueLabelCell.Controls.Add(ratinghiddenfield);
+                        TextBox ratingTextBox = new TextBox();
+                        issueLabel = new Label();
+                        issueLabel.Width = 120;
+                        ratingTextBox.Width = 500;
+                        issueLabel.Text = "Rating (1-5)";
+                        //ratingTextBox.Value = element.Id.ToString();
+                        ratingTextBox.ID = "ratingTextBox" + hyperlinkid;
+                        issueLabelCell.Controls.Add(issueLabel);
+                        issueLabelCell.Controls.Add(ratingTextBox);
                         //reviewTextBox.Text = element.ReviewRating.ToString();
                         //reviewTextBox.ID = "ratingTextBox" + hyperlinkid;
                         break;
                     case 2:
                         TextBox reviewTextBox = new TextBox();
-                        Label issueLabel = new Label();
+                        issueLabel = new Label();
                         issueLabel.Width = 120;
                         reviewTextBox.Width = 500;
                         issueLabel.Text = "Explanation";
@@ -309,6 +315,7 @@ namespace Client
             {
                 TableRow issueRow = new TableRow();
                 TableCell issueLabelCell = new TableCell();
+                Label issueLabel;
                 issueLabelCell.Style.Add("padding", "3px");
                 issueLabelCell.Style.Add("padding", "3px");
                 switch (i)
@@ -322,16 +329,21 @@ namespace Client
                         //reviewTextBox.ID = "issueTextBox" + hyperlinkid;
                         break;
                     case 1:
-                        HiddenField ratinghiddenfield = new HiddenField();
-                        ratinghiddenfield.Value = element.Id.ToString();
-                        ratinghiddenfield.ID = "ratingHiddenField" + hyperlinkid;
-                        issueLabelCell.Controls.Add(ratinghiddenfield);
+                        TextBox ratingTextBox = new TextBox();
+                        issueLabel = new Label();
+                        issueLabel.Width = 120;
+                        ratingTextBox.Width = 500;
+                        issueLabel.Text = "Rating (1-5)";
+                        //ratingTextBox.Value = element.Id.ToString();
+                        ratingTextBox.ID = "ratingTextBox" + hyperlinkid;
+                        issueLabelCell.Controls.Add(issueLabel);
+                        issueLabelCell.Controls.Add(ratingTextBox);
                         //reviewTextBox.Text = element.ReviewRating.ToString();
                         //reviewTextBox.ID = "ratingTextBox" + hyperlinkid;
                         break;
                     case 2: 
                         TextBox reviewTextBox = new TextBox();
-                        Label issueLabel = new Label();
+                        issueLabel = new Label();
                         issueLabel.Width = 120;
                         reviewTextBox.Width = 500;
                         issueLabel.Text = "Explanation";
@@ -495,12 +507,16 @@ namespace Client
             {
                 //TextBox issueTextBox = (TextBox)addPanel.FindControl("issueTextBox" + pressedbuttonid);
                 HiddenField issuehiddenfield = (HiddenField)addPanel.FindControl("issueHiddenField" + pressedbuttonid);
-                HiddenField ratinghiddenfield = (HiddenField)addPanel.FindControl("ratingHiddenField" + pressedbuttonid);
+                TextBox ratingTextBox= (TextBox)addPanel.FindControl("ratingTextBox" + pressedbuttonid);
                 TextBox explanationTextBox = (TextBox)addPanel.FindControl("explanationTextBox" + pressedbuttonid);
                 //TextBox userFirstNameTextBox = (TextBox)addPanel.FindControl("userFirstNameTextBox" + pressedbuttonid);
                 //TextBox userLastNameTextBox = (TextBox)addPanel.FindControl("userLastNameTextBox" + pressedbuttonid);
                 newReview.Issue = Convert.ToInt32(issuehiddenfield.Value);
-                newReview.Rating = Convert.ToInt32(issuehiddenfield.Value);
+                int rating = Convert.ToInt32(ratingTextBox.Text);
+                if(rating >=0 && rating <=5){
+                    newReview.Rating = rating;
+                }
+                
                 newReview.Explanation = explanationTextBox.Text;
                 newReview.UserFirstName = rc.User.FirstName;
                 newReview.UserLastName = rc.User.LastName;
