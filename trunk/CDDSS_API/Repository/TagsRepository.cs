@@ -9,6 +9,7 @@ namespace CDDSS_API.Repository
 {
     public class TagsRepository :RepositoryBase
     {
+        DataClassesDataContext ctx = new DataClassesDataContext();
         /// <summary>
         /// returns all Tags
         /// </summary>
