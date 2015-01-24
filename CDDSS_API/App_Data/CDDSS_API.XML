@@ -809,6 +809,27 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CDDSS_API.Controllers.TagsController.GetTagByIssue(System.Int32)">
+            <summary>
+            returns all Tags of an Issue
+            </summary>
+            <param name="Issueid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.TagsController.Put(CDDSS_API.Models.TagModel)">
+            <summary>
+            Edits a specific Tag
+            </summary>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.TagsController.DeleteTag(System.Int32)">
+            <summary>
+            Delets a specific Tag
+            </summary>
+            <param name="tagID"></param>
+            <returns></returns>
+        </member>
         <member name="T:CDDSS_API.Controllers.UserController">
             <summary>
             ApiController User
@@ -1012,6 +1033,33 @@
             </summary>
             <param name="criterionid"></param>
             <param name="alternativeid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.TagsRepository.GetAllTags">
+            <summary>
+            returns all Tags
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.TagsRepository.getTagsOfIssue(System.Int32)">
+            <summary>
+            returns all Tags of an Issue
+            </summary>
+            <param name="issueID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.TagsRepository.EditTag(CDDSS_API.Models.TagModel)">
+            <summary>
+            Edits a specific Tag
+            </summary>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.TagsRepository.DeleteTag(System.Int32)">
+            <summary>
+            Deletes a specific Tag
+            </summary>
+            <param name="tagID"></param>
             <returns></returns>
         </member>
         <member name="T:CDDSS_API.Repository.UserRepository">
