@@ -12,6 +12,9 @@ using System.Web.UI.WebControls;
 
 namespace Client
 {
+    /// <summary>
+    /// API Handler contains necessary API requests for AllIssues.apsx and MyIssues.aspx
+    /// </summary>
     public class ReviewAPIHandler
     {
         public ReviewAPIHandler()
@@ -19,6 +22,11 @@ namespace Client
 
         }
 
+        /// <summary>
+        /// returns all issues of application
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <returns></returns>
         public List<IssueModel> GetAllIssues(RestClient rc)
         {
             rc.EndPoint = "api/Issue/";
@@ -27,6 +35,12 @@ namespace Client
             return JsonConvert.DeserializeObject<List<IssueModel>>(json);
         }
 
+        /// <summary>
+        /// returns all issues of the requested user with accessright contributor or owner
+        
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <returns></returns>
         public List<IssueModel> GetAllCOIssuesOfUser(RestClient rc)
         {
             rc.EndPoint = "api/AllIssue/OfUser";
@@ -35,6 +49,11 @@ namespace Client
             return JsonConvert.DeserializeObject<List<IssueModel>>(userissue);
         }
 
+        /// <summary>
+        /// returns only these issues of the requested user with accessright owner
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <returns></returns>
         public List<IssueModel> GetOwnerIssuesOfUser(RestClient rc)
         {
             rc.EndPoint = "api/Issue/OfUser";
@@ -43,6 +62,12 @@ namespace Client
             return JsonConvert.DeserializeObject<List<IssueModel>>(userissue);
         }
 
+        /// <summary>
+        /// adds a new review
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <param name="newReview"></param>
+        /// <returns></returns>
         public String AddReview(RestClient rc, ReviewModel newReview)
         {
             rc.EndPoint = "api/Review/Add";
@@ -53,6 +78,12 @@ namespace Client
             return json;
         }
 
+        /// <summary>
+        /// returns issue reviews
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public List<ReviewModel> GetIssueReviews(RestClient rc, IssueModel element)
         {
             rc.EndPoint = "api/Review?issueId=" + element.Id;
@@ -62,14 +93,14 @@ namespace Client
         }
     }
 
+    /// <summary>
+    /// Provides all necessary helper methods for visualizing the reviews in AllIssues.aspx and MyIssues.aspx
+    /// </summary>
     public class ReviewHelper
     {
-        List<Panel> reviewAddPanelList;
-        List<Panel> reviewShowPanelList;
-        List<LinkButton> addReviewLinkButtonList;
-        List<LinkButton> showReviewLinkButtonList;
-        List<IssueModel> userIssues;
-        List<IssueModel> allIssues;
+        private List<Panel> reviewAddPanelList, reviewShowPanelList; //contains all add/show panels
+        private List<LinkButton> addReviewLinkButtonList, showReviewLinkButtonList; //contains all add/show review LinkButtons
+        private List<IssueModel> userIssues, allIssues; 
 
         public ReviewHelper()
         {
@@ -81,42 +112,49 @@ namespace Client
             allIssues = new List<IssueModel>();
         }
 
+        //getter, setter ReviewAddPanelList
         public List<Panel> ReviewAddPanelList
         {
             get { return reviewAddPanelList; }
             set { this.reviewAddPanelList = value; }
         }
 
+        //getter, setter ReviewShowPanelList
         public List<Panel> ReviewShowPanelList
         {
             get { return reviewShowPanelList; }
             set { this.reviewShowPanelList = value; }
         }
 
+        //getter, setter AddReviewLinkButtonList
         public List<LinkButton> AddReviewLinkButtonList
         {
             get { return addReviewLinkButtonList; }
             set { this.addReviewLinkButtonList = value; }
         }
 
+        //getter, setter ShowReviewLinkButtonList
         public List<LinkButton> ShowReviewLinkButtonList
         {
             get { return showReviewLinkButtonList; }
             set { this.showReviewLinkButtonList = value; }
         }
 
+        //getter, setter UserIssues
         public List<IssueModel> UserIssues
         {
             get { return userIssues; }
             set { this.userIssues = value; }
         }
 
+        //getter, setter AllIssues
         public List<IssueModel> AllIssues
         {
             get { return allIssues; }
             set { this.allIssues = value; }
         }
 
+        //creates show linkButton
         public LinkButton CreateShowLinkButton(int hyperlinkid)
         {
             LinkButton showLinkButton = new LinkButton();
@@ -127,6 +165,7 @@ namespace Client
             return showLinkButton;
         }
 
+        //creates add linkButton
         public LinkButton CreateAddLinkButton(int hyperlinkid)
         {
             LinkButton addLinkButton = new LinkButton();
@@ -138,6 +177,7 @@ namespace Client
             return addLinkButton;
         }
 
+        //creates the panel if review adding was successful
         public Panel CreateReviewAddSuccessPanel()
         {
             Panel panelOK = new Panel();
@@ -149,6 +189,7 @@ namespace Client
             return panelOK;
         }
 
+        //creates the panle if review adding was NOT successful
         public Panel CreateReviewAddFailPanel()
         {
             Panel panelNOK = new Panel();
@@ -377,6 +418,7 @@ namespace Client
             return reviewPanel;
         }
 
+        //sets the style of the selected LinkButton and invisibles all other panels
         public void HandleLinkButtonClick(LinkButton link, List<Panel> panelList, int pressedlinkbuttonid, Table dataTable, String buttontype)
         {
             InvisiblePanels(pressedlinkbuttonid, buttontype);

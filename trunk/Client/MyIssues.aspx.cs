@@ -148,14 +148,6 @@ namespace Client
                     Panel showReviewPanel = reviewHelper.CreateShowReviewPanel(element, rc, hyperlinkid, this);
                     showReviewPanel.Visible = false;
                     tTitle.Controls.Add(showReviewPanel);
-                    
-
-                    ///
-                    if (element.Status.Equals("Finished"))
-                    {
-                        
-                    }
-                    ///
 
                     row.Cells.Add(tTitle);
 
