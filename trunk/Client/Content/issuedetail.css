@@ -181,6 +181,49 @@ table > tbody > tr > th {
     margin-bottom:3px;
 }
 
+#MainContent_criteriaTable {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_criteriaWeightTable {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_criteriaWeightTable > tbody > tr > td {
+    text-align: center;
+}
+
+.left {
+    text-align: left !important;
+}
+
+#MainContent_alternativesTable {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_decisionPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_decisionLBL {
+    font-family: 'Maven Pro', sans-serif;
+    font-size:20px;
+    color:#009688 !important;
+}
+
+#MainContent_reviewPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_reviewPanel > span {
+    color:#009688 !important;
+}
+
 a {
     font-family: 'Maven Pro', sans-serif;
     color:#727272 !important;
