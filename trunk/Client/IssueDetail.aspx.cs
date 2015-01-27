@@ -319,6 +319,7 @@ namespace Client
                     }
                     
                     decisionTXT.Text = dm.Explanation;
+                    decisionPanel.Controls.Add(new LiteralControl("<hr />"));
                     decisionPanel.Visible = true;
                 }
                
@@ -342,6 +343,7 @@ namespace Client
                         reviewPanel.Controls.Add(new LiteralControl("<br />"));
 
                     }
+                    reviewPanel.Controls.Add(new LiteralControl("<hr />"));
                     reviewPanel.Visible = true;
                 }
             }
@@ -362,6 +364,7 @@ namespace Client
             evaluationTable.Rows.Clear();
             us.RatingsTRs.Clear();
 
+            evaluationPanel.Controls.Add(new LiteralControl("<hr />"));
             evaluationPanel.Visible = true;
 
             rc.EndPoint = "api/Rating/All";
