@@ -7,8 +7,15 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding an Artefact
+    /// </summary>
     public class ArtefactsRepository : RepositoryBase
     {
+        /// <summary>
+        /// returns all artefacts
+        /// </summary>
+        /// <returns></returns>
          public List<ArtefactModel> GetAllArtefacts(){
              DataClassesDataContext ctx = new DataClassesDataContext();
              List<ArtefactModel> list = new List<ArtefactModel>();

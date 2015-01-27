@@ -13,9 +13,17 @@ using System.Web.UI.WebControls;
 
 namespace Client
 {
+    /// <summary>
+    /// Code Behind for IssueDetail.aspx
+    /// </summary>
     public partial class IssueDetail : System.Web.UI.Page
     {
-
+        /// <summary>
+        /// Event Page Preload
+        /// here are all dynamically generated events registered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Preload(object sender, EventArgs e)
         {
             if (!this.User.Identity.IsAuthenticated)
@@ -32,12 +40,6 @@ namespace Client
             }
             if (!IsPostBack)
             {
-                //if (!User.Identity.IsAuthenticated)
-                //{
-                //    RestClient.Login("sinisa.zubic@gmx.at", "passme", Session.SessionID);
-                //    SessionManager.AddUserSession(Session.SessionID);
-                //}
-                
                 UserSession us = SessionManager.GetUserSession(Session.SessionID);
                 us.DetailIssue = null;
                 us.CreateIssueEntered();
@@ -112,6 +114,12 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// Page Load
+        /// the whole page is been created
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             int issueID = int.Parse(Request["issueId"]);
@@ -158,6 +166,7 @@ namespace Client
                 relatedIssueLink.Visible = false;
             }
 
+            //if not postback load issue data and show it
             if (!IsPostBack) { 
                 Button tagButton;
                 titleText.Text = issue.Title;
@@ -220,7 +229,7 @@ namespace Client
                 }
                 
             }
-            else
+            else //if postback load data from user session and show it
             {
                 foreach (Control c in us.IssueTags)
                 {
@@ -350,6 +359,13 @@ namespace Client
             
         }
 
+        //------------------------- panel build methods -------------------------------------------
+        /// <summary>
+        /// builds rating panel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded from API</param>
+        /// <param name="us">UserSession</param>
+        /// <param name="altList">list of alternatives regarding the issue</param>
         private void buildRating(IssueModel issue, UserSession us, List<AlternativeModel> altList)
         {
             TableHeaderRow thr = new TableHeaderRow();
@@ -420,6 +436,12 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// builds alternatives Panel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded from API</param>
+        /// <param name="us">UserSession</param>
+        /// <returns>list of alternatives regarding the issue</returns>
         private List<AlternativeModel> buildAlternatives(IssueModel issue, UserSession us)
         {
             RestClient rc = RestClient.GetInstance(Session.SessionID);
@@ -485,6 +507,11 @@ namespace Client
             return altList;
         }
 
+        /// <summary>
+        /// builds criteriaWeights panel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded from API</param>
+        /// <param name="us">UserSession</param>
         private void buildCriteriaWeights(IssueModel issue, UserSession us)
         {
             TableRow tr;
@@ -619,6 +646,11 @@ namespace Client
             
         }
 
+        /// <summary>
+        /// builds criteriaPanel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel Loaded form API</param>
+        /// <param name="us">UserSession</param>
         private void buildCriterias(IssueModel issue, UserSession us)
         {
             TableRow tr;
@@ -657,6 +689,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// builds documentsPanel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded from API</param>
+        /// <param name="us">UserSession</param>
         private void buildDocuments(IssueModel issue, UserSession us)
         {
             HyperLink link;
@@ -689,6 +726,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// builds stakeholdersPanel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded form API</param>
+        /// <param name="us">UserSession</param>
         private void buildStakeholders(IssueModel issue, UserSession us)
         {
             TableRow tr;
@@ -720,6 +762,11 @@ namespace Client
             }  
         }
 
+        /// <summary>
+        /// builds sartefactsPanel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded form API</param>
+        /// <param name="us">UserSession</param>
         private void buildArtefacts(IssueModel issue, UserSession us)
         {
             TableRow tr;
@@ -751,6 +798,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// builds factorsPanel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded form API</param>
+        /// <param name="us">UserSession</param>
         private void buildFactors(IssueModel issue, UserSession us)
         {
             us = SessionManager.GetUserSession(Session.SessionID);
@@ -797,6 +849,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// builds accessRightsPanel, called from page load
+        /// </summary>
+        /// <param name="issue">IssueModel loaded form API</param>
+        /// <param name="us">UserSession</param>
         private void buildAccessRights(IssueModel issue, UserSession us)
         {
             TableRow tr;
@@ -876,134 +933,14 @@ namespace Client
             }
         }
 
-        void delUserBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+        //------------------------- enable, disable and visibility for controls -------------------
 
-            if (((DropDownList)t.Cells[1].Controls[0]).SelectedIndex == 2)
-            {
-                return;
-            }
-            
-            usersTable.Rows.Remove(t);
-            us.AccessRTRs.Clear();
-            
-            foreach (TableRow tr in usersTable.Rows)
-            {
-                if (tr.GetType() != typeof(TableHeaderRow))
-                {
-                    us.AccessRTRs.Add(tr);
-                }
-            }
-        }
-
-        void delStkBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
-
-            stakeholderTable.Rows.Remove(t);
-            us.StakeholdersTRs.Clear();
-
-            foreach (TableRow tr in stakeholderTable.Rows)
-            {
-                us.StakeholdersTRs.Add(tr);
-            }
-        }
-
-        void delArtBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
-
-            artefactsTable.Rows.Remove(t);
-            us.ArtefactsTRs.Clear();
-
-            foreach (TableRow tr in artefactsTable.Rows)
-            {
-                us.ArtefactsTRs.Add(tr);
-            }
-        }
-
-        void delFactorBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
-
-            factorsTable.Rows.Remove(t);
-            us.FactorTRs.Clear();
-
-            for (int i = 1; i < factorsTable.Rows.Count;i++ )
-            {
-                us.FactorTRs.Add(factorsTable.Rows[i]);
-            }
-        }
-
-        void delDocBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-
-            if (t.Cells[0].Controls[0].GetType() == typeof(HyperLink)){
-                us.DocsToDelete.Add(((HyperLink)t.Cells[0].Controls[0]).Text);
-            }
-            else
-            {
-                rc.RemoveFile(((HyperLink)t.Cells[0].Controls[0]).Text);
-            }
-
-            documentsTable.Rows.Remove(t);
-            us.DocumentsTRs.Clear();
-
-            foreach(TableRow tr in documentsTable.Rows)
-            {
-                us.DocumentsTRs.Add(tr);
-            }
-        }
-
-        void delCritBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            int id = int.Parse(t.ID.Replace("critTR",""));
-
-            if (id > 0)
-            {
-                us.CriteriasToDelete.Add(id);
-            }
-
-            criteriaTable.Rows.Remove(t);
-            us.CriteriaTRs.Clear();
-
-            foreach (TableRow tr in criteriaTable.Rows)
-            {
-                us.CriteriaTRs.Add(tr);
-            }
-        }
-
-        protected void delAltBtn_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
-            int id = int.Parse(t.ID.Replace("altTR", ""));
-
-            if (id > 0)
-            {
-                us.AlternativesToDelete.Add(id);
-            }
-
-            alternativesTable.Rows.Remove(t);
-            us.AlternativesTRs.Clear();
-
-            for (int i = 1; i < alternativesTable.Rows.Count; i++ )
-            {
-                us.AlternativesTRs.Add(alternativesTable.Rows[i]);
-            }
-        }
-        
+        /// <summary>
+        /// sets view permissions for controls (disable/enable & visibility)
+        /// called from page load
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <param name="rc"></param>
         protected void doPermissions(IssueModel issue, RestClient rc)
         {
             char accessRight;
@@ -1028,8 +965,8 @@ namespace Client
 
                 descriptionText.Enabled = false;
                 titleText.Enabled = false;
-                
-                
+
+
 
                 save.Visible = false;
 
@@ -1043,7 +980,7 @@ namespace Client
                 disableTags();
 
                 disableCriteria();
-                
+
 
                 //critweight TC
                 foreach (TableRow tr in criteriaWeightTable.Rows)
@@ -1107,7 +1044,8 @@ namespace Client
                 saveNext.Visible = false;
                 foreach (TableRow tr in usersTable.Rows)
                 {
-                    if (tr.GetType() != typeof(TableHeaderRow)) { 
+                    if (tr.GetType() != typeof(TableHeaderRow))
+                    {
                         ((DropDownList)tr.Cells[1].Controls[0]).Enabled = false;
                         ((Button)tr.Cells[2].Controls[0]).Visible = false;
                     }
@@ -1118,7 +1056,7 @@ namespace Client
             //STATUS ONLY - disable criteria weight textboxes when status not in BR2
             if (!issue.Status.ToUpper().Equals("BRAINSTORMING2"))
             {
-                for (int i = 1; i < criteriaWeightTable.Rows.Count; i++ )
+                for (int i = 1; i < criteriaWeightTable.Rows.Count; i++)
                 {
                     TableRow tr = criteriaWeightTable.Rows[i];
                     ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
@@ -1128,6 +1066,8 @@ namespace Client
             if (issue.Status.ToUpper().Equals("CREATING"))
             {
                 alternativesPanel.Visible = false;
+                criteriaPanel.Visible = false;
+                criteriaWeightPanel.Visible = false;
             }
 
             if (!issue.Status.ToUpper().Equals("FINISHED"))
@@ -1163,6 +1103,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// disables controls in criteria panel
+        /// </summary>
         public void disableCriteria()
         {
             foreach (TableRow tr in criteriaTable.Rows)
@@ -1174,6 +1117,9 @@ namespace Client
             addCriteriaButton.Visible = false;
         }
 
+        /// <summary>
+        /// disables remove tag option
+        /// </summary>
         private void disableTags()
         {
             foreach (Control c in tagPanel.Controls)
@@ -1186,7 +1132,11 @@ namespace Client
             addTagButton.Visible = false;
         }
 
-        private void disableStakeholdersEdit() {
+        /// <summary>
+        /// disables edit stakeholder option
+        /// </summary>
+        private void disableStakeholdersEdit()
+        {
             foreach (TableRow tr in stakeholderTable.Rows)
             {
                 ((Button)tr.Cells[1].Controls[0]).Visible = false;
@@ -1194,6 +1144,9 @@ namespace Client
             addStakeholder.Visible = false;
         }
 
+        /// <summary>
+        /// disables edit influence factor option
+        /// </summary>
         private void disableFactorsEdit()
         {
             int cnt = 0;
@@ -1211,6 +1164,9 @@ namespace Client
             addFactor.Visible = false;
         }
 
+        /// <summary>
+        /// disables edit document option
+        /// </summary>
         private void disableDocumentsEdit()
         {
             foreach (TableRow tr in documentsTable.Rows)
@@ -1220,6 +1176,9 @@ namespace Client
             addDocumentBtn.Visible = false;
         }
 
+        /// <summary>
+        /// disables eidt artefact option
+        /// </summary>
         private void disableArtefactsEdit()
         {
             foreach (TableRow tr in artefactsTable.Rows)
@@ -1229,6 +1188,9 @@ namespace Client
             addArtefact.Visible = false;
         }
 
+        /// <summary>
+        /// disables editAlternative option
+        /// </summary>
         private void disableAlternativesEdit()
         {
             //alternatives
@@ -1241,7 +1203,177 @@ namespace Client
             }
             addAlternativeButton.Visible = false;
         }
+        
+        //------------------------- control events ------------------------------------------------
 
+        /// <summary>
+        /// event for removing access right of some user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void delUserBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+
+            if (((DropDownList)t.Cells[1].Controls[0]).SelectedIndex == 2)
+            {
+                return;
+            }
+            
+            usersTable.Rows.Remove(t);
+            us.AccessRTRs.Clear();
+            
+            foreach (TableRow tr in usersTable.Rows)
+            {
+                if (tr.GetType() != typeof(TableHeaderRow))
+                {
+                    us.AccessRTRs.Add(tr);
+                }
+            }
+        }
+
+        /// <summary>
+        /// event for deleting some stakeholder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void delStkBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+
+            stakeholderTable.Rows.Remove(t);
+            us.StakeholdersTRs.Clear();
+
+            foreach (TableRow tr in stakeholderTable.Rows)
+            {
+                us.StakeholdersTRs.Add(tr);
+            }
+        }
+
+        /// <summary>
+        /// event for deleteing some artefact
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void delArtBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+
+            artefactsTable.Rows.Remove(t);
+            us.ArtefactsTRs.Clear();
+
+            foreach (TableRow tr in artefactsTable.Rows)
+            {
+                us.ArtefactsTRs.Add(tr);
+            }
+        }
+
+        /// <summary>
+        /// event for deleting some influence factor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void delFactorBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+
+            factorsTable.Rows.Remove(t);
+            us.FactorTRs.Clear();
+
+            for (int i = 1; i < factorsTable.Rows.Count;i++ )
+            {
+                us.FactorTRs.Add(factorsTable.Rows[i]);
+            }
+        }
+
+        /// <summary>
+        /// event for deleting some document
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void delDocBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+
+            if (t.Cells[0].Controls[0].GetType() == typeof(HyperLink)){
+                us.DocsToDelete.Add(((HyperLink)t.Cells[0].Controls[0]).Text);
+            }
+            else
+            {
+                rc.RemoveFile(((HyperLink)t.Cells[0].Controls[0]).Text);
+            }
+
+            documentsTable.Rows.Remove(t);
+            us.DocumentsTRs.Clear();
+
+            foreach(TableRow tr in documentsTable.Rows)
+            {
+                us.DocumentsTRs.Add(tr);
+            }
+        }
+
+        /// <summary>
+        /// event for deleting some criteria
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void delCritBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            int id = int.Parse(t.ID.Replace("critTR",""));
+
+            if (id > 0)
+            {
+                us.CriteriasToDelete.Add(id);
+            }
+
+            criteriaTable.Rows.Remove(t);
+            us.CriteriaTRs.Clear();
+
+            foreach (TableRow tr in criteriaTable.Rows)
+            {
+                us.CriteriaTRs.Add(tr);
+            }
+        }
+
+        /// <summary>
+        /// event for deleting some alternative
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void delAltBtn_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow t = (TableRow)((TableCell)((Button)sender).Parent).Parent;
+            int id = int.Parse(t.ID.Replace("altTR", ""));
+
+            if (id > 0)
+            {
+                us.AlternativesToDelete.Add(id);
+            }
+
+            alternativesTable.Rows.Remove(t);
+            us.AlternativesTRs.Clear();
+
+            for (int i = 1; i < alternativesTable.Rows.Count; i++ )
+            {
+                us.AlternativesTRs.Add(alternativesTable.Rows[i]);
+            }
+        }
+
+        /// <summary>
+        /// remove tag event, raised when some tag is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void tagButton_Click(object sender, EventArgs e)
         {
             UserSession us = SessionManager.GetUserSession(Session.SessionID);
@@ -1250,12 +1382,22 @@ namespace Client
             tagPanel.Controls.Remove(b);
         }
 
+        /// <summary>
+        /// save button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void save_Click(object sender, EventArgs e)
         {
             saveIssue();
             Response.Redirect("IssueDetail?issueId=" + Request["issueId"]);
          }
 
+        /// <summary>
+        /// save and next button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void saveNext_Click(object sender, EventArgs e)
         {
             saveIssue();
@@ -1268,6 +1410,506 @@ namespace Client
             Response.Redirect("IssueDetail?issueId=" + Request["issueId"]);
         }
 
+        /// <summary>
+        /// add tag event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addTagButton_Click(object sender, EventArgs e)
+        {
+            List<TagModel> tagsList;
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            UserSession userSession = SessionManager.GetUserSession(Session.SessionID);
+
+            rc.EndPoint = "api/Tags";
+            tagsList = JsonConvert.DeserializeObject<List<TagModel>>(rc.MakeRequest());
+
+            DropDownList tagsDDL = new DropDownList();
+            tagsDDL.Items.Add(new ListItem("", "-1"));
+            tagsDDL.SelectedIndexChanged += tagsDDL_SelectedIndexChanged;
+            tagsDDL.CssClass = "dropdown_tag";
+            tagsDDL.AutoPostBack = true;
+            string nextID = userSession.NextTTRID;
+            tagsDDL.ID = "tagDDL" + nextID;
+            foreach (TagModel tag in tagsList)
+            {
+                tagsDDL.Items.Add(new ListItem(tag.Name, tag.Id.ToString()));
+            }
+            tagsDDL.Items.Add(new ListItem("New...", "-2"));
+            LiteralControl lc = new LiteralControl("<br />");
+            lc.ID = "tagLiteral" + nextID;
+            tagPanel.Controls.Add(lc);
+            tagPanel.Controls.Add(tagsDDL);
+
+            userSession.IssueTags.Add(lc);
+            userSession.IssueTags.Add(tagsDDL);
+        }
+
+        /// <summary>
+        /// tag drop down listbox index changed event
+        /// if a tag is selected, then tag is added to issue
+        /// else a textbox is created for new tag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void tagsDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserSession session = SessionManager.GetUserSession(Session.SessionID);
+            DropDownList dpList = (DropDownList)sender;
+
+
+            if (dpList.SelectedIndex == dpList.Items.Count - 1)
+            {
+                TextBox t = new TextBox();
+                t.CssClass = "maxwidth";
+                int idx = tagPanel.Controls.IndexOf(dpList);
+                t.ID = dpList.ID.Replace("tagDDL", "tagTXT");
+                tagPanel.Controls.AddAt(idx, t);
+                tagPanel.Controls.Remove(dpList);
+
+                session.IssueTags.Clear();
+                foreach (Control c in tagPanel.Controls)
+                {
+                    session.IssueTags.Add(c);
+                }
+            }
+            else if (dpList.SelectedIndex > 0)
+            {
+                if (FindControl("TAGBTN" + dpList.SelectedItem.Value) != null)
+                {
+                    dpList.SelectedIndex = 0;
+                    return;
+                }
+                string del = dpList.ID;
+                tagPanel.Controls.Remove(dpList);
+                string del2 = del.Replace("tagDDL", "tagLiteral");
+
+                foreach (Control c in tagPanel.Controls)
+                {
+                    if (c.ID != null && c.ID.Equals(del2))
+                    {
+                        tagPanel.Controls.Remove(c);
+                        break;
+                    }
+                }
+
+                Button tagButton = new Button();
+                tagButton = new Button();
+                tagButton.ID = "TAGBTN" + dpList.SelectedItem.Value;
+                tagButton.Click += tagButton_Click;
+                tagButton.ToolTip = "Remove";
+                tagButton.Text = dpList.SelectedItem.Text;
+                tagButton.CssClass = "table_tag";
+
+
+                foreach (Control c in session.IssueTags)
+                {
+                    if (c.ID != null && c.ID.Equals(del))
+                    {
+                        session.IssueTags.Remove(c);
+                        break;
+                    }
+                }
+
+                foreach (Control c in session.IssueTags)
+                {
+                    if (c.ID != null && c.ID.Equals(del2))
+                    {
+                        session.IssueTags.Remove(c);
+                        break;
+                    }
+                }
+
+                //check if tag already exists
+                bool exists = false;
+                foreach (Control c in tagPanel.Controls)
+                {
+                    if (c.ID != null && c.ID.Equals(tagButton.ID))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists)
+                {
+                    tagPanel.Controls.Add(tagButton);
+                    session.IssueTags.Add(tagButton);
+                }
+            }
+        }
+
+        /// <summary>
+        /// add user click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addUser_Click(object sender, EventArgs e)
+        {
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow tr;
+            TableCell userTC, rightTC, delTC;
+            DropDownList userDrpList;
+            DropDownList userRightDDL;
+            Button delUserBtn;
+            int key = us.NextAccesTRKey;
+            tr = new TableRow();
+            tr.ID = "usrTR-" + key;
+
+            rc.EndPoint = "api/User";
+            List<UserShort> userList = JsonConvert.DeserializeObject<List<UserShort>>(rc.MakeRequest());
+            userDrpList = new DropDownList();
+            userDrpList.ID = "USRList-" + key;
+            userDrpList.Items.Add(new ListItem(""));
+            foreach (UserShort u in userList)
+            {
+                userDrpList.Items.Add(new ListItem(u.FirstName + " " + u.LastName, u.AccessObject.ToString()));
+            }
+
+            userTC = new TableCell();
+            userTC.ID = "usrTC-" + key;
+            userTC.Controls.Add(userDrpList);
+
+            userRightDDL = new DropDownList();
+            userRightDDL.Items.Add("Contributor");
+            userRightDDL.Items.Add("Viewer");
+            userRightDDL.Items.Add("Owner");
+            rightTC = new TableCell();
+            rightTC.ID = "rightTC-" + us.NextATRID;
+            rightTC.Controls.Add(userRightDDL);
+            delUserBtn = new Button();
+
+            delUserBtn.ID = "delUsrBTN-" + key;
+            delUserBtn.Text = "X";
+            delUserBtn.Click += delUserBtn_Click;
+            delTC = new TableCell();
+            delTC.ID = "delTC-" + key;
+            delTC.Controls.Add(delUserBtn);
+            tr.Cells.Add(userTC);
+            tr.Cells.Add(rightTC);
+            tr.Cells.Add(delTC);
+            usersTable.Rows.Add(tr);
+            us.AccessRTRs.Add(tr);
+        }
+
+        /// <summary>
+        /// add stakeholder event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addStakeholder_Click(object sender, EventArgs e)
+        {
+            TableRow tr;
+            TableCell stkTC, delTC;
+            DropDownList stkDropList;
+            Button delStkBtn;
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            rc.EndPoint = "api/Stakeholders";
+            List<StakeholderModel> stakeholdersList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
+            string id = "-" + us.NextSTRID;
+
+            tr = new TableRow();
+            tr.ID = "stkTR" + id;
+
+
+            stkDropList = new DropDownList();
+            stkDropList.ID = "stkDrp" + id;
+            stkDropList.Items.Add("");
+            foreach (StakeholderModel sm in stakeholdersList)
+            {
+                stkDropList.Items.Add(new ListItem(sm.Name, sm.Id.ToString()));
+            }
+            stkDropList.Items.Add("new...");
+            stkDropList.SelectedIndexChanged += stkDropList_SelectedIndexChanged;
+            stkDropList.AutoPostBack = true;
+
+            stkTC = new TableCell();
+            stkTC.ID = "stkTC" + id;
+            stkTC.Controls.Add(stkDropList);
+            delStkBtn = new Button();
+            delStkBtn.ID = "delStkBTN" + id;
+            delStkBtn.Text = "X";
+            delStkBtn.Click += delStkBtn_Click;
+            delTC = new TableCell();
+            delTC.ID = "delStkTC" + id;
+            delTC.Controls.Add(delStkBtn);
+            tr.Cells.Add(stkTC);
+            tr.Cells.Add(delTC);
+            stakeholderTable.Rows.Add(tr);
+            us.StakeholdersTRs.Add(tr);
+        }
+
+        /// <summary>
+        /// add artefact event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addArtefact_Click(object sender, EventArgs e)
+        {
+            TableRow tr;
+            TableCell artTC, delArtTC;
+            DropDownList artDropList;
+            Button delArtBtn;
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            RestClient rc = RestClient.GetInstance(Session.SessionID);
+            rc.EndPoint = "api/Artefacts";
+            List<ArtefactModel> artefactsList = JsonConvert.DeserializeObject<List<ArtefactModel>>(rc.MakeRequest());
+            string id = "-" + us.NextATRID;
+
+            tr = new TableRow();
+            tr.ID = "artTR" + id;
+
+
+            artDropList = new DropDownList();
+            artDropList.ID = "artDrp" + id;
+            artDropList.Items.Add("");
+            foreach (ArtefactModel art in artefactsList)
+            {
+                artDropList.Items.Add(new ListItem(art.Name, art.Id.ToString()));
+            }
+            artDropList.Items.Add("new...");
+            artDropList.SelectedIndexChanged += artDropList_SelectedIndexChanged;
+            artDropList.AutoPostBack = true;
+
+            artTC = new TableCell();
+            artTC.ID = "artTC" + id;
+            artTC.Controls.Add(artDropList);
+            delArtBtn = new Button();
+            delArtBtn.ID = "delArtBTN" + id;
+            delArtBtn.Text = "X";
+            delArtBtn.Click += delArtBtn_Click;
+            delArtTC = new TableCell();
+            delArtTC.ID = "delArtTC" + id;
+            delArtTC.Controls.Add(delArtBtn);
+            tr.Cells.Add(artTC);
+            tr.Cells.Add(delArtTC);
+            artefactsTable.Rows.Add(tr);
+            us.ArtefactsTRs.Add(tr);
+        }
+
+        /// <summary>
+        /// artefact drop down listbox index changed event
+        /// existing artefact is added to issue or a textbox is created for new artefact
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void artDropList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            DropDownList drpList = (DropDownList)sender;
+            if (drpList.SelectedValue.Equals("new..."))
+            {
+                TableCell tc = ((TableCell)drpList.Parent);
+                tc.Controls.Remove(drpList);
+                TextBox txt = new TextBox();
+                txt.ID = "artTXT-" + tc.ID.Replace("artTC", "");
+                tc.Controls.Add(txt);
+            }
+        }
+
+        /// <summary>
+        /// stakeholder drop down listbox index changed event
+        /// if stakeholder is selected, then existing stakeholder is added to issue
+        /// else a textbox is been created to enter a new stakeholder input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void stkDropList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            DropDownList drpList = (DropDownList)sender;
+            if (drpList.SelectedValue.Equals("new..."))
+            {
+                TableCell tc = ((TableCell)drpList.Parent);
+                tc.Controls.Remove(drpList);
+                TextBox txt = new TextBox();
+                txt.ID = "stkTXT-" + tc.ID.Replace("stkTC", "");
+                tc.Controls.Add(txt);
+            }
+        }
+
+        /// <summary>
+        /// add influence factor event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addFactor_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            string id = us.NextFTRID;
+            TextBox factorNameTxt = new TextBox();
+            factorNameTxt.ID = "factNameTXT-" + id;
+            factorNameTxt.Width = 100;
+            TableCell nameTC = new TableCell();
+            nameTC.Controls.Add(factorNameTxt);
+
+            TextBox factorCharacteristicsTxt = new TextBox();
+            factorCharacteristicsTxt.ID = "factCharTXT-" + id;
+            factorCharacteristicsTxt.Width = 130;
+            TableCell characteristicsTC = new TableCell();
+            characteristicsTC.Controls.Add(factorCharacteristicsTxt);
+
+            CheckBox numericChck = new CheckBox();
+            numericChck.ID = "factNumCHK-" + id;
+            numericChck.Width = 50;
+            TableCell numericTC = new TableCell();
+            numericTC.Controls.Add(numericChck);
+
+            Button delFactorBtn = new Button();
+            delFactorBtn.ID = "delFactBTN-" + id;
+            delFactorBtn.Text = "X";
+            delFactorBtn.CssClass = "delete_button";
+            delFactorBtn.Click += delFactorBtn_Click;
+            TableCell delTC = new TableCell();
+            delTC.Controls.Add(delFactorBtn);
+
+            TableRow tr = new TableRow();
+            tr.ID = "factTR-" + id;
+            tr.Cells.Add(nameTC);
+            tr.Cells.Add(characteristicsTC);
+            tr.Cells.Add(numericTC);
+            tr.Cells.Add(delTC);
+
+            factorsTable.Rows.Add(tr);
+            us.FactorTRs.Add(tr);
+        }
+
+        /// <summary>
+        /// add document event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addDocumentBtn_Click(object sender, EventArgs e)
+        {
+            FileUpload fileUpload = new FileUpload();
+            fileUpload.Visible = true;
+            fileUpload.Attributes.Add("onchange", "this.form.submit()");
+
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            string id = us.NextDocTRKey;
+            TableRow tr = new TableRow();
+            tr.ID = "docTR" + id;
+            TableCell docTC = new TableCell();
+            docTC.ID = "docTC" + id;
+            docTC.Controls.Add(fileUpload);
+            Button delDocBtn = new Button();
+            delDocBtn.Click += delDocBtn_Click;
+            delDocBtn.ID = "delDocBTN" + id;
+            delDocBtn.Text = "X";
+            TableCell delDocTC = new TableCell();
+            delDocTC.ID = "delDocTC" + id;
+            delDocTC.Controls.Add(delDocBtn);
+            tr.Cells.Add(docTC);
+            tr.Cells.Add(delDocTC);
+            documentsTable.Rows.Add(tr);
+            us.DocumentsTRs.Add(tr);
+        }
+
+        /// <summary>
+        /// add criteria event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addCriteriaButton_Click(object sender, EventArgs e)
+        {
+            TableRow tr;
+            TableCell critDescTC, critTC, delCritTC;
+            TextBox critTXT, critDescTXT;
+            Button delCritBtn;
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            string id = us.NextCritTRKey;
+
+            tr = new TableRow();
+            tr.ID = "critTR-" + id;
+            critTC = new TableCell();
+            critTC.ID = "critTC-" + id;
+            critDescTC = new TableCell();
+            critDescTC.ID = "critDescTC-" + id;
+            delCritTC = new TableCell();
+            delCritTC.ID = "delCritTC-" + id;
+            critTXT = new TextBox();
+            critTXT.ID = "critTXT-" + id;
+            critDescTXT = new TextBox();
+            critDescTXT.ID = "critDescTXT-" + id;
+            delCritBtn = new Button();
+            delCritBtn.Text = "X";
+            delCritBtn.ID = "delCritBtn-" + id;
+            delCritBtn.Click += delCritBtn_Click;
+            critDescTC.Controls.Add(critDescTXT);
+            critTC.Controls.Add(critTXT);
+            delCritTC.Controls.Add(delCritBtn);
+            tr.Cells.Add(critTC);
+            tr.Cells.Add(critDescTC);
+            tr.Cells.Add(delCritTC);
+            criteriaTable.Rows.Add(tr);
+            us.CriteriaTRs.Add(tr);
+        }
+
+        /// <summary>
+        /// add alternative event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void addAlternativeButton_Click(object sender, EventArgs e)
+        {
+            UserSession us = SessionManager.GetUserSession(Session.SessionID);
+            TableRow tr;
+            TableCell altTC, descAltTC, altReasonTC, delAltTC, altRatTC;
+            TextBox altTXT, descAltTXT, altReasonTXT;
+            Button delAltBtn;
+            Label altRatLbl;
+            int id = us.NextAltKey;
+
+            tr = new TableRow();
+            tr.ID = "altTR-" + id;
+            altTC = new TableCell();
+            altTC.ID = "altTC-" + id;
+            altTXT = new TextBox();
+            altTXT.ID = "altTXT-" + id;
+            altTC.Controls.Add(altTXT);
+            tr.Cells.Add(altTC);
+
+            descAltTC = new TableCell();
+            descAltTC.ID = "desAltTC-" + id;
+            descAltTXT = new TextBox();
+            descAltTXT.ID = "desActTXT-" + id;
+            descAltTC.Controls.Add(descAltTXT);
+            tr.Cells.Add(descAltTC);
+
+            altReasonTC = new TableCell();
+            altReasonTC.ID = "altReasonTC-" + id;
+            altReasonTXT = new TextBox();
+            altReasonTXT.ID = "altReasonTXT-" + id;
+            altReasonTC.Controls.Add(altReasonTXT);
+            tr.Cells.Add(altReasonTC);
+
+            delAltBtn = new Button();
+            delAltBtn.ID = "delAltBtn-" + id;
+            delAltBtn.Text = "X";
+            delAltBtn.Click += delAltBtn_Click;
+            delAltTC = new TableCell();
+            delAltTC.ID = "delAltTC-" + id;
+            delAltTC.Controls.Add(delAltBtn);
+            tr.Cells.Add(delAltTC);
+
+            altRatTC = new TableCell();
+            altRatTC.ID = "altRatTC-" + id;
+            altRatLbl = new Label();
+            altRatLbl.ID = "altRatLbl-" + id;
+            altRatTC.Controls.Add(altRatLbl);
+            tr.Cells.Add(altRatTC);
+
+            alternativesTable.Rows.Add(tr);
+            us.AlternativesTRs.Add(tr);
+        }
+        
+        //------------------------- save to api methods -------------------------------------------
+
+        /// <summary>
+        /// saves the issue to the API
+        /// </summary>
         protected void saveIssue()
         {
             UserSession us = SessionManager.GetUserSession(Session.SessionID);
@@ -1405,6 +2047,13 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// saves documents to api
+        /// new documents are uploaded and deleted documents were deleted from API
+        /// </summary>
+        /// <param name="rc">RestClient of current session</param>
+        /// <param name="issue">IssueModel of current issue</param>
+        /// <param name="us">UserSession</param>
         private void saveDocuments(RestClient rc, IssueModel issue, UserSession us)
         {
             rc.UploadFilesToRemoteUrl(issue.Id);
@@ -1416,6 +2065,12 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// saves criterias to current issue
+        /// </summary>
+        /// <param name="rc">RestClient of current session</param>
+        /// <param name="issue">IssueModel - current issue</param>
+        /// <param name="us">UserSession</param>
         private void saveCriterias(RestClient rc, IssueModel issue, UserSession us)
         {
             foreach (TableRow tr in criteriaTable.Rows)
@@ -1447,12 +2102,18 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// saves userRatings for current issue
+        /// for empty rating values system is placing 1
+        /// </summary>
+        /// <param name="rc">RestClient of current session</param>
         private void saveRating(RestClient rc)
         {
             TableRow tr;
             TextBox txt;
             List<RatingModel> ratList = new List<RatingModel>();
             RatingModel rat;
+            double r;
 
             if (evaluationTable.Rows.Count == 0)
             {
@@ -1465,7 +2126,12 @@ namespace Client
                 {
                     txt = (TextBox)evaluationTable.Rows[i].Cells[j].Controls[0];
                     rat = new RatingModel();
-                    rat.Rating1 = double.Parse(txt.Text);
+                    if (!double.TryParse(txt.Text,out r))
+                    {
+                        r = 1;
+                    }
+                    rat.Rating1 = r;
+                    
                     rat.AlternativeID = int.Parse(evaluationTable.Rows[i].Cells[j].ID.Split('x')[1]);
                     rat.CriterionID = int.Parse(evaluationTable.Rows[i].Cells[j].ID.Split('x')[0]);
                     ratList.Add(rat);
@@ -1483,6 +2149,10 @@ namespace Client
             rc.MakeRequest();
         }
 
+        /// <summary>
+        /// saves alternatives of current issue
+        /// </summary>
+        /// <param name="rc">RestClient of current session</param>
         private void saveAlternatives(RestClient rc)
         {
             AlternativeModel alt;
@@ -1519,6 +2189,10 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// saves criteria weights to current issue
+        /// </summary>
+        /// <param name="rc">RestClient of current session</param>
         private void saveCriteriaWeights(RestClient rc)
         {
             //saveCriteriaWeigts
@@ -1548,353 +2222,11 @@ namespace Client
             rc.PostData = JsonConvert.SerializeObject(cwmList);
             rc.MakeRequest();
         }
-
-        protected void addTagButton_Click(object sender, EventArgs e)
-        {
-            List<TagModel> tagsList;
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            UserSession userSession = SessionManager.GetUserSession(Session.SessionID);
-
-            rc.EndPoint = "api/Tags";
-            tagsList = JsonConvert.DeserializeObject<List<TagModel>>(rc.MakeRequest());
-
-            DropDownList tagsDDL = new DropDownList();
-            tagsDDL.Items.Add(new ListItem("", "-1"));
-            tagsDDL.SelectedIndexChanged += tagsDDL_SelectedIndexChanged;
-            tagsDDL.CssClass = "dropdown_tag";
-            tagsDDL.AutoPostBack = true;
-            tagsDDL.ID = "tagDDL" + userSession.NextTTRID;
-            foreach (TagModel tag in tagsList)
-            {
-                tagsDDL.Items.Add(new ListItem(tag.Name, tag.Id.ToString()));
-            }
-            tagsDDL.Items.Add(new ListItem("New...", "-2"));
-            tagPanel.Controls.Add(new LiteralControl("<br />"));
-            tagPanel.Controls.Add(tagsDDL);
-
-            userSession.IssueTags.Add(new LiteralControl("<br />"));
-            userSession.IssueTags.Add(tagsDDL);
-        }
-
-        void tagsDDL_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UserSession session = SessionManager.GetUserSession(Session.SessionID);
-            DropDownList dpList = (DropDownList)sender;
-            
-
-            if (dpList.SelectedIndex == dpList.Items.Count - 1)
-            {
-                TextBox t = new TextBox();
-                t.CssClass = "maxwidth";
-                int idx = tagPanel.Controls.IndexOf(dpList);
-                t.ID = dpList.ID.Replace("tagDDL", "tagTXT");
-                tagPanel.Controls.AddAt(idx, t);
-                tagPanel.Controls.Remove(dpList);
-
-                session.IssueTags.Clear();
-                foreach(Control c in tagPanel.Controls){
-                    session.IssueTags.Add(c);
-                }
-            }
-            else if (dpList.SelectedIndex > 0)
-            {
-                if (FindControl("TAGBTN" + dpList.SelectedItem.Value) != null)
-                {
-                    dpList.SelectedIndex = 0;
-                    return;
-                }
-                string del = dpList.ID;
-                tagPanel.Controls.Remove(dpList);
-
-
-                Button tagButton = new Button();
-                tagButton = new Button();
-                tagButton.ID = "TAGBTN" + dpList.SelectedItem.Value;
-                tagButton.Click += tagButton_Click;
-                tagButton.ToolTip = "Remove";
-                tagButton.Text = dpList.SelectedItem.Text ;
-                tagPanel.Controls.Add(tagButton);
-
-                foreach (Control c in session.IssueTags)
-                {
-                    if (c.ID != null && c.ID.Equals(del))
-                    {
-                        session.IssueTags.Remove(c);
-                        break;
-                    }
-                }
-
-                session.IssueTags.Add(tagButton);
-            }
-        }
-
-        protected void addUser_Click(object sender, EventArgs e)
-        {
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow tr;
-            TableCell userTC, rightTC, delTC;
-            DropDownList userDrpList;
-            DropDownList userRightDDL;
-            Button delUserBtn;
-            int key = us.NextAccesTRKey;
-            tr = new TableRow();
-            tr.ID = "usrTR-" + key;
-
-            rc.EndPoint = "api/User";
-            List<UserShort> userList = JsonConvert.DeserializeObject<List<UserShort>>(rc.MakeRequest());
-            userDrpList = new DropDownList();
-            userDrpList.ID = "USRList-" + key;
-            userDrpList.Items.Add(new ListItem(""));
-            foreach (UserShort u in userList)
-            {
-                userDrpList.Items.Add(new ListItem(u.FirstName + " " + u.LastName, u.AccessObject.ToString()));
-            }
-            
-            userTC = new TableCell();
-            userTC.ID = "usrTC-" + key;
-            userTC.Controls.Add(userDrpList);
-            
-            userRightDDL = new DropDownList();
-            userRightDDL.Items.Add("Contributor");
-            userRightDDL.Items.Add("Viewer");
-            userRightDDL.Items.Add("Owner");
-            rightTC = new TableCell();
-            rightTC.ID = "rightTC-" + us.NextATRID;
-            rightTC.Controls.Add(userRightDDL);
-            delUserBtn = new Button();
-            
-            delUserBtn.ID = "delUsrBTN-" + key;
-            delUserBtn.Text = "X";
-            delUserBtn.Click += delUserBtn_Click;
-            delTC = new TableCell();
-            delTC.ID = "delTC-" + key;
-            delTC.Controls.Add(delUserBtn);
-            tr.Cells.Add(userTC);
-            tr.Cells.Add(rightTC);
-            tr.Cells.Add(delTC);
-            usersTable.Rows.Add(tr);
-            us.AccessRTRs.Add(tr);
-        }
-
-        protected void addStakeholder_Click(object sender, EventArgs e)
-        {
-            TableRow tr;
-            TableCell stkTC, delTC;
-            DropDownList stkDropList;
-            Button delStkBtn;
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            rc.EndPoint = "api/Stakeholders";
-            List<StakeholderModel> stakeholdersList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
-            string id = "-" + us.NextSTRID;
-
-            tr = new TableRow();
-            tr.ID = "stkTR" + id;
-
-
-            stkDropList = new DropDownList();
-            stkDropList.ID = "stkDrp" + id;
-            stkDropList.Items.Add("");
-            foreach (StakeholderModel sm in stakeholdersList)
-            {
-                stkDropList.Items.Add(new ListItem(sm.Name, sm.Id.ToString()));
-            }
-            stkDropList.Items.Add("new...");
-            stkDropList.SelectedIndexChanged += stkDropList_SelectedIndexChanged;
-            stkDropList.AutoPostBack = true;
-
-            stkTC = new TableCell();
-            stkTC.ID = "stkTC" + id;
-            stkTC.Controls.Add(stkDropList);
-            delStkBtn = new Button();
-            delStkBtn.ID = "delStkBTN" + id;
-            delStkBtn.Text = "X";
-            delStkBtn.Click += delStkBtn_Click;
-            delTC = new TableCell();
-            delTC.ID = "delStkTC" + id;
-            delTC.Controls.Add(delStkBtn);
-            tr.Cells.Add(stkTC);
-            tr.Cells.Add(delTC);
-            stakeholderTable.Rows.Add(tr);
-            us.StakeholdersTRs.Add(tr);
-        }
-
-        protected void addArtefact_Click(object sender, EventArgs e)
-        {
-            TableRow tr;
-            TableCell artTC, delArtTC;
-            DropDownList artDropList;
-            Button delArtBtn;
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            RestClient rc = RestClient.GetInstance(Session.SessionID);
-            rc.EndPoint = "api/Artefacts";
-            List<ArtefactModel> artefactsList = JsonConvert.DeserializeObject<List<ArtefactModel>>(rc.MakeRequest());
-            string id = "-" + us.NextATRID;
-
-            tr = new TableRow();
-            tr.ID = "artTR" + id;
-
-
-            artDropList = new DropDownList();
-            artDropList.ID = "artDrp" + id;
-            artDropList.Items.Add("");
-            foreach (ArtefactModel art in artefactsList)
-            {
-                artDropList.Items.Add(new ListItem(art.Name, art.Id.ToString()));
-            }
-            artDropList.Items.Add("new...");
-            artDropList.SelectedIndexChanged += artDropList_SelectedIndexChanged;
-            artDropList.AutoPostBack = true;
-
-            artTC = new TableCell();
-            artTC.ID = "artTC" + id;
-            artTC.Controls.Add(artDropList);
-            delArtBtn = new Button();
-            delArtBtn.ID = "delArtBTN" + id;
-            delArtBtn.Text = "X";
-            delArtBtn.Click += delArtBtn_Click;
-            delArtTC = new TableCell();
-            delArtTC.ID = "delArtTC" + id;
-            delArtTC.Controls.Add(delArtBtn);
-            tr.Cells.Add(artTC);
-            tr.Cells.Add(delArtTC);
-            artefactsTable.Rows.Add(tr);
-            us.ArtefactsTRs.Add(tr);
-        }
-
-        void artDropList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            DropDownList drpList = (DropDownList)sender;
-            if (drpList.SelectedValue.Equals("new..."))
-            {
-                TableCell tc = ((TableCell)drpList.Parent);
-                tc.Controls.Remove(drpList);
-                TextBox txt = new TextBox();
-                txt.ID = "artTXT-" + tc.ID.Replace("artTC", "");
-                tc.Controls.Add(txt);
-            }
-        }
-
-        void stkDropList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            DropDownList drpList = (DropDownList) sender;
-            if (drpList.SelectedValue.Equals("new..."))
-            {
-                TableCell tc = ((TableCell)drpList.Parent);
-                tc.Controls.Remove(drpList);
-                TextBox txt = new TextBox();
-                txt.ID = "stkTXT-" + tc.ID.Replace("stkTC","");
-                tc.Controls.Add(txt);
-            }
-        }
-
-        protected void addFactor_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            string id = us.NextFTRID;
-            TextBox factorNameTxt = new TextBox();
-            factorNameTxt.ID = "factNameTXT-" + id;
-            factorNameTxt.Width = 100;
-            TableCell nameTC = new TableCell();
-            nameTC.Controls.Add(factorNameTxt);
-
-            TextBox factorCharacteristicsTxt = new TextBox();
-            factorCharacteristicsTxt.ID = "factCharTXT-" + id;
-            factorCharacteristicsTxt.Width = 130;
-            TableCell characteristicsTC = new TableCell();
-            characteristicsTC.Controls.Add(factorCharacteristicsTxt);
-
-            CheckBox numericChck = new CheckBox();
-            numericChck.ID = "factNumCHK-" + id;
-            numericChck.Width = 50;
-            TableCell numericTC = new TableCell();
-            numericTC.Controls.Add(numericChck);
-
-            Button delFactorBtn = new Button();
-            delFactorBtn.ID = "delFactBTN-" + id;
-            delFactorBtn.Text = "X";
-            delFactorBtn.CssClass = "delete_button";
-            delFactorBtn.Click += delFactorBtn_Click;
-            TableCell delTC = new TableCell();
-            delTC.Controls.Add(delFactorBtn);
-
-            TableRow tr = new TableRow();
-            tr.ID = "factTR-" + id;
-            tr.Cells.Add(nameTC);
-            tr.Cells.Add(characteristicsTC);
-            tr.Cells.Add(numericTC);
-            tr.Cells.Add(delTC);
-
-            factorsTable.Rows.Add(tr);
-            us.FactorTRs.Add(tr);
-        }
-
-        protected void addDocumentBtn_Click(object sender, EventArgs e)
-        {
-            FileUpload fileUpload = new FileUpload();
-            fileUpload.Visible = true;
-            fileUpload.Attributes.Add("onchange", "this.form.submit()");
-            
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            string id = us.NextDocTRKey;
-            TableRow tr = new TableRow();
-            tr.ID = "docTR" + id;
-            TableCell docTC = new TableCell();
-            docTC.ID = "docTC" + id;
-            docTC.Controls.Add(fileUpload);
-            Button delDocBtn = new Button();
-            delDocBtn.Click += delDocBtn_Click;
-            delDocBtn.ID = "delDocBTN" + id;
-            delDocBtn.Text = "X";
-            TableCell delDocTC = new TableCell();
-            delDocTC.ID = "delDocTC" + id;
-            delDocTC.Controls.Add(delDocBtn);
-            tr.Cells.Add(docTC);
-            tr.Cells.Add(delDocTC);
-            documentsTable.Rows.Add(tr);
-            us.DocumentsTRs.Add(tr);
-        }
-
-        protected void addCriteriaButton_Click(object sender, EventArgs e)
-        {
-            TableRow tr;
-            TableCell critDescTC, critTC, delCritTC;
-            TextBox critTXT, critDescTXT;
-            Button delCritBtn;
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            string id = us.NextCritTRKey;
-
-            tr = new TableRow();
-            tr.ID = "critTR-" + id;
-            critTC = new TableCell();
-            critTC.ID = "critTC-" + id;
-            critDescTC = new TableCell();
-            critDescTC.ID = "critDescTC-" + id;
-            delCritTC = new TableCell();
-            delCritTC.ID = "delCritTC-" + id;
-            critTXT = new TextBox();
-            critTXT.ID = "critTXT-" + id;
-            critDescTXT = new TextBox();
-            critDescTXT.ID = "critDescTXT-" + id;
-            delCritBtn = new Button();
-            delCritBtn.Text = "X";
-            delCritBtn.ID = "delCritBtn-" + id;
-            delCritBtn.Click += delCritBtn_Click;
-            critDescTC.Controls.Add(critDescTXT);
-            critTC.Controls.Add(critTXT);
-            delCritTC.Controls.Add(delCritBtn);
-            tr.Cells.Add(critTC);
-            tr.Cells.Add(critDescTC);
-            tr.Cells.Add(delCritTC);
-            criteriaTable.Rows.Add(tr);
-            us.CriteriaTRs.Add(tr);
-        }
-
-        
-
+      
+        /// <summary>
+        /// checks if the sum of criteria weights are 100 %
+        /// </summary>
+        /// <returns></returns>
         private bool checkCriteriaWeights()
         {
             double sum = 0;
@@ -1918,59 +2250,6 @@ namespace Client
             {
                 return false;
             }
-        }
-
-        protected void addAlternativeButton_Click(object sender, EventArgs e)
-        {
-            UserSession us = SessionManager.GetUserSession(Session.SessionID);
-            TableRow tr;
-            TableCell altTC, descAltTC, altReasonTC, delAltTC, altRatTC;
-            TextBox altTXT, descAltTXT, altReasonTXT;
-            Button delAltBtn;
-            Label altRatLbl;
-            int id = us.NextAltKey;
-
-            tr = new TableRow();
-            tr.ID = "altTR-" + id;
-            altTC = new TableCell();
-            altTC.ID = "altTC-" + id;
-            altTXT = new TextBox();
-            altTXT.ID = "altTXT-" + id;
-            altTC.Controls.Add(altTXT);
-            tr.Cells.Add(altTC);
-
-            descAltTC = new TableCell();
-            descAltTC.ID = "desAltTC-" + id;
-            descAltTXT = new TextBox();
-            descAltTXT.ID = "desActTXT-" + id;
-            descAltTC.Controls.Add(descAltTXT);
-            tr.Cells.Add(descAltTC);
-
-            altReasonTC = new TableCell();
-            altReasonTC.ID = "altReasonTC-" + id;
-            altReasonTXT = new TextBox();
-            altReasonTXT.ID = "altReasonTXT-" + id;
-            altReasonTC.Controls.Add(altReasonTXT);
-            tr.Cells.Add(altReasonTC);
-
-            delAltBtn = new Button();
-            delAltBtn.ID = "delAltBtn-" + id;
-            delAltBtn.Text = "X";
-            delAltBtn.Click += delAltBtn_Click;
-            delAltTC = new TableCell();
-            delAltTC.ID = "delAltTC-" + id;
-            delAltTC.Controls.Add(delAltBtn);
-            tr.Cells.Add(delAltTC);
-
-            altRatTC = new TableCell();
-            altRatTC.ID = "altRatTC-" + id;
-            altRatLbl = new Label();
-            altRatLbl.ID = "altRatLbl-" + id;
-            altRatTC.Controls.Add(altRatLbl);
-            tr.Cells.Add(altRatTC);
-
-            alternativesTable.Rows.Add(tr);
-            us.AlternativesTRs.Add(tr);
         }
 
     }

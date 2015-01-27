@@ -7,6 +7,9 @@ using CDDSS_API.Models.Domain;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing an Criterion
+    /// </summary>
     [DataContractAttribute]
     public class CriterionModel
     {

@@ -8,8 +8,17 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding an Review
+    /// </summary>
     public class ReviewRepository : RepositoryBase
     {
+        /// <summary>
+        /// Adds a review for an Issue
+        /// </summary>
+        /// <param name="rm">ReviewModel</param>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool AddReview(ReviewModel rm, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -34,6 +43,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// returns all reviews of an Issue
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <returns></returns>
         public List<ReviewModel> GetReviewsOfIssue(int issueId)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -61,6 +75,12 @@ namespace CDDSS_API.Repository
             return rmList;
         }
 
+        /// <summary>
+        /// edits an review for an Issue
+        /// </summary>
+        /// <param name="rm">ReviewModel</param>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool EditReview(ReviewModel rm, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -85,6 +105,12 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// deletes a review
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns>true if operation succededs</returns>
         public bool DeleteReview(int issueId, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();

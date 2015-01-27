@@ -7,6 +7,9 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding an rating
+    /// </summary>
     public class RatingRepository : RepositoryBase
     {
         /// <summary>

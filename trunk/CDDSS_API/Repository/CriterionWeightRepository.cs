@@ -7,8 +7,17 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding CriterionWeight
+    /// </summary>
     public class CriterionWeightRepository : RepositoryBase
     {
+        /// <summary>
+        /// adds list of criterions weights to issue
+        /// </summary>
+        /// <param name="list">CriterionWeight List</param>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool AddCriterionWeights(List<CriterionWeightModel> list, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -36,6 +45,12 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// deletes CriterionWeights of current user to some issue
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool DeleteCriterionWeights(int issueId, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -61,6 +76,12 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// updates CriterionWeights of current user to some issue
+        /// </summary>
+        /// <param name="list">list of CriterionWeights</param>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool UpdateCriterionWeights(List<CriterionWeightModel> list, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -88,6 +109,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// returns all CriterionWeight of an Issue
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <returns></returns>
         public List<CriterionWeightModel> GetCriterionWeights(int issueId)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();

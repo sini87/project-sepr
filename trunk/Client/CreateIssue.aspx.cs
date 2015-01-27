@@ -11,6 +11,9 @@ using System.Web.UI.WebControls;
 
 namespace Client
 {
+    /// <summary>
+    /// code behind for CreateIssue.aspx
+    /// </summary>
     public partial class CreateIssue : System.Web.UI.Page
     {
         RestClient rc;
@@ -19,11 +22,18 @@ namespace Client
         List<StakeholderModel> stakeholdersList = new List<StakeholderModel>();
         List<ArtefactModel> artefactsList = new List<ArtefactModel>();
 
+        /// <summary>
+        /// page PreInit event
+        /// registers events from dynamically created controls
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_PreInit(object sender, EventArgs e)
         {
             if (!this.User.Identity.IsAuthenticated)
             {
-                SessionManager.AddUserSession(Session.SessionID);
+                Server.Transfer("Default.aspx");
+                return;
             }
             rc = RestClient.GetInstance(Session.SessionID);
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -111,6 +121,12 @@ namespace Client
             }            
         }
 
+        /// <summary>
+        /// page init events
+        /// creates gui events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Init(object sender, EventArgs e)
         {
             rc = RestClient.GetInstance(Session.SessionID);
@@ -191,6 +207,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// page load event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -200,7 +221,11 @@ namespace Client
             }
         }
 
-
+        /// <summary>
+        /// add tag event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void addTags_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -239,6 +264,11 @@ namespace Client
             session.TagsTRs.Add(tr);
         }
 
+        /// <summary>
+        /// del tag event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void delTagButton_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -257,6 +287,12 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// tags drop down listbox index changed event
+        /// adds a existing tag to issue or creates a textbox for a new tag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void tagsDDList_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -280,6 +316,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// add user to issue event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void addUser_Click(object sender, EventArgs e)
         {
             if (userList.Count == 0)
@@ -326,6 +367,11 @@ namespace Client
             rc.Issue.AccessUserList.Add(null);
         }
 
+        /// <summary>
+        /// delete user event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void delUserButton_Click(object sender, EventArgs e)
         {
             int idx;
@@ -339,6 +385,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// add stakeholder to issue event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void addStakeholders_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -377,6 +428,12 @@ namespace Client
             session.StakeholdersTRs.Add(tr);            
         }
 
+        /// <summary>
+        /// stakeholder drop down listbox index changed event
+        /// adds existing stakeholder to issue or creates textbox for new stakeholder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void stakeholdersDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -400,6 +457,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// delete stakeholder event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void delStakeholderButton_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -417,6 +479,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// add influence factor event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void addFactor_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -460,6 +527,11 @@ namespace Client
             session.FactorTRs.Add(tr);
         }
 
+        /// <summary>
+        /// delete influence factor event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void delFactorBtn_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -478,6 +550,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// add artefact event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void addArtefact_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -517,6 +594,11 @@ namespace Client
             session.ArtefactsTRs.Add(tr);            
         }
 
+        /// <summary>
+        /// delete artefact event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void delArtefactButton_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -534,6 +616,12 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// artefacts drop down listbox index change event
+        /// adds an existing artefact to issue or creates textbox for new artefact
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void artefactsDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -557,6 +645,11 @@ namespace Client
             }
         }
         
+        /// <summary>
+        /// save button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void save_Click(object sender, EventArgs e)
         {
             AddIssue();
@@ -567,6 +660,11 @@ namespace Client
             rc.StakeholderRows = new List<TableRow>();
         }
 
+        /// <summary>
+        /// save publish button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void savePublish_Click(object sender, EventArgs e)
         {
             int issueId = AddIssue();
@@ -580,27 +678,24 @@ namespace Client
             rc.StakeholderRows = new List<TableRow>();
         }
 
+        /// <summary>
+        /// add document event
+        /// enables the relevant controls
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void addDocument_Click(object sender, EventArgs e)
         {
             FileUpload1.Visible = true;
             UploadButton.Visible = true;
         }
 
-        protected void addRelation_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void relationTypeDDL_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void relationIssuesDDL_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// file upload clicked event
+        /// loads file to RestClient
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void UploadButton_Click(object sender, EventArgs e)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -637,6 +732,12 @@ namespace Client
             session.DocumentsTRs.Add(tr);
         }
 
+        /// <summary>
+        /// delete file click event
+        /// removes uploaded file from RestClient
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void delFileBtn_Click(object sender, EventArgs e)
         {
             UserSession session = SessionManager.GetUserSession(Session.SessionID);
@@ -660,6 +761,10 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// adds the issue to API
+        /// </summary>
+        /// <returns></returns>
         private int AddIssue()
         {
             IssueModel issue = new IssueModel();
@@ -771,30 +876,46 @@ namespace Client
             return issueID;
         }
 
+        /// <summary>
+        /// retrieves users from API
+        /// </summary>
         private void RetrieveUsers()
         {
             rc.EndPoint = "api/User";
             userList = JsonConvert.DeserializeObject<List<UserShort>>(rc.MakeRequest());
         }
 
+        /// <summary>
+        /// retrieves tags from API
+        /// </summary>
         private void RetrieveTags()
         {
             rc.EndPoint = "api/Tags";
             tagsList = JsonConvert.DeserializeObject<List<TagModel>>(rc.MakeRequest());
         }
 
+        /// <summary>
+        /// retrieves stakeholders form API
+        /// </summary>
         private void RetrieveStakeholders()
         {
             rc.EndPoint = "api/Stakeholders";
             stakeholdersList = JsonConvert.DeserializeObject<List<StakeholderModel>>(rc.MakeRequest());
         }
 
+        /// <summary>
+        /// retrieves all artefacts from api
+        /// </summary>
         private void RetrieveArtefacts()
         {
             rc.EndPoint = "api/Artefacts";
             artefactsList = JsonConvert.DeserializeObject<List<ArtefactModel>>(rc.MakeRequest());
         }
 
+        /// <summary>
+        /// retrieves all issues from API
+        /// </summary>
+        /// <returns></returns>
         private List<IssueModel> RetrieveIssues()
         {
             if (rc == null)

@@ -5,10 +5,18 @@ using System.Web;
 
 namespace Client
 {
+    /// <summary>
+    /// Singleton pattern for UserSession
+    /// </summary>
     public class SessionManager
     {
         private static Dictionary<string, UserSession> userSessions;
 
+        /// <summary>
+        /// returns UserSession by sessionID
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns></returns>
         public static UserSession GetUserSession(string sessionID)
         {
             if (userSessions == null)
@@ -21,6 +29,10 @@ namespace Client
             return null;
         }
 
+        /// <summary>
+        /// adds a new UserSession object by sessionID
+        /// </summary>
+        /// <param name="sessionID"></param>
         public static void AddUserSession(string sessionID)
         {
             if (userSessions == null)
@@ -33,6 +45,11 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// removes a UserSession by sessionID
+        /// called when logging out
+        /// </summary>
+        /// <param name="sessionID"></param>
         public static void RemoveUserSession(string sessionID)
         {
             if (userSessions == null)

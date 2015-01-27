@@ -5,6 +5,9 @@ using System.Web;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing a stakeholder
+    /// </summary>
     public class StakeholderModel
     {
         public int Id { get; set; }

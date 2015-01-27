@@ -7,6 +7,9 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding a Tag
+    /// </summary>
     public class TagsRepository :RepositoryBase
     {
         DataClassesDataContext ctx = new DataClassesDataContext();

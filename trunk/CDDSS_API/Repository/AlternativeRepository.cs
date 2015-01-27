@@ -7,8 +7,16 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding an Alternative
+    /// </summary>
     public class AlternativeRepository : RepositoryBase
     {
+        /// <summary>
+        /// returns all alternatives by IssueOD
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <returns>List of Alternatives</returns>
         public List<AlternativeModel> GetAlternativesByIssueId(int issueId)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -40,6 +48,11 @@ namespace CDDSS_API.Repository
             return list;
         }
 
+        /// <summary>
+        /// creates an alternative for issue
+        /// </summary>
+        /// <param name="altModel"></param>
+        /// <returns>returns true if operation succeded</returns>
         public bool CreateAlternativeForIssue(AlternativeModel altModel)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -87,6 +100,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// updates an alternative
+        /// </summary>
+        /// <param name="altModel"></param>
+        /// <returns>true if succeded</returns>
         public bool UpdateAlternative(AlternativeModel altModel)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -100,10 +118,13 @@ namespace CDDSS_API.Repository
                 ctx.SubmitChanges();
                 return true;
             }
-
-            return false;
         }
 
+        /// <summary>
+        /// deletes an alternative
+        /// </summary>
+        /// <param name="altId">alternative id</param>
+        /// <returns>true if succeded</returns>
         public bool DeleteAlternative(int altId)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -118,8 +139,6 @@ namespace CDDSS_API.Repository
                 ctx.SubmitChanges();
                 return true;
             }
-
-            return false;
         }
     }
 }

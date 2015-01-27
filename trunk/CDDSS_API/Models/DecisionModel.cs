@@ -6,6 +6,9 @@ using System.Web;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing a Decision
+    /// </summary>
     [DataContract]
     public class DecisionModel
     {

@@ -7,8 +7,16 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding a Decision
+    /// </summary>
     public class DecisionRepository : RepositoryBase
     {
+        /// <summary>
+        /// creates a Decision
+        /// </summary>
+        /// <param name="decision"></param>
+        /// <returns>true if operation succeded</returns>
         public bool CreateDecision(DecisionModel decision)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -25,6 +33,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// deletes an Decision
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <returns>true if succeded</returns>
         public bool DeleteDecision(int issueID)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -38,6 +51,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// edits an decision
+        /// </summary>
+        /// <param name="decision"></param>
+        /// <returns>true if opearation succeded</returns>
         public bool EditDecision(DecisionModel decision)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -52,6 +70,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// returns an Decision
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <returns></returns>
         public DecisionModel GetDecision(int issueID)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();

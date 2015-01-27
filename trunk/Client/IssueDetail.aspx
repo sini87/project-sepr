@@ -142,20 +142,20 @@
 
                 <hr />
 
-                <h3>Criteria</h3>
-                <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
+                <asp:Panel runat="server" ID="criteriaPanel">
+                    <h3>Criteria</h3>
                     <asp:Table ID="criteriaTable" runat="server"></asp:Table>
                     <asp:LinkButton ID="addCriteriaButton" runat="server" OnClick="addCriteriaButton_Click">add</asp:LinkButton>
-                <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
+                    <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
+                </asp:Panel>
 
                 <hr />
 
                 <asp:Panel runat="server" ID="criteriaWeightPanel">
                     <h3>Criteria Weight</h3>
                     <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
+                    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
                 </asp:Panel>
-
-                <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
        
                 <hr />
 

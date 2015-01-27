@@ -10,6 +10,9 @@ using System.Web.Http.Cors;
 
 namespace CDDSS_API.Controllers
 {
+    /// <summary>
+    /// controller for criterion weights
+    /// </summary>
     [EnableCors("http://localhost:51853", "*", "*")]
     [Authorize]
     public class CriterionWeightController : ApiController

@@ -20,6 +20,9 @@ using CDDSS_API.Repository;
 
 namespace CDDSS_API.Controllers
 {
+    /// <summary>
+    /// Microsoft Account Controller
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController

@@ -10,6 +10,9 @@ using System.Web.Http.Cors;
 
 namespace CDDSS_API.Controllers
 {
+    /// <summary>
+    /// controller for tags
+    /// </summary>
     [EnableCors("http://localhost:51853", "*", "*")]
     [Authorize]
     public class TagsController : ApiController

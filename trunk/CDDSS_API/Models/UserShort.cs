@@ -6,6 +6,9 @@ using System.Web;
 
 namespace CDDSS_API
 {
+    /// <summary>
+    /// data model class representing an User
+    /// </summary>
     //[DataContractAttribute]
     public class UserShort
     {

@@ -10,6 +10,9 @@ using System.Web.Http.Cors;
 
 namespace CDDSS_API.Controllers
 {
+    /// <summary>
+    /// Controller for Alternative
+    /// </summary>
     [Authorize]
     [EnableCors("http://localhost:51853", "*", "*")]
     public class AlternativeController : ApiController

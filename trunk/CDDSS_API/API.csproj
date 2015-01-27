@@ -248,7 +248,6 @@
     <Compile Include="Models\ArtefactModel.cs" />
     <Compile Include="Models\CriterionModel.cs" />
     <Compile Include="Models\CriterionWeightModel.cs" />
-    <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Models\DecisionModel.cs" />
     <Compile Include="Models\Domain\DataClasses.designer.cs">
       <AutoGen>True</AutoGen>

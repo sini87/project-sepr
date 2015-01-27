@@ -7,7 +7,9 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
-
+    /// <summary>
+    /// class for database operations regarding criterion
+    /// </summary>
     public class CriterionRepository : RepositoryBase
     {
         /// <summary>

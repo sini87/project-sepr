@@ -5,6 +5,9 @@ using System.Web;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing an artefact
+    /// </summary>
     public class ArtefactModel
     {
         public int Id { get; set; }

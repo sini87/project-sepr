@@ -9,8 +9,17 @@ using System.Web.UI.WebControls;
 
 namespace Client
 {
+    /// <summary>
+    /// code behind for final decision
+    /// </summary>
     public partial class FinalDecision : System.Web.UI.Page
     {
+        /// <summary>
+        /// page load event
+        /// site is build here
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.User.Identity.IsAuthenticated)
@@ -90,6 +99,11 @@ namespace Client
 
         }
 
+        /// <summary>
+        /// save decision event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void save_button_Click(object sender, EventArgs e)
         {
             UserSession us = SessionManager.GetUserSession(Session.SessionID);
