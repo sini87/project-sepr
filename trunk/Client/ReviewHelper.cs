@@ -185,6 +185,7 @@ namespace Client
             panelOK.Style.Add("background-color", "#68DB5C");
             SetMessagePanelStyle(panelOK);
             labelOK.Text = "Review added!";
+            panelOK.CssClass = "alert alert-success";
             panelOK.Controls.Add(labelOK);
             return panelOK;
         }
@@ -197,6 +198,7 @@ namespace Client
             panelNOK.Style.Add("background-color", "#FF6F6B");
             SetMessagePanelStyle(panelNOK);
             labelNOK.Text = "Review NOT added!";
+            panelNOK.CssClass = "alert alert-danger";
             panelNOK.Controls.Add(labelNOK);
             return panelNOK;
         }
@@ -300,7 +302,7 @@ namespace Client
                         issueLabel = new Label();
                         issueLabel.Width = 120;
                         ratingTextBox.Width = 500;
-                        issueLabel.Text = "Rating (1-5)";
+                        issueLabel.Text = "Rating (1-10)";
                         //ratingTextBox.Value = element.Id.ToString();
                         ratingTextBox.ID = "ratingTextBox" + hyperlinkid;
                         issueLabelCell.Controls.Add(issueLabel);
