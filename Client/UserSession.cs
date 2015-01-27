@@ -8,6 +8,9 @@ using System.Web.UI.WebControls;
 
 namespace Client
 {
+    /// <summary>
+    /// class is used for storing dynamically created GUI elements for a session
+    /// </summary>
     public class UserSession
     {
         private List<TableRow> tagsTRs, stakeholdersTRs, factorsTRs, artefactsTRs, documentsTRs, accessRTRs, criteriaTRs, criterionWeightTRs, alternativesTRs, ratingsTRs;
@@ -21,6 +24,9 @@ namespace Client
         private List<RadioButton> finDecAlternativesRBs;
         private bool finalDecisionExists;
        
+        /// <summary>
+        /// constructor
+        /// </summary>
         public UserSession()
         {
             tagsTRs = new List<TableRow>();
@@ -51,6 +57,10 @@ namespace Client
             finDecAlternativesRBs = new List<RadioButton>();
         }
 
+        /// <summary>
+        /// this method is called, when some site is entered (not post back)
+        /// resets all GUI elements
+        /// </summary>
         public void CreateIssueEntered()
         {
             tagsTRs = new List<TableRow>();
@@ -78,12 +88,18 @@ namespace Client
             finDecAlternativesRBs = new List<RadioButton>();
         }
 
+        /// <summary>
+        /// crterias to delete collections (criteria IDs)
+        /// </summary>
         public List<int> CriteriasToDelete
         {
             get { return criteriasToDelete; }
             set { criteriasToDelete = value; }
         }
 
+        /// <summary>
+        /// returns next ID a new accessRights 
+        /// </summary>
         public int NextAccesTRKey
         {
             get
@@ -93,6 +109,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// list of issueTags controls in issuePanel
+        /// </summary>
         public List<Control> IssueTags
         {
             get
@@ -101,6 +120,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// stores current issue
+        /// </summary>
         public IssueModel DetailIssue
         {
             get
@@ -114,6 +136,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// tablerows for tagsTable
+        /// </summary>
         public List<TableRow> TagsTRs
         {
             get
@@ -122,6 +147,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// table rows for stakeholder table
+        /// </summary>
         public List<TableRow> StakeholdersTRs
         {
             get
@@ -130,6 +158,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// table rows for influence factor table
+        /// </summary>
         public List<TableRow> FactorTRs
         {
             get
@@ -138,6 +169,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// table rows for artefacts table
+        /// </summary>
         public List<TableRow> ArtefactsTRs
         {
             get
@@ -146,6 +180,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// table rows for documents table
+        /// </summary>
         public List<TableRow> DocumentsTRs
         {
             get
@@ -202,24 +239,36 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// stores documents to delete
+        /// </summary>
         public List<String> DocsToDelete
         {
             get { return docsToDelete; }
             set { docsToDelete = value; }
         }
 
+        /// <summary>
+        /// stores description textBox of issue
+        /// </summary>
         public TextBox DescriptionText
         {
             get { return descriptionText; }
             set { descriptionText = value; }
         }
 
+        /// <summary>
+        /// stores title textBox of issue
+        /// </summary>
         public TextBox TitleText
         {
             get { return titleText; }
             set { titleText = value; }
         }
 
+        /// <summary>
+        /// next criteria Id for new crtieria
+        /// </summary>
         public string NextCritTRKey
         {
             get
@@ -229,12 +278,18 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// stores criteria table rows
+        /// </summary>
         public List<TableRow> CriteriaTRs
         {
             get { return criteriaTRs; }
             set { criteriaTRs = value; }
         }
 
+        /// <summary>
+        /// stores access rights table rows
+        /// </summary>
         public List<TableRow> AccessRTRs
         {
             get { return accessRTRs; }
@@ -253,23 +308,35 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// stores criterion weight table rows
+        /// </summary>
         public List<TableRow> CriterionWeightTRs
         {
             get { return criterionWeightTRs; }
             set { criterionWeightTRs = value; }
         }
 
+        /// <summary>
+        /// stores some user messages which have to be shown to the user
+        /// </summary>
         public List<String> Messages
         {
             get { return messages; }
         }
 
+        /// <summary>
+        /// stores alternative table rows
+        /// </summary>
         public List<TableRow> AlternativesTRs
         {
             get { return alternativesTRs; }
             set { alternativesTRs = value; }
         }
  
+        /// <summary>
+        /// returns next key for new alternative
+        /// </summary>
         public int NextAltKey
         {
             get {
@@ -279,18 +346,27 @@ namespace Client
             set { nextAltKey = value; }
         }
 
+        /// <summary>
+        /// stores IDs of alternatives to delete
+        /// </summary>
         public List<int> AlternativesToDelete
         {
             get { return alternativesToDelete; }
             set { alternativesToDelete = value; }
         }
 
+        /// <summary>
+        /// stores ratings table rows
+        /// </summary>
         public List<TableRow> RatingsTRs
         {
             get { return ratingsTRs; }
             set { ratingsTRs = value; }
         }
 
+        /// <summary>
+        /// storing information about final decision, if exists
+        /// </summary>
         public bool FinalDecisionExists
         {
             get
@@ -304,6 +380,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// storing radio button decisions of final decision
+        /// </summary>
         public List<RadioButton> FinDecAlternativesRBs
         {
             get
@@ -317,6 +396,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// stores issue ID of final decision
+        /// </summary>
         public int FinalDecisionIssueId
         {
             get

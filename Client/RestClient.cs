@@ -44,6 +44,9 @@ namespace Client
         public List<TableRow> StakeholderRows { get; set; }
         public List<TableRow> UsersRows { get; set; }
         
+        /// <summary>
+        /// constructor
+        /// </summary>
         public RestClient()
         {
             TagRows = new List<TableRow>();
@@ -52,6 +55,11 @@ namespace Client
             Issue = null;
         }
 
+        /// <summary>
+        /// singleton, returns RestClient by Session ID
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns></returns>
         public static RestClient GetInstance(string sessionID)
         {
             if (!sessionRCDict.ContainsKey(sessionID))
@@ -65,6 +73,9 @@ namespace Client
 
         }
 
+        /// <summary>
+        /// returns information of current logged user
+        /// </summary>
         public UserShort User
         {
             get
@@ -73,6 +84,10 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// terminates session to API
+        /// </summary>
+        /// <param name="sessionID"></param>
         public static void SessionEnd(string sessionID)
         {
             if (sessionRCDict.ContainsKey(sessionID))
@@ -81,11 +96,22 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// make a request without parameters
+        /// </summary>
+        /// <returns></returns>
         public string MakeRequest()
         {
             return MakeRequest("");
         }
 
+        /// <summary>
+        /// performs a login
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="sessionID"></param>
+        /// <returns></returns>
         public static bool Login(string username, string password, string sessionID)
         {
 
@@ -121,6 +147,10 @@ namespace Client
             return false;
         }
 
+        /// <summary>
+        /// performs a logout
+        /// </summary>
+        /// <returns></returns>
         public bool Logout()
         {
             if (accessToken != null)
@@ -140,6 +170,11 @@ namespace Client
             return false;
         }
 
+        /// <summary>
+        /// registers a new user
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         public static bool Register(CDDSS_API.Models.RegisterBindingModel m)
         {
             RestClient rc = new RestClient();
@@ -159,6 +194,11 @@ namespace Client
             return true;
         }
 
+        /// <summary>
+        /// makes a API request with parameters
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public string MakeRequest(string parameters)
         {
             var request = (HttpWebRequest)WebRequest.Create(Prefix + EndPoint + parameters);
@@ -257,6 +297,10 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// removes an added file (before saving an issue)
+        /// </summary>
+        /// <param name="filename"></param>
         public void RemoveFile(string filename)
         {
             if (filesDict.ContainsKey(filename))
@@ -267,6 +311,7 @@ namespace Client
 
         /// <summary>
         /// source from http://stackoverflow.com/questions/15543150/httprequest-files-is-empty-when-posting-file-through-httpclient
+        /// uploads files to API
         /// </summary>
         /// <param name="issue"></param>
         /// <param name="filename"></param>

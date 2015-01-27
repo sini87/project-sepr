@@ -12,6 +12,7 @@ using System.Web.Http.Cors;
 namespace CDDSS_API.Controllers
 {
     /// <summary>
+    /// controlle for an issue
     /// </summary>
     [EnableCors("http://localhost:51853", "*", "*")]
     [Authorize]

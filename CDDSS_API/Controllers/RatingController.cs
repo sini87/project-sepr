@@ -9,6 +9,9 @@ using System.Web.Http;
 
 namespace CDDSS_API.Controllers
 {
+    /// <summary>
+    /// controller for rating
+    /// </summary>
     public class RatingController : ApiController
     {
         RatingRepository rRep;

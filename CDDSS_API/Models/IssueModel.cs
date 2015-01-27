@@ -7,6 +7,9 @@ using System.Web;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing an Issue
+    /// </summary>
     [DataContractAttribute]
     public class IssueModel
     {

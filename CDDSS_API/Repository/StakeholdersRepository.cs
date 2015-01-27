@@ -7,8 +7,15 @@ using System.Web;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding a stakeholder
+    /// </summary>
     public class StakeholdersRepository : RepositoryBase
     {
+        /// <summary>
+        /// returns all stakeholders
+        /// </summary>
+        /// <returns></returns>
         public List<StakeholderModel> GetAllStakeholders()
         {
             DataClassesDataContext ctx = new DataClassesDataContext();

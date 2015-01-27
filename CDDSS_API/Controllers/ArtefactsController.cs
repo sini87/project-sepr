@@ -10,7 +10,8 @@ using System.Web.Http.Cors;
 
 namespace CDDSS_API.Controllers
 {
-    // <summary>
+    /// <summary>
+    /// controller for artefacts
     /// </summary>
     [EnableCors("http://localhost:51853", "*", "*")]
     [Authorize]

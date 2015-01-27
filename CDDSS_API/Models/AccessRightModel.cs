@@ -6,6 +6,9 @@ using System.Web;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing an accessright
+    /// </summary>
     [DataContract]
     public class AccessRightModel
     {

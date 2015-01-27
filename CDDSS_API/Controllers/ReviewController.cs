@@ -10,6 +10,9 @@ using System.Web.Http.Cors;
 
 namespace CDDSS_API.Controllers
 {
+    /// <summary>
+    /// controller for reviews
+    /// </summary>
     [Authorize]
     [EnableCors("http://localhost:51853", "*", "*")]
     public class ReviewController : ApiController

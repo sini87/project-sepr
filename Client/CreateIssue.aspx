@@ -101,12 +101,12 @@
 
             <label>Relations</label><br />
             <asp:Panel ID="relations" runat="server">
-                <asp:DropDownList ID="relationTypeDDL" class="dropdown_tag_small" runat="server" AutoPostBack="true" OnSelectedIndexChanged="relationTypeDDL_SelectedIndexChanged">
+                <asp:DropDownList ID="relationTypeDDL" class="dropdown_tag_small" runat="server" AutoPostBack="true" >
                     <asp:ListItem Text="None" Value="N"/>
                     <asp:ListItem Text="Parent" Value="P"/>
                     <asp:ListItem Text="Child" Value="C"/>
-                </asp:DropDownList><asp:DropDownList ID="relationIssuesDDL" class="dropdown_tag_small" runat="server" AutoPostBack="true" OnSelectedIndexChanged="relationIssuesDDL_SelectedIndexChanged"></asp:DropDownList><br/ />
-                <asp:LinkButton runat="server" ID="addRelation" class="mya" OnClick="addRelation_Click">add relation</asp:LinkButton>
+                </asp:DropDownList>
+                <asp:DropDownList ID="relationIssuesDDL" class="dropdown_tag_small" runat="server" AutoPostBack="true" ></asp:DropDownList><br/ />
             </asp:Panel>
 
             <asp:RequiredFieldValidator ID="relationDDLFieldValidator" runat="server" ControlToValidate="relationTypeDDL" ValidationGroup="relationTypeDDLValGroup" Style="display:none" InitialValue="N"></asp:RequiredFieldValidator>

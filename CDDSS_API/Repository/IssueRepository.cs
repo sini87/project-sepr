@@ -10,8 +10,16 @@ using System.Web.Routing;
 
 namespace CDDSS_API.Repository
 {
+    /// <summary>
+    /// class for database operations regarding an Issue
+    /// </summary>
     public class IssueRepository : RepositoryBase
     {
+        /// <summary>
+        /// returns all Issues which are visable of current user
+        /// </summary>
+        /// <param name="email">E-Mail of current user</param>
+        /// <returns></returns>
         public List<IssueModel> GetAllIssues(string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -40,6 +48,11 @@ namespace CDDSS_API.Repository
             return list;
         }
 
+        /// <summary>
+        /// returns detaild Information of an Issue
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <returns></returns>
         public IssueModel GetIssueDetailed(int issueID)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -139,6 +152,11 @@ namespace CDDSS_API.Repository
             return model;
         }
 
+        /// <summary>
+        /// returns Issues where current User is owner
+        /// </summary>
+        /// <param name="email">E-Mail of current User</param>
+        /// <returns></returns>
         public List<IssueModel> GetUserIssues(string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -183,7 +201,6 @@ namespace CDDSS_API.Repository
                 list.Add(issueShort);
             }
 
-            DBConnection.Instance.Connection.Close();
             return list;
         }
 
@@ -265,7 +282,12 @@ namespace CDDSS_API.Repository
             return issueID;
         }
 
-
+        /// <summary>
+        /// deletes an Issue
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <param name="ownerEmail">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool DeleteIssue(int issueId, string ownerEmail)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -283,6 +305,12 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// Issue proceedes to next stage
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <param name="ownerEmail">E-Mail of current user</param>
+        /// <returns>true if operation succeded</returns>
         public bool NextStage(int issueId, string ownerEmail)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -320,6 +348,12 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// edits an Issue
+        /// </summary>
+        /// <param name="im">IssueModel</param>
+        /// <param name="email">E-Mail of Current User</param>
+        /// <returns>true if operation succeded</returns>
         public bool EditIssue(IssueModel im, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -369,6 +403,11 @@ namespace CDDSS_API.Repository
             return false;
         }
 
+        /// <summary>
+        /// edits issue stakeholders
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <param name="stakeholders"></param>
         private void ModifyStakeholders(int issueID, List<StakeholderModel> stakeholders)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -421,6 +460,11 @@ namespace CDDSS_API.Repository
             }
         }
 
+        /// <summary>
+        /// edits issue tags
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <param name="tags"></param>
         private void ModifyTags(int issueID, List<TagModel> tags)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -481,6 +525,11 @@ namespace CDDSS_API.Repository
             ctx.SubmitChanges();
         }
 
+        /// <summary>
+        /// edits issue artefacts
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <param name="artefacts"></param>
         private void ModifyArtefacts(int issueID, List<ArtefactModel> artefacts)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -533,6 +582,11 @@ namespace CDDSS_API.Repository
             }
         }
 
+        /// <summary>
+        /// edits issue InfluenceFactors
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <param name="influenceFactors"></param>
         private void ModifyInfluenceFactors(int issueID, List<InfluenceFactorModel> influenceFactors){
             DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from InfluenceFactors in
@@ -573,6 +627,12 @@ namespace CDDSS_API.Repository
             }
         }
 
+        /// <summary>
+        /// edits issue AccessRights
+        /// </summary>
+        /// <param name="issueID"></param>
+        /// <param name="accessList"></param>
+        /// <param name="email"></param>
         private void ModifyAccessRights(int issueID, Dictionary<int,char> accessList, string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -602,6 +662,11 @@ namespace CDDSS_API.Repository
             }
         }
 
+        /// <summary>
+        /// returns all visible issues for current user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public List<IssueModel> GetAllUserIssues(string email)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
@@ -646,7 +711,6 @@ namespace CDDSS_API.Repository
                 list.Add(issueShort);
             }
 
-            DBConnection.Instance.Connection.Close();
             return list;
         }
     }

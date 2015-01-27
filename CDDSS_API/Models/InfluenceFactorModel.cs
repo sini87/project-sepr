@@ -5,6 +5,9 @@ using System.Web;
 
 namespace CDDSS_API.Models
 {
+    /// <summary>
+    /// data model class representing an InfluenceFactor
+    /// </summary>
     public class InfluenceFactorModel
     {
         public int Id { get; set; }

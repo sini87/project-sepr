@@ -196,10 +196,6 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\minified\bootstrap-theme.css" />
-    <Content Include="Content\themes\base\minified\bootstrap-theme.min.css" />
-    <Content Include="Content\themes\base\minified\bootstrap.css" />
-    <Content Include="Content\themes\base\minified\bootstrap.min.css" />
     <Content Include="Content\themes\base\minified\images\bootstrap-theme.css" />
     <Content Include="Content\themes\base\minified\images\bootstrap-theme.min.css" />
     <Content Include="Content\themes\base\minified\images\bootstrap.css" />
@@ -209,8 +205,6 @@
     <Content Include="Content\themes\base\minified\images\Site.css" />
     <Content Include="Content\themes\base\minified\login.css" />
     <Content Include="Content\themes\base\minified\register.css" />
-    <Content Include="Content\themes\base\minified\Site.css" />
-    <Content Include="Content\themes\base\minified\cddss.css" />
     <Content Include="Content\themes\base\progressbar.css" />
     <Content Include="Content\themes\base\resizable.css" />
     <Content Include="Content\themes\base\selectable.css" />
@@ -269,8 +263,6 @@
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\themes\base\minified\bootstrap-theme.css.map" />
-    <Content Include="Content\themes\base\minified\bootstrap.css.map" />
     <Content Include="Login.Master" />
     <Content Include="LoggedIn.Master" />
     <None Include="Properties\PublishProfiles\AWSCLient.pubxml" />
