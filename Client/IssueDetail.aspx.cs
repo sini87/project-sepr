@@ -130,7 +130,9 @@ namespace Client
             {
                 issue = us.DetailIssue;
             }
+            ratingLabel.Attributes.Add("readonly", "readonly");
             ratingLabel.Text = issue.ReviewRating.ToString();
+
             statusLabel.Text = issue.Status;
             
             if ( issue.RelatedTo > 0)
@@ -170,6 +172,7 @@ namespace Client
                     tagButton.Click += tagButton_Click;
                     tagButton.ToolTip = "Remove";
                     tagButton.Text = tm.Name;
+                    tagButton.CssClass = "table_tag";
                     tagPanel.Controls.Add(tagButton);
                     us.IssueTags.Add(tagButton);
                 }
@@ -192,6 +195,28 @@ namespace Client
                     {
                         buildRating(issue, us, altList);
                     }
+                }
+
+
+                if (statusLabel.Text.ToUpper().Equals("CREATING"))
+                {
+                    statusLabel.CssClass = "status_creating";
+                }
+                else if (statusLabel.Text.ToUpper().Equals("BRAINSTORMING1") || statusLabel.Text.ToUpper().Equals("BRAINSTORMING2"))
+                {
+                    statusLabel.CssClass = "status_brainstorming";
+                }
+                else if (statusLabel.Text.ToUpper().Equals("EVALUATING"))
+                {
+                    statusLabel.CssClass = "status_evaluating";
+                }
+                else if (statusLabel.Text.ToUpper().Equals("FINISHED"))
+                {
+                    statusLabel.CssClass = "status_finished";
+                }
+                else
+                {
+                    statusLabel.CssClass = "status_reviewed";
                 }
                 
             }

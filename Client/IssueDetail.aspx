@@ -12,75 +12,112 @@
        
                 
     </script>
+
+    <script src="../Scripts/rating.js"></script>
+    <script src="../Scripts/myrating.js"></script>
+
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <h1>Issue</h1>
+
+                <hr />
     
-    <asp:Panel runat="server" ID="issueTitlePanel">
-        <asp:TextBox ID="titleText" runat="server" Text="IssueTitle" Font-Size="X-Large"></asp:TextBox>
-    </asp:Panel><br />
-    <h3>Rating</h3>
-    <asp:Panel runat="server" ID="ratingPanel">
-        <asp:Label ID="ratingLabel" runat="server" Text="RATING"></asp:Label>
-    </asp:Panel>
-    <h3>Tags</h3>
-    <asp:Panel runat="server" ID="tagPanel" class="tag"></asp:Panel>
-    <asp:LinkButton ID="addTagButton" runat="server" OnClick="addTagButton_Click">add</asp:LinkButton>
-    <h3>Status</h3>
-    <asp:Panel runat="server" ID="statusPanel">
-        <asp:Label ID="statusLabel" runat="server" Text="Status"></asp:Label>
-    </asp:Panel>
-    <h3>Description</h3>
-    <asp:Panel runat="server" ID="descriptionPanel">
-        <asp:TextBox ID="descriptionText" runat="server" TextMode="MultiLine" Text="Description"></asp:TextBox>
-    </asp:Panel>
-    <h3>Relation</h3>
-    <asp:Panel runat="server" ID="relationsPanel">
-        <asp:Label ID="relationTypeLabel" runat="server" Text="type"></asp:Label>
-        <asp:HyperLink ID="relatedIssueLink" runat="server" Text="RelationIssue"></asp:HyperLink>
-    </asp:Panel>
+                <asp:Panel runat="server" ID="issueTitlePanel">
+                    <asp:TextBox ID="titleText" runat="server" Text="IssueTitle" Font-Size="X-Large"></asp:TextBox>
+                </asp:Panel>
 
-    <h3>Stakeholder</h3>
-    <asp:Panel runat="server" ID="stakeholderPanel">
-        <asp:Table ID="stakeholderTable" runat="server"></asp:Table>
-        <asp:LinkButton ID="addStakeholder" runat="server" OnClick="addStakeholder_Click">add</asp:LinkButton>
-    </asp:Panel><br />
+                <asp:Panel runat="server" ID="ratingPanel">
+                    <asp:TextBox ID="ratingLabel" runat="server" Text="RATING" CssClass="rating rating5"></asp:TextBox>
+                </asp:Panel>
 
-    <h3>Factors</h3>
-    <asp:Panel runat="server" ID="factorsPanel">
-        <asp:Table ID="factorsTable" runat="server">
-            <asp:TableHeaderRow runat="server" ForeColor="Red">  
-                <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
-                <asp:TableHeaderCell>Characteristics</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Number?</asp:TableHeaderCell>
-                <asp:TableHeaderCell></asp:TableHeaderCell>
-            </asp:TableHeaderRow>  
-        </asp:Table>
-        <asp:LinkButton ID="addFactor" runat="server" OnClick="addFactor_Click">add</asp:LinkButton>
-    </asp:Panel>
+                <asp:Panel runat="server" ID="tagPanel" class="tag"></asp:Panel>
+                <asp:LinkButton ID="addTagButton" runat="server" OnClick="addTagButton_Click">add</asp:LinkButton>
 
-    <h3>Artefacts</h3>
-    <asp:Panel runat="server" ID="artefactsPanel">
-        <asp:Table ID="artefactsTable" runat="server"></asp:Table>
-        <asp:LinkButton ID="addArtefact" runat="server" OnClick="addArtefact_Click">add</asp:LinkButton>
-    </asp:Panel><br />
+                <asp:Panel runat="server" ID="statusPanel">
+                    <asp:Label ID="statusLabel" runat="server" Text="Status"></asp:Label>
+                </asp:Panel>
+
+                <h3>Description</h3>
+                <asp:Panel runat="server" ID="descriptionPanel">
+                    <asp:TextBox ID="descriptionText" runat="server" TextMode="MultiLine" Text="Description"></asp:TextBox>
+                </asp:Panel>
+
+                <h3>Relation</h3>
+                <asp:Panel runat="server" ID="relationsPanel">
+                    <asp:Label ID="relationTypeLabel" runat="server" Text="type"></asp:Label>
+                    <asp:HyperLink ID="relatedIssueLink" runat="server" Text="RelationIssue"></asp:HyperLink>
+                </asp:Panel>
+
+                <hr />
+
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                    <h3>Stakeholder</h3>
+                    <asp:Panel runat="server" ID="stakeholderPanel">
+                        <asp:Table ID="stakeholderTable" runat="server"></asp:Table>
+                        <asp:LinkButton ID="addStakeholder" runat="server" OnClick="addStakeholder_Click">add</asp:LinkButton>
+                    </asp:Panel><br />
+
+                    <h3>Factors</h3>
+                    <asp:Panel runat="server" ID="factorsPanel">
+                        <asp:Table ID="factorsTable" runat="server">
+                            <asp:TableHeaderRow runat="server" ForeColor="Red">  
+                                <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
+                                <asp:TableHeaderCell>Characteristics</asp:TableHeaderCell>
+                                <asp:TableHeaderCell>Number?</asp:TableHeaderCell>
+                                <asp:TableHeaderCell></asp:TableHeaderCell>
+                            </asp:TableHeaderRow>  
+                        </asp:Table>
+                        <asp:LinkButton ID="addFactor" runat="server" OnClick="addFactor_Click">add</asp:LinkButton>
+                    </asp:Panel>
+
+                    <h3>Artefacts</h3>
+                    <asp:Panel runat="server" ID="artefactsPanel">
+                        <asp:Table ID="artefactsTable" runat="server"></asp:Table>
+                        <asp:LinkButton ID="addArtefact" runat="server" OnClick="addArtefact_Click">add</asp:LinkButton>
+                    </asp:Panel><br />
     
-    <h3>Documents</h3>
-    <asp:Panel runat="server" ID="documentsPanel">
-        <asp:Table ID="documentsTable" runat="server"></asp:Table>
-        <asp:LinkButton ID="addDocumentBtn" runat="server" OnClick="addDocumentBtn_Click">add</asp:LinkButton>
-    </asp:Panel>
+                    <h3>Documents</h3>
+                    <asp:Panel runat="server" ID="documentsPanel">
+                        <asp:Table ID="documentsTable" runat="server"></asp:Table>
+                        <asp:LinkButton ID="addDocumentBtn" runat="server" OnClick="addDocumentBtn_Click">add</asp:LinkButton>
+                    </asp:Panel>
 
-    <h3>User</h3>
-    <asp:Panel runat="server" ID="usersPanel">
-        <asp:Table ID="usersTable" runat="server">
-            <asp:TableHeaderRow runat="server" ForeColor="Red">  
-                <asp:TableHeaderCell>User</asp:TableHeaderCell>  
-                <asp:TableHeaderCell>Right</asp:TableHeaderCell>
-                <asp:TableHeaderCell></asp:TableHeaderCell>
-            </asp:TableHeaderRow>  
-        </asp:Table>
-        <asp:LinkButton ID="addUser" runat="server" OnClick="addUser_Click">add</asp:LinkButton>
-    </asp:Panel>
+                    <h3>User</h3>
+                    <asp:Panel runat="server" ID="usersPanel">
+                        <asp:Table ID="usersTable" runat="server">
+                            <asp:TableHeaderRow runat="server" ForeColor="Red">  
+                                <asp:TableHeaderCell>User</asp:TableHeaderCell>  
+                                <asp:TableHeaderCell>Right</asp:TableHeaderCell>
+                                <asp:TableHeaderCell></asp:TableHeaderCell>
+                            </asp:TableHeaderRow>  
+                        </asp:Table>
+                        <asp:LinkButton ID="addUser" runat="server" OnClick="addUser_Click">add</asp:LinkButton>
+                    </asp:Panel>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
 
     <h3>Criteria</h3>
     <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
