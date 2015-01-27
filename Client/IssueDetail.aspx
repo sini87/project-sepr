@@ -181,8 +181,6 @@
 
             <div class="row">
 
-                <hr />
-
                 <asp:Panel ID="evaluationPanel" runat="server" Visible="false">
                     <h3>Rating</h3>
                     <asp:Table ID="evaluationTable" runat="server"></asp:Table>
@@ -196,8 +194,6 @@
         <div class="col-lg-12">
 
             <div class="row">
-
-                <hr />
 
                 <asp:Panel ID="decisionPanel" runat="server" Visible="false">
                     <h3>Decision</h3>
@@ -214,8 +210,6 @@
 
             <div class="row">
 
-                <hr />
-
                 <asp:Panel ID="reviewPanel" runat="server" Visible="false">
                     <h3>Reviews</h3>
                 </asp:Panel>
@@ -228,8 +222,6 @@
         <div class="col-lg-12">
 
             <div class="row">
-
-                <hr />
 
                 <asp:Button ID="save" runat="server" Text="Save" OnClick="save_Click" Visible="false"/>
                 <asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" Visible="false" OnClick="saveNext_Click"/>
