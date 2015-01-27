@@ -129,11 +129,56 @@ h3, .h3 {
     border: none !important;
     font-family: 'Maven Pro', sans-serif;
     color:#727272;
+    padding:0px !important;
 }
 
 #MainContent_relationsPanel {
     font-family: 'Maven Pro', sans-serif;
     color:#727272;
+}
+
+#MainContent_stakeholderPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+#MainContent_factorsPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+input[type="text"] {
+    border: none !important;
+    padding: 0px !important;
+}
+
+table > tbody > tr > th {
+    font-family: 'Maven Pro', sans-serif;
+    color:#009688;
+}
+
+#MainContent_artefactsPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_usersPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+.UserAcronym {
+    font-family: "Maven Pro",sans-serif !important;
+    font-size:20px;
+    color: #009688 !important;
+    display: inline-block !important;
+    background: url("../Images/avatar_woman_small.png") no-repeat scroll center center transparent !important;
+    text-align: center !important;
+    line-height: 50px !important;
+    width: 56px !important;
+    text-transform: uppercase !important;
+
+    margin-top:3px;
+    margin-bottom:3px;
 }
 
 a {
@@ -143,6 +188,66 @@ a {
 
 a:hover {
     color:#00796B !important;
+}
+
+#MainContent_save {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 26px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 8px !important;
+    padding-left:35px;
+    padding-right:35px;
+    padding-top:10px;
+    padding-bottom:10px;
+    width: auto;
+}
+
+#MainContent_save:hover {
+    background-color: #00796B !important;
+}
+
+input[value="X"] { 
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer !important;
+    color:#ffffff !important;
+
+    margin-left:4px !important;
+    margin-right:4px !important;
+
+    padding:4px !important;
+    text-decoration:none !important;
+}​
+
+input[value="X"]:hover {
+    background-color: #00796B !important;
+    text-decoration:none;
+ }
+
+#MainContent_saveNext {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 26px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 8px !important;
+    padding-left:35px;
+    padding-right:35px;
+    padding-top:10px;
+    padding-bottom:10px;
+    width: auto;
+}
+
+#MainContent_saveNext:hover {
+    background-color: #00796B !important;
 }
 
 /********************

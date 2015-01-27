@@ -235,6 +235,7 @@
     <None Include="Images\avatar_woman.png" />
     <None Include="Images\avatar_woman_big.png" />
     <None Include="Images\rating.png" />
+    <Content Include="Images\avatar_woman_small.png" />
     <Content Include="IssueDetail.aspx" />
     <Content Include="MyIssues.aspx" />
     <Content Include="Profile.aspx" />

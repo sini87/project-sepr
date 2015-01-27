@@ -61,54 +61,115 @@
 
         </div>
 
-        <hr />
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                    <div class="col-lg-4">
+
+                        <div class="row">
+
+                            <h3>Stakeholder</h3>
+                            <asp:Panel runat="server" ID="stakeholderPanel">
+                                <asp:Table ID="stakeholderTable" runat="server"></asp:Table>
+                                <asp:LinkButton ID="addStakeholder" runat="server" OnClick="addStakeholder_Click">add</asp:LinkButton>
+                            </asp:Panel><br />
+
+                            <h3>Factors</h3>
+                            <asp:Panel runat="server" ID="factorsPanel">
+                                <asp:Table ID="factorsTable" runat="server">
+                                    <asp:TableHeaderRow runat="server" ForeColor="Red">  
+                                        <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
+                                        <asp:TableHeaderCell>Characteristics</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell>Number?</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell></asp:TableHeaderCell>
+                                    </asp:TableHeaderRow>  
+                                </asp:Table>
+                                <asp:LinkButton ID="addFactor" runat="server" OnClick="addFactor_Click">add</asp:LinkButton>
+                            </asp:Panel>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="row">
+
+                            <h3>Artefacts</h3>
+                            <asp:Panel runat="server" ID="artefactsPanel">
+                                <asp:Table ID="artefactsTable" runat="server"></asp:Table>
+                                <asp:LinkButton ID="addArtefact" runat="server" OnClick="addArtefact_Click">add</asp:LinkButton>
+                            </asp:Panel><br />
+    
+                            <h3>Documents</h3>
+                            <asp:Panel runat="server" ID="documentsPanel">
+                                <asp:Table ID="documentsTable" runat="server"></asp:Table>
+                                <asp:LinkButton ID="addDocumentBtn" runat="server" OnClick="addDocumentBtn_Click">add</asp:LinkButton>
+                            </asp:Panel>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="row">
+
+                            <h3>User</h3>
+                            <asp:Panel runat="server" ID="usersPanel">
+                                <asp:Table ID="usersTable" runat="server">
+                                    <asp:TableHeaderRow runat="server" ForeColor="Red">  
+                                        <asp:TableHeaderCell>User</asp:TableHeaderCell>  
+                                        <asp:TableHeaderCell>Right</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell></asp:TableHeaderCell>
+                                    </asp:TableHeaderRow>  
+                                </asp:Table>
+                                <asp:LinkButton ID="addUser" runat="server" OnClick="addUser_Click">add</asp:LinkButton>
+                            </asp:Panel>
+
+                        </div>
+
+                    </div>
+
+            </div>
+
+        </div>
 
         <div class="col-lg-12">
 
             <div class="row">
 
-                    <h3>Stakeholder</h3>
-                    <asp:Panel runat="server" ID="stakeholderPanel">
-                        <asp:Table ID="stakeholderTable" runat="server"></asp:Table>
-                        <asp:LinkButton ID="addStakeholder" runat="server" OnClick="addStakeholder_Click">add</asp:LinkButton>
-                    </asp:Panel><br />
+                <hr />
 
-                    <h3>Factors</h3>
-                    <asp:Panel runat="server" ID="factorsPanel">
-                        <asp:Table ID="factorsTable" runat="server">
-                            <asp:TableHeaderRow runat="server" ForeColor="Red">  
-                                <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
-                                <asp:TableHeaderCell>Characteristics</asp:TableHeaderCell>
-                                <asp:TableHeaderCell>Number?</asp:TableHeaderCell>
-                                <asp:TableHeaderCell></asp:TableHeaderCell>
-                            </asp:TableHeaderRow>  
-                        </asp:Table>
-                        <asp:LinkButton ID="addFactor" runat="server" OnClick="addFactor_Click">add</asp:LinkButton>
-                    </asp:Panel>
+                <h3>Criteria</h3>
+                <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
+                    <asp:Table ID="criteriaTable" runat="server"></asp:Table>
+                    <asp:LinkButton ID="addCriteriaButton" runat="server" OnClick="addCriteriaButton_Click">add</asp:LinkButton>
+                <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
 
-                    <h3>Artefacts</h3>
-                    <asp:Panel runat="server" ID="artefactsPanel">
-                        <asp:Table ID="artefactsTable" runat="server"></asp:Table>
-                        <asp:LinkButton ID="addArtefact" runat="server" OnClick="addArtefact_Click">add</asp:LinkButton>
-                    </asp:Panel><br />
+                <asp:Panel runat="server" ID="criteriaWeightPanel">
+                    <h3>Criteria Weight</h3>
+                    <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
+                </asp:Panel>
+
+                <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
+       
     
-                    <h3>Documents</h3>
-                    <asp:Panel runat="server" ID="documentsPanel">
-                        <asp:Table ID="documentsTable" runat="server"></asp:Table>
-                        <asp:LinkButton ID="addDocumentBtn" runat="server" OnClick="addDocumentBtn_Click">add</asp:LinkButton>
-                    </asp:Panel>
-
-                    <h3>User</h3>
-                    <asp:Panel runat="server" ID="usersPanel">
-                        <asp:Table ID="usersTable" runat="server">
-                            <asp:TableHeaderRow runat="server" ForeColor="Red">  
-                                <asp:TableHeaderCell>User</asp:TableHeaderCell>  
-                                <asp:TableHeaderCell>Right</asp:TableHeaderCell>
-                                <asp:TableHeaderCell></asp:TableHeaderCell>
-                            </asp:TableHeaderRow>  
-                        </asp:Table>
-                        <asp:LinkButton ID="addUser" runat="server" OnClick="addUser_Click">add</asp:LinkButton>
-                    </asp:Panel>
+                <asp:Panel runat="server" ID="alternativesPanel">
+                    <h3>Alternatives</h3>
+                    <asp:Table ID="alternativesTable" runat="server">
+                        <asp:TableHeaderRow runat="server" ForeColor="Red">  
+                            <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
+                            <asp:TableHeaderCell>Description</asp:TableHeaderCell>
+                            <asp:TableHeaderCell>Reason</asp:TableHeaderCell>
+                            <asp:TableHeaderCell></asp:TableHeaderCell>
+                            <asp:TableHeaderCell>Rating</asp:TableHeaderCell>
+                        </asp:TableHeaderRow>  
+                    </asp:Table>
+                    <asp:LinkButton ID="addAlternativeButton" runat="server" OnClick="addAlternativeButton_Click">add</asp:LinkButton>
+                </asp:Panel>
+                <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
 
             </div>
 
@@ -119,34 +180,7 @@
 
 
 
-    <h3>Criteria</h3>
-    <asp:Panel runat="server" ID="criteriaPanel"></asp:Panel>
-        <asp:Table ID="criteriaTable" runat="server"></asp:Table>
-        <asp:LinkButton ID="addCriteriaButton" runat="server" OnClick="addCriteriaButton_Click">add</asp:LinkButton>
-    <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
-
-    <asp:Panel runat="server" ID="criteriaWeightPanel">
-        <h3>Criteria Weight</h3>
-        <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
-    </asp:Panel>
-
-    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
-       
     
-    <asp:Panel runat="server" ID="alternativesPanel">
-        <h3>Alternatives</h3>
-        <asp:Table ID="alternativesTable" runat="server">
-            <asp:TableHeaderRow runat="server" ForeColor="Red">  
-                <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
-                <asp:TableHeaderCell>Description</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Reason</asp:TableHeaderCell>
-                <asp:TableHeaderCell></asp:TableHeaderCell>
-                <asp:TableHeaderCell>Rating</asp:TableHeaderCell>
-            </asp:TableHeaderRow>  
-        </asp:Table>
-        <asp:LinkButton ID="addAlternativeButton" runat="server" OnClick="addAlternativeButton_Click">add</asp:LinkButton>
-    </asp:Panel>
-    <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
     
     <asp:Panel ID="evaluationPanel" runat="server" Visible="false">
         <h3>Rating</h3>
