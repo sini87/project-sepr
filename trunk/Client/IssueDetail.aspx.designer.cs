@@ -46,7 +46,7 @@ namespace Client {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ratingLabel;
+        protected global::System.Web.UI.WebControls.TextBox ratingLabel;
         
         /// <summary>
         /// tagPanel control.

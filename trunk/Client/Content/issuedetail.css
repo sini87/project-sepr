@@ -43,8 +43,106 @@ h2, .h2 {
     margin-bottom:20px;
 }
 
+h3, .h3 {
+    font-family: 'Maven Pro', sans-serif;
+    color:#202020;
+    font-size:18px;
+    margin-bottom:5px;
+    margin-top:10px;
+}
+
 #site-nav {
     display:block !important;
+}
+
+#MainContent_issueTitlePanel {
+    font-family: 'Maven Pro', sans-serif;
+    
+    font-size:25px;
+    color:#000000;
+    text-transform:uppercase !important;
+    font-weight:500;
+    margin-bottom:5px;
+}
+
+#MainContent_titleText {
+    text-transform:uppercase !important;
+    border: none !important;
+    padding: 0px !important;
+}
+
+#MainContent_ratingPanel {
+    margin-bottom:10px;
+}
+
+.table_tag {
+    border:2px solid #B2DFDB !important;
+    background-color:transparent !important;
+
+    font-family: 'Maven Pro', sans-serif !important;
+    font-size:12px !important;
+    color:#727272 !important;
+    text-transform:capitalize !important;
+    display:inline-block !important;
+    padding:2px 4px 2px 4px !important;
+    margin-right:5px !important;
+}
+
+.status_creating, .status_brainstorming, .status_evaluating, .status_finished, .status_reviewed {
+    border:1px solid #DBDBDB;
+
+    font-family: 'Maven Pro', sans-serif;
+    font-size:12px;
+    font-style:normal;
+    font-weight:500;
+    color:#ffffff;
+    text-transform:uppercase;
+
+    display:inline-block !important;
+
+    padding:4px 8px 4px 8px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.status_creating {
+    background-color:#EAB9B9;
+}
+
+.status_brainstorming {
+    background-color:#FF9B49;
+}
+
+.status_evaluating {
+    background-color:#CE7AFF;
+}
+
+.status_finished {
+    background-color:#8EAA90;
+}
+
+.status_reviewed {
+    background-color:#FFD203;
+}
+
+#MainContent_descriptionText {
+    border: none !important;
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+#MainContent_relationsPanel {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+}
+
+a {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272 !important;
+}
+
+a:hover {
+    color:#00796B !important;
 }
 
 /********************
