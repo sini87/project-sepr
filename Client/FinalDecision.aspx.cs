@@ -72,7 +72,7 @@ namespace Client
                 else
                 {
                     us.FinalDecisionExists = false;
-                    save_button.Text = "add decision";
+                    save_button.Text = "Save Decision";
                 }
             }
             else

@@ -106,9 +106,13 @@ namespace Client
                         {
                             pStatus.CssClass = "status_creating";
                         }
-                        else if (element.Status.ToUpper().Equals("BRAINSTORMING"))
+                        else if (element.Status.ToUpper().Equals("BRAINSTORMING1") || element.Status.ToUpper().Equals("BRAINSTORMING2"))
                         {
                             pStatus.CssClass = "status_brainstorming";
+                        }
+                        else if (element.Status.ToUpper().Equals("EVALUATING"))
+                        {
+                            pStatus.CssClass = "status_evaluating";
                         }
                         else if (element.Status.ToUpper().Equals("FINISHED"))
                         {
