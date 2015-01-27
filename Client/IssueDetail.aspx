@@ -148,6 +148,8 @@
                     <asp:LinkButton ID="addCriteriaButton" runat="server" OnClick="addCriteriaButton_Click">add</asp:LinkButton>
                 <asp:HiddenField ID="hiddenCriteria" runat="server" ClientIDMode="Static"/>
 
+                <hr />
+
                 <asp:Panel runat="server" ID="criteriaWeightPanel">
                     <h3>Criteria Weight</h3>
                     <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
@@ -155,7 +157,8 @@
 
                 <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
        
-    
+                <hr />
+
                 <asp:Panel runat="server" ID="alternativesPanel">
                     <h3>Alternatives</h3>
                     <asp:Table ID="alternativesTable" runat="server">
@@ -163,7 +166,6 @@
                             <asp:TableHeaderCell>Name</asp:TableHeaderCell>  
                             <asp:TableHeaderCell>Description</asp:TableHeaderCell>
                             <asp:TableHeaderCell>Reason</asp:TableHeaderCell>
-                            <asp:TableHeaderCell></asp:TableHeaderCell>
                             <asp:TableHeaderCell>Rating</asp:TableHeaderCell>
                         </asp:TableHeaderRow>  
                     </asp:Table>
@@ -175,33 +177,67 @@
 
         </div>
 
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <hr />
+
+                <asp:Panel ID="evaluationPanel" runat="server" Visible="false">
+                    <h3>Rating</h3>
+                    <asp:Table ID="evaluationTable" runat="server"></asp:Table>
+                </asp:Panel>
+                <asp:HiddenField ID="HiddenField1" runat="server" ClientIDMode="Static"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <hr />
+
+                <asp:Panel ID="decisionPanel" runat="server" Visible="false">
+                    <h3>Decision</h3>
+                    <asp:Label ID="decisionLBL" runat="server" Text="Label"></asp:Label></br>
+                    <asp:TextBox ID="decisionTXT" runat="server" TextMode="MultiLine" Height ="50" Enabled="false"></asp:TextBox>
+                </asp:Panel>
+                <asp:HiddenField ID="HiddenField2" runat="server" ClientIDMode="Static"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <hr />
+
+                <asp:Panel ID="reviewPanel" runat="server" Visible="false">
+                    <h3>Reviews</h3>
+                </asp:Panel>
+                <asp:HiddenField ID="HiddenField3" runat="server" ClientIDMode="Static"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <hr />
+
+                <asp:Button ID="save" runat="server" Text="Save" OnClick="save_Click" Visible="false"/>
+                <asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" Visible="false" OnClick="saveNext_Click"/>
+
+            </div>
+
+        </div>
+
     </div>
 
-
-
-
-    
-    
-    <asp:Panel ID="evaluationPanel" runat="server" Visible="false">
-        <h3>Rating</h3>
-        <asp:Table ID="evaluationTable" runat="server"></asp:Table>
-    </asp:Panel>
-    <asp:HiddenField ID="HiddenField1" runat="server" ClientIDMode="Static"/>
-
-    <asp:Panel ID="decisionPanel" runat="server" Visible="false">
-        <h3>Decision</h3>
-        <asp:Label ID="decisionLBL" runat="server" Text="Label"></asp:Label></br>
-        <asp:TextBox ID="decisionTXT" runat="server" TextMode="MultiLine" Height ="50" Enabled="false"></asp:TextBox>
-    </asp:Panel>
-    <asp:HiddenField ID="HiddenField2" runat="server" ClientIDMode="Static"/>
-    
-    <asp:Panel ID="reviewPanel" runat="server" Visible="false">
-        <h3>Reviews</h3>
-    </asp:Panel>
-    <asp:HiddenField ID="HiddenField3" runat="server" ClientIDMode="Static"/>
-
-    <asp:Button ID="save" runat="server" Text="Save" OnClick="save_Click" Visible="false"/>
-    <asp:Button ID="saveNext" runat="server" Text="Save and Next Stage" Visible="false" OnClick="saveNext_Click"/>
-
 </asp:Content>
-

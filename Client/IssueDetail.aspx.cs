@@ -498,7 +498,22 @@ namespace Client
             thr.Cells.Add(thc);
             thc = new TableHeaderCell();
             thc.ID = rc.User.AccessObject.ToString();
-            thc.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
+
+            Label acLabel = new Label();
+            acLabel.CssClass = "UserAcronym";
+            if (rc != null && rc.User != null && rc.User.FirstName != null && rc.User.LastName != null)
+            {
+                if (rc.User.FirstName != "" && rc.User.LastName != "")
+                {
+                    acLabel.Text = rc.User.FirstName.Substring(0, 1) + rc.User.LastName.Substring(0, 1);
+                }
+            }
+            if (acLabel.Text.Equals(""))
+            {
+                acLabel.Text = "&nbsp;";
+            }
+            thc.Controls.Add(acLabel);
+
             thr.Cells.Add(thc);
             criteriaWeightTable.Rows.Add(thr);
             
@@ -517,6 +532,7 @@ namespace Client
                 else
                 {
                     critLbl.Text = (cm.Weight * 100) + "% " + cm.Name;
+                    critTC.CssClass = "left";
                 }
                 weightTXT = new TextBox();
                 weightTXT.ID = "critWTXT" + cm.Id;
@@ -559,7 +575,19 @@ namespace Client
                 {
                     thc = new TableHeaderCell();
                     thc.ID = cwm.UserAccesObject.ToString();
-                    thc.Text = cwm.Acronym;
+
+                    Label acLabelTemp = new Label();
+                    acLabelTemp.CssClass = "UserAcronym";
+                    if (cwm != null)
+                    {
+                        acLabelTemp.Text = cwm.Acronym;
+                    }
+                    if (acLabelTemp.Text.Equals(""))
+                    {
+                        acLabelTemp.Text = "&nbsp;";
+                    }
+                    thc.Controls.Add(acLabelTemp);
+
                     thr.Cells.Add(thc);
                 }
 
