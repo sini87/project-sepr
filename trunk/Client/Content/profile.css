@@ -57,9 +57,22 @@ td a {
     font-family: 'Maven Pro', sans-serif !important;
     color:#999999 !important;
     font-size:18px !important;
+    text-decoration: none !important;
 }
 
 td a:hover {
+    color:#00796B !important;
+    text-decoration: underline !important;
+}
+
+#MainContent_LinkButton1 {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#727272 !important;
+    font-size:16px !important;
+    text-decoration: underline !important;
+}
+
+#MainContent_LinkButton1:hover {
     color:#00796B !important;
 }
 

@@ -170,11 +170,11 @@ namespace Client
             showReviewPanel.Style.Add("border-bottom", "2px dashed grey");
             if (i % 2 == 0)
             {
-                showReviewPanel.Style.Add("background-color", "#4BB3A7");
+                showReviewPanel.Style.Add("background-color", "#009688");
             }
             else
             {
-                showReviewPanel.Style.Add("background-color", "#4BB3A8");
+                showReviewPanel.Style.Add("background-color", "#00968a");
             }
             
         }
@@ -185,7 +185,7 @@ namespace Client
             addReviewPanel.Style.Add("padding-left", "45px");
             addReviewPanel.Style.Add("padding-top", "10px");
             addReviewPanel.Style.Add("padding-bottom", "5px");
-            addReviewPanel.Style.Add("background-color", "#4BB3A7");
+            addReviewPanel.Style.Add("background-color", "#009688");
         }
 
         //Sets LinkButton style
@@ -388,7 +388,7 @@ namespace Client
             {
                 button.Style.Add("background-color", "none");
             }
-            link.Style.Add("background-color", "#4BB3A7");
+            link.Style.Add("background-color", "#009688");
             int i = 0;
             while (i <= dataTable.Rows.Count - 1)
             {

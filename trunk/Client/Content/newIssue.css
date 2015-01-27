@@ -145,6 +145,7 @@ label {
     margin-right:4px !important;
 
     padding:4px !important;
+    text-decoration:none !important;
 }
 
 .delete_button:hover {
@@ -159,7 +160,7 @@ label {
 }
 
 .dropdown_tag_small {
-    width: 100px;
+    width: 45%;
     height: 32px !important;
     margin-right:4px;
 }
@@ -170,6 +171,24 @@ tr {
 
 .maxwidth {
     width:100%;
+}
+
+#MainContent_FileUpload1 {
+    width: 100%;
+}
+
+#MainContent_UploadButton {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+
+    background-color: #009688 !important;
+    cursor: pointer;
+   
+    width: auto;
+}
+
+#MainContent_UploadButton:hover {
+    background-color: #00796B !important;
 }
 
 /********************
