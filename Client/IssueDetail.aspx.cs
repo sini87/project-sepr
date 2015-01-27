@@ -770,18 +770,35 @@ namespace Client
         {
             TableRow tr;
             TableCell userTC, rightTC, delTC;
-            Label userLabel;
+            Label userLabel, acLabel;
             DropDownList userRightDDL;
             Button delUserBtn;
             foreach (AccessRightModel ar in issue.AccessUserList)
             {
                 tr = new TableRow();
                 tr.ID = "usrTR" + ar.User.AccessObject;
+
+                acLabel = new Label();
+                acLabel.ID = "acLBL" + ar.User.AccessObject;
+                acLabel.CssClass = "UserAcronym";
+                if (ar != null && ar.User != null && ar.User.FirstName != null && ar.User.LastName != null)
+                {
+                    if (ar.User.FirstName != "" && ar.User.LastName != "")
+                    {
+                        acLabel.Text = ar.User.FirstName.Substring(0, 1) + ar.User.LastName.Substring(0, 1);
+                    }
+                }
+                if (acLabel.Text.Equals(""))
+                {
+                    acLabel.Text = "&nbsp;";
+                }
+
                 userLabel = new Label();
                 userLabel.ID = "usrLBL" + ar.User.AccessObject;
                 userLabel.Text = ar.User.FirstName + " " + ar.User.LastName;
                 userTC = new TableCell();
                 userTC.ID = "usrTC" + ar.User.AccessObject;
+                userTC.Controls.Add(acLabel);
                 userTC.Controls.Add(userLabel);
                 userRightDDL = new DropDownList();
                 userRightDDL.Items.Add("Contributor");
