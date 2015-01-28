@@ -32,19 +32,20 @@ namespace UnitTests
             i.Artefacts.Add(a);
             i.Artefacts.Add(a2);
             i.Tags.Add(t);
+
+            RestClient.Instance.Login(Credentials.username, Credentials.password);
         }
 
-        //[TestMethod]
-        public void postIssueSuccessfull()
+        [TestMethod]
+        public void createIssueSuccessfull()
         {
             try
             {
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue/Create";
                 RestClient.Instance.Method = HttpVerb.POST;
                 RestClient.Instance.PostData = JsonConvert.SerializeObject(i);
 
-                var resp = RestClient.Instance.MakeRequest();
                 Assert.AreNotEqual(resp, "");
             }
             catch (Exception e)
@@ -61,7 +62,7 @@ namespace UnitTests
                 i.Title = "Edited Issue";
                 i.Description = "Edited Description";
                 
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue/Edit";
                 RestClient.Instance.Method = HttpVerb.POST;
                 RestClient.Instance.PostData = JsonConvert.SerializeObject(i);
@@ -81,7 +82,7 @@ namespace UnitTests
         {
             try
             {
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue/OfUser";
                 RestClient.Instance.Method = HttpVerb.GET;
                 var json = RestClient.Instance.MakeRequest();
@@ -99,31 +100,13 @@ namespace UnitTests
                 Assert.Fail("Exception: " + e.Message);
             }
         }
-
-        [TestMethod]
-        public void getAllIssuesOfUserFailBecauseNotLoggedIn()
-        {
-            try{
-
-                RestClient.Instance.LogOut();
-                RestClient.Instance.EndPoint = "api/Issue/OfUser";
-                RestClient.Instance.Method = HttpVerb.GET;
-                var json = RestClient.Instance.MakeRequest();
-
-                Assert.AreEqual(json, "");
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Exception: " + e.Message);
-            }
-        }
-
+        
         [TestMethod]
         public void getIssueByIdSuccessfull()
         {
             try{
 
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue";
                 RestClient.Instance.Method = HttpVerb.GET;
                 var resp =RestClient.Instance.MakeRequest("?issueId=" + i.Id);
@@ -143,7 +126,7 @@ namespace UnitTests
         {
             try{
 
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue";
                 RestClient.Instance.Method = HttpVerb.GET;
                 var resp = RestClient.Instance.MakeRequest("?issueId=11111");
@@ -161,7 +144,7 @@ namespace UnitTests
         {
             try{
 
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue/"+i.Id+"/nextStage";
                 RestClient.Instance.Method = HttpVerb.POST;
                 var resp = RestClient.Instance.MakeRequest();
@@ -179,7 +162,7 @@ namespace UnitTests
         {
             try{
 
-                RestClient.Instance.Login(Credentials.username, Credentials.password);
+                
                 RestClient.Instance.EndPoint = "api/Issue";
                 RestClient.Instance.Method = HttpVerb.DELETE;
                 var resp = RestClient.Instance.MakeRequest("?issueId=" + i.Id);
@@ -192,10 +175,30 @@ namespace UnitTests
             }
         }
 
+
+        [TestMethod]
+        public void getAllIssuesOfUserFailBecauseNotLoggedIn()
+        {
+            try
+            {
+
+                RestClient.Instance.LogOut();
+                RestClient.Instance.EndPoint = "api/Issue/OfUser";
+                RestClient.Instance.Method = HttpVerb.GET;
+                var json = RestClient.Instance.MakeRequest();
+
+                Assert.AreEqual(json, "");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Exception: " + e.Message);
+            }
+        }
+
         [TestCleanup]
         public void TearDown()
         {
-
+            //RestClient.Instance.LogOut();
         }
 
         

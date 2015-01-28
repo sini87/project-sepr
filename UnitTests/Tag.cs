@@ -19,7 +19,10 @@ namespace UnitTests
                 RestClient.Instance.EndPoint = "api/Tags";
                 var resp = RestClient.Instance.MakeRequest();
 
-                List<TagModel> t = JsonConvert.DeserializeObject<List<TagModel>>(resp);
+                if (!resp.Equals("null"))
+                {
+                    List<TagModel> t = JsonConvert.DeserializeObject<List<TagModel>>(resp);
+                }
 
                 Assert.AreNotEqual(resp, "");
             }
