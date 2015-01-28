@@ -272,35 +272,5 @@ namespace UnitTests
             httpWebRequest2 = null;
             webResponse2 = null;
         }
-
-
-    } // class
-
-
-    //sample method how to upload files
-    //public static void RestFileUpload()
-    //{
-    //    try
-    //    {
-    //        var client = RestClient.Instance;
-    //        client.Login("sinisa.zubic@gmx.at", "passme");
-    //        client.Endpoint = @"http://localhost:51853/api/Document";
-    //        client.Method = HttpVerb.POST;
-    //        //var json = client.MakeRequest("?issue=1&filename=test.png");
-
-    //        using (MemoryStream ms = new MemoryStream())
-    //        using (FileStream file = new FileStream(@"C:\test.pdf", FileMode.Open, FileAccess.Read))
-    //        {
-    //            byte[] bytes = new byte[file.Length];
-    //            file.Read(bytes, 0, (int)file.Length);
-    //            ms.Write(bytes, 0, (int)file.Length);
-    //            client.AddFile("test.pdf", ms);
-    //        }
-    //        client.UploadFilesToRemoteUrl(1);
-    //    }a
-    //    catch (System.Net.WebException ex)
-    //    {
-    //        System.Console.WriteLine(ex.Message);
-    //    }
-    //}
+    }
 }
