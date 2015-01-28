@@ -46,7 +46,7 @@ h2, .h2 {
 h3, .h3 {
     font-family: 'Maven Pro', sans-serif;
     color:#202020;
-    font-size:18px;
+    font-size:20px;
     margin-bottom:5px;
     margin-top:10px;
 }
@@ -217,9 +217,36 @@ table > tbody > tr > th {
     text-align: left !important;
 }
 
+#MainContent_evaluationTable {
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272;
+    width:100%;
+}
+
+#MainContent_evaluationTable > tbody > tr > td > input {
+    width:100%;
+}
+
 #MainContent_alternativesTable {
     font-family: 'Maven Pro', sans-serif;
     color:#727272;
+}
+
+.allRatTab {
+    width:100%;
+    border: 1px solid #E9E9E9;
+    font-family: 'Maven Pro', sans-serif;
+    color:#727272 !important;
+}
+
+.allRatTab > tbody > tr > th {
+    /*border: 1px solid #E9E9E9;*/
+    text-align: center;
+}
+
+.allRatTab > tbody > tr > td {
+    /*border: 1px solid #E9E9E9;*/
+    text-align: center;
 }
 
 #MainContent_decisionPanel {
@@ -240,6 +267,7 @@ table > tbody > tr > th {
 
 #MainContent_reviewPanel > span {
     color:#009688 !important;
+    font-size: 15px !important;
 }
 
 a {
@@ -308,6 +336,45 @@ input[value="X"]:hover {
 }
 
 #MainContent_saveNext:hover {
+    background-color: #00796B !important;
+}
+
+.mybold {
+    font-family: "Maven Pro",sans-serif;
+    font-size:15px;
+    color: #009688;
+}
+
+.myleft {
+    text-align:left !important;
+}
+
+.myred {
+    font-family: "Maven Pro",sans-serif;
+    font-size:15px;
+    font-style: oblique;
+    color:#FF545C;
+}
+
+#MainContent_finalDecisionButton {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 26px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    text-decoration:none;
+    
+    margin-right: 8px !important;
+    padding-left:35px;
+    padding-right:35px;
+    padding-top:10px;
+    padding-bottom:10px;
+    width: auto;
+}
+
+#MainContent_finalDecisionButton:hover {
     background-color: #00796B !important;
 }
 
@@ -382,6 +449,23 @@ header {
 }
 
 #MainContent_saveNext {
+    font-family: 'Maven Pro', sans-serif !important;
+    color:#ffffff !important;
+    font-size: 20px !important;
+
+    background-color: #009688 !important;
+    border: 0px !important;
+    cursor: pointer;
+    
+    margin-right: 5px !important;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    width: auto;
+}
+
+#MainContent_finalDecisionButton {
     font-family: 'Maven Pro', sans-serif !important;
     color:#ffffff !important;
     font-size: 20px !important;

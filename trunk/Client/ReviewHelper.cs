@@ -301,7 +301,7 @@ namespace Client
                         TextBox ratingTextBox = new TextBox();
                         issueLabel = new Label();
                         issueLabel.Width = 120;
-                        ratingTextBox.Width = 500;
+                        ratingTextBox.Width = Unit.Percentage(100); 
                         issueLabel.Text = "Rating (1-5)";
                         //ratingTextBox.Value = element.Id.ToString();
                         ratingTextBox.ID = "ratingTextBox" + hyperlinkid;
@@ -314,7 +314,7 @@ namespace Client
                         TextBox reviewTextBox = new TextBox();
                         issueLabel = new Label();
                         issueLabel.Width = 120;
-                        reviewTextBox.Width = 500;
+                        reviewTextBox.Width = Unit.Percentage(100); 
                         issueLabel.Text = "Explanation";
                         reviewTextBox.Text = element.Description;
                         reviewTextBox.TextMode = TextBoxMode.MultiLine;

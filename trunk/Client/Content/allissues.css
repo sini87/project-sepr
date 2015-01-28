@@ -225,6 +225,15 @@ td > input[type="submit"]:hover {
     background-color: #00796B !important;
 }
 
+#MainContent_issuesOwnedText {
+    margin-left:50px;
+}
+
+.mytextbox {
+    width:100%;
+}
+
+
 /********************
 *   Mobile Styles   *
 ********************/

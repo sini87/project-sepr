@@ -301,33 +301,6 @@ namespace Client {
         protected global::System.Web.UI.WebControls.HiddenField hiddenCriteria;
         
         /// <summary>
-        /// criteriaWeightPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel criteriaWeightPanel;
-        
-        /// <summary>
-        /// criteriaWeightTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table criteriaWeightTable;
-        
-        /// <summary>
-        /// hiddenCriteriaWeight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenCriteriaWeight;
-        
-        /// <summary>
         /// alternativesPanel control.
         /// </summary>
         /// <remarks>
@@ -362,6 +335,33 @@ namespace Client {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenAlternatives;
+        
+        /// <summary>
+        /// criteriaWeightPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel criteriaWeightPanel;
+        
+        /// <summary>
+        /// criteriaWeightTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table criteriaWeightTable;
+        
+        /// <summary>
+        /// hiddenCriteriaWeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenCriteriaWeight;
         
         /// <summary>
         /// evaluationPanel control.

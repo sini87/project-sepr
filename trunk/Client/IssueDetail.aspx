@@ -151,14 +151,6 @@
 
                 <hr />
 
-                <asp:Panel runat="server" ID="criteriaWeightPanel">
-                    <h3>Criteria Weight</h3>
-                    <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
-                    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
-                </asp:Panel>
-       
-                <hr />
-
                 <asp:Panel runat="server" ID="alternativesPanel">
                     <h3>Alternatives</h3>
                     <asp:Table ID="alternativesTable" runat="server">
@@ -173,6 +165,16 @@
                 </asp:Panel>
                 <asp:HiddenField ID="hiddenAlternatives" runat="server" ClientIDMode="Static"/>
 
+                <hr />
+
+                <asp:Panel runat="server" ID="criteriaWeightPanel">
+                    <h3>Criteria Weight [sum must be 100]</h3>
+                    <asp:Table ID="criteriaWeightTable" runat="server"></asp:Table>
+                    <asp:HiddenField ID="hiddenCriteriaWeight" runat="server" ClientIDMode="Static"/> 
+                </asp:Panel>
+
+                <hr />
+
             </div>
 
         </div>
@@ -182,7 +184,7 @@
             <div class="row">
 
                 <asp:Panel ID="evaluationPanel" runat="server" Visible="false">
-                    <h3>Rating</h3>
+                    <h3>Rating [0-10]</h3>
                     <asp:Table ID="evaluationTable" runat="server"></asp:Table>
                 </asp:Panel>
                 <asp:HiddenField ID="HiddenField1" runat="server" ClientIDMode="Static"/>
@@ -224,7 +226,7 @@
             <div class="row">
 
                 <asp:Panel ID="decisionPanel" runat="server" Visible="false">
-                    <h3>Decision</h3>
+                    <h3>Final Decision</h3>
                     <asp:Label ID="decisionLBL" runat="server" Text="Label"></asp:Label></br>
                     <asp:TextBox ID="decisionTXT" runat="server" TextMode="MultiLine" Height ="50" Enabled="false"></asp:TextBox>
                 </asp:Panel>
@@ -252,7 +254,7 @@
             <div class="row">
 
                 <asp:Panel ID="finalDecisionPanel" runat="server" Visible="false">
-                    <asp:Hyperlink ID="finalDecisionButton" runat="server">set final decision</asp:Hyperlink>
+                    <asp:Hyperlink ID="finalDecisionButton" runat="server">Set Final Decision</asp:Hyperlink>
                 </asp:Panel>
                 
 
