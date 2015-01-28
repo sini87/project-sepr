@@ -68,15 +68,23 @@ namespace CDDSS_API.Repository
             DataClassesDataContext ctx = new DataClassesDataContext();
             Criterion criterionLinq = new Criterion();
             int id;
-            var query = (from t in ctx.Criterion select t.Id).Max();
-            if (query != null)
+            if (ctx.Criterion.ToList().Count > 0)
             {
-                id = query + 1;
+                var query = (from t in ctx.Criterion select t.Id).Max();
+                if (query != null)
+                {
+                    id = query + 1;
+                }
+                else
+                {
+                    id = 1;
+                }
             }
             else
             {
                 id = 1;
             }
+            
             
             criterionLinq.Id = id;
             criterionLinq.Name = criterion.Name;
