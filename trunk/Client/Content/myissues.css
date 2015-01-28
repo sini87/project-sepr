@@ -225,6 +225,10 @@ td > input[type="submit"]:hover {
     background-color: #00796B !important;
 }
 
+#MainContent_InvolvedIssuesText {
+    margin-left:50px;
+}
+
 #MainContent_issuesOwnedText {
     margin-left:50px;
 }
