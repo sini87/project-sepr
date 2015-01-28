@@ -8,7 +8,7 @@ namespace UnitTests
 {
     public class Credentials
     {
-        public const string username = "d.kaltenbrunner@gmx.at";
+        public const string username = "sinisa.zubic@gmx.at";
         public const string password = "passme";
     }
 }
