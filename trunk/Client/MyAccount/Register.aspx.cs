@@ -139,7 +139,7 @@ namespace Client
         {
             registering = false;
             m = null;
-            Server.Transfer("~/Default.aspx");
+            Server.Transfer("~/MyIssues.aspx");
         }
 
         protected void HtmlAnchor_Click(Object sender, EventArgs e)
