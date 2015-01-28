@@ -20,7 +20,11 @@ namespace UnitTests
                 RestClient.Instance.Method = HttpVerb.GET;
                 var resp = RestClient.Instance.MakeRequest();
 
-                List<StakeholderModel> list = JsonConvert.DeserializeObject<List<StakeholderModel>>(resp);
+                if (!resp.Equals("null"))
+                {
+                    List<StakeholderModel> list = JsonConvert.DeserializeObject<List<StakeholderModel>>(resp);
+                }
+                
 
                 Assert.AreNotEqual(resp, "");
             }
