@@ -7,22 +7,24 @@ using Newtonsoft.Json;
 namespace UnitTests
 {
     [TestClass]
-    public class GetTag
+    public class Stakeholder
     {
         [TestMethod]
-        public void getAllTags()
+        public void getAllStakeholders()
         {
             try
             {
 
                 RestClient.Instance.Login(Credentials.username, Credentials.password);
-                RestClient.Instance.EndPoint = "api/Tags";
+                RestClient.Instance.EndPoint = "api/Stakeholders";
+                RestClient.Instance.Method = HttpVerb.GET;
                 var resp = RestClient.Instance.MakeRequest();
 
                 if (!resp.Equals("null"))
                 {
-                    List<TagModel> t = JsonConvert.DeserializeObject<List<TagModel>>(resp);
+                    List<StakeholderModel> list = JsonConvert.DeserializeObject<List<StakeholderModel>>(resp);
                 }
+                
 
                 Assert.AreNotEqual(resp, "");
             }
@@ -30,6 +32,7 @@ namespace UnitTests
             {
                 Assert.Fail("Exception: " + e.Message);
             }
+
         }
     }
 }
