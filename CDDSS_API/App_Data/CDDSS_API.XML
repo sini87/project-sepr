@@ -481,6 +481,16 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:CDDSS_API.Controllers.AccountController">
+            <summary>
+            Microsoft Account Controller
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Controllers.AlternativeController">
+            <summary>
+            Controller for Alternative
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Controllers.AlternativeController.Get(System.Int32)">
             <summary>
             returns all alternatives of an issue
@@ -509,7 +519,11 @@
             <param name="alternativeId">integer id of the alternative</param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CDDSS_API.Controllers.ArtefactsController" -->
+        <member name="T:CDDSS_API.Controllers.ArtefactsController">
+            <summary>
+            controller for artefacts
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Controllers.ArtefactsController.GET">
             <summary>
             returns all artefacts
@@ -561,6 +575,11 @@
             <param name="weight"></param>
             <returns></returns>
         </member>
+        <member name="T:CDDSS_API.Controllers.CriterionWeightController">
+            <summary>
+            controller for criterion weights
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Controllers.CriterionWeightController.AddCriterionWeights(System.Collections.Generic.List{CDDSS_API.Models.CriterionWeightModel})">
             <summary>
             Adds criterion weights to a group of criteria of the logged in user
@@ -588,6 +607,11 @@
             </summary>
             <param name="issueId"></param>
             <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Controllers.DecisionController">
+            <summary>
+            controller for decisions
+            </summary>
         </member>
         <member name="M:CDDSS_API.Controllers.DecisionController.GetDecision(System.Int32)">
             <summary>
@@ -655,6 +679,7 @@
         </member>
         <member name="T:CDDSS_API.Controllers.IssueController">
             <summary>
+            controlle for an issue
             </summary>
         </member>
         <member name="M:CDDSS_API.Controllers.IssueController.#ctor">
@@ -716,6 +741,11 @@
             <param name="issue"></param>
             <returns></returns>
         </member>
+        <member name="T:CDDSS_API.Controllers.RatingController">
+            <summary>
+            controller for rating
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Controllers.RatingController.getRating(System.Int32,System.Int32)">
             <summary>
             Returns a specific Rating
@@ -767,6 +797,11 @@
             <param name="criterionId"></param>
             <returns></returns>
         </member>
+        <member name="T:CDDSS_API.Controllers.ReviewController">
+            <summary>
+            controller for reviews
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Controllers.ReviewController.AddReview(CDDSS_API.Models.ReviewModel)">
             <summary>
             adds a new review to the issue of the logged user
@@ -797,11 +832,21 @@
             <param name="issueId">issue id</param>
             <returns>OK if deleted</returns>
         </member>
+        <member name="T:CDDSS_API.Controllers.StakeholdersController">
+            <summary>
+            controler for stakeholders
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Controllers.StakeholdersController.Get">
             <summary>
             returns all stakeholders
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Controllers.TagsController">
+            <summary>
+            controller for tags
+            </summary>
         </member>
         <member name="M:CDDSS_API.Controllers.TagsController.GET">
             <summary>
@@ -870,6 +915,31 @@
             <param name="answer"></param>
             <returns>returns HTTP Status Code OK if operation was successful, else HTTP Status Cude NOT Acceptable</returns>
         </member>
+        <member name="T:CDDSS_API.Models.AccessRightModel">
+            <summary>
+            data model class representing an accessright
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.AlternativeModel">
+            <summary>
+            data model class representing an alternative
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.ArtefactModel">
+            <summary>
+            data model class representing an artefact
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.CriterionModel">
+            <summary>
+            data model class representing an Criterion
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.CriterionWeightModel">
+            <summary>
+            data model class representing CriterionWeight
+            </summary>
+        </member>
         <member name="M:CDDSS_API.Models.CriterionWeightModel.#ctor(System.Int32,System.Int32,System.Double)">
             <summary>
             Creates a new CriterionWeightModel
@@ -896,6 +966,90 @@
         <member name="P:CDDSS_API.Models.CriterionWeightModel.UserAccesObject">
             <summary>
             Access Object ID of User
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.DecisionModel">
+            <summary>
+            data model class representing a Decision
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.InfluenceFactorModel">
+            <summary>
+            data model class representing an InfluenceFactor
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.IssueModel">
+            <summary>
+            data model class representing an Issue
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.RatingModel">
+            <summary>
+            data model class representing a Rating
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.ReviewModel">
+            <summary>
+            data model class representing an Review
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.StakeholderModel">
+            <summary>
+            data model class representing a stakeholder
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Models.TagModel">
+            <summary>
+            data model class representing a tag
+            </summary>
+        </member>
+        <member name="T:CDDSS_API.Repository.AlternativeRepository">
+            <summary>
+            class for database operations regarding an Alternative
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.AlternativeRepository.GetAlternativesByIssueId(System.Int32)">
+            <summary>
+            returns all alternatives by IssueOD
+            </summary>
+            <param name="issueId"></param>
+            <returns>List of Alternatives</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.AlternativeRepository.CreateAlternativeForIssue(CDDSS_API.Models.AlternativeModel)">
+            <summary>
+            creates an alternative for issue
+            </summary>
+            <param name="altModel"></param>
+            <returns>returns true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.AlternativeRepository.UpdateAlternative(CDDSS_API.Models.AlternativeModel)">
+            <summary>
+            updates an alternative
+            </summary>
+            <param name="altModel"></param>
+            <returns>true if succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.AlternativeRepository.DeleteAlternative(System.Int32)">
+            <summary>
+            deletes an alternative
+            </summary>
+            <param name="altId">alternative id</param>
+            <returns>true if succeded</returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.ArtefactsRepository">
+            <summary>
+            class for database operations regarding an Artefact
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.ArtefactsRepository.GetAllArtefacts">
+            <summary>
+            returns all artefacts
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.CriterionRepository">
+            <summary>
+            class for database operations regarding criterion
             </summary>
         </member>
         <member name="M:CDDSS_API.Repository.CriterionRepository.GetCriterion(System.Int32)">
@@ -948,6 +1102,75 @@
             <param name="weight"></param>
             <returns></returns>
         </member>
+        <member name="T:CDDSS_API.Repository.CriterionWeightRepository">
+            <summary>
+            class for database operations regarding CriterionWeight
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionWeightRepository.AddCriterionWeights(System.Collections.Generic.List{CDDSS_API.Models.CriterionWeightModel},System.String)">
+            <summary>
+            adds list of criterions weights to issue
+            </summary>
+            <param name="list">CriterionWeight List</param>
+            <param name="email">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionWeightRepository.DeleteCriterionWeights(System.Int32,System.String)">
+            <summary>
+            deletes CriterionWeights of current user to some issue
+            </summary>
+            <param name="issueId"></param>
+            <param name="email">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionWeightRepository.UpdateCriterionWeights(System.Collections.Generic.List{CDDSS_API.Models.CriterionWeightModel},System.String)">
+            <summary>
+            updates CriterionWeights of current user to some issue
+            </summary>
+            <param name="list">list of CriterionWeights</param>
+            <param name="email">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.CriterionWeightRepository.GetCriterionWeights(System.Int32)">
+            <summary>
+            returns all CriterionWeight of an Issue
+            </summary>
+            <param name="issueId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.DecisionRepository">
+            <summary>
+            class for database operations regarding a Decision
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.DecisionRepository.CreateDecision(CDDSS_API.Models.DecisionModel)">
+            <summary>
+            creates a Decision
+            </summary>
+            <param name="decision"></param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.DecisionRepository.DeleteDecision(System.Int32)">
+            <summary>
+            deletes an Decision
+            </summary>
+            <param name="issueID"></param>
+            <returns>true if succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.DecisionRepository.EditDecision(CDDSS_API.Models.DecisionModel)">
+            <summary>
+            edits an decision
+            </summary>
+            <param name="decision"></param>
+            <returns>true if opearation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.DecisionRepository.GetDecision(System.Int32)">
+            <summary>
+            returns an Decision
+            </summary>
+            <param name="issueID"></param>
+            <returns></returns>
+        </member>
         <member name="T:CDDSS_API.Repository.DocumentRepository">
             <summary>
             Used for Operations with table document
@@ -985,6 +1208,32 @@
             <param name="filename">filename</param>
             <returns>stream of the file</returns>
         </member>
+        <member name="T:CDDSS_API.Repository.IssueRepository">
+            <summary>
+            class for database operations regarding an Issue
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.GetAllIssues(System.String)">
+            <summary>
+            returns all Issues which are visable of current user
+            </summary>
+            <param name="email">E-Mail of current user</param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.GetIssueDetailed(System.Int32)">
+            <summary>
+            returns detaild Information of an Issue
+            </summary>
+            <param name="issueID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.GetUserIssues(System.String)">
+            <summary>
+            returns Issues where current User is owner
+            </summary>
+            <param name="email">E-Mail of current User</param>
+            <returns></returns>
+        </member>
         <member name="M:CDDSS_API.Repository.IssueRepository.CreateIssue(CDDSS_API.Models.IssueModel,System.String)">
             <summary>
             creates a new issue and returns the issue id of the new issue
@@ -992,6 +1241,78 @@
             <param name="issue"></param>
             <param name="email"></param>
             <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.DeleteIssue(System.Int32,System.String)">
+            <summary>
+            deletes an Issue
+            </summary>
+            <param name="issueId"></param>
+            <param name="ownerEmail">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.NextStage(System.Int32,System.String)">
+            <summary>
+            Issue proceedes to next stage
+            </summary>
+            <param name="issueId"></param>
+            <param name="ownerEmail">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.EditIssue(CDDSS_API.Models.IssueModel,System.String)">
+            <summary>
+            edits an Issue
+            </summary>
+            <param name="im">IssueModel</param>
+            <param name="email">E-Mail of Current User</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.ModifyStakeholders(System.Int32,System.Collections.Generic.List{CDDSS_API.Models.StakeholderModel})">
+            <summary>
+            edits issue stakeholders
+            </summary>
+            <param name="issueID"></param>
+            <param name="stakeholders"></param>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.ModifyTags(System.Int32,System.Collections.Generic.List{CDDSS_API.Models.TagModel})">
+            <summary>
+            edits issue tags
+            </summary>
+            <param name="issueID"></param>
+            <param name="tags"></param>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.ModifyArtefacts(System.Int32,System.Collections.Generic.List{CDDSS_API.Models.ArtefactModel})">
+            <summary>
+            edits issue artefacts
+            </summary>
+            <param name="issueID"></param>
+            <param name="artefacts"></param>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.ModifyInfluenceFactors(System.Int32,System.Collections.Generic.List{CDDSS_API.Models.InfluenceFactorModel})">
+            <summary>
+            edits issue InfluenceFactors
+            </summary>
+            <param name="issueID"></param>
+            <param name="influenceFactors"></param>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.ModifyAccessRights(System.Int32,System.Collections.Generic.Dictionary{System.Int32,System.Char},System.String)">
+            <summary>
+            edits issue AccessRights
+            </summary>
+            <param name="issueID"></param>
+            <param name="accessList"></param>
+            <param name="email"></param>
+        </member>
+        <member name="M:CDDSS_API.Repository.IssueRepository.GetAllUserIssues(System.String)">
+            <summary>
+            returns all visible issues for current user
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.RatingRepository">
+            <summary>
+            class for database operations regarding an rating
+            </summary>
         </member>
         <member name="M:CDDSS_API.Repository.RatingRepository.getRating(System.Int32,System.Int32)">
             <summary>
@@ -1034,6 +1355,58 @@
             <param name="criterionid"></param>
             <param name="alternativeid"></param>
             <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.ReviewRepository">
+            <summary>
+            class for database operations regarding an Review
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.ReviewRepository.AddReview(CDDSS_API.Models.ReviewModel,System.String)">
+            <summary>
+            Adds a review for an Issue
+            </summary>
+            <param name="rm">ReviewModel</param>
+            <param name="email">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.ReviewRepository.GetReviewsOfIssue(System.Int32)">
+            <summary>
+            returns all reviews of an Issue
+            </summary>
+            <param name="issueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.ReviewRepository.EditReview(CDDSS_API.Models.ReviewModel,System.String)">
+            <summary>
+            edits an review for an Issue
+            </summary>
+            <param name="rm">ReviewModel</param>
+            <param name="email">E-Mail of current user</param>
+            <returns>true if operation succeded</returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.ReviewRepository.DeleteReview(System.Int32,System.String)">
+            <summary>
+            deletes a review
+            </summary>
+            <param name="issueId"></param>
+            <param name="email">E-Mail of current user</param>
+            <returns>true if operation succededs</returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.StakeholdersRepository">
+            <summary>
+            class for database operations regarding a stakeholder
+            </summary>
+        </member>
+        <member name="M:CDDSS_API.Repository.StakeholdersRepository.GetAllStakeholders">
+            <summary>
+            returns all stakeholders
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CDDSS_API.Repository.TagsRepository">
+            <summary>
+            class for database operations regarding a Tag
+            </summary>
         </member>
         <member name="M:CDDSS_API.Repository.TagsRepository.GetAllTags">
             <summary>
@@ -1103,6 +1476,11 @@
             creates an accessobject for the user
             </summary>
             <param name="email"></param>
+        </member>
+        <member name="T:CDDSS_API.UserShort">
+            <summary>
+            data model class representing an User
+            </summary>
         </member>
     </members>
 </doc>
