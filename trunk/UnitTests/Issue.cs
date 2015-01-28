@@ -36,7 +36,7 @@ namespace UnitTests
             RestClient.Instance.Login(Credentials.username, Credentials.password);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void createIssueSuccessfull()
         {
             try
@@ -45,6 +45,8 @@ namespace UnitTests
                 RestClient.Instance.EndPoint = "api/Issue/Create";
                 RestClient.Instance.Method = HttpVerb.POST;
                 RestClient.Instance.PostData = JsonConvert.SerializeObject(i);
+
+                var resp = RestClient.Instance.MakeRequest();
 
                 Assert.AreNotEqual(resp, "");
             }
