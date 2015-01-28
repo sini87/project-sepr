@@ -550,7 +550,7 @@
             <param name="criterion"></param>
             <returns></returns>
         </member>
-        <member name="M:CDDSS_API.Controllers.CriterionController.Put(CDDSS_API.Models.CriterionModel)">
+        <member name="M:CDDSS_API.Controllers.CriterionController.Update(CDDSS_API.Models.CriterionModel)">
             <summary>
             Updates a specific Criterion
             </summary>
@@ -795,6 +795,14 @@
             </summary>
             <param name="alternativeId"></param>
             <param name="criterionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Controllers.RatingController.GetUserCriterionRating(System.Int32,System.String)">
+            <summary>
+            returns user rating for an criterion
+            </summary>
+            <param name="criterionID"></param>
+            <param name="user"></param>
             <returns></returns>
         </member>
         <member name="T:CDDSS_API.Controllers.ReviewController">
@@ -1063,14 +1071,6 @@
             <summary>
             Returns all Criterias
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:CDDSS_API.Repository.CriterionRepository.isDuplicate(CDDSS_API.Models.CriterionModel)">
-            <summary>
-            returns true if Criterion is duplicated, else return false
-            </summary>
-            <param name="name"></param>
-            <param name="issueId"></param>
             <returns></returns>
         </member>
         <member name="M:CDDSS_API.Repository.CriterionRepository.AddCriterion(CDDSS_API.Models.CriterionModel)">
@@ -1354,6 +1354,14 @@
             </summary>
             <param name="criterionid"></param>
             <param name="alternativeid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CDDSS_API.Repository.RatingRepository.GetUserIssueRatings(System.Int32,System.String)">
+            <summary>
+            returns issue ratings for user and criterion
+            </summary>
+            <param name="criterionID"></param>
+            <param name="user"></param>
             <returns></returns>
         </member>
         <member name="T:CDDSS_API.Repository.ReviewRepository">

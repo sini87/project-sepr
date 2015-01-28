@@ -46,7 +46,7 @@ namespace Client
                 foreach (AlternativeModel am in alternativeList)
                 {
                     RadioButton rb = new RadioButton();
-                    rb.Text = am.Name;
+                    rb.Text = am.Name + " - " + Math.Round(am.Rating,2);
                     rb.ID = am.Id.ToString();
                     rb.GroupName = "Alternative";
                     rb.AutoPostBack = false;

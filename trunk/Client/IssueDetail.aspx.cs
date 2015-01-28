@@ -355,11 +355,175 @@ namespace Client
                     reviewPanel.Controls.Add(new LiteralControl("<hr />"));
                     reviewPanel.Visible = true;
                 }
+
+                finalDecisionButton.NavigateUrl = "~/FinalDecision.aspx?issueId=" + issue.Id;
+                buildResultRating(issue, us, altList, rc);
+            }
+
+            if (issue.Status.ToUpper().Equals("FINISHED") || issue.Status.ToUpper().Equals("EVALUATING"))
+            {
+                buildAllRatings(issue, us, altList, rc);
             }
             
         }
 
         //------------------------- panel build methods -------------------------------------------
+
+        private void buildResultRating(IssueModel issue, UserSession us, List<AlternativeModel> altLis, RestClient rc)
+        {
+            resultRatingsPanel.Visible = true;
+            Table t;
+            TableCell tc;
+            TableHeaderCell thc;
+            TableHeaderRow thr;
+            TableRow tr;
+            Label l;
+            User u;
+            string aoID = "resultTab";
+
+           
+                
+            t = new Table();
+            t.ID = "allRatTab" + aoID;
+
+            thr = new TableHeaderRow();
+            thr.ID = t.ID + "THR";
+            thc = new TableHeaderCell();
+            thc.ID = t.ID + "THCU" + aoID;
+
+
+            
+            
+            thr.Cells.Add(thc);
+
+            foreach (AlternativeModel am in altLis)
+            {
+                thc = new TableHeaderCell();
+                thc.ID = "allRatTabTHC" + am.Id + ";" + aoID;
+                thc.Text = am.Name;
+                thc.CssClass = "mybold";
+                thr.Cells.Add(thc);
+            }
+            t.Rows.Add(thr);
+
+            rc.EndPoint = "api/Rating/ResultRatings";
+            rc.Method = HttpVerb.GET;
+            List<RatingModel> ratings = JsonConvert.DeserializeObject<List<RatingModel>>(rc.MakeRequest("?issueID=" + issue.Id));
+            
+            int idx = 0;
+
+            foreach (CriterionModel cm in issue.Criterions)
+            {
+                tr = new TableRow();
+                tr.ID = "allRatTabTR" + cm.Id + ";" + aoID;
+                tc = new TableCell();
+                tc.ID = "allRatTCCrit" + cm.Id + ";" + aoID;
+                tc.Text = Math.Round(cm.Weight, 2) + "% " + cm.Name;
+                tc.CssClass = "mybold";
+                tr.Cells.Add(tc);
+
+                
+                int idxH = idx;
+                for (int i = idxH; i < idxH + altLis.Count(); i++ )
+                {
+                    tc = new TableCell();
+                    
+                    tc.Text = Math.Round(ratings[idx].Rating1,2).ToString();
+                    tr.Cells.Add(tc);
+                    idx++;
+                    
+                }
+                t.Rows.Add(tr);
+            }
+            resultRatingsPanel.Controls.Add(t);
+            
+        }
+        
+        /// <summary>
+        /// builds all user ratings
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <param name="us"></param>
+        /// <param name="altLis"></param>
+        /// <param name="rc"></param>
+        private void buildAllRatings(IssueModel issue, UserSession us, List<AlternativeModel> altLis, RestClient rc)
+        {
+            allRatingsPanel.Visible = true;
+            Table t;
+            TableCell tc;
+            TableHeaderCell thc;
+            TableHeaderRow thr;
+            TableRow tr;
+            Label l;
+            User u;
+            int aoID;
+
+            foreach (AccessRightModel ar in issue.AccessUserList)
+            {
+                aoID = ar.User.AccessObject;
+                t = new Table();
+                t.ID = "allRatTab" + aoID;
+
+                thr = new TableHeaderRow();
+                thr.ID = t.ID + "THR";
+                thc = new TableHeaderCell();
+                thc.ID = t.ID + "THCU" + aoID;
+
+
+                l = new Label();
+                l.CssClass = "UserAcronym";
+                if (ar != null && ar.User != null && ar.User.FirstName != null && ar.User.LastName != null)
+                {
+                    if (ar.User.FirstName != "" && ar.User.LastName != "")
+                    {
+                        l.Text = ar.User.FirstName.Substring(0, 1) + ar.User.LastName.Substring(0, 1);
+                    }
+                }
+                if (l.Text.Equals(""))
+                {
+                    l.Text = "&nbsp;";
+                }
+                thc.Controls.Add(l);
+                thr.Cells.Add(thc);
+
+                foreach (AlternativeModel am in altLis)
+                {
+                    thc = new TableHeaderCell();
+                    thc.ID = "allRatTabTHC" + am.Id + ";" + aoID;
+                    thc.Text = am.Name;
+                    thc.CssClass = "mybold";
+                    thr.Cells.Add(thc);
+                }
+                t.Rows.Add(thr);
+
+                foreach (CriterionModel cm in issue.Criterions)
+                {
+                    tr = new TableRow();
+                    tr.ID = "allRatTabTR" + cm.Id + ";" + aoID;
+                    tc = new TableCell();
+                    tc.ID = "allRatTCCrit" + cm.Id + ";" + aoID;
+                    tc.Text = Math.Round(cm.Weight,2) + "% " + cm.Name;
+                    tc.CssClass = "mybold";
+                    tr.Cells.Add(tc);
+
+                    rc.EndPoint = "api/Rating/CriterionUser";
+                    rc.Method = HttpVerb.GET;
+                    List<RatingModel> ratings = JsonConvert.DeserializeObject<List<RatingModel>>(rc.MakeRequest("?criterionID=" + cm.Id + "&user=" + ar.User.ID));
+
+                    foreach (RatingModel rm in ratings)
+                    {
+                        tc = new TableCell();
+                        tc.Text = rm.Rating1.ToString();
+                        tr.Cells.Add(tc);
+
+
+                    }
+                    t.Rows.Add(tr);
+                }
+                allRatingsPanel.Controls.Add(t);
+            }
+        }
+
         /// <summary>
         /// builds rating panel, called from page load
         /// </summary>
@@ -496,7 +660,7 @@ namespace Client
                 altRatTC.ID = "altRatTC" + alt.Id;
                 altRatLbl = new Label();
                 altRatLbl.ID = "altRatLbl" + alt.Id;
-                altRatLbl.Text = alt.Rating.ToString();
+                altRatLbl.Text = Math.Round(alt.Rating,2).ToString();
                 altRatTC.Controls.Add(altRatLbl);
                 tr.Cells.Add(altRatTC);
 
@@ -561,7 +725,7 @@ namespace Client
                 }
                 else
                 {
-                    critLbl.Text = (cm.Weight * 100) + "% " + cm.Name;
+                    critLbl.Text = (Math.Round(cm.Weight,2) * 100) + "% " + cm.Name;
                     critTC.CssClass = "left";
                 }
                 weightTXT = new TextBox();
@@ -1089,6 +1253,11 @@ namespace Client
                 descriptionPanel.Enabled = false;
                 titleText.Enabled = false;
                 addUser.Visible = false;
+
+                if (accessRight.Equals('O'))
+                {
+                    finalDecisionPanel.Visible = true;
+                }
             }
 
             if (issue.Status.ToUpper().Equals("FINISHED") || issue.Status.ToUpper().Equals("EVALUATING"))
@@ -2077,20 +2246,21 @@ namespace Client
             {
                 int id = int.Parse(tr.ID.Replace("critTR", ""));
                 CriterionModel cm = new CriterionModel();
-                rc.EndPoint = "api/Criterion";
+                
                 cm.Name = ((TextBox)tr.Cells[0].Controls[0]).Text;
                 cm.Description = ((TextBox)tr.Cells[1].Controls[0]).Text;
                 cm.Issue = issue.Id;
                 if (id < 0)
                 {
-                    rc.Method = HttpVerb.POST;
+                    rc.EndPoint = "api/Criterion";
                 }
                 else
                 {
-                    rc.Method = HttpVerb.PUT;
+                    rc.EndPoint = "api/Criterion/Update";
                     cm.Id = id;
                 }
                 rc.PostData = JsonConvert.SerializeObject(cm);
+                rc.Method = HttpVerb.POST;
                 rc.MakeRequest();
             }
 

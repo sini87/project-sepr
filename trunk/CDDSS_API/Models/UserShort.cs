@@ -23,6 +23,7 @@ namespace CDDSS_API
         public string SecretQuestion {get; set;}
         public string Answer {get; set;}
         public string Password { get; set; }
+        public string ID { get; set; }
 
         public UserShort()
         {
