@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace UnitTests
 {
     [TestClass]
-    public class CreateIssue
+    public class Issue
     {
         static IssueModel i;
 
@@ -19,23 +19,13 @@ namespace UnitTests
         [TestInitialize]
         public void SetUp()
         {
-
-            i = new IssueModel();
-            a = new ArtefactModel("TestArtefact");
-            a2 = new ArtefactModel(1, "TestArtefact2");
-            ifm = new InfluenceFactorModel("TestBudget", true, "max 100K");
-            t = new TagModel(1, "TestTag");
-            s = new StakeholderModel("TestManager");
-
-            i.Title = "Test Issue";
-            i.Description = "Description";
-            i.InfluenceFactors.Add(ifm);
-            i.Stakeholders.Add(s);
-            i.Artefacts.Add(a);
-            i.Artefacts.Add(a2);
-            i.Tags.Add(t);
-
             RestClient.Instance.Login(Credentials.username, Credentials.password);
+        }
+
+        [TestCleanup]
+        public void TearDown()
+        {
+            RestClient.Instance.LogOut();
         }
 
         [TestMethod]
@@ -43,11 +33,31 @@ namespace UnitTests
         {
             try
             {
+                i = new IssueModel();
+                a = new ArtefactModel("TestArtefact");
+                a2 = new ArtefactModel(1, "TestArtefact2");
+                ifm = new InfluenceFactorModel("TestBudget", true, "max 100K");
+                t = new TagModel(1, "TestTag");
+                s = new StakeholderModel("TestManager");
+
+                i.Title = "Test Issue";
+                i.Description = "Description";
+                i.InfluenceFactors.Add(ifm);
+                i.Stakeholders.Add(s);
+                i.Artefacts.Add(a);
+                i.Artefacts.Add(a2);
+                i.Tags.Add(t);
+
                 RestClient.Instance.EndPoint = "api/Issue/Create";
                 RestClient.Instance.Method = HttpVerb.POST;
                 RestClient.Instance.PostData = JsonConvert.SerializeObject(i);
 
                 var resp = RestClient.Instance.MakeRequest();
+
+                resp = resp.TrimStart('\"');
+                resp = resp.TrimEnd('\"');
+
+                i.Id = int.Parse(resp);
 
                 Assert.AreNotEqual(resp, "");
             }
@@ -83,7 +93,7 @@ namespace UnitTests
             }
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void EditIssueSuccessfull()
         {
             try
@@ -132,7 +142,7 @@ namespace UnitTests
                 RestClient.Instance.Method = HttpVerb.GET;
                 var resp = RestClient.Instance.MakeRequest("?issueId=" + i.Id);
 
-                GetIssue iss = JsonConvert.DeserializeObject<GetIssue>(resp);
+                Issue iss = JsonConvert.DeserializeObject<Issue>(resp);
 
                 Assert.AreNotEqual(resp, "");
             }
@@ -176,5 +186,23 @@ namespace UnitTests
             }
         }
 
+        [TestMethod]
+        public void getAllIssuesOfUserFailBecauseNotLoggedIn()
+        {
+            try
+            {
+
+                RestClient.Instance.LogOut();
+                RestClient.Instance.EndPoint = "api/Issue/OfUser";
+                RestClient.Instance.Method = HttpVerb.GET;
+                var json = RestClient.Instance.MakeRequest();
+
+                Assert.AreEqual(json, "");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Exception: " + e.Message);
+            }
+        }        
     }
 }
