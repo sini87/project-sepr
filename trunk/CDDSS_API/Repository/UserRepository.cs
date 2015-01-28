@@ -135,10 +135,21 @@ namespace CDDSS_API.Repository
                         {
                             MaxId = (int)g.Max(p => p.Id)
                         };
-            AccessObject ao = new AccessObject()
+            AccessObject ao;
+            if (query.ToList().Count() > 0){
+                ao = new AccessObject()
+                {
+                    Id = query.ToList()[0].MaxId + 1
+                };
+            }
+            else
             {
-                Id = query.ToList()[0].MaxId + 1
-            };
+                ao = new AccessObject()
+                {
+                    Id = 1
+                };
+            }
+            
             ctx.AccessObjects.InsertOnSubmit(ao);
             User u = ctx.Users.First(x => x.Email == email);
             u.AccessObject = ao.Id;
