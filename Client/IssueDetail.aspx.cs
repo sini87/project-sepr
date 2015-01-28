@@ -385,15 +385,13 @@ namespace Client
                 
             t = new Table();
             t.ID = "allRatTab" + aoID;
+            t.CssClass = "allRatTab";
 
             thr = new TableHeaderRow();
             thr.ID = t.ID + "THR";
             thc = new TableHeaderCell();
             thc.ID = t.ID + "THCU" + aoID;
 
-
-            
-            
             thr.Cells.Add(thc);
 
             foreach (AlternativeModel am in altLis)
@@ -418,8 +416,8 @@ namespace Client
                 tr.ID = "allRatTabTR" + cm.Id + ";" + aoID;
                 tc = new TableCell();
                 tc.ID = "allRatTCCrit" + cm.Id + ";" + aoID;
-                tc.Text = Math.Round(cm.Weight, 2) + "% " + cm.Name;
-                tc.CssClass = "mybold";
+                tc.Text = Math.Round(cm.Weight, 2)*100 + "% " + cm.Name;
+                tc.CssClass = "mybold myleft";
                 tr.Cells.Add(tc);
 
                 
@@ -436,6 +434,7 @@ namespace Client
                 t.Rows.Add(tr);
             }
             resultRatingsPanel.Controls.Add(t);
+            resultRatingsPanel.Controls.Add(new LiteralControl("<hr />"));
             
         }
         
@@ -463,12 +462,13 @@ namespace Client
                 aoID = ar.User.AccessObject;
                 t = new Table();
                 t.ID = "allRatTab" + aoID;
+                t.CssClass = "allRatTab";
 
                 thr = new TableHeaderRow();
                 thr.ID = t.ID + "THR";
                 thc = new TableHeaderCell();
                 thc.ID = t.ID + "THCU" + aoID;
-
+                thc.CssClass = "myleft";
 
                 l = new Label();
                 l.CssClass = "UserAcronym";
@@ -502,8 +502,8 @@ namespace Client
                     tr.ID = "allRatTabTR" + cm.Id + ";" + aoID;
                     tc = new TableCell();
                     tc.ID = "allRatTCCrit" + cm.Id + ";" + aoID;
-                    tc.Text = Math.Round(cm.Weight,2) + "% " + cm.Name;
-                    tc.CssClass = "mybold";
+                    tc.Text = Math.Round(cm.Weight,2)*100 + "% " + cm.Name;
+                    tc.CssClass = "mybold myleft";
                     tr.Cells.Add(tc);
 
                     rc.EndPoint = "api/Rating/CriterionUser";
@@ -521,6 +521,7 @@ namespace Client
                     t.Rows.Add(tr);
                 }
                 allRatingsPanel.Controls.Add(t);
+                allRatingsPanel.Controls.Add(new LiteralControl("<br />"));
             }
         }
 
@@ -578,6 +579,7 @@ namespace Client
                 tr = new TableRow();
                 thc = new TableHeaderCell();
                 thc.ID = "evalCrTHC" + cm.Id;
+                thc.CssClass = "myleft";
                 thc.Text = cm.Name;
                 tr.Cells.Add(thc);
                 foreach (AlternativeModel alt in altList)
@@ -660,6 +662,7 @@ namespace Client
                 altRatTC.ID = "altRatTC" + alt.Id;
                 altRatLbl = new Label();
                 altRatLbl.ID = "altRatLbl" + alt.Id;
+                altRatLbl.CssClass = "myred";
                 altRatLbl.Text = Math.Round(alt.Rating,2).ToString();
                 altRatTC.Controls.Add(altRatLbl);
                 tr.Cells.Add(altRatTC);
@@ -683,7 +686,7 @@ namespace Client
             TextBox weightTXT;
             Label critLbl, weightLbl;
             RestClient rc = RestClient.GetInstance(Session.SessionID);
-            int userAO = int.Parse(usersTable.ID.Replace("USR",""));
+            int userAO = int.Parse(usersTable.ID.Replace("USR", ""));
 
             TableHeaderRow thr = new TableHeaderRow();
             thr.ID = "critTHR";
@@ -719,6 +722,7 @@ namespace Client
                 critTC.ID = "critNameWTC" + cm.Id;
                 critLbl = new Label();
                 critLbl.ID = "critWLBL" + cm.Id;
+                critLbl.CssClass = "mybold";
                 if (issue.Status.Equals("Brainstorming2"))
                 {
                     critLbl.Text = cm.Name + " ";
@@ -819,8 +823,19 @@ namespace Client
         {
             TableRow tr;
             TableCell critDescTC, critTC, delCritTC;
+            TableHeaderRow headerRow;
+            TableHeaderCell headerCell;
             TextBox critTXT, critDescTXT;
             Button delCritBtn;
+
+            headerRow = new TableHeaderRow();
+            headerCell = new TableHeaderCell();
+            headerCell.Text = "Name";
+            headerRow.Cells.Add(headerCell);
+            headerCell = new TableHeaderCell();
+            headerCell.Text = "Description";
+            headerRow.Cells.Add(headerCell);
+            criteriaTable.Rows.Add(headerRow);
 
             foreach (CriterionModel crit in issue.Criterions)
             {
@@ -1174,8 +1189,11 @@ namespace Client
                 else
                 {
                     addCriteriaButton.Visible = false;
-                    foreach (TableRow tr in criteriaTable.Rows)
+
+                    for (int i = 1; i < criteriaTable.Rows.Count; i++)
                     {
+                        //dont use header row
+                        TableRow tr = criteriaTable.Rows[i];
                         ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
                         ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
                         ((Button)tr.Cells[2].Controls[0]).Visible = false;
@@ -1277,11 +1295,14 @@ namespace Client
         /// </summary>
         public void disableCriteria()
         {
-            foreach (TableRow tr in criteriaTable.Rows)
+
+            for (int i = 1; i < criteriaTable.Rows.Count; i++)
             {
-                ((Button)tr.Cells[2].Controls[0]).Visible = false;
+                //dont use header row
+                TableRow tr = criteriaTable.Rows[i];
                 ((TextBox)tr.Cells[0].Controls[0]).Enabled = false;
                 ((TextBox)tr.Cells[1].Controls[0]).Enabled = false;
+                ((Button)tr.Cells[2].Controls[0]).Visible = false;
             }
             addCriteriaButton.Visible = false;
         }
