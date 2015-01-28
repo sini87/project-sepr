@@ -9,7 +9,7 @@ namespace UnitTests
     [TestClass]
     public class Issue
     {
-        static IssueModel i;
+        static IssueModel i = new IssueModel();
 
         static ArtefactModel a, a2;
         static InfluenceFactorModel ifm;
@@ -33,7 +33,7 @@ namespace UnitTests
         {
             try
             {
-                i = new IssueModel();
+                
                 a = new ArtefactModel("TestArtefact");
                 a2 = new ArtefactModel(1, "TestArtefact2");
                 ifm = new InfluenceFactorModel("TestBudget", true, "max 100K");
@@ -94,7 +94,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void EditIssueSuccessfull()
+        public void editIssueSuccessfull()
         {
             try
             {
