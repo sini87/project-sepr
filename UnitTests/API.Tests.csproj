@@ -68,9 +68,10 @@
     <Compile Include="RestClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Authentication.cs" />
-    <Compile Include="Issue.cs" />
-    <Compile Include="Tag.cs" />
-    <Compile Include="Stakeholder.cs" />
+    <Compile Include="GetIssue.cs" />
+    <Compile Include="GetTag.cs" />
+    <Compile Include="GetStakeholder.cs" />
+    <Compile Include="CreateIssue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
