@@ -865,6 +865,10 @@ namespace Client
                 issue.RelatedTo = Convert.ToInt32(relationIssuesDDL.SelectedValue);
                 issue.RelationType = Convert.ToChar(relationTypeDDL.SelectedValue);
             }
+            else
+            {
+                issue.RelatedTo = 0;
+            }
 
             rc.EndPoint = "api/Issue/Create";
             rc.Method = HttpVerb.POST;

@@ -94,7 +94,7 @@ namespace CDDSS_API.Repository
             DataClassesDataContext ctx = new DataClassesDataContext();
             var query = from Documents in ctx.Documents
                         where
-                          Documents.Issue == 1 &&
+                          Documents.Issue == issueId &&
                           Documents.Name == filename
                         select new
                         {

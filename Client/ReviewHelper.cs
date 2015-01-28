@@ -302,7 +302,7 @@ namespace Client
                         issueLabel = new Label();
                         issueLabel.Width = 120;
                         ratingTextBox.Width = 500;
-                        issueLabel.Text = "Rating (1-10)";
+                        issueLabel.Text = "Rating (1-5)";
                         //ratingTextBox.Value = element.Id.ToString();
                         ratingTextBox.ID = "ratingTextBox" + hyperlinkid;
                         issueLabelCell.Controls.Add(issueLabel);

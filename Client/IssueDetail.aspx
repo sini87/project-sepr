@@ -195,6 +195,34 @@
 
             <div class="row">
 
+                <asp:Panel ID="allRatingsPanel" runat="server" Visible="false">
+                    <h3>All User Ratings</h3>
+                    
+                </asp:Panel>
+                <asp:HiddenField ID="HiddenField4" runat="server" ClientIDMode="Static"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <asp:Panel ID="resultRatingsPanel" runat="server" Visible="false">
+                    <h3>Results</h3>
+                    
+                </asp:Panel>
+                <asp:HiddenField ID="HiddenField5" runat="server" ClientIDMode="Static"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
                 <asp:Panel ID="decisionPanel" runat="server" Visible="false">
                     <h3>Decision</h3>
                     <asp:Label ID="decisionLBL" runat="server" Text="Label"></asp:Label></br>
@@ -214,6 +242,19 @@
                     <h3>Reviews</h3>
                 </asp:Panel>
                 <asp:HiddenField ID="HiddenField3" runat="server" ClientIDMode="Static"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="row">
+
+                <asp:Panel ID="finalDecisionPanel" runat="server" Visible="false">
+                    <asp:Hyperlink ID="finalDecisionButton" runat="server">set final decision</asp:Hyperlink>
+                </asp:Panel>
+                
 
             </div>
 

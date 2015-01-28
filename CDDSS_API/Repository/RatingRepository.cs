@@ -210,5 +210,65 @@ namespace CDDSS_API.Repository
             }
             else return false;
         }
+
+        /// <summary>
+        /// returns issue ratings for user and criterion
+        /// </summary>
+        /// <param name="criterionID"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public List<RatingModel> GetUserIssueRatings(int criterionID, string user)
+        {
+            List<RatingModel> list = new List<RatingModel>();
+            DataClassesDataContext ctx = new DataClassesDataContext();
+            RatingModel rm = new RatingModel();
+        
+            IQueryable<Rating> iq = ctx.Rating.Where(x => x.Criterion == criterionID && x.User == user);
+            foreach (Rating r in iq)
+            {
+                rm = new RatingModel();
+                rm.AlternativeID = r.Alternative;
+                rm.CriterionID = r.Alternative;
+                rm.Rating1 = r.Rating1;
+                rm.User = r.User;
+                list.Add(rm);
+            }
+
+            return list;
+        }
+
+        public List<RatingModel> GetIssueResRating(int issueID)
+        {
+            DataClassesDataContext ctx = new DataClassesDataContext();
+            var query =
+            from rat in ctx.Rating
+            where
+              rat.Criterion1.Issue == issueID
+            group new { rat.Criterion, rat.Alternative, rat } by new
+            {
+                Id = (int?)rat.Criterion1.Id,
+                Column1 = (int?)rat.Alternative1.Id
+            } into g
+            select new
+            {
+                Crit = (int?)g.Key.Id,
+                Alt = (int?)g.Key.Id,
+                Rat = (double?)g.Average(p => p.rat.Rating1)
+            };
+
+            List<RatingModel> list = new List<RatingModel>();
+            RatingModel rm;
+
+            foreach (var r in query)
+            {
+                rm = new RatingModel();
+                rm.Rating1 = (double)r.Rat;
+                rm.CriterionID = (int)r.Crit;
+                rm.AlternativeID = (int) r.Alt;
+                list.Add(rm);
+            }
+            return list;
+                
+        }
     }
 }

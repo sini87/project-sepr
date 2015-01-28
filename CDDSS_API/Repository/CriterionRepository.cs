@@ -60,31 +60,6 @@ namespace CDDSS_API.Repository
         }
 
         /// <summary>
-        /// returns true if Criterion is duplicated, else return false
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="issueId"></param>
-        /// <returns></returns>
-        internal bool isDuplicate(CriterionModel criterion)
-        {
-            DataClassesDataContext ctx = new DataClassesDataContext();
-            int i = 0;
-            var query = from Criterion in ctx.Criterion
-                        where
-                          Criterion.Description == criterion.Description &&
-                          Criterion.Issue == criterion.Issue
-                        select new
-                        {
-                            Name = Criterion.Name,
-                            Issue = Criterion.Issue,
-                            Weight = Criterion.Weight
-                        };
-            foreach (var c in query) i++;
-            if (i > 0) return true;
-            else return false;
-        }
-
-        /// <summary>
         /// Adds new Criterion
         /// </summary>
         /// <param name="criterion"></param>
@@ -92,23 +67,18 @@ namespace CDDSS_API.Repository
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
             Criterion criterionLinq = new Criterion();
-            var query = from Criterion in
-                            (from Criterion in ctx.Criterion
-                             select new
-                             {
-                                 Criterion.Id,
-                                 Dummy = "x"
-                             })
-                        group Criterion by new { Criterion.Dummy } into g
-                        select new
-                        {
-                            Column1 = (int?)g.Max(p => p.Id)
-                        };
-            foreach (var c in query)
+            int id;
+            var query = (from t in ctx.Criterion select t.Id).Max();
+            if (query != null)
             {
-                criterion.Id = c.Column1.Value;
+                id = query + 1;
             }
-            criterionLinq.Id = criterion.Id+1;
+            else
+            {
+                id = 1;
+            }
+            
+            criterionLinq.Id = id;
             criterionLinq.Name = criterion.Name;
             criterionLinq.Description = criterion.Description;
             criterionLinq.Weight = 0;
@@ -127,25 +97,26 @@ namespace CDDSS_API.Repository
         internal Boolean UpdateCriterion(CriterionModel criterion)
         {
             DataClassesDataContext ctx = new DataClassesDataContext();
-            IEnumerable<Criterion> query1 = from Criterion in ctx.Criterion
-                                            where
-                                              Criterion.Id == criterion.Id
-                                            select Criterion;
-            IEnumerable<Issue> query2 = from Issues in ctx.Issues
-                                        where
-                                          Issues.Id == criterion.Id
-                                        select Issues;
-            if (query1.Count() > 0 && query2.Count() >0)
+            try
             {
-                query1.First().Name = criterion.Name;
-                query1.First().Description = criterion.Description;
-                query1.First().Issue = criterion.Issue;
-                query1.First().Issue1 = query2.First();
-                query1.First().Weight=criterion.Weight;
-                ctx.SubmitChanges();
-                return true;
+                Criterion c;
+                IQueryable<Criterion> iq;
+                iq = ctx.Criterion.Where(x => x.Id == criterion.Id);
+                if (iq.Count() > 0)
+                {
+                    c = iq.First();
+                    c.Name = criterion.Name;
+                    c.Description = criterion.Description;
+                    ctx.SubmitChanges(); 
+                    return true;
+                }
+                return false;
             }
-            else return false;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         /// <summary>

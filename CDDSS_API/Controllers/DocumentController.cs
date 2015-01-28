@@ -76,6 +76,7 @@ namespace CDDSS_API.Controllers
         /// <param name="filename"></param>
         /// <returns>document</returns>
         [AllowAnonymous]
+        [HttpGet]
         public HttpResponseMessage Get(int issueId, string filename)
         {
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);

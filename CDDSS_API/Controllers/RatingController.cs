@@ -123,5 +123,25 @@ namespace CDDSS_API.Controllers
             if(rRep.DeleteRating(criterionid, alternativeid)) return Request.CreateResponse(HttpStatusCode.OK, "Rating deleted!"); 
             else return Request.CreateResponse(HttpStatusCode.NotImplemented, "Rating NOT deleted!");
         }
+
+        /// <summary>
+        /// returns user rating for an criterion
+        /// </summary>
+        /// <param name="criterionID"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/Rating/CriterionUser")]
+        public List<RatingModel> GetUserCriterionRating(int criterionID, string user)
+        {
+            return rRep.GetUserIssueRatings(criterionID, user);
+        }
+
+        [HttpGet]
+        [Route("api/Rating/ResultRatings")]
+        public List<RatingModel> GetResultRatings(int issueID)
+        {
+            return rRep.GetIssueResRating(issueID);
+        }
     }
 }

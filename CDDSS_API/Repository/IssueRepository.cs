@@ -100,6 +100,7 @@ namespace CDDSS_API.Repository
                 u = ctx.Users.Where(x => x.AccessObject == ar.AccessObject).First();
                 us = new UserShort(u.FirstName, u.LastName, (int)u.AccessObject);
                 us.Email = u.Email;
+                us.ID = u.Id;
                 model.AccessUserList.Add(new AccessRightModel(us, ar.Right));
                 model.AccessRights.Add(ar.AccessObject, ar.Right);
             }
