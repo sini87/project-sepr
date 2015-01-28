@@ -46,14 +46,14 @@
     <header>
         <div class="content-wrapper">
             <div class="row">
-                <div class="float-left col-lg-2">
+                <div class="float-left col-lg-1">
                     <p class="site-title">
                         <a runat="server" href="~/MyIssues">
                             <img src="../images/cddss_logo.png" id="logo_cddss" alt="Logo CDDSS" />
                         </a>
                     </p>
                 </div>
-                <div class="float-middle col-lg-5">
+                <div class="float-middle col-lg-6">
                     <p id="site-nav">
                         <a id="allIssuesLink" runat="server" href="~/AllIssues">ALL ISSUES</a>
                         <span id="site-nav-sign">|</span>
